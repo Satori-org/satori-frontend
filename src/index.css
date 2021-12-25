@@ -1,0 +1,57 @@
+
+html body {
+  margin: 0;
+  min-width: 1380px;
+  font-size: 14px;
+  line-height: initial;
+  font-family: PingFang SC, Microsoft YaHei, SourceHanSerifCN-Medium, robotoregular, Hiragino Sans GB, Heiti SC, WenQuanYi Micro Hei, Helvetica, Arial, monospace, serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+*{
+  margin: 0;
+  padding: 0;
+}
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+  monospace;
+}
+
+button{
+  cursor: pointer;
+  outline: none;
+  border: none;
+}
+img{
+  vertical-align: bottom;
+}
+table{
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+body p{
+  margin-bottom: 0;
+}
+input {
+  border: none;
+  outline: none;
+}
+
+.flex-row{
+  display: flex;
+  align-items: center;
+}
+.flex-sb{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.flex-box{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.grid-2{
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+}

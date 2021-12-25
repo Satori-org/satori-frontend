@@ -1,0 +1,10 @@
+@font-face{
+    font-family: "SourceHanSerifCN-Medium";
+    src: url("./SourceHanSerifCN-Medium.otf");
+}
+/*html body{
+    font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
+}*/
+.FuturaBT{
+    font-family: "SourceHanSerifCN-Medium";
+}
