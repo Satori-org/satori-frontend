@@ -12,7 +12,7 @@ var networks = require('@ethersproject/networks');
 var providers = require('@ethersproject/providers');
 
 // function connectWallet(dispatch: Dispatch) {
-//     let web3js = new Web3(window['ethereum']);//
+//     let web3js = new Web3(window['ethereum']);
 //
 //     web3js.eth.getAccounts(function (error, result) {
 //         /* alert(result[0]);*/
@@ -23,7 +23,7 @@ var providers = require('@ethersproject/providers');
 //         }
 //
 //         if (!error)
-//             console.log(result)//
+//             console.log(result)
 //     });
 // }
 

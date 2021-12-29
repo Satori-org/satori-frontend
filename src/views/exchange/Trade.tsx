@@ -7,6 +7,7 @@ import Form from "src/components/form/Form";
 import Input from "src/components/form/Input";
 import RSlider from "src/components/slider/RSlider";
 import LoadButton from "src/components/loadButton/LoadButton";
+import SettlementModal from './SettlementModal';
 
 export default function Trade() {
     const {t} = useTranslation();
@@ -18,7 +19,7 @@ export default function Trade() {
     });
 
 
-    /*滑动块显示的百分比*/
+    /*The slider displays the percentage*/
     function tipFormatter (value=0) {
         return (<span>{value}%</span>)
     }
@@ -66,12 +67,13 @@ export default function Trade() {
                     <span>{t(`Fee`)}</span>
                     <span style={{color: "#B2B6BC"}}>0.000 USDT</span>
                 </FeeBox>
-                <TotleAmount className={"disabled"}>Total(BTC)</TotleAmount>
+                <TotleAmount className={"disabled"}>{t(`Total(BTC)`)}</TotleAmount>
                 <ButtonGroup className={"grid-2"}>
                     <LoadButton loading={false} className={"Long"}>{t(`Buy/Long`)}</LoadButton>
                     <LoadButton loading={false} className={"Short"}>{t(`Sell/Short`)}</LoadButton>
                 </ButtonGroup>
             </Form>
+            <SettlementModal />
         </TradeStyle>
     )
 }

@@ -44,7 +44,14 @@ export default function Nav() {
     return ( showNav
             ? <NavStyle bgImg={state.bgImg}>
                 {
-
+                    /*navs.map((item, index) => {
+                        return (
+                            <RouterLink className={"flex-box navItem"} to={item.path} key={index}>
+                                <img src={ isActive(index) ? item.activeIcon : item.icon} className={"icon"} alt=""/>
+                                <div className={`text ${isActive(index) ? 'active' : ''}`}>{item.text}</div>
+                            </RouterLink>
+                        )
+                    })*/
                 }
               </NavStyle>
             : null

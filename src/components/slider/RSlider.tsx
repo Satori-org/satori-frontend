@@ -51,6 +51,7 @@ export default function RSlider(props:ISlider) {
             document.removeEventListener("click", documentClick);
         };
     }, []);
+    /*拖动鼠标*/
     function handleMouse (event:MouseEvent|React.MouseEvent<HTMLSpanElement>, left?:number) {
         let mouseX = left || event.clientX;
         //setClientX(mouseX);
@@ -63,6 +64,7 @@ export default function RSlider(props:ISlider) {
         setPercen(value);
         setValue(value);
     }
+    /*鼠标按下*/
     function handleHold(event:React.MouseEvent<HTMLSpanElement>) {
         if (disableRef.current) {
             return;

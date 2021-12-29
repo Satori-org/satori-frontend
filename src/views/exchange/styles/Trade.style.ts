@@ -2,6 +2,7 @@ import styled from "styled-components";
 import {colors} from "../../../styles/style";
 
 export const TradeStyle = styled.div`
+    position: relative;
     padding: 20px 24px;
     background: ${colors.tradeBgColor};
 `;

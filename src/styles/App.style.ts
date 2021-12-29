@@ -8,4 +8,8 @@ export const AppStyle = styled.div`
     background: ${colors.backgroundColor};
     text-align: left;
     box-sizing: border-box;
+    a{
+        color: ${colors.baseColor};
+        text-decoration: none;
+    }
 `;

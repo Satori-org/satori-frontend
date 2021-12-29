@@ -9,7 +9,7 @@ export interface reqConfig {
 }
 
 export function fetchPost<R extends Object>(url:string, data = {}, config:reqConfig = {}):Promise<IAjax<R>> {
-    if (data instanceof FormData) {     //Currently used to upload pictures
+    if (data instanceof FormData) {
         return axios.post(url, data, config);
     } else {
         if (!config.headers) {

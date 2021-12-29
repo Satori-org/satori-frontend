@@ -22,7 +22,7 @@ export default function Copy(props: IProps) {
 
     return (
         <CopyToClipboard text={props.text} onCopy={onCopy}>
-            <CopyStyle style={props.style} src={require("src/assets/images/copy.png")}>
+            <CopyStyle style={props.style} src={require("src/assets/images/edit.png")}>
             </CopyStyle>
         </CopyToClipboard>
     )

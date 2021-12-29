@@ -1,4 +1,4 @@
-//
+//Parameter conversion processing
 export const stringify = (obj:any) => {
     let str = "";
     for (let i in obj) {
@@ -8,7 +8,7 @@ export const stringify = (obj:any) => {
     }
     return str.slice(0, -1);
 };
-/**/
+/*Assembly route parameters*/
 export const buildSearch = (obj:any) => {
     return stringify(obj)
 };
@@ -139,8 +139,8 @@ export function deepCompare(x: any, y: any) {
     return true;
 }
 
-/* :xxx  */
-export function checkMatchModel(routePath: string, browserPath: string) {
+/* :xxx Pattern matching routing */
+export function checkMatchModel(routePath = "", browserPath: string) {
     let matchesArr = routePath.match(/:[^/]+/g);
     let regExpStr = routePath.replace(/:[^/]+/g, "(.+)");
     let regExp = new RegExp(regExpStr, "");

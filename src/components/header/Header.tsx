@@ -19,9 +19,9 @@ export default function Header(props: IProps) {
                     <Logo src={require("src/assets/images/logo.png")} />
                 </RouterLink>
                 <Nav>
-                    <RouterLink className={"item"} to={"/trade"}>{t(`Perpetual Trade`)}</RouterLink>
-                    <RouterLink className={"item"} to={"/Portfolio"}>{t(`Portfolio`)}</RouterLink>
-                    <RouterLink className={"item"} to={"/Docs"}>{t(`Docs`)}</RouterLink>
+                    <RouterLink className={"item"} activeClassName={"active"} to={"/exchange"}>{t(`Perpetual Trade`)}</RouterLink>
+                    <RouterLink className={"item"} activeClassName={"active"} to={"/portfolio"}>{t(`Portfolio`)}</RouterLink>
+                    <RouterLink className={"item"} activeClassName={"active"} to={"/Docs"}>{t(`Docs`)}</RouterLink>
                 </Nav>
             </div>
             <div className={"flex-row"}>

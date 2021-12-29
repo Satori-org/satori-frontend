@@ -1,5 +1,6 @@
 import React from 'react';
 import './App.css';
+import './assets/css/animate.css';
 import RouterView from "./router/RouterView";
 import {AppStyle} from "./styles/App.style";
 import connect, {IConnectProps} from "./store/connect";

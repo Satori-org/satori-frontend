@@ -20,11 +20,11 @@ export const PanelStyle = styled.div`
     position: absolute;
     right: 0;
     bottom: 0;
-    transform: translateY(100%);
     width: 185px;
     padding: 14px 16px 20px;
     border-radius: 2px;
     background: ${colors.tradeBgColor};
+    transform: translateY(100%);
     .title{
         font-size: 12px;
         font-weight: 400;

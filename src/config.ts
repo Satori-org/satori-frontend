@@ -8,8 +8,8 @@ export const PROVIDER = window['ethereum'];
 export function getAuctionType(type: number, t: TFunction) {
     switch (type) {
         case 0:
-            return t(`English`);
+            return t(`british`);
         default:
-            return t(`Dutch`);
+            return t(`theDutch`);
     }
 }

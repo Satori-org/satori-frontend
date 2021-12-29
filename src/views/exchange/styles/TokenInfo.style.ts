@@ -9,22 +9,6 @@ export const TokenInfoStyle = styled.div`
     grid-column-end: 3;
 `;
 
-export const TokenList = styled.div`
-    width: 202px;
-    height: 100%;
-    text-align: center;
-    font-size: ${fonts.h2};
-    border-right: 1px solid ${colors.pageBgColor};
-    .icon{
-        display: inline-block;
-        margin-left: 12px;
-        margin-top: 5px;
-        border-top: 6px solid ${colors.baseColor};
-        border-right: 5px solid transparent;
-        border-left: 5px solid transparent;
-    }
-`;
-
 
 export const TokenData = styled.div`
     padding-left: 32px;

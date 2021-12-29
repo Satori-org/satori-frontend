@@ -51,7 +51,7 @@ class Input extends React.Component<inputProps, inputState>{
             value: props.value || "",
             offsetLeft: 0,
             validErr: false,
-            errText: props.t(`Invalid values`)
+            errText: props.t(`无效的值`)
         }
     }
 
@@ -93,7 +93,7 @@ class Input extends React.Component<inputProps, inputState>{
         }
         let isError = false;
         if (el.required && !el.value) {
-            //this.appendWarn(el, `Can't be empty`);
+            //this.appendWarn(el, `不能为空`);
             this.setState({validErr:true,errText: this.props.t(`The required`)});
             //$root.classList.add('inputWarn');
             isError = true;

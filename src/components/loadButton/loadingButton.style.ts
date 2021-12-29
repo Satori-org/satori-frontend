@@ -10,6 +10,7 @@ export const Submit = styled.button`
 	border-radius: 8px;
 	color: ${colors.buttonTextColor};
 	cursor: pointer;
+	background: ${colors.activeColor};
 	&:disabled{
 		/*background: #DBDBDB;
 		color: #999999;*/

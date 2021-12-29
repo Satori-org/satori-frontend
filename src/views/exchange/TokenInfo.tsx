@@ -1,8 +1,9 @@
 import React, {useEffect} from 'react';
 import { useTranslation } from 'react-i18next';
-import {Price, TokenData, TokenInfoStyle, TokenList} from './styles/TokenInfo.style';
+import {Price, TokenData, TokenInfoStyle} from './styles/TokenInfo.style';
 import Setting from "./Setting";
 import {useCustomerTokenInfo} from "./useCustomerTokenInfo";
+import TokenList from "./TokenList";
 
 export default function TokenInfo() {
     const {t} = useTranslation();
@@ -14,10 +15,7 @@ export default function TokenInfo() {
 
     return (
         <TokenInfoStyle className={"flex-row"}>
-            <TokenList className={"flex-box"}>
-                <span>BTC/USDT</span>
-                <span className={"icon"}></span>
-            </TokenList>
+            <TokenList />
             <TokenData className={"flex-row"}>
                 <Price>62,479.15</Price>
                 <div className={"dataGroup"}>
@@ -57,7 +55,7 @@ export default function TokenInfo() {
                     <p>128,556</p>
                 </div>*/}
             </TokenData>
-            <Setting></Setting>
+            <Setting />
         </TokenInfoStyle>
     )
 }

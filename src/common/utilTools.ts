@@ -1,11 +1,11 @@
-/*Retain the decimal*/
+
 import {Toast} from "src/components/toast/Toast";
 import {TFunction} from "i18next";
 import MsgNotification, {MsgType} from "src/components/msgNotification/MsgNotification";
 import { BigNumber } from 'ethers';
 import Decimal from "decimal.js";
 
-//Parameter conversion processing
+
 export function stringify(obj:any) {
     let str = "";
     for (let i in obj) {
@@ -27,11 +27,10 @@ export function showMessage(msg: string) {
     //alert(msg);
     Toast(msg);
 }
-/*Check safari*/
+
 const isSafari = () => {
     return /Apple/.test(navigator.vendor);
 };
-/*Time formatting*/
 export function formatDate(dateStr:string|number, format:string="yyyy-MM-dd hh:mm:ss") {
     if (!dateStr) {
         return "";
@@ -67,7 +66,6 @@ export function formatDate(dateStr:string|number, format:string="yyyy-MM-dd hh:m
     return format;
 }
 
-//Full screen
 export function fullscreen(element:any) {
     if(element.requestFullscreen) {
         element.requestFullscreen();
@@ -79,7 +77,6 @@ export function fullscreen(element:any) {
         element.msRequestFullscreen();
     }
 }
-//Exit full screen
 export function exitFullscreen() {
     let doc = (document as any);
     if (doc.exitFullscreen) {
@@ -92,20 +89,18 @@ export function exitFullscreen() {
         doc.webkitExitFullscreen();
     }
 }
-//Determine the full screen
 export function isFullscreen(element:any) {
     return element.fullscreenEnabled ||
         element.mozFullScreenEnabled ||
         element.webkitFullscreenEnabled ||
         element.msFullscreenEnabled || false;
 }
-/* For the rest of */
 export function formatDuring(time: number, t: TFunction) {
     let days: string | number = Math.floor(time / (1000 * 60 * 60 * 24));
     let hours: string | number = Math.floor(time % (1000 * 60 * 60 * 24) / (1000 * 60 * 60));
     let minutes: string | number = Math.floor(time % (1000 * 60 * 60) / (1000 * 60));
     let seconds: string | number = Math.floor(time % (1000 * 60) / 1000);
-    // format 00day 00hour 00minute 00second
+    // 格式 00天 00时 00分 00秒
     if (days < 10) {
         days = '0' + days
     }
@@ -122,13 +117,8 @@ export function formatDuring(time: number, t: TFunction) {
 }
 
 
-/**
- * Format the seconds
- * @param int  value The total number of seconds
- * @return string result A formatted string
- */
 export function formatSeconds(value: number) {
-    var theTime = fixedNumber(value);// Time required to convert in seconds
+    var theTime = fixedNumber(value);//
     var theTime1 = 0;//
     var theTime2 = 0;//
     var theTime3 = 0;//
@@ -139,7 +129,7 @@ export function formatSeconds(value: number) {
             theTime2 = fixedNumber(theTime1 / 60);
             theTime1 = fixedNumber(theTime1 % 60);
             if (theTime2 > 24) {
-                //> 24 hours
+                //大于24小时
                 theTime3 = fixedNumber(theTime2 / 24);
                 theTime2 = fixedNumber(theTime2 % 24);
             }
@@ -166,10 +156,7 @@ export function isNumber(str: string) {
     return new RegExp(NUMBER_REG, "gi").test(str);
 }
 
-/*Dynamic string
-* @param str Dynamic string
-* @param obj OBJECT
-*/
+
 export const regExpTemplate = (str:string, obj:any) => {
     return str.replace(/\${[^}]+}/g,  (variableStr) => {
         let variable = variableStr.replace(/\${(.+)}/, "$1");
@@ -177,7 +164,7 @@ export const regExpTemplate = (str:string, obj:any) => {
     })
 };
 
-//async await错误处理
+
 export function awaitWrap<T>(promise: Promise<T>) {
     return promise
         .then((data:T) => [data, null])
@@ -205,7 +192,7 @@ export function getDecimalLen(val: string | number) {
     return arr[1] ? arr[1].length : 0;
 }
 
-/*格式化地址*/
+
 export function formatAddress(address: string, start = 12, end = 5) {
     if (!address) {
         return "";
@@ -219,7 +206,6 @@ export function getNumberByDecimal(amount: BigNumber | number | string, decimals
     return new Decimal(String(amount)).div(e18).toFixed();
 }
 
-/*以，分隔数字*/
 export function formatNumber(amount:number, splitor = ",") {
     if (amount > 1000) {
         let numAry = String(amount).split('.');

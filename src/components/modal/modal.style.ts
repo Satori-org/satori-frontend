@@ -13,20 +13,21 @@ export const ModalBox = styled.div`
         left: 50%;
         top: 50%;
         transform: translate(-50%, -50%);
-        width: 342px;
-        border-radius: 12px;
-        background-color: transparent;
-        padding: 24px 16px 32px 16px;
+        width: 386px;
+        border-radius: 24px;
+        background: ${colors.tradeBgColor};
+        padding: 26px 31px;
         box-sizing: border-box;
-        color: #fff;
-        backdrop-filter: blur(20px);
+        color: ${colors.baseColor};
         .close{
             /*position: absolute;
             right: 0;
             top: 0;
             padding: 15px;*/
             .closeIcon{
-                width: 20px;
+                width: 32px;
+                height: 32px;
+                cursor:pointer;
                 vertical-align: initial;
             }
         }

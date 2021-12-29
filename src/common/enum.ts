@@ -17,9 +17,8 @@ export enum NftType {
 }
 
 
-export enum NftStatus {
-    wait,
-    pending,
+export enum TradeStatus {
     success,
-    cancel
+    fail,
+    warn
 }

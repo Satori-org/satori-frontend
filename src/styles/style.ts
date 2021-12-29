@@ -6,13 +6,15 @@ export const colors = {
     short: "#E86B4A",
     activeColor: "#79BDEB",
     baseColor: "#E9EBF0",
+    artContentColor: "#B2B6BC",
     labelColor: "#74777F",
     buttonTextColor: "#17181C",
     auxiBgColor: "#333A47",
     inputBgColor: "#1A1D27",
     tradeBgColor: "#202531",
     disabledFontColor: "#464953",
-    pageBgColor: "#090A10"
+    pageBgColor: "#090A10",
+    fail: "rgba(232,107,74,0.19)"
 };
 
 export const fonts = {

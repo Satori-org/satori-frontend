@@ -22,6 +22,19 @@ export default function Record() {
         ]
     }, [t]);
 
+    const RecordComponent = useMemo(() => {
+        switch (state.active) {
+            case 1:
+                return <OpenOrder></OpenOrder>;
+            case 2:
+                return <Fills></Fills>;
+            case 3:
+                return <TransactionHistory></TransactionHistory>;
+            default:
+                return <Position></Position>
+        }
+    }, [state.active]);
+
     return (
         <RecordStyle>
             <RecordTab className={"flex-row"}>
@@ -33,10 +46,7 @@ export default function Record() {
                     })
                 }
             </RecordTab>
-            <Position></Position>
-            {/*<OpenOrder></OpenOrder>*/}
-            {/*<Fills></Fills>*/}
-            {/*<TransactionHistory></TransactionHistory>*/}
+            {RecordComponent}
         </RecordStyle>
     )
 }

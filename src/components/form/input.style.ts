@@ -8,7 +8,7 @@ export const InputBox = styled.div`
     align-items: center;
     padding-left: 8px;
     padding-right: 8px;
-    font-size: 16px;
+    font-size: 14px;
     height: ${$height};
     background: ${colors.inputBgColor};
     border-radius: 8px;
@@ -24,7 +24,7 @@ export const InputBox = styled.div`
         height: 100%;
         text-align: right;
         color: ${colors.baseColor};
-        padding: 3px 0 0 8px;
+        padding: 0 0 0 8px;
         box-sizing: border-box;
     }
     .inputWarn{
