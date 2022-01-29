@@ -16,7 +16,7 @@ export default function Switch(props: IProps) {
         document.documentElement.scrollTop = 0;
         React.Children.forEach( props.children ,(item: any) => {
             let matchPath = item.props.path === pathname || (!item.props.exact && pathname.startsWith(item.props.path));
-            /* :xxx Pattern matching routing */
+            /* :xxx Pattern Matching Routing */
             let { isMatchModel } = checkMatchModel(item.props.path, pathname);
             if (!match && (matchPath || isMatchModel)) {
                 match = true;

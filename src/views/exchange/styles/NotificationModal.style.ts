@@ -9,8 +9,12 @@ export const NotificationModalStyle = styled.div`
     height: 100vh;
     z-index: 500;
     background: rgba(32,37,49,0.6);
-    backdrop-filter: blur(8px);
+    backdrop-filter: blur(0px);
     color: ${colors.baseColor};
+    transition: backdrop-filter 0.15s ease-in;
+    &.active{
+        backdrop-filter: blur(8px);
+    }
 `;
 
 export const NotificationContent = styled.div`

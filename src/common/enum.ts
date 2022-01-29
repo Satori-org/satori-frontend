@@ -9,16 +9,13 @@ export enum LanguageType {
     en = "en_US"
 }
 
-
-export enum NftType {
-    Master,
-    Segment ,
-    Compose
-}
-
-
 export enum TradeStatus {
     success,
     fail,
     warn
 }
+
+export const ORDER_TYPE = {
+    limit: false,
+    market: true
+};

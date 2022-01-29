@@ -1,9 +1,8 @@
 import styled from "styled-components";
 
 export const KlineBox = styled.div`
-	height: 420px;
+	height: 596px;
 	position: relative;
-	background-color: #1c1c1c;
 	.depthChart{
 		visibility: hidden;
 		&.active{

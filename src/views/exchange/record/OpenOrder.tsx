@@ -1,81 +1,111 @@
-import React, {useEffect} from 'react';
-import { useTranslation } from 'react-i18next';
-import {PercentStyle, PositionStyle } from '../styles/Position.style';
-import Table from "../../../components/table/Table";
-import Copy from "../../../components/copy/Copy";
-import {useEffectState} from "../../../hooks/useEffectState";
-import Toggle from 'src/components/toggle/Toggle';
-import {colors} from "../../../styles/style";
-
-const data = [
-    { Pairs: "BTC/USDT", time: "2021-11-20", Status: "Limit", Type: "Sell/Short", Price: "6.998", Completed: "1,297.60", Commission: "1.894541" },
-    { Pairs: "BTC/USDT", time: "2021-11-20", Status: "Market", Type: "Buy/Long", Price: "6.998", Completed: "1,297.60", Commission: "1.894541" }
-];
+import React, {useMemo} from 'react';
+import {useTranslation} from 'react-i18next';
+import Table from "src/components/table/Table";
+import Pagination from "src/components/pagination/Pagination";
+import {CancelButton, RecordListStyle, RowStyle} from "./style";
+import {cancelEntrust, getCurrentEntrustList, ICurrentEntrustList} from "src/ajax/contract/contract";
+import useExchangeStore from "../ExchangeProvider";
+import {Toast} from "src/components/toast/Toast";
+import {useEffectState} from "src/hooks/useEffectState";
+import {getOrderType} from "../config";
+import {useStore} from "react-redux";
+import {IState} from "src/store/reducer";
+import Loading from "src/components/loadStatus/Loading";
+import {RELOAD_RECORD} from "src/common/PubSubEvents";
+import {useFetchPostPage} from "src/ajax";
+import {usePubSubEvents} from "src/hooks/usePubSubEvents";
 
 type IRow = {
-    item: (typeof data)[0]
+    item: ICurrentEntrustList
+    reload(): void
 }
 function Row(props: IRow) {
     const {t} = useTranslation();
-    const state = useEffectState({
-        showpercent: false,
-        percent: ""
-    });
 
-    const percents = [0.1, 0.2 ,0.50,0.75, 1];
+    async function cancelOrder() {
+        const result = await cancelEntrust(props.item.id);
+        if (result) {
+            Toast(t(`Undo successfully`));
+            props.reload();
+        }
+    }
 
-    return <tr>
+    return <RowStyle>
         <td>
             <div className={"flex-row"}>
-                <span className={"name"}>{props.item.time}</span>
+                <span className={"name"}>{props.item.createTime}</span>
             </div>
         </td>
-        <td>{props.item.Pairs}</td>
-        <td>{props.item.Status}</td>
-        <td className={"long"}>{props.item.Type}</td>
-        <td>{props.item.Price}</td>
-        <td className={"long"}>{props.item.Completed}</td>
-        <td className={"long"}>{props.item.Commission}</td>
+        <td>{props.item.symbol}</td>
+        <td>{props.item.dealQuantity === "0" ? t(`Not Sold`) : t(`Partial Transaction`)}</td>
+        <td className={`${props.item.isLong ? 'long' : 'short'}`}>{getOrderType(props.item.isLong, t)}</td>
+        <td>{props.item.price}</td>
+        <td>{props.item.quantity}</td>
+        <td>{props.item.dealQuantity}</td>
+        <td>{props.item.contractPairId}</td>
         <td>
             <div className={"flex-row"} style={{position: "relative"}}>
-                <button className={"closeBtn"} style={{
-                    width: "71px",
-                    height: "28px",
-                    background: "#333A47",
-                    borderRadius: "8px",
-                    color: colors.baseColor
-                }}>{t(`Cancel`)}</button>
+                <CancelButton onClick={cancelOrder}>{t(`Cancel`)}</CancelButton>
             </div>
         </td>
-    </tr>
+    </RowStyle>
 }
 
 export default function OpenOrder() {
     const {t} = useTranslation();
+    const store = useStore<IState>();
+    const storeData = store.getState();
+    const [reducerState] = useExchangeStore();
+    const state = useEffectState({
+        pageNo: 1,
+        pageSize: 10
+    });
+
+    /* Currently selected trading pairs */
+    const pairInfo = useMemo(() => {
+        return reducerState.pairs[reducerState.currentTokenIndex] || {};
+    }, [reducerState.pairs, reducerState.currentTokenIndex]);
+
+    const {data, loading, total, reload} = useFetchPostPage<ICurrentEntrustList>(getCurrentEntrustList, {
+        pageNo: state.pageNo,
+        pageSize: state.pageSize,
+        contractPairId: pairInfo.id
+    }, [pairInfo.id, storeData.token]);
+
+    usePubSubEvents(RELOAD_RECORD, reload);
 
     return (
         <div>
-            <Table>
-                <thead>
-                <tr>
-                    <th>{t(`Time`)}</th>
-                    <th>{t(`Pairs`)}</th>
-                    <th>{t(`Status`)}</th>
-                    <th>{t(`Type`)}</th>
-                    <th>{t(`Price`)}</th>
-                    <th>{t(`Completed Cont`)}</th>
-                    <th>{t(`Commission Cont`)}</th>
-                    <th>{t(`Operation`)}</th>
-                </tr>
-                </thead>
-                <tbody>
-                {
-                    data.map((item, index) => {
-                        return <Row key={index} item={item}></Row>
-                    })
-                }
-                </tbody>
-            </Table>
+            <RecordListStyle>
+                { loading ? <Loading /> :null }
+                <Table>
+                    <thead>
+                    <tr>
+                        <th style={{width: "13%"}}>{t(`Time`)}</th>
+                        <th>{t(`Pairs`)}</th>
+                        <th>{t(`Status`)}</th>
+                        <th>{t(`Type`)}</th>
+                        <th>{t(`Price`)}</th>
+                        <th>{t(`Total`)}</th>
+                        <th>{t(`Filled`)}</th>
+                        <th>{t(`Fee`)}</th>
+                        <th style={{width: "15%", minWidth: "220px"}}>{t(`Operation`)}</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {
+                        data.map((item) => {
+                            return <Row key={item.id} item={item} reload={reload}></Row>
+                        })
+                    }
+                    </tbody>
+                </Table>
+            </RecordListStyle>
+            {/*<Pagination
+                style={{marginRight: "24px"}}
+                pageSize={state.pageSize}
+                total={total}
+                onChange={(page) => state.pageNo = page} />*/}
         </div>
     )
 }

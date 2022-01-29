@@ -25,8 +25,11 @@ export const Option = styled.ul`
     padding: 6px 10px;
     text-align: center;
     line-height: 24px;
+    white-space: nowrap;
+    z-index: 100;
     .item{
         cursor:pointer;
+        color: ${colors.baseColor};
         &.active{
             color: ${colors.activeColor};
         }

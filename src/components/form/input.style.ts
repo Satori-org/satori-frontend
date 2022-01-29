@@ -12,6 +12,8 @@ export const InputBox = styled.div`
     height: ${$height};
     background: ${colors.inputBgColor};
     border-radius: 8px;
+    border: 1px solid transparent;
+    box-sizing: border-box;
     .label{
         display: inline-block;
         color: #B2B6BC;

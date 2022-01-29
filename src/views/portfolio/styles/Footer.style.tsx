@@ -2,6 +2,7 @@ import styled from "styled-components";
 import {colors} from "../../../styles/style";
 
 export const FooterStyle = styled.div`
+    margin-top: 60px;
     ul{
         list-style: none;
     }

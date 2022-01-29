@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {CSSProperties, useEffect} from 'react';
 import { useTranslation } from 'react-i18next';
 import { DropDownStyle, Option } from './DropDown.style';
 import {useEffectState} from "../../hooks/useEffectState";
@@ -8,6 +8,7 @@ type IProps<T> = {
     options: {text: string, value: T}[],
     defaultIndex?: number,
     onChange(selectd: {text: string, value: T}): void
+    menuStyle?: CSSProperties
 }
 export default function DropDown<T>(props: IProps<T>) {
     const {t} = useTranslation();
@@ -27,7 +28,7 @@ export default function DropDown<T>(props: IProps<T>) {
                 <img src={require("src/assets/images/arrow.png")} className={"icon"} alt=""/>
             </div>
             <Toggle vIf={state.showOption}>
-                <Option>
+                <Option style={props.menuStyle}>
                     {
                         props.options.map((item,index) => {
                             return <li className={`item ${item.value === state.selected.value ? 'active' : ''}`} key={index}

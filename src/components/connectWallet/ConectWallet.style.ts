@@ -10,4 +10,5 @@ export const ConectWalletStyle = styled.div`
     padding: 0 27px;
     box-sizing: border-box;
     text-align: center;
+    cursor:pointer;
 `;

@@ -2,6 +2,7 @@ import styled from "styled-components";
 import {colors} from "../../styles/style";
 
 export const StepNumberStyle = styled.div`
+    display: flex;
     padding: 3px;
     background: ${colors.inputBgColor};
     text-align: center;
@@ -9,6 +10,10 @@ export const StepNumberStyle = styled.div`
         display: inline-block;
         padding: 0 8px;
         box-sizing: border-box;
+        text-align: center;
+        flex: 1;
+        background: transparent;
+        color: ${colors.baseColor};
     }
     .stepBtn{
         width: 48px;

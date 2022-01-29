@@ -1,14 +1,32 @@
-import React from 'react';
+import React, {useEffect, useReducer} from 'react';
 import { useTranslation } from 'react-i18next';
 import Toggle from 'src/components/toggle/Toggle';
 import {PanelStyle, TokenListStyle } from './styles/TokenList.style';
-import {useEffectState} from "../../hooks/useEffectState";
+import {useEffectState} from "src/hooks/useEffectState";
+import {getContractPairList} from "src/ajax/contract/contract";
+import {exchangeActions} from "./exchangeReducer";
+import useExchangeStore from "./ExchangeProvider";
 
 export default function TokenList() {
     const {t} = useTranslation();
+    const [ reducerState, dispath ] = useExchangeStore();
+
     const state = useEffectState({
         showPanel: false
     });
+
+    useEffect(() => {
+        getPairList();
+    }, []);
+
+    async function getPairList() {
+        const pairs = await getContractPairList();
+        console.log("=============")
+        dispath({
+            type: exchangeActions.SET_PAIR,
+            data: pairs.data
+        })
+    }
 
     const list = [
         { symbol: "BTC/USDT", lastPrice: "48,409.09", "rise": "+19.08%" },
@@ -18,7 +36,7 @@ export default function TokenList() {
 
     return (
         <TokenListStyle className={"flex-box"}>
-            <div className={"flex-row"} style={{cursor: "pointer"}} onClick={() => state.showPanel = !state.showPanel}>
+            <div className={"flex-row"} style={{cursor: "pointer", userSelect: "none"}} onClick={() => state.showPanel = !state.showPanel}>
                 <span>BTC/USDT</span>
                 <span className={`icon ${state.showPanel ? 'active' : ''}`}></span>
             </div>

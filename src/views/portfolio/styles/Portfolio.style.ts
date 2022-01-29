@@ -19,3 +19,9 @@ export const PortfolioStyle = styled.div`
         background: ${colors.backgroundColor};
     }
 `;
+
+export const Title = styled.h3`
+    font-size: 14px;
+    font-weight: 400;
+    margin-bottom: 18px;
+`;

@@ -4,8 +4,12 @@ export const colors = {
     backgroundColor: "#11131E",
     long: "#98E39E",
     short: "#E86B4A",
+    longOpa: "rgba(152,227,158,0.19)",
+    shortOpa: "rgba(232,107,74,0.19)",
+    longOpa7: "rgba(152,227,158,0.7)",
+    shortOpa7: "rgba(232,107,74,0.7)",
     activeColor: "#79BDEB",
-    baseColor: "#E9EBF0",
+    baseColor: "#B2B6BC",
     artContentColor: "#B2B6BC",
     labelColor: "#74777F",
     buttonTextColor: "#17181C",
@@ -19,6 +23,7 @@ export const colors = {
 
 export const fonts = {
     h2: "24px",
+    h3: "18px",
     h5: "14px",
     h6: "12px"
 };

@@ -18,7 +18,7 @@ export default function RSlider(props:ISlider) {
     //const [clientX, setClientX] = useState(0);
     const [parentWidth, setParentWidth] = useState(0);
     const [percen, setPercen] = useState(props.value || 0);
-    const [value, setValue] = useState( 0);
+    //const [value, setValue] = useState( 0);
     const [hover, setHover] = useState( false);
     const parentXRef = useRef(0);
     const parentWidthRef = useRef(0);
@@ -39,9 +39,9 @@ export default function RSlider(props:ISlider) {
     useEffect(() => {
         parentWidthRef.current = parentWidth;
     }, [parentWidth]);
-    useEffect(() => {
+    /*useEffect(() => {
         props.onChange(value);
-    }, [value]);
+    }, [value]);*/
 
     useEffect(() => {
         getParentParams();
@@ -51,7 +51,7 @@ export default function RSlider(props:ISlider) {
             document.removeEventListener("click", documentClick);
         };
     }, []);
-    /*拖动鼠标*/
+    /*Drag the mouse*/
     function handleMouse (event:MouseEvent|React.MouseEvent<HTMLSpanElement>, left?:number) {
         let mouseX = left || event.clientX;
         //setClientX(mouseX);
@@ -62,9 +62,9 @@ export default function RSlider(props:ISlider) {
             value = 0;
         }
         setPercen(value);
-        setValue(value);
+        props.onChange(value);
     }
-    /*鼠标按下*/
+    /*Mouse down*/
     function handleHold(event:React.MouseEvent<HTMLSpanElement>) {
         if (disableRef.current) {
             return;
@@ -84,6 +84,7 @@ export default function RSlider(props:ISlider) {
         setParentX(paren_x);
         setParentWidth(paren_width);
     }
+    /*Click on the progress bar*/
     function clickProcess(event:React.MouseEvent<HTMLDivElement>) {
         event.stopPropagation();
         if (disableRef.current) {
@@ -96,17 +97,20 @@ export default function RSlider(props:ISlider) {
             handleMouse(event, left);
         }, 0);
     }
+    /*Click to separate*/
     function clickItem(event:React.MouseEvent<HTMLSpanElement>, item:Iitem) {
         if (!disableRef.current) {
             setPercen(item.value);
-            setValue(item.value);
+            props.onChange(item.value);
         }
         event.stopPropagation();
     }
+    /*Adding event listeners*/
     function addMouseEvent() {
         window.addEventListener("mousemove", handleMouse);
         window.addEventListener("mouseup", removeMouseEvent);
     }
+    /*Remove event listeners*/
     function removeMouseEvent(event: MouseEvent) {
         window.removeEventListener("mousemove", handleMouse);
         event.stopPropagation();
@@ -116,7 +120,7 @@ export default function RSlider(props:ISlider) {
     }
     return (
         <SliderStyle style={{background: `linear-gradient(90deg, ${colors.activeColor} 0,${colors.activeColor} ${percen}%,${colors.inputBgColor} ${percen}%,${colors.inputBgColor} 100%)`}}
-             onClick={useCallback(clickProcess, [])}
+             onClick={clickProcess}
              ref={sliderRef}>
             {
                 props.marks.map((item, index) => {
@@ -129,7 +133,7 @@ export default function RSlider(props:ISlider) {
                 })
             }
             <div className={`step ${props.disabled?"disabled":""} ${hover?"hover":""} ${props.stepClassName??""}`}
-                 onMouseDown={useCallback(handleHold, [])}
+                 onMouseDown={handleHold}
                  onMouseOver={() => !props.disabled && setHover(true)}
                  /*onMouseLeave={() => setHover(false)}*/
                  style={{transform: `translate(${percen/100*parentWidth}px, -50%)`}}>

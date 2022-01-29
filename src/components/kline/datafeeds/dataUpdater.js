@@ -1,6 +1,6 @@
 /**
- *
- *
+ * 数据更新器
+ * 通过更新器触发datafeeds的getBars实时更新图表数据
  */
 class dataUpdater {
     constructor(datafeeds) {

@@ -2,10 +2,12 @@ import {erc20} from "./config";
 import {Decimal} from "decimal.js";
 import {NewReadContract} from "./wallet";
 
+
 export async function getTokenDecimal(address: string): Promise<number> {
     let contract = NewReadContract(address, erc20);
     return await contract.decimals();
 }
+
 
 export async function getTokenBalance(account: string, address: string): Promise<number> {
     let contract = NewReadContract(address, erc20);

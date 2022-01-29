@@ -1,25 +1,24 @@
 import React, {useEffect} from 'react';
-import { useTranslation } from 'react-i18next';
 import {PanelStyle, SettingStyle} from './styles/Setting.style';
-import {useEffectState} from "../../hooks/useEffectState";
-import Toggle from "../../components/toggle/Toggle";
-import {useCustomerTokenInfo} from "./useCustomerTokenInfo";
+import {useEffectState} from "src/hooks/useEffectState";
+import {ICustomerToken, useCustomerTokenInfo} from "./useCustomerTokenInfo";
 import {CSSTransition} from "react-transition-group";
 
 const checkbox_default = require("src/assets/images/icon_checkbox_default@2x.png");
 const checkbox_selected = require("src/assets/images/icon_checkbox_selected@2x.png");
 
-export default function Setting() {
-    const {t} = useTranslation();
+type IProps = {
+    onChange(customerTokens: ICustomerToken[]): void
+}
+export default function Setting(props: IProps) {
     const {customerTokenInfo, toggleTokenInfo} = useCustomerTokenInfo();
-
     const state = useEffectState({
         showPanel: false
     });
 
-    function PanelItem() {
-
-    }
+    useEffect(() => {
+        props.onChange(customerTokenInfo);
+    }, [customerTokenInfo]);
 
     return (
         <SettingStyle className={"flex-box"}>

@@ -3,8 +3,8 @@ import {colors, fonts} from "src/styles/style";
 
 export const TokenListStyle = styled.div`
     position: relative;
-    width: 202px;
     height: 100%;
+    padding: 0 24px;
     text-align: center;
     font-size: ${fonts.h2};
     border-right: 1px solid ${colors.pageBgColor};

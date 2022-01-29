@@ -1,6 +1,7 @@
 import React, {CSSProperties, useEffect, useState} from 'react';
 import { StepNumberStyle } from './StepNumber.style';
 import {useEffectState} from "../../hooks/useEffectState";
+import {INT_REG} from "../../common/regExp";
 
 type IProps = {
     value?: number
@@ -36,9 +37,13 @@ export default function StepNumber(props: IProps) {
     }
 
     return (
-        <StepNumberStyle className={"flex-sb"} style={props.style}>
+        <StepNumberStyle style={props.style}>
             <button className={"flex-box stepBtn"} onClick={handleSub}>-</button>
-            <span className={"value"}>{state.value}x</span>
+            <input className={"value"} value={state.value} onChange={(event) => {
+                if (new RegExp(INT_REG, "g").test(event.target.value)) {
+                    state.value = Number(event.target.value);
+                }
+            }} />
             <button className={"flex-box stepBtn"} onClick={handleAdd}>+</button>
         </StepNumberStyle>
     )

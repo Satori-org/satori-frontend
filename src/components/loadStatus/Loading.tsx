@@ -8,7 +8,7 @@ interface IProps {
     width?:string,
     style?: CSSProperties
 }
-export default (props:IProps) => {
+export default function Loading(props:IProps) {
     return (
         <LoadingMask className={`${props.inline?'inline':''}`} style={props.style}>
             <LoadingSpinner className={`${props.inline?'inline':''}`}>

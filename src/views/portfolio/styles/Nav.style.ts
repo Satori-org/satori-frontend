@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import {colors} from "../../../styles/style";
+import {colors} from "src/styles/style";
 
 export const NavStyle = styled.nav`
     display: flex;
@@ -13,6 +13,16 @@ export const NavStyle = styled.nav`
         &.active{
             background: ${colors.inputBgColor};
             color: ${colors.activeColor};
+        }
+        .iconWrap{
+            display: inline-block; 
+            min-width: 22px; 
+            text-align: center;
+            margin-right: 12px;
+            padding-bottom: 2px;
+        }
+        .icon{
+            vertical-align: middle;
         }
     }
 `;

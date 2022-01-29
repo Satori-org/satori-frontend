@@ -1,14 +1,15 @@
 import styled from "styled-components";
+import {colors} from "../../../styles/style";
 
 export const TradingviewToolStyle = styled.div`
     width: 100%;
-    height: 20px;
+    height: 56px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    //margin-bottom: 4px;
-    background-color: #1c1c1c;
-    color: #8193B8;
+    background-color: ${colors.backgroundColor};
+    color: ${colors.baseColor};
+    margin-bottom: 1px;
     .toolItem{
         display: inline-block;
         border-right: 1px solid transparent;
@@ -17,10 +18,10 @@ export const TradingviewToolStyle = styled.div`
         line-height: 20px;
         cursor: pointer;
         &.active{
-            color: blue;
+            color: ${colors.activeColor};
         }
         &:hover{
-            color: blue;
+            color: ${colors.activeColor};
         }
     }
     .reloadIcon{

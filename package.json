@@ -88,6 +88,7 @@
     "react-redux": "^7.2.2",
     "react-refresh": "^0.8.3",
     "react-router-dom": "^5.2.0",
+    "react-scripts": "^5.0.0",
     "react-transition-group": "^4.4.2",
     "redux": "^4.0.5",
     "redux-devtools-extension": "^2.13.8",
@@ -114,7 +115,8 @@
   "scripts": {
     "start": "dotenv -e .env.dev node scripts/start.js",
     "build": "dotenv -e .env.production node scripts/build.js",
-    "test": "node scripts/test.js"
+    "test": "node scripts/test.js",
+    "eject": "react-scripts eject"
   },
   "eslintConfig": {
     "extends": [

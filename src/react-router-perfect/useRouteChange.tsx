@@ -37,7 +37,7 @@ export function useRouteChange(hashModel?: boolean) {
         if (hashModel) {
             return getHashPath(location.hash);
         } else {
-            return location.pathname;
+            return location.pathname.replace(/\/.*\.html/g, "");
         }
     }
 
@@ -51,7 +51,7 @@ export function useRouteChange(hashModel?: boolean) {
     }
 
     function callback() {
-        let path = hashModel ? getHashPath(location.hash) : location.pathname;
+        let path = hashModel ? getHashPath(location.hash) : location.pathname.replace(/\/.*\.html/g, "");
         if (pathRef.current !== path) {
             setPathname(path)
         }

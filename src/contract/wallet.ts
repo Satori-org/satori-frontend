@@ -11,21 +11,6 @@ import {PROVIDER} from "../config";
 var networks = require('@ethersproject/networks');
 var providers = require('@ethersproject/providers');
 
-// function connectWallet(dispatch: Dispatch) {
-//     let web3js = new Web3(window['ethereum']);
-//
-//     web3js.eth.getAccounts(function (error, result) {
-//         /* alert(result[0]);*/
-//         if (result.length !== 0) {
-//             dispatch.setWalletAddress(result[0]);
-//         } else {
-//             connect('injected')
-//         }
-//
-//         if (!error)
-//             console.log(result)
-//     });
-// }
 
 export async function getBalance(address: string) {
     let balance = await getWallet().provider.getBalance(address);
@@ -135,4 +120,30 @@ export function checkHashStatus(tranInfo: ITrans) {
 
 export function getInput(amount: number | string, decimal: number) {
     return utils.parseUnits(String(amount), decimal);
+}
+
+export function unpackEIP712(signature:string) {
+    if (signature.startsWith("0x")) {
+        signature = signature.substring(2);
+    }
+    const r = "0x" + signature.substring(0, 64);
+    const s = "0x" + signature.substring(64, 128);
+    const v = parseInt(signature.substring(128, 130), 16);
+
+    return [r,v,s]
+}
+
+interface ISignatrua {
+    origin: string
+    signatrue: string
+}
+
+export async function signMsg(signObj: any) : Promise<ISignatrua>{
+    const originData = JSON.stringify(signObj);
+    const withdrawSignature = await getWallet().signMessage(originData);
+    return {origin: originData, signatrue:withdrawSignature}
+}
+
+export function signExpire(duration = 30 * 1000) {
+    return new Date().getTime() + duration;
 }

@@ -11,12 +11,11 @@ export const TokenInfoStyle = styled.div`
 
 
 export const TokenData = styled.div`
-    padding-left: 32px;
     white-space: nowrap;
     overflow: hidden;
     .dataGroup{
         &:not(:last-child){
-            margin-right: 32px;
+            margin-right: 24px;
         }
         .label{
             font-size: ${fonts.h6};
@@ -30,8 +29,8 @@ export const TokenData = styled.div`
 `;
 
 export const Price = styled.div`
-    font-size: ${fonts.h2};
+    font-size: ${fonts.h3};
     font-weight: 500;
     color: ${colors.long};
-    margin-right: 32px;
+    margin-right: 24px;
 `;

@@ -7,12 +7,12 @@ import {
 
 export enum langType {
     zh_CN = "zh_CN",
+    zh_TW = "zh_TW",
     en_US = "en_US",
 }
 
 i18n.use(initReactI18next) //init i18next
     .init({
-
         resources: {
             en_US: {
                 translation: en_US,

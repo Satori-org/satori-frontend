@@ -18,7 +18,6 @@ export default function Nav() {
     const navs:any = useMemo(() => {
         return [];
 
-
     }, [t]);
     useEffect(() => {
         /*navs.some((item, index) => {

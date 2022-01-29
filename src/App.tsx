@@ -1,6 +1,7 @@
 import React from 'react';
 import './App.css';
 import './assets/css/animate.css';
+import Nav from './components/nav/Nav';
 import RouterView from "./router/RouterView";
 import {AppStyle} from "./styles/App.style";
 import connect, {IConnectProps} from "./store/connect";
@@ -11,6 +12,8 @@ import {Toast} from "./components/toast/Toast";
 import {withTranslation, WithTranslation} from "react-i18next";
 import {PROVIDER} from "./config";
 import Header from "./components/header/Header";
+import {generateNonce, getUserToken} from "./ajax/auth/auth";
+import {getWallet} from "./contract/wallet";
 
 interface IProps extends IConnectProps, WithTranslation{
 
@@ -26,11 +29,14 @@ class App extends React.Component<IProps, any>{
     componentDidMount(): void {
         plusReady(() => {
             this.addEventListener();
-        })
+        });
+        this.checkLoginStatus();
     }
 
     componentDidUpdate(prevProps: Readonly<IProps>, prevState: Readonly<any>, snapshot?: any): void {
-
+        if (!prevProps.redux.address && this.props.redux.address) {
+            this.checkLoginStatus();
+        }
     }
 
     addEventListener() {
@@ -46,15 +52,36 @@ class App extends React.Component<IProps, any>{
         });
         window['ethereum'].on('accountsChanged',  (accounts:string[]) => {
             if (accounts && accounts[0]) {
-                this.props.setWalletAddress(accounts[0]);
+                const address = accounts[0];
+                this.props.setWalletAddress(address);
+                this.getGenerateNonce(address);
             }
         });
     }
 
     checkNetwork(ID:number) {
         if (ID !== chainID) {
-            Toast(this.props.t(`Please connect to the correct network`));
+            Toast(this.props.t(`请连接正确的网络`));
         }
+    }
+
+    checkLoginStatus() {
+        let token = sessionStorage.getItem("token");
+        if (this.props.redux.address && !token) {
+            this.getGenerateNonce(this.props.redux.address);
+        }
+    }
+
+    async getGenerateNonce(address: string) {
+        const nonceInfo = await generateNonce(address);
+        const signStr = await getWallet().signMessage(nonceInfo.data.nonce);
+        this.login(address, signStr);
+    }
+
+    async login(address: string, signStr: string) {
+        const userInfo = await getUserToken(address, signStr);
+        sessionStorage.setItem("token", userInfo.data);
+        this.props.setToken(userInfo.data);
     }
 
     render(): React.ReactElement<any, string | React.JSXElementConstructor<any>> | string | number | {} | React.ReactNodeArray | React.ReactPortal | boolean | null | undefined {

@@ -27,7 +27,7 @@ function NotificationModal(props: INotification) {
     ];
 
     return (
-        <NotificationModalStyle onClick={() => {
+        <NotificationModalStyle className={`${state.active ? 'active' : ''}`} onClick={() => {
             state.active = false;
 
         }}>

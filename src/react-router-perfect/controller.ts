@@ -40,9 +40,9 @@ class Controller {
             history.pushState(routeData, "", pathname);
             //window.onPushState();
             let event = document.createEvent("HTMLEvents");
-            // Initialize the Test Event Event
+            // 初始化testEvent事件
             event.initEvent("pushState", false, true);
-            // Triggers a custom event
+            // 触发自定义事件
             window.dispatchEvent(event);
         }, disabledProgress)
     }
@@ -77,7 +77,7 @@ class Controller {
         return new Promise((resolve) => {
             this.routes.forEach((item) => {
                 let isMatch = item.path === browserPath || (!item.exact && browserPath.indexOf(item.path) === 0);
-                /* :xxx Pattern matching routing */
+                /* :xxx 模式匹配路由 */
                 let { isMatchModel } = checkMatchModel(item.path, browserPath);
                 if (isMatch || isMatchModel) {
                     if (this.showProgress && !disabledProgress) {

@@ -2,13 +2,17 @@ import React from 'react';
 import {MyChartStyle} from './depthChart.style';
 import {withTranslation, WithTranslation, WithTranslationProps} from 'react-i18next';
 import connect, {IConnectProps} from "../../../store/connect";
-//Introducing basic templates
+import {colors} from "../../../styles/style";
+//引入基本模板
 const echarts = require('echarts/lib/echarts');
+// 引入饼状图组件
 require('echarts/lib/chart/line');
+// 引入提示框和title组件，图例
 require('echarts/lib/component/tooltip');
+require('echarts/lib/component/grid');
 
 interface IDepthItem {
-    amount:string,
+    quantity:string,
     price:string
 }
 export interface IDepthData {
@@ -62,6 +66,7 @@ class DepthChart extends React.Component<IuserProps, any>{
         }, 0);
     }
     initChart () {
+        // 基于准备好的dom，初始化echarts实例
         this.myChart = echarts.init(this.chartNode.current);
         this.myChart.on('globalout',  () => {
             this.myChart.setOption({
@@ -78,9 +83,10 @@ class DepthChart extends React.Component<IuserProps, any>{
         if (!this.myChart) {
             return;
         }
+        // 绘制图表
         this.myChart.setOption({
             animation: false,
-            backgroundColor: '#171B2B',
+            backgroundColor: colors.backgroundColor,
             tooltip: {
                 trigger: 'axis',
                 confine: true,
@@ -91,10 +97,12 @@ class DepthChart extends React.Component<IuserProps, any>{
                     }
                 },
                 alwaysShowContent: true,
-                backgroundColor: 'rgba(0, 0, 0, .6)',
+                backgroundColor: colors.pageBgColor,
+                borderColor: colors.pageBgColor,
                 formatter: (params:any) => {
                     let data = params && params[0].data;
-                    return [`<p style="text-align: left;">${this.props.t(`价格`)}  ：${data[0]}</p><p style="text-align: left;">${this.props.t(`总量`)} ：${data[1].toFixed(this.amountPrecision)}</p>`].join('\n')
+                    return [`<p style="text-align: left;color: ${colors.baseColor}"><span style="color: ${colors.labelColor}">${this.props.t(`价格`)}</span>  ：${data[0]}</p>
+                                <p style="text-align: left;color: ${colors.baseColor}"><span style="color: ${colors.labelColor}">${this.props.t(`总量`)}</span> ：${data[1].toFixed(this.amountPrecision)}</p>`].join('\n')
                 }
             },
             grid: {
@@ -149,8 +157,8 @@ class DepthChart extends React.Component<IuserProps, any>{
                 showSymbol: false,
                 symbolSize: 10,
                 itemStyle: {
-                    color: 'blue',
-                    borderColor: 'yellow',
+                    color: colors.long,
+                    borderColor: colors.long,
                     shadowColor: 'rgba(0, 0, 0, 0.5)',
                     shadowBlur: 10
                 },
@@ -163,7 +171,7 @@ class DepthChart extends React.Component<IuserProps, any>{
                     color: '#fff',
                     backgroundColor: 'rgba(0, 0, 0, .6)',
                     formatter: (params:any) => {
-                        return [`price ：{a|${params.data[0]}}`, `volumes ：{a|${params.data[1].toFixed(this.precision)}}`].join('\n')
+                        return [`价格 ：{a|${params.data[0]}}`, `总量 ：{a|${params.data[1].toFixed(this.precision)}}`].join('\n')
                     },
                     rich: {
                         a: {
@@ -175,10 +183,10 @@ class DepthChart extends React.Component<IuserProps, any>{
                     }
                 },
                 lineStyle: {
-                    color: '#41b37d',
+                    color: colors.long,
                 },
                 areaStyle: {
-                    color: '#123239'
+                    color: 'rgba(152,227,158,0.49)'
                 },
             },
                 {
@@ -188,8 +196,8 @@ class DepthChart extends React.Component<IuserProps, any>{
                     showSymbol: false,
                     symbolSize: 10,
                     itemStyle: {
-                        color: 'blue',
-                        borderColor: 'yellow',
+                        color: colors.short,
+                        borderColor: colors.short,
                         shadowColor: 'rgba(0, 0, 0, 0.5)',
                         shadowBlur: 10
                     },
@@ -202,7 +210,7 @@ class DepthChart extends React.Component<IuserProps, any>{
                         color: '#fff',
                         backgroundColor: 'rgba(0, 0, 0, .6)',
                         formatter: (params:any) => {
-                            return [`${this.props.t(`price`)} ：{a|${params.data[0]}}`, `total ：{a|${params.data[1].toFixed(this.precision)}}`].join('\n')
+                            return [`${this.props.t(`价格`)} ：{a|${params.data[0]}}`, `总量 ：{a|${params.data[1].toFixed(this.precision)}}`].join('\n')
                         },
                         rich: {
                             a: {
@@ -214,10 +222,10 @@ class DepthChart extends React.Component<IuserProps, any>{
                         }
                     },
                     lineStyle: {
-                        color: '#d74e5a',
+                        color: colors.short,
                     },
                     areaStyle: {
-                        color: '#412031'
+                        color: 'rgba(232,107,74,0.49)'
                     },
                 },
             ]
@@ -228,7 +236,7 @@ class DepthChart extends React.Component<IuserProps, any>{
         let totalAmount = 0;
         asks.forEach((item) => {
             ary.push([item.price, totalAmount]);
-            totalAmount += Number(item.amount);
+            totalAmount += Number(item.quantity);
         });
         return ary;
     }

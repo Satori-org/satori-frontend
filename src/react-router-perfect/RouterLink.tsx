@@ -1,4 +1,4 @@
-import React, {useCallback,ReactNode} from 'react';
+import React, {useCallback, ReactNode, useMemo, useEffect} from 'react';
 import { NavLinkProps, LinkProps } from 'react-router-dom';
 import {$router} from "./Index";
 import {useRouteChange} from "./useRouteChange";
@@ -17,6 +17,7 @@ interface ILazyLink extends NavLinkProps {
     callback?():void
     className?: string
     beforeOnClick?(): void
+    activeCallback?(active: boolean): void
 }
 
 export default function RouterLink(props:ILazyLink) {
@@ -36,11 +37,11 @@ export default function RouterLink(props:ILazyLink) {
         props.callback && props.callback();
     }
 
-    const isActive = useCallback(() => {
+    const activeClassName = useMemo(() => {
         if (!props.activeClassName) {
             return '';
         }
-        let execArr = /\/([^\?]+)/g.exec(anchorPath) || [];
+        let execArr = /\/([^\?]*)/g.exec(anchorPath) || [];
         let targetPath = execArr[0];
         if (props.exact && pathname === targetPath) {
             return props.activeClassName;
@@ -49,6 +50,10 @@ export default function RouterLink(props:ILazyLink) {
         }
         return '';
     }, [pathname, anchorPath, props.activeClassName, props.exact]);
+
+    useEffect(() => {
+        props.activeCallback && props.activeCallback(!!activeClassName);
+    }, [activeClassName]);
 
 
     /*useEffect(() => {
@@ -61,7 +66,7 @@ export default function RouterLink(props:ILazyLink) {
     return (
         <Anchor href={anchorPath}
            style={Object.assign({}, {textDecoration: "none"}, props.style) }
-           className={`${props.className || ""} ${isActive()}`}
+           className={`${props.className || ""} ${activeClassName}`}
            onClick={handNav}>{props.children}</Anchor>
     )
 }

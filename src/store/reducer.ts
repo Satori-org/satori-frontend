@@ -8,16 +8,18 @@ export type IState = {
     localTrans: ITrans[],
     completedHash: string,
     lang: string
+    token: string
 };
 let initState: IState = {
     address: sessionStorage.getItem("wallet_address") || (window['ethereum'] && window['ethereum'].selectedAddress) || "",
     trans: [],
     localTrans: sessionStorage.getItem("trans") ? JSON.parse(sessionStorage.getItem("trans") || "{}") :  [],
     completedHash: "",
-    lang: sessionStorage.getItem("lang") || langType.zh_CN
+    lang: localStorage.getItem("lang") || langType.zh_CN,
+    token: sessionStorage.getItem("token") || ""
 };
 
-export default (state = initState, action: any):any => {
+export default function reducer(state = initState, action: any): IState  {
     switch (action.type) {
         case actions.SET_WALLET_ADDRESS:
             return {...state, address: action.data};
@@ -27,6 +29,10 @@ export default (state = initState, action: any):any => {
             return {...state, localTrans: action.data};
         case actions.SET_COMPLETED_HASH:
             return {...state, completedHash: action.data};
+        case actions.SET_LANG:
+            return {...state, lang: action.data};
+        case actions.SET_TOKEN:
+            return {...state, token: action.data};
         default:
             return state;
     }

@@ -1,11 +1,11 @@
-
 import {Toast} from "src/components/toast/Toast";
 import {TFunction} from "i18next";
-import MsgNotification, {MsgType} from "src/components/msgNotification/MsgNotification";
 import { BigNumber } from 'ethers';
 import Decimal from "decimal.js";
+import {CSSProperties} from "react";
+import {NUMBER_REG} from "./regExp";
 
-
+//Parameter conversion processing
 export function stringify(obj:any) {
     let str = "";
     for (let i in obj) {
@@ -27,10 +27,11 @@ export function showMessage(msg: string) {
     //alert(msg);
     Toast(msg);
 }
-
+/*Determine safari browser*/
 const isSafari = () => {
     return /Apple/.test(navigator.vendor);
 };
+/*Time Formatting*/
 export function formatDate(dateStr:string|number, format:string="yyyy-MM-dd hh:mm:ss") {
     if (!dateStr) {
         return "";
@@ -66,6 +67,7 @@ export function formatDate(dateStr:string|number, format:string="yyyy-MM-dd hh:m
     return format;
 }
 
+//Full Screen
 export function fullscreen(element:any) {
     if(element.requestFullscreen) {
         element.requestFullscreen();
@@ -77,6 +79,7 @@ export function fullscreen(element:any) {
         element.msRequestFullscreen();
     }
 }
+//Exit full screen
 export function exitFullscreen() {
     let doc = (document as any);
     if (doc.exitFullscreen) {
@@ -89,18 +92,20 @@ export function exitFullscreen() {
         doc.webkitExitFullscreen();
     }
 }
+//Determine full screen
 export function isFullscreen(element:any) {
     return element.fullscreenEnabled ||
         element.mozFullScreenEnabled ||
         element.webkitFullscreenEnabled ||
         element.msFullscreenEnabled || false;
 }
+/* Remaining time */
 export function formatDuring(time: number, t: TFunction) {
     let days: string | number = Math.floor(time / (1000 * 60 * 60 * 24));
     let hours: string | number = Math.floor(time % (1000 * 60 * 60 * 24) / (1000 * 60 * 60));
     let minutes: string | number = Math.floor(time % (1000 * 60 * 60) / (1000 * 60));
     let seconds: string | number = Math.floor(time % (1000 * 60) / 1000);
-    // 格式 00天 00时 00分 00秒
+
     if (days < 10) {
         days = '0' + days
     }
@@ -113,15 +118,20 @@ export function formatDuring(time: number, t: TFunction) {
     if (seconds < 10) {
         seconds = '0' + seconds
     }
-    return days + t(`天`) + hours + t(`时`) + minutes + t(`分`) + seconds + t(`秒`);
+    return days + t(`Day`) + hours + t(`h`) + minutes + t(`min`) + seconds + t(`seconds`);
 }
 
 
+/**
+ * Formatting seconds
+ * @param int  value Total seconds
+ * @return string result Formatted string
+ */
 export function formatSeconds(value: number) {
-    var theTime = fixedNumber(value);//
-    var theTime1 = 0;//
-    var theTime2 = 0;//
-    var theTime3 = 0;//
+    var theTime = fixedNumber(value);
+    var theTime1 = 0;
+    var theTime2 = 0;
+    var theTime3 = 0;
     if (theTime > 60) {
         theTime1 = fixedNumber(theTime / 60);
         theTime = fixedNumber(theTime % 60);
@@ -129,34 +139,35 @@ export function formatSeconds(value: number) {
             theTime2 = fixedNumber(theTime1 / 60);
             theTime1 = fixedNumber(theTime1 % 60);
             if (theTime2 > 24) {
-                //大于24小时
                 theTime3 = fixedNumber(theTime2 / 24);
                 theTime2 = fixedNumber(theTime2 % 24);
             }
         }
     }
-    var result = '';
+    let result = '';
     if (theTime > 0) {
-        result = "" + fixedNumber(theTime) + "秒";
+        result = "" + fixedNumber(theTime) + "seconds";
     }
     if (theTime1 > 0) {
-        result = "" + fixedNumber(theTime1) + "分钟" + result;
+        result = "" + fixedNumber(theTime1) + "min" + result;
     }
     if (theTime2 > 0) {
-        result = "" + fixedNumber(theTime2) + "小时" + result;
+        result = "" + fixedNumber(theTime2) + "h" + result;
     }
     if (theTime3 > 0) {
-        result = "" + fixedNumber(theTime3) + "天" + result;
+        result = "" + fixedNumber(theTime3) + "Day" + result;
     }
     return result;
 }
 
 export function isNumber(str: string) {
-    const NUMBER_REG = "^\\d+(\\.{1}\\d+)?$";
     return new RegExp(NUMBER_REG, "gi").test(str);
 }
 
-
+/*Dynamic Strings
+* @param str Dynamic Strings
+* @param obj Object
+*/
 export const regExpTemplate = (str:string, obj:any) => {
     return str.replace(/\${[^}]+}/g,  (variableStr) => {
         let variable = variableStr.replace(/\${(.+)}/, "$1");
@@ -164,7 +175,7 @@ export const regExpTemplate = (str:string, obj:any) => {
     })
 };
 
-
+//async await Error Handling
 export function awaitWrap<T>(promise: Promise<T>) {
     return promise
         .then((data:T) => [data, null])
@@ -192,7 +203,7 @@ export function getDecimalLen(val: string | number) {
     return arr[1] ? arr[1].length : 0;
 }
 
-
+/*Formatted Address*/
 export function formatAddress(address: string, start = 12, end = 5) {
     if (!address) {
         return "";
@@ -206,6 +217,7 @@ export function getNumberByDecimal(amount: BigNumber | number | string, decimals
     return new Decimal(String(amount)).div(e18).toFixed();
 }
 
+/*with, separating numbers*/
 export function formatNumber(amount:number, splitor = ",") {
     if (amount > 1000) {
         let numAry = String(amount).split('.');
@@ -221,4 +233,11 @@ export function formatNumber(amount:number, splitor = ",") {
         return newStr.split("").reverse().join("") + (numAry[1]?`.${numAry[1]}`:'');
     }
     return amount;
+}
+
+export function styleToString(style: CSSProperties) {
+    return Object.keys(style).reduce((acc, key) => {
+        // @ts-ignore
+        return acc + key.split(/(?=[A-Z])/).join('-').toLowerCase() + ':' + style[key] + ';'
+    }, '');
 }

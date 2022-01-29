@@ -2,14 +2,20 @@ import styled from "styled-components";
 import {colors} from "../../styles/style";
 
 export const MessageBoxStyle = styled.div`
-    position: fixed;
+    /*position: absolute;
     left: 50%;
     top: 50%;
-    transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);*/
     width: 386px;
     padding: 32px 22px;
     background: ${colors.tradeBgColor};
     border-radius: 24px;
+    margin-top: 20px;
+    &.bottomRight{
+        left: initial;
+        top: initial;
+        transform: none;
+    }
     .title{
         font-size: 18px;
         font-weight: bold;

@@ -2,12 +2,11 @@ import styled from "styled-components";
 import {colors} from "../../../styles/style";
 
 export const ContractDetailStyle = styled.div`
-    padding: 0 24px 24px;
+    padding: 68px 24px 24px;
     background: ${colors.backgroundColor};
     flex: 1;
     display: flex;
     flex-direction: column;
-    justify-content: flex-end;
 `;
 
 
@@ -16,6 +15,7 @@ export const Title = styled.div`
 `;
 
 export const FieldLabel = styled.div`
+    line-height: 24px;
     color: #B2B6BC;
     &:not(:last-child){
         margin-bottom: 10px;

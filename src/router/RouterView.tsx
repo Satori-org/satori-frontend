@@ -11,13 +11,13 @@ export default function RouterView() {
     const routes: Iroutes[] = [
         {
             path: "/",
-            component: Home,
+            component: Exchange,
             exact: true
         },
-        {
+        /*{
             path: "/exchange",
             component: Exchange
-        },
+        },*/
         {
             path: "/portfolio",
             component: Portfolio

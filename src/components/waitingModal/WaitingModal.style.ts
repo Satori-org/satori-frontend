@@ -44,5 +44,6 @@ export const ProgressBar = styled.div`
         height: 100%;
         background: ${colors.activeColor};
         border-radius: 12px;
+        transition: width 0.25s;
     }
 `;

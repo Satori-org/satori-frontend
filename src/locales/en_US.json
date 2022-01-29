@@ -1,3 +1,4 @@
 {
-
+    "您的300.00 USDT提现将在15次确认后获得。": "您的${amount} USDT提现将在15次确认后获得。",
+    "Your recharge cannot exceed the available pledge.": "您的${amount} USDT充值将在15次确认后获得。"
 }

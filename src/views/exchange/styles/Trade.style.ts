@@ -43,10 +43,19 @@ export const TotleAmount = styled.div`
 
 export const ButtonGroup = styled.div`
     grid-column-gap: 10px;
+    margin-top: 80px;
     .Long{
         background: ${colors.long};
+        &:active{
+            transform: translateY(1px);
+            background: ${colors.longOpa7};
+        }
     }
     .Short{
         background: ${colors.short};
+        &:active{
+            transform: translateY(1px);
+            background: ${colors.shortOpa7};
+        }
     }
 `;

@@ -22,6 +22,7 @@ export interface IdefalutProps extends Pick<InputHTMLAttributes<HTMLInputElement
     minText?: string,
     max?:number,
     maxText?: string,
+    maxDecimal?: number,
     onChange?(value:string, params?:any):void
 }
 
@@ -64,7 +65,7 @@ class Input extends React.Component<inputProps, inputState>{
         this.inputNode.current!.removeEventListener("blur", this.handle);
     }
     componentDidUpdate(prevProps: Readonly<inputProps>, prevState: Readonly<inputState>, snapshot?: any): void {
-        if (prevProps.value !== this.props.value && typeof this.props.value !== "undefined") {
+        if (prevProps.value !== this.props.value && typeof this.props.value !== "undefined" && !this.validMaxDecimal(this.props.value)) {
             this.setState({value: String(this.props.value)}, () => {
                 if (this.state.validErr) {
                     this.handle();
@@ -93,16 +94,14 @@ class Input extends React.Component<inputProps, inputState>{
         }
         let isError = false;
         if (el.required && !el.value) {
-            //this.appendWarn(el, `不能为空`);
-            this.setState({validErr:true,errText: this.props.t(`The required`)});
-            //$root.classList.add('inputWarn');
+            this.setState({validErr:true,errText: this.props.t(`This field is required`)});
             isError = true;
         } else if (this.props.min && Number(el.value) < this.props.min) {
-            let warnText = this.props.minText || (this.props.t(`The minimum value`) + `：${this.props.min}`);
+            let warnText = this.props.minText || (this.props.t(`Minimum value`) + `：${this.props.min}`);
             this.setState({validErr:true,errText: warnText});
             isError = true;
         } else if (this.props.max && Number(el.value) > this.props.max) {
-            let warnText = this.props.maxText || (this.props.t(`Beyond the maximum`) + `：${this.props.max}`);
+            let warnText = this.props.maxText || (this.props.t(`Exceeds maximum`) + `：${this.props.max}`);
             this.setState({validErr:true,errText: warnText});
             isError = true;
         } else if (this.props.regex) {
@@ -158,7 +157,9 @@ class Input extends React.Component<inputProps, inputState>{
 
     changeState(event: ChangeEvent<HTMLInputElement>): void {
         let val = event.target.value;
-        this.setState({value: val});
+        if (!this.validMaxDecimal(val) ) {
+            return;
+        }
         if (typeof this.context.onChange === 'function') {
             this.context.onChange(val.trim());
         }
@@ -168,13 +169,22 @@ class Input extends React.Component<inputProps, inputState>{
         this.handle();
     }
 
+    validMaxDecimal(val: string) {
+        let arr = val.split(".");
+        if (this.props.maxDecimal && (arr[1] && arr[1].length > this.props.maxDecimal) ) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
 
     render(): React.ReactElement<any, string | React.JSXElementConstructor<any>> | string | number | {} | React.ReactNodeArray | React.ReactPortal | boolean | null | undefined {
         const simpleBorderStyle = {
             border: "none",
             borderBottom: "1px solid #f5f5f5"
         };
-        const { simpleBorder,tReady, inputStyle, t,value, className, ...rest } = this.props;
+        const { simpleBorder,tReady, maxDecimal, inputStyle, t,value, className,hideTips, ...rest } = this.props;
         const boxStyle = simpleBorder?Object.assign({},simpleBorderStyle,this.props.style):this.props.style;
         return (
             <InputBox className={`flex-sb ${className}`} ref={this.rootNode} style={boxStyle}>
@@ -187,7 +197,10 @@ class Input extends React.Component<inputProps, inputState>{
                     {
                         this.props.left?this.props.left:null
                     }
-                    <input type={this.props.type || "text"} className={'input'} value={this.state.value} ref={this.inputNode}
+                    <input type={this.props.type || "text"}
+                           className={'input'}
+                           value={this.props.value}
+                           ref={this.inputNode}
                            autoComplete={"new-password"}
                            required={this.props.required || this.context.required}
                            {...rest}

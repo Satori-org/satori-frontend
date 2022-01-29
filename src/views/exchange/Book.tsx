@@ -1,51 +1,36 @@
-import React from 'react';
+import React, {useMemo, useState} from 'react';
 import { useTranslation } from 'react-i18next';
-import {BookContent, BookStyle, BookTab, LabelBox, Row, RowContainer, Spread} from './styles/Book.style';
-import {colors} from "../../styles/style";
+import {BookStyle, BookTab} from './styles/Book.style';
+import OrderBook from "./OrderBook";
+import Transaction from "./Transaction";
+import {IDepthData} from "src/components/kline/depthChart/DepthChart";
+import {ITrade} from "src/ajax/contract/contract";
 
-export default function Book() {
+type IProps = {
+    depthData: IDepthData
+    tradeData: ITrade[]
+}
+export default function Book(props: IProps) {
     const {t} = useTranslation();
+    const [active, setActive] = useState(0);
+
+    const OrderBookMemo = useMemo(() => {
+        return <OrderBook data={props.depthData} />;
+    }, [props.depthData]);
+
+    const TransactionMemo = useMemo(() => {
+        return <Transaction data={props.tradeData} />;
+    }, [props.tradeData]);
 
     return (
         <BookStyle>
             <BookTab>
-                <span className={"tabItem active"}>{t(`OrderBook`)}</span>
-                <span className={"tabItem"}>{t(`Transaction`)}</span>
+                <span className={`tabItem ${active === 0 ? 'active' : ''}`} onClick={() => setActive(0)}>{t(`OrderBook`)}</span>
+                <span className={`tabItem ${active === 1 ? 'active' : ''}`} onClick={() => setActive(1)}>{t(`Transaction`)}</span>
             </BookTab>
-            <LabelBox>
-                <span className={"labelItem"}>{t(`Price`)}</span>
-                <span className={"labelItem"}>{t(`Amount(Cont)`)}</span>
-                <span className={"labelItem"}>{t(`Time`)}</span>
-            </LabelBox>
-            <BookContent>
-                <RowContainer className={"reverse"}>
-                    {
-                        new Array(8).fill("").map((item, index) => {
-                            return <Row key={index}>
-                                <span className={"short"}>62109.28</span>
-                                <span>477.636</span>
-                                <span>14:22:35</span>
-                            </Row>
-                        })
-                    }
-                </RowContainer>
-                <Spread>
-                    <span>{t(`Spread`)}</span>
-                    <span style={{color: colors.labelColor}}>0.1</span>
-                    <span>0.01%</span>
-                </Spread>
-                <RowContainer>
-                    {
-                        new Array(8).fill("").map((item, index) => {
-                            return <Row key={index}>
-                                <span className={"long"}>62109.28</span>
-                                <span>477.636</span>
-                                <span>14:22:35</span>
-                            </Row>
-                        })
-                    }
-                </RowContainer>
-            </BookContent>
+            {
+                active === 0 ?  OrderBookMemo : TransactionMemo
+            }
         </BookStyle>
     )
 }

@@ -8,7 +8,7 @@ export const stringify = (obj:any) => {
     }
     return str.slice(0, -1);
 };
-/*Assembly route parameters*/
+/*Assembled Routing Parameters*/
 export const buildSearch = (obj:any) => {
     return stringify(obj)
 };
@@ -139,7 +139,7 @@ export function deepCompare(x: any, y: any) {
     return true;
 }
 
-/* :xxx Pattern matching routing */
+/* :xxx Pattern Matching Routing */
 export function checkMatchModel(routePath = "", browserPath: string) {
     let matchesArr = routePath.match(/:[^/]+/g);
     let regExpStr = routePath.replace(/:[^/]+/g, "(.+)");

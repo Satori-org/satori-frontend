@@ -45,6 +45,13 @@ export const mapDispatchToProps = (dispatch: Dispatch) => {
                 data: hash
             })
         },
+        setToken(token: string) {
+            sessionStorage.setItem("token", token);
+            dispatch({
+                type: actions.SET_TOKEN,
+                data: token
+            })
+        }
     }
 };
 
@@ -52,6 +59,6 @@ export interface IConnectProps extends ReturnType<typeof mapDispatchToProps> {
     redux: IState
 }
 
-export default <p>(component: ComponentType<p>): any => {
+export default <p>(component: ComponentType<p>) => {
     return connect(mapStateToProps, mapDispatchToProps)<ComponentType<any>>(component);
 }

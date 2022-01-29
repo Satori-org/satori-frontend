@@ -13,6 +13,12 @@ export const BookStyle = styled.div`
     background: ${colors.backgroundColor};
 `;
 
+export const ListContainer = styled.div`
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+`;
+
 export const BookTab = styled.div`
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -20,6 +26,7 @@ export const BookTab = styled.div`
     text-align: center;
     align-items: center;
     .tabItem{
+        cursor:pointer;
         &.active{
             font-weight: 600;
             color: ${colors.activeColor};
@@ -87,11 +94,10 @@ export const Row = styled.div`
 
 export const Spread = styled.div`
     display: flex;
-    padding: ${PADDING};
-    border-bottom: 1px solid #1C1F2C;
-    border-top: 1px solid #1C1F2C;
-    color: #5F6165;
-    line-height: 26px;
+    /*border-bottom: 1px solid #1C1F2C;
+    border-top: 1px solid #1C1F2C;*/
+    font-size: 20px;
+    padding: 14px 24px;
     box-sizing: border-box;
     span{
         flex: 1;

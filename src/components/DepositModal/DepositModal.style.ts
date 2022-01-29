@@ -29,6 +29,7 @@ export const RightBtn = styled.span`
     margin: 0 8px;
     color: ${colors.activeColor};
     cursor:pointer;
+    user-select: none;
 `;
 
 export const BalanceBox = styled.div`
@@ -37,6 +38,9 @@ export const BalanceBox = styled.div`
     margin-bottom: 30px;
     .label{
         color: ${colors.labelColor};
+    }
+    .short{
+        color: ${colors.short};
     }
 `;
 

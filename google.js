@@ -7,21 +7,19 @@ let fs = require('fs');
 let path = require('path');
 let filePath = path.resolve('./src');
 
-//  models。
+
 const TmtClient = tencentcloud.tmt.v20180321.Client;
 const clientConfig = {
-
     credential: secret,
     region: "ap-shanghai",
     profile: {
-        signMethod: "HmacSHA256", //
+        signMethod: "HmacSHA256", // 签名方法
         httpProfile: {
-            reqMethod: "POST", //
-            reqTimeout: 30, //
+            reqMethod: "POST", // 请求方法
+            reqTimeout: 30, // 请求超时时间，默认60s
         },
     },
 };
-//
 const client = new TmtClient(clientConfig);
 
 
@@ -29,15 +27,15 @@ let keys = [];
 let result = [];
 let localData = {};
 let t_en_US = {};
-//
+
 fileDisplay(filePath, function () {
-    /**/
+
     let zhData = Object.assign({}, local_zh, localData);
     let zh_str = JSON.stringify(zhData, null, 4);
     fs.writeFile(path.resolve('./src/locales/zh_CN.json'),zh_str,'utf8',function(err){
 
     });
-    /**/
+
     if (result.length > 0) {
         console.log(result.join("|"));
         startTranslate(result.concat());
@@ -83,7 +81,6 @@ function startTranslate(tranArr, keysIndex = 0) {
             //=> I speak English
             //console.log(res.from.language.iso);
         } else {
-            /*  */
             setTimeout(() => {
                 startTranslate(tranArr, targetIndex);
             }, 200);
@@ -96,9 +93,7 @@ function startTranslate(tranArr, keysIndex = 0) {
     });
 }
 
-//
 function fileDisplay(filePath, callback){
-    //
     let files = fs.readdirSync(filePath);
     files.forEach(function(filename, fileIndex){
         let filedir = path.join(filePath, filename);
@@ -108,7 +103,12 @@ function fileDisplay(filePath, callback){
         if(isFile && !filename.endsWith(".png")){
             let content = fs.readFileSync(filedir, 'utf-8');
             // console.log(content);
+            /*标签内*/
             let regExp = new RegExp("(t\\(`)[^\\)]+(`\\))", "gi");
+            /*js代码中*/
+            //let regExp1 = new RegExp("([\"'])([\u4e00-\u9fa5][^\"^']*[\u4e00-\u9fa5])([\"'])", "gi");
+            /*html属性*/
+            //let regExp2 = new RegExp("(\"')([\u4e00-\u9fa5][^\"^']*[\u4e00-\u9fa5])('\")", "gi");
 
             let hasChange = false;
             let str = content.replace(regExp, function (a,b,c,d) {
@@ -127,7 +127,7 @@ function fileDisplay(filePath, callback){
             }*/
         }
         if(isDir && filename !== "locales"){
-            fileDisplay(filedir);//
+            fileDisplay(filedir);
         }
         if (fileIndex === files.length - 1 && typeof  callback === 'function') {
             callback();

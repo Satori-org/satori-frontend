@@ -1,22 +1,36 @@
-import React, {ReactNode, useRef} from 'react';
+import React, {MutableRefObject, ReactNode, useImperativeHandle} from 'react';
 
 interface formProps{
-    onSubmit():void,
+    onSubmit?():void,
     children: ReactNode
+    childRef?: MutableRefObject<{ validate(): void } | undefined>
 }
 
 export default React.forwardRef(function Form(props:formProps, $form: any) {
-    //let $form = useRef<HTMLFormElement>(null);
+    useImperativeHandle(
+        props.childRef,
+        () => ({
+            validate: () => {
+                return validateForm().verror;
+            }
+        }),
+        [],
+    );
 
     function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+        let {verror, el} = validateForm();
+        if (!verror) {
+            props.onSubmit && props.onSubmit();
+        } else if(el) {
+            el.scrollIntoView({block:"center"});
+        }
+        event.preventDefault();
+    }
+
+    function validateForm() {
         let verror = false;
-        // console.log($form);
         let el: HTMLInputElement | undefined;
         $form && Array.from($form.current!.elements).forEach((item:any) => {
-            /*if (typeof item.getAttribute("require") === "string" && !item.value) {
-                item.classList.add("empty");
-                hasEmpty = true;
-            }*/
             if (item.getAttribute("verror") || item.dataset.verror) {
                 item.classList.add("error");
                 verror = true;
@@ -25,12 +39,7 @@ export default React.forwardRef(function Form(props:formProps, $form: any) {
                 }
             }
         });
-        if (!verror) {
-            props.onSubmit();
-        } else {
-            el?.scrollIntoView({block:"center"});
-        }
-        event.preventDefault();
+        return {verror, el};
     }
 
     return (

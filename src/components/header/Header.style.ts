@@ -2,7 +2,7 @@ import styled from "styled-components";
 import {colors} from "../../styles/style";
 
 export const HeaderStyle = styled.div`
-    height: 72px;
+    height: 48px;
     position: relative;
     padding: 0 20px;
 `;
