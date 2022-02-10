@@ -9,7 +9,7 @@ import {colors} from "src/styles/style";
 import {withdraw} from "src/ajax/contract/contract";
 import {useEffectState} from "src/hooks/useEffectState";
 import {NUMBER_REG} from "src/common/regExp";
-import {checkHashStatus, getWallet, NewWriteContract, unpackEIP712} from 'src/contract/wallet';
+import {checkHashStatus, getWallet, NewWriteContract, signMsg, unpackEIP712} from 'src/contract/wallet';
 import {project} from "src/contract/config";
 import {
     awaitWrap,
@@ -77,10 +77,12 @@ export default function WithdrawModal(props: IProps) {
             "address": storeData.address,
             "expireTime": new Date().getTime() + 30 * 1000
         };
-        const originData = JSON.stringify(withdrawInfo);
-        const withdrawSignature = await getWallet().signMessage(originData);
+        /*const originData = JSON.stringify(withdrawInfo);
+        const withdrawSignature = await getWallet().signMessage(originData);*/
 
-        const {data: resData} = await withdraw(state.amount, originData, withdrawSignature);
+        const signatureData = await signMsg(withdrawInfo, storeData.address);
+
+        const {data: resData} = await withdraw(state.amount, signatureData.origin, signatureData.signatrue);
         const [r,v,s] = unpackEIP712(resData.signHash);
         const contract = NewWriteContract(Proxy.address, Satori.abi);
         const [transInfo, error] = await awaitWrap(contract.withdraw(resData.amount, resData.expireTime, resData.salt, v, r, s));

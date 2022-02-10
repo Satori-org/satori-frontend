@@ -3,7 +3,8 @@ import {ethers, utils} from "ethers";
 import {ITrans} from "./types";
 import PubSub from "pubsub-js";
 import {Decimal} from "decimal.js";
-import {PROVIDER} from "../config";
+import {getWalletProvider} from "../config";
+import Web3 from "web3";
 
 export async function getBalance(address: string) {
     let balance = await getWallet().provider.getBalance(address);
@@ -16,7 +17,7 @@ export function getProvider() {
 }
 
 export function getWallet() {
-    return new ethers.providers.Web3Provider(window["ethereum"]).getSigner();
+    return new ethers.providers.Web3Provider(getWalletProvider()).getSigner();
 }
 
 export function NewReadContract(address: string, abi: any[]) {
@@ -69,7 +70,7 @@ export function approve(params: IApprove): Promise<ITrans> {
 export function checkHashStatus(tranInfo: ITrans) {
 
     function checkStatus(currentHash:string, callback: Function) {
-        let instance = new ethers.providers.Web3Provider(PROVIDER);
+        let instance = new ethers.providers.Web3Provider(getWalletProvider());
         //const instance = new web3(chainNode);
         //instance.eth.getTransactionReceipt(currentHash).then((res) => {
         instance.getTransactionReceipt(currentHash).then((res) => {
@@ -113,10 +114,26 @@ interface ISignatrua {
     signatrue: string
 }
 
-export async function signMsg(signObj: any) : Promise<ISignatrua>{
+export async function signMsg(signObj: any, walletAddress: string) : Promise<ISignatrua>{
     const originData = JSON.stringify(signObj);
-    const withdrawSignature = await getWallet().signMessage(originData);
-    return {origin: originData, signatrue:withdrawSignature}
+    /*const signature = await getWallet().signMessage(originData);
+    return {origin: originData, signatrue: signature}*/
+
+    return signString(originData, walletAddress);
+}
+
+export async function signString(str: string, address: string) : Promise<ISignatrua>{
+    let web3Provider = new Web3(getWalletProvider());
+
+    return new Promise((resolve, reject) => {
+        web3Provider.eth.personal.sign(str, address, "", (err: any, res: any) => {
+            if (!err) {
+                resolve({origin: str, signatrue: res});
+            } else {
+                reject(err);
+            }
+        })
+    });
 }
 
 export function signExpire(duration = 30 * 1000) {

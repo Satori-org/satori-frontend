@@ -257,7 +257,7 @@ export default function Trade(props: IProps) {
             "contractPairId": reducerState.currentPair.id,
             "isClose": isClose,
             amount: total
-        })) ;
+        }, storeData.address)) ;
         if (!error) {
             let reqParams = {
                 contractPairId: reducerState.currentPair.id,

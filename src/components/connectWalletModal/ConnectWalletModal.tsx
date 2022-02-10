@@ -3,13 +3,13 @@ import { useTranslation } from 'react-i18next';
 import {ConnectButton, ConnectWalletModalStyle, Process, StepBox, Subtitle, Title} from './ConnectWalletModal.style';
 import Modal from "../modal/Modal";
 import Web3 from "web3";
-import {PROVIDER} from "../../config";
+import {getWalletProvider} from "../../config";
 import {useWallet} from "use-wallet";
 import {useStore} from "react-redux";
 import {IState} from "../../store/reducer";
 import {mapDispatchToProps} from "../../store/connect";
 import {generateNonce, getUserToken} from "../../ajax/auth/auth";
-import {getWallet} from "../../contract/wallet";
+import {getWallet, signString} from "../../contract/wallet";
 import {useEffectState} from "../../hooks/useEffectState";
 import Toggle from "../toggle/Toggle";
 import Spin from "../Spin/Spin";
@@ -54,10 +54,13 @@ export default function ConnectWalletModal(props: IProps) {
         }
     }
 
-    function connectWallet() {
-        let web3js = new Web3(PROVIDER);//web3js is the web3 example you need
+    async function connectWallet() {
+        const accounts = await window.clover.request({ method: 'eth_requestAccounts' });
+        console.log('accounts:', accounts);
+        dispatch.setWalletAddress(accounts[0]);
+        /*let web3js = new Web3(getWalletProvider());//web3js is the web3 example you need
         web3js.eth.getAccounts(function (error, result) {
-            /* alert(result[0]);*/
+            /!* alert(result[0]);*!/
             if (result.length !== 0) {
                 dispatch.setWalletAddress(result[0]);
             } else {
@@ -66,7 +69,7 @@ export default function ConnectWalletModal(props: IProps) {
 
             if (!error)
                 console.log(result)//After successful authorization, result can get the account normally
-        });
+        });*/
     }
 
     async function getGenerateNonce(address: string) {
@@ -80,13 +83,38 @@ export default function ConnectWalletModal(props: IProps) {
         }, 0);
         const [nonceInfo, error] = await awaitWrap(generateNonce(address));
         if (nonceInfo) {
-            const [signStr, error] = await awaitWrap(getWallet().signMessage(nonceInfo.data.nonce));
+            const [signStr, error] = await awaitWrap(signString(nonceInfo.data.nonce, storeData.address));
+            if (signStr) {
+                login(storeData.address, signStr);
+            } else {
+                console.error(error);
+                state.loading = false;
+            }
+            /*let web3Provider = new Web3(getWalletProvider());
+            web3Provider.eth.personal.sign(nonceInfo.data.nonce, storeData.address, "", (err: any, res: any) => {
+                if (!err) {
+                    login(storeData.address, res);
+                } else {
+                    state.loading = false;
+                }
+            })*/
+            /*let walletProvider = getWallet();
+            console.log(walletProvider)
+            walletProvider.signMessage(nonceInfo.data.nonce).then((res) => {
+                console.log("message", res);
+            }).catch((error3) => {
+                console.log(error3)
+            })*/
+            /*const [signStr, error2] = await awaitWrap(getWallet().signMessage(nonceInfo.data.nonce));
+            console.log("==2", signStr, error2)
             if (signStr) {
                 login(address, signStr);
             } else {
+                console.log("error2", error2)
                 state.loading = false;
-            }
+            }*/
         } else {
+            console.log("error", error)
             state.loading = false;
         }
     }

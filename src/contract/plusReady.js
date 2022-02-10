@@ -1,5 +1,7 @@
+import {getWalletProvider} from "../config";
+
 export default function plusReady(fn) {
-    if (window['ethereum']) {
+    if (getWalletProvider()) {
         setTimeout(fn, 0)
     } else {
         setTimeout(() => {

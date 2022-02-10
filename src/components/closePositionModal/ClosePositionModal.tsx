@@ -100,7 +100,7 @@ export function ClosePositionModal(props: IProps) {
             "amount": "100"
         };
         let signParams = isMart ? baseSignParams : Object.assign({}, baseSignParams, {"price": state.price});
-        const [signData, error] = await awaitWrap(signMsg(signParams)) ;
+        const [signData, error] = await awaitWrap(signMsg(signParams, storeData.address)) ;
         if (!error) {
             let baseOrderParams = {
                 contractPairId: props.data.contractPairId,

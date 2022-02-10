@@ -9,12 +9,12 @@ import {ethers} from "ethers";
 import {chainID} from "./contract/config";
 import {Toast} from "./components/toast/Toast";
 import {withTranslation, WithTranslation} from "react-i18next";
-import {PROVIDER} from "./config";
+import {getWalletProvider} from "./config";
 import Header from "./components/header/Header";
 import {generateNonce, getUserToken} from "./ajax/auth/auth";
-import {getWallet} from "./contract/wallet";
+import {getWallet, signString} from "./contract/wallet";
 import {ThemeProviderWrapper} from "./ThemeProviderWrapper";
-import {showMessage} from "./common/utilTools";
+import {awaitWrap, showMessage} from "./common/utilTools";
 
 interface IProps extends IConnectProps, WithTranslation{
 
@@ -41,17 +41,17 @@ class App extends React.Component<IProps, any>{
     }
 
     addEventListener() {
-        let ethersProvider = new ethers.providers.Web3Provider(PROVIDER);
+        let ethersProvider = new ethers.providers.Web3Provider(getWalletProvider());
         ethersProvider.getNetwork().then((res:any) => {
             this.checkNetwork(res.chainId);
         });
-        window['ethereum'].on('chainChanged',  (accounts:any) => {
+        getWalletProvider().on('chainChanged',  (accounts:any) => {
             console.log(accounts);
             console.log(parseInt(accounts, 16));
             let chainID = parseInt(accounts, 16);
             this.checkNetwork(chainID);
         });
-        window['ethereum'].on('accountsChanged',  (accounts:string[]) => {
+        getWalletProvider().on('accountsChanged',  (accounts:string[]) => {
             if (accounts && accounts[0]) {
                 const address = accounts[0];
                 this.logout();
@@ -80,9 +80,15 @@ class App extends React.Component<IProps, any>{
         if (!address) {
             return ;
         }
-        const nonceInfo = await generateNonce(address);
-        const signStr = await getWallet().signMessage(nonceInfo.data.nonce);
+
+        const [nonceInfo, error] = await awaitWrap(generateNonce(address));
+        const [signStr, error2] = await awaitWrap(signString(nonceInfo.data.nonce, address));
         this.login(address, signStr);
+
+
+        /*const nonceInfo = await generateNonce(address);
+        const signStr = await getWallet().signMessage(nonceInfo.data.nonce);
+        this.login(address, signStr);*/
     }
 
     async login(address: string, signStr: string) {

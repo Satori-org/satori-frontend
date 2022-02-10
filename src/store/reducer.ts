@@ -2,6 +2,7 @@ import { ITrans } from 'src/contract/types';
 import * as actions from './actionTypes';
 import {langType} from "../locales/i18n";
 import {THEME} from "../common/enum";
+import {getWalletProvider} from "../config";
 
 export type IState = {
     address: string
@@ -13,7 +14,7 @@ export type IState = {
     theme: string
 };
 let initState: IState = {
-    address: sessionStorage.getItem("wallet_address") || (window['ethereum'] && window['ethereum'].selectedAddress) || "",
+    address: sessionStorage.getItem("wallet_address") || (getWalletProvider() && getWalletProvider().selectedAddress) || "",
     trans: [],
     localTrans: sessionStorage.getItem("trans") ? JSON.parse(sessionStorage.getItem("trans") || "{}") :  [],
     completedHash: "",

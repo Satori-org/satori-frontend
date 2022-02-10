@@ -124,7 +124,7 @@ function Row(props: IRow) {
             "contractPairId": props.item.contractPairId,
             "isClose": isClose,
             "amount": "100"
-        })) ;
+        }, storeData.address)) ;
         if (!error) {
             const [res, error2] = await awaitWrap(addOrder({
                 contractPairId: props.item.contractPairId,

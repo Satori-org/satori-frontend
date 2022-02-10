@@ -144,3 +144,6 @@ declare module '*.module.sass' {
 interface Window {
   ethereum: any
 }
+interface Window {
+  clover: any
+}

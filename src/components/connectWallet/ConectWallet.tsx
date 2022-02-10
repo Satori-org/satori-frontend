@@ -3,7 +3,7 @@ import {useTranslation} from 'react-i18next';
 import {ConectWalletStyle, DropMenu, DropMenuContainer} from './ConectWallet.style';
 import {NewReadContract, NewWriteContract} from "src/contract/wallet";
 import {ethers} from "ethers";
-import {PROVIDER} from "src/config";
+import {getWalletProvider} from "src/config";
 import {project} from "src/contract/config";
 import {formatAddress, getNumberByDecimal, showMessage} from "src/common/utilTools";
 import {useStore} from "react-redux";
@@ -66,7 +66,7 @@ export default function ConectWallet(props: IProp) {
     }
 
     async function sign() {
-        let ethersProvider = new ethers.providers.Web3Provider(PROVIDER);
+        let ethersProvider = new ethers.providers.Web3Provider(getWalletProvider());
         const domain = [
             { name: "name", type: "string" },
             { name: "version", type: "string" },

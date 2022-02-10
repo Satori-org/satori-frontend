@@ -1,6 +1,6 @@
 import React, {CSSProperties, ReactNode} from 'react';
 import { Submit, Loading } from './loadingButton.style';
-import {PROVIDER} from "src/config";
+import {getWalletProvider} from "src/config";
 
 interface IProps {
     loading:boolean,
@@ -15,7 +15,7 @@ export default function LoadButton(props: IProps) {
 
     return (
         <Submit className={`flex-box ${props.loading?'loading':''} ${props.className || ''}`} style={props.style}
-                disabled={props.loading || !PROVIDER}
+                disabled={props.loading || !getWalletProvider()}
                 onClick={props.onClick}>
             {/*{
                 props.loading?<Loading inline={true} width={"10"} color={"#fff"}></Loading>:null
