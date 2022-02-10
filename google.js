@@ -4,14 +4,17 @@ const local_en = require('./src/locales/en_US.json');
 const tencentcloud = require("tencentcloud-sdk-nodejs");
 const secret = require("E:/cfd_workspace/tencen.json");
 let fs = require('fs');
-let path = require('path');
+let path = require('path');//解析需要遍历的文件夹
 let filePath = path.resolve('./src');
 
-
+// 导入对应产品模块的client models。
 const TmtClient = tencentcloud.tmt.v20180321.Client;
 const clientConfig = {
+// 腾讯云认证信息
     credential: secret,
+// 产品地域
     region: "ap-shanghai",
+// 可选配置实例
     profile: {
         signMethod: "HmacSHA256", // 签名方法
         httpProfile: {
@@ -20,22 +23,38 @@ const clientConfig = {
         },
     },
 };
+// 实例化要请求产品(以cvm为例)的client对象
 const client = new TmtClient(clientConfig);
-
+/*const params = {
+    "Source": "zh",
+    "Target": "en",
+    "ProjectId": 0,
+    "SourceTextList": [
+        "测试", "目的地"
+    ]
+};
+client.TextTranslateBatch(params).then(
+    (data) => {
+        console.log(data);
+    },
+    (err) => {
+        console.error("error", err);
+    }
+);*/
 
 let keys = [];
 let result = [];
 let localData = {};
 let t_en_US = {};
-
+//调用文件遍历方法
 fileDisplay(filePath, function () {
-
+    /*存中文文件*/
     let zhData = Object.assign({}, local_zh, localData);
     let zh_str = JSON.stringify(zhData, null, 4);
     fs.writeFile(path.resolve('./src/locales/zh_CN.json'),zh_str,'utf8',function(err){
 
     });
-
+    /*存英文文件*/
     if (result.length > 0) {
         console.log(result.join("|"));
         startTranslate(result.concat());
@@ -81,6 +100,7 @@ function startTranslate(tranArr, keysIndex = 0) {
             //=> I speak English
             //console.log(res.from.language.iso);
         } else {
+            /* 接口限制每秒5次 */
             setTimeout(() => {
                 startTranslate(tranArr, targetIndex);
             }, 200);
@@ -93,13 +113,18 @@ function startTranslate(tranArr, keysIndex = 0) {
     });
 }
 
+//文件遍历方法
 function fileDisplay(filePath, callback){
+    //根据文件路径读取文件，返回文件列表
     let files = fs.readdirSync(filePath);
+    //遍历读取到的文件列表
     files.forEach(function(filename, fileIndex){
+        //获取当前文件的绝对路径
         let filedir = path.join(filePath, filename);
+        //根据文件路径获取文件信息，返回一个fs.Stats对象
         let fileState = fs.statSync(filedir);
-        let isFile = fileState.isFile();
-        let isDir = fileState.isDirectory();
+        let isFile = fileState.isFile();//是文件
+        let isDir = fileState.isDirectory();//是文件夹
         if(isFile && !filename.endsWith(".png")){
             let content = fs.readFileSync(filedir, 'utf-8');
             // console.log(content);
@@ -127,7 +152,7 @@ function fileDisplay(filePath, callback){
             }*/
         }
         if(isDir && filename !== "locales"){
-            fileDisplay(filedir);
+            fileDisplay(filedir);//递归，如果是文件夹，就继续遍历该文件夹下面的文件
         }
         if (fileIndex === files.length - 1 && typeof  callback === 'function') {
             callback();

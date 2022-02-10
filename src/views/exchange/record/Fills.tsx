@@ -1,4 +1,4 @@
-import React, {useMemo} from 'react';
+import React, {useEffect, useMemo} from 'react';
 import { useTranslation } from 'react-i18next';
 import Table from "src/components/table/Table";
 import Pagination from "src/components/pagination/Pagination";
@@ -13,6 +13,13 @@ import Loading from "src/components/loadStatus/Loading";
 import { RELOAD_RECORD } from 'src/common/PubSubEvents';
 import {useFetchPostPage} from "src/ajax";
 import {usePubSubEvents} from "src/hooks/usePubSubEvents";
+import {useUpdateEffect} from "ahooks";
+import useWidthChange from "../../../hooks/useWidthChange";
+import NotConnect from "../../../components/NotConnect/NotConnect";
+import Toggle from "../../../components/toggle/Toggle";
+import RecordDatePicker from "../../../components/recordDatePicter/RecordDatePicker";
+import EmptyData from "../../../components/noData/EmptyData";
+import {formatDate} from "../../../common/utilTools";
 
 type IRow = {
     item: IFills
@@ -29,7 +36,7 @@ function Row(props: IRow) {
         <td>{props.item.symbol}</td>
         <td className={`${props.item.isLong ? 'long' : 'short'}`}>{getOrderType(props.item.isLong, t)}</td>
         <td>{props.item.averagePrice}</td>
-        <td>{props.item.quantity}</td>
+        <td>{props.item.quantity} {props.item.symbol.split("-")[0]}</td>
         <td>{props.item.profitLoss}</td>
         <td>{props.item.positionFee}</td>
         <td>{props.item.isMarket ? t(`Market`) : t(`Limit`)}</td>
@@ -37,59 +44,99 @@ function Row(props: IRow) {
     </RowStyle>
 }
 
+type IDate = Date | null
 export default function Fills() {
     const {t} = useTranslation();
     const store = useStore<IState>();
     const storeData = store.getState();
     const [reducerState] = useExchangeStore();
+    const { width } = useWidthChange();
     const state = useEffectState({
         pageNo: 1,
-        pageSize: 10
+        pageSize: 4,
+        startDate: null as IDate,
+        endDate: null as IDate,
+        timeType: 0
     });
     /* Currently selected trading pairs */
-    const pairInfo = useMemo(() => {
+    /*const pairInfo = useMemo(() => {
         return reducerState.pairs[reducerState.currentTokenIndex] || {};
-    }, [reducerState.pairs, reducerState.currentTokenIndex]);
+    }, [reducerState.pairs, reducerState.currentTokenIndex]);*/
     const {data, loading, total, reload} = useFetchPostPage<IFills>(getFillHistory, {
         pageNo: state.pageNo,
         pageSize: state.pageSize,
-        contractPairId: pairInfo.id
-    }, [pairInfo.id, storeData.token]);
+        contractPairId: reducerState.hideDifferent ? reducerState.currentPair.id : undefined,
+        timeType: state.timeType,
+        fromDate: (state.startDate && state.timeType === 1) ? formatDate(state.startDate.getTime()) : null,
+        toDate: (state.endDate && state.timeType === 1) ? formatDate(state.endDate.getTime()) : null
+    }, reducerState.hideDifferent ? [reducerState.currentPair.id, storeData.token] : [storeData.token]);
 
     usePubSubEvents(RELOAD_RECORD, reload);
 
+    /*useUpdateEffect(() => {
+        reload();
+    }, [storeData.token, reload]);*/
+
+    const ItemStyle = useMemo(() => {
+        return width > 1700 ? {width: "11%"} : {};
+    }, [width]);
+
     return (
         <div>
+            <RecordDatePicker
+                style={{paddingLeft: "24px", marginBottom: "18px"}}
+                onChange={(value) => {
+                    state.pageNo = 1;
+                    state.timeType = value;
+                }}
+                onSelectRange={(startDate, endDate) => {
+                    state.pageNo = 1;
+                    state.timeType = 1;
+                    state.startDate = startDate;
+                    state.endDate = endDate;
+                }} />
             <RecordListStyle>
                 { loading ? <Loading /> :null }
-                <Table>
-                    <thead>
-                    <tr>
-                        <th style={{width: "13%"}}>{t(`Time`)}</th>
-                        <th>{t(`Pairs`)}</th>
-                        <th>{t(`Type`)}</th>
-                        <th>{t(`Price`)}</th>
-                        <th>{t(`Cont`)}</th>
-                        <th style={{width: "12%"}}>{t(`Realized PnL `)}</th>
-                        <th>{t(`Fee`)}</th>
-                        <th>{t(`Orders Status`)}</th>
-                        <th>{t(`Liquidty`)}</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {
-                        data.map((item, index) => {
-                            return <Row key={index} item={item}></Row>
-                        })
-                    }
-                    </tbody>
-                </Table>
+                <Toggle vIf={!!storeData.token}>
+                    <Table style={{whiteSpace: "nowrap"}}>
+                        <thead>
+                        <tr>
+                            <th style={ItemStyle}>{t(`Time`)}</th>
+                            <th style={ItemStyle}>{t(`Pairs`)}</th>
+                            <th style={ItemStyle}>{t(`Type`)}</th>
+                            <th style={ItemStyle}>{t(`Price`)}</th>
+                            <th style={ItemStyle}>{t(`Cont`)}</th>
+                            <th style={ItemStyle}>{t(`Realized PnL(USDT) `)}</th>
+                            <th style={ItemStyle}>{t(`Funding costs(USDT) `)}</th>
+                            {/*<th>{t(`Fee`)}</th>*/}
+                            <th style={ItemStyle}>{t(`Order Type`)}</th>
+                            <th style={ItemStyle}>{t(`Transaction Type`)}</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {
+                            data.map((item, index) => {
+                                return <Row key={index} item={item}></Row>
+                            })
+                        }
+                        </tbody>
+                    </Table>
+                    <NotConnect></NotConnect>
+                </Toggle>
+                <Toggle vIf={total === 0 && !!storeData.token}>
+                    <EmptyData style={{marginTop: "78px"}} />
+                </Toggle>
             </RecordListStyle>
-            {/*<Pagination
-                style={{marginRight: "24px"}}
-                total={total}
-                pageSize={state.pageSize}
-                onChange={(page) => state.pageNo = page} />*/}
+            <Toggle vIf={!!total && total > state.pageSize}>
+                <div style={{padding: "0 24px"}}>
+                    <Pagination
+                        style={{marginRight: "24px", marginTop: "6px"}}
+                        current={state.pageNo}
+                        pageSize={state.pageSize}
+                        total={total || 0}
+                        onChange={(page) => state.pageNo = page} />
+                </div>
+            </Toggle>
         </div>
     )
 }

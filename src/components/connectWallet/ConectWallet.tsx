@@ -1,17 +1,21 @@
 import React, {CSSProperties, useEffect} from 'react';
-import { useTranslation } from 'react-i18next';
-import { ConectWalletStyle } from './ConectWallet.style';
+import {useTranslation} from 'react-i18next';
+import {ConectWalletStyle, DropMenu, DropMenuContainer} from './ConectWallet.style';
 import {NewReadContract, NewWriteContract} from "src/contract/wallet";
 import {ethers} from "ethers";
 import {PROVIDER} from "src/config";
 import {project} from "src/contract/config";
-import {formatAddress, getNumberByDecimal} from "src/common/utilTools";
+import {formatAddress, getNumberByDecimal, showMessage} from "src/common/utilTools";
 import {useStore} from "react-redux";
 import {IState} from "src/store/reducer";
-import Web3 from "web3";
 import {useWallet} from "use-wallet";
 import {mapDispatchToProps} from "src/store/connect";
 import PubSub from "pubsub-js";
+import ConnectWalletModal from "../connectWalletModal/ConnectWalletModal";
+import Toggle from '../toggle/Toggle';
+import {useEffectState} from "../../hooks/useEffectState";
+import {MsgStatus} from "../../common/enum";
+import CopyToClipboard from 'react-copy-to-clipboard';
 
 type IProp = {
     style?: CSSProperties
@@ -23,19 +27,27 @@ export default function ConectWallet(props: IProp) {
     const storeData = store.getState();
     const dispatch = mapDispatchToProps(store.dispatch);
     const { account, connect, reset } = useWallet();
+    const state = useEffectState({
+        showModal: false,
+        showDropMenu: false
+    });
 
     useEffect(() => {
         getBalance();
         const namespace = PubSub.subscribe("wallet.logout", () => {
-            dispatch.setWalletAddress("");
-            dispatch.setToken("");
-            reset();
+            disconnect();
         });
+        document.addEventListener("click", docOnClick);
 
         return () => {
             PubSub.unsubscribe(namespace);
+            document.removeEventListener("click", docOnClick)
         }
     }, []);
+
+    function docOnClick() {
+        state.showDropMenu = false;
+    }
 
     async function getBalance() {
         const USDC = NewReadContract(project.contracts.USDC.address, project.contracts.USDC.abi)
@@ -105,25 +117,61 @@ export default function ConectWallet(props: IProp) {
         return [r,v,s]
     }
 
-    return (
-        <ConectWalletStyle style={props.style} onClick={(event) => {
-            if (storeData.address) {
-                console.log(t(`Click Wallet Address`));
-            } else {
-                let web3js = new Web3(PROVIDER);//web3js is the web3 example you need
-                web3js.eth.getAccounts(function (error, result) {
-                    /* alert(result[0]);*/
-                    if (result.length !== 0) {
-                        dispatch.setWalletAddress(result[0]);
-                    } else {
-                        connect('injected')
-                    }
+    async function disconnect() {
+        dispatch.setWalletAddress("");
+        dispatch.setToken("");
+        reset();
+    }
 
-                    if (!error)
-                        console.log(result)//After successful authorization, result can get the account normally
-                });
-            }
-            event.stopPropagation();
-        }}>{storeData.address? formatAddress(storeData.address) : t(`Connect Wallet`)}</ConectWalletStyle>
+    return (
+        <div>
+            <ConectWalletStyle
+                style={props.style}
+                onMouseOver={() => {
+                    if (storeData.address) {
+                        state.showDropMenu = true;
+                    }
+                }}
+                onMouseLeave={() => state.showDropMenu = false}
+                onClick={(event) => {
+                    if (!storeData.address) {
+                        state.showModal = true;
+                    } else {
+                        state.showDropMenu = true;
+                        event.stopPropagation();
+                    }
+                }}>
+                <span>{storeData.address? formatAddress(storeData.address) : t(`Connect Wallet`)}</span>
+                <Toggle vIf={state.showDropMenu}>
+                    <DropMenuContainer>
+                        <DropMenu onClick={(event) => event.stopPropagation()}>
+                            <li className="flex-box menuItem">
+                                <CopyToClipboard
+                                    text={storeData.address}
+                                    onCopy={() => {
+                                        showMessage(t(`Copy Success`), MsgStatus.success);
+                                        state.showDropMenu = false;
+                                    }}>
+                                    <span>{t(`Copy address`)}</span>
+                                </CopyToClipboard>
+                            </li>
+                            <li className="flex-box menuItem exit"
+                                onClick={() => {
+                                    disconnect();
+                                    showMessage(t(`Wallet Disconnected`), MsgStatus.success);
+                                    state.showDropMenu = false;
+                                }}
+                            >{t(`Disconnect`)}</li>
+                        </DropMenu>
+                    </DropMenuContainer>
+                </Toggle>
+            </ConectWalletStyle>
+            <Toggle vIf={state.showModal}>
+                <ConnectWalletModal
+                    onClose={() => state.showModal = false}
+                    onSuccess={() => state.showModal = false}></ConnectWalletModal>
+            </Toggle>
+        </div>
+
     )
 }

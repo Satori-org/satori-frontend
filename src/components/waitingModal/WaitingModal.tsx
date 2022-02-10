@@ -53,14 +53,14 @@ function WaitingModal(props: INotification) {
 
     return (
         <WaitingModalStyle>
-            <h3 className={"flex-box title"}>
+            <h3 className={"flex-row title"}>
                 <img src={require("src/assets/images/wait.png")} className={"icon"} alt="" />
                 <div>{props.title}</div>
             </h3>
             <div className={"content"}>
                 {props.content}
             </div>
-            <div className={"label"}>{state.count}/15 {t(`confirmations`)}</div>
+            {/*<div className={"label"}>{state.count}/15 {t(`confirmations`)}</div>*/}
             <ProgressBar>
                 <div className={"progress"} style={{width: `${state.count/15*100}%`, maxWidth: "100%"}}></div>
             </ProgressBar>

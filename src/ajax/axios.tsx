@@ -5,6 +5,8 @@ import { service_api } from 'src/config';
 import { store } from 'src/store';
 import { $router } from 'src/react-router-perfect/Index';
 import PubSub from "pubsub-js";
+import OpenMessageBox from "../components/messageBox/MessageBox";
+import {showMessage} from "../common/utilTools";
 
 axios.defaults.baseURL = service_api;
 //=>Set the request header
@@ -35,7 +37,7 @@ axios.interceptors.response.use((response:AxiosResponse<IAjax>):Promise<any> => 
         if (response.status === 200) {
             if (response.data) {
                 if (response.data.error) {
-                    Toast(response.data.msg);
+                    showMessage(response.data.msg);
                     /*token expiration exit*/
                     if (response.data.code === 4003) {
                         PubSub.publish("wallet.logout");
@@ -52,7 +54,7 @@ axios.interceptors.response.use((response:AxiosResponse<IAjax>):Promise<any> => 
         }
     },
     error => {
-        Toast(error.toString());
+        showMessage(error.toString());
         return Promise.reject(error);
     }
 );

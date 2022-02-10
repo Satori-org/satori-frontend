@@ -16,7 +16,7 @@ interface ILazyLink extends NavLinkProps {
     children?:ReactNode,
     callback?():void
     className?: string
-    beforeOnClick?(): void
+    beforeOnClick?(): Promise<any>
     activeCallback?(active: boolean): void
 }
 

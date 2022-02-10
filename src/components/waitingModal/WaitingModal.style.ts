@@ -6,44 +6,49 @@ export const WaitingModalStyle = styled.div`
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
-    width: 386px;
-    padding: 66px 24px 40px 24px;
-    background: ${colors.tradeBgColor};
-    border-radius: 24px;
+    width: 360px;
+    padding: 20px;
+    background: #121212;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-sizing: border-box;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
     .title{
         font-size: 18px;
-        font-weight: bold;
-        color: ${colors.baseColor};
-        margin-bottom: 34px;
+        font-weight: 400;
+        color: #fff;
+        margin-bottom: 8px;
     }
     .icon{
-        width: 20px;
-        height: 20px;
-        margin-right: 8px;
+        width: 22px;
+        height: 22px;
+        margin-right: 12px;
     }
     .content{
         font-size: 14px;
         font-weight: 400;
-        color: ${colors.artContentColor};
-        line-height: 24px;
-        margin-bottom: 30px;
+        color: #999897;
+        line-height: 150%;
+        margin-bottom: 12px;
+        padding-left: 34px;
     }
-    .label{
+    /*.label{
         color: ${colors.labelColor};
-    }
+    }*/
 `;
 
 export const ProgressBar = styled.div`
     position: relative;
     height: 8px;
-    background: ${colors.inputBgColor};
-    border-radius: 12px;
+    background: #525150;
+    border-radius: 8px;
     overflow: hidden;
     margin-top: 10px;
+    margin-left: 34px;
     .progress{
         height: 100%;
-        background: ${colors.activeColor};
-        border-radius: 12px;
+        background: #fff;
+        border-radius: 8px;
         transition: width 0.25s;
     }
 `;

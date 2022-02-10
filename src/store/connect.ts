@@ -4,6 +4,7 @@ import {Dispatch} from "redux";
 import {ComponentType} from "react";
 import * as actions from './actionTypes';
 import {ITrans} from "../contract/types";
+import { THEME } from 'src/common/enum';
 
 
 const mapStateToProps = (state: IState) => ({
@@ -50,6 +51,12 @@ export const mapDispatchToProps = (dispatch: Dispatch) => {
             dispatch({
                 type: actions.SET_TOKEN,
                 data: token
+            })
+        },
+        toggleTheme(theme: THEME) {
+            dispatch({
+                type: actions.TOGGLE_THEME,
+                data: theme
             })
         }
     }

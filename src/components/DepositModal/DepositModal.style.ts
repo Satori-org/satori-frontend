@@ -5,6 +5,24 @@ export const DepositModalStyle = styled.div`
     
 `;
 
+export const Label = styled.span`
+    display: inline-block;
+    margin-bottom: 8px;
+`;
+
+export const Explain = styled.div`
+    margin: 12px 0 56px;
+    font-size: 14px;
+    color: ${({theme}) => theme.colors.explain};
+`;
+
+export const Group = styled.div`
+    margin-bottom: 15px;
+    .label{
+        margin-right: 12px;
+    }
+`;
+
 export const AssetBox = styled.div`
     height: 48px;
     padding: 0 16px 0 12px;
@@ -23,13 +41,15 @@ export const AssetBox = styled.div`
     }
 `;
 
-export const RightBtn = styled.span`
-    font-size: 14px;
-    font-weight: 400;
-    margin: 0 8px;
-    color: ${colors.activeColor};
-    cursor:pointer;
-    user-select: none;
+export const RightBtn = styled.button`
+    min-width: 50px;
+    height: 30px;
+    padding: 0 10px;
+    box-sizing: border-box;
+    color: ${({theme}) => theme.colors.labelColor};
+    background: rgba(255,255,255,.08);
+    border-radius: 8px;
+    margin-left: 8px;
 `;
 
 export const BalanceBox = styled.div`

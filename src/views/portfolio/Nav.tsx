@@ -45,9 +45,9 @@ export default function Nav() {
             {
                 navLinks.map((item, indx) => {
                     return <RouterLink className={"item flex-row"} activeClassName={"active"} to={item.to} key={indx}>
-                        <span className={"iconWrap"}>
+                        {/*<span className={"iconWrap"}>
                             <img src={pathname === item.to ? item.activeIcon : item.icon} style={item.iconStyle} className={"icon"} alt=""/>
-                        </span>
+                        </span>*/}
                         <span>{item.text}</span>
                     </RouterLink>
                 })

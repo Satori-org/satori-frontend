@@ -1,9 +1,9 @@
-import {Toast} from "src/components/toast/Toast";
-import {TFunction} from "i18next";
-import { BigNumber } from 'ethers';
+import {BigNumber} from 'ethers';
 import Decimal from "decimal.js";
 import {CSSProperties} from "react";
-import {NUMBER_REG} from "./regExp";
+import {INPUT_NUMBER_REG, INT_REG, NUMBER_REG} from "./regExp";
+import OpenMessageBox from "../components/messageBox/MessageBox";
+import {MsgStatus} from "./enum";
 
 //Parameter conversion processing
 export function stringify(obj:any) {
@@ -19,13 +19,51 @@ export const fixedNumber = (value:number|string, precision:number = 0) => {
     if (!value) {
         return 0;
     }
-    let scale = String(Number(value)*Math.pow(10, precision));
-    return parseInt(scale)/Math.pow(10, precision);
+    //let scale = String(Number(value)*Math.pow(10, precision));
+    // return parseInt(scale)/Math.pow(10, precision);
+    let scale = Decimal.mul(value, Math.pow(10, precision)).toFixed();
+    return Decimal.div(parseInt(scale), Math.pow(10, precision)).toNumber() ;
 };
 
-export function showMessage(msg: string) {
+export const fixedNumberStr = (value:number|string, precision:number = 0) => {
+    if (typeof value !== "number" && !isNumber(String(value))) {
+        return String(value);
+    }
+    if (!value) {
+        return "0";
+    }
+
+    let scale = Decimal.mul(value, Math.pow(10, precision)).toFixed();
+    let valStr = Decimal.div(parseInt(scale), Math.pow(10, precision)).toFixed();
+    let dol = valStr.split(".");
+    if (dol[1] && dol[1].length < precision) {
+        let sub = precision - dol[1].length;
+        valStr += new Array(sub).fill("0").join("");
+    }
+    return valStr;
+};
+
+export function formatAmount(amount: number | string, percent?: boolean): string {
+    if (!amount || amount === "0") {
+        return "--";
+    }
+    return percent ? `${String(amount)}%` : String(amount);
+}
+
+export function formatAmountRise(amount: number | string): string {
+    if (!amount || amount === "0") {
+        return "--";
+    }
+    return Number(amount) > 0 ? `+${amount}` : String(amount);
+}
+
+export function showMessage(msg: string, type?: MsgStatus) {
     //alert(msg);
-    Toast(msg);
+    //Toast(msg);
+    OpenMessageBox({
+        title: msg,
+        type: type ?? MsgStatus.warn
+    })
 }
 /*Determine safari browser*/
 const isSafari = () => {
@@ -100,7 +138,7 @@ export function isFullscreen(element:any) {
         element.msFullscreenEnabled || false;
 }
 /* Remaining time */
-export function formatDuring(time: number, t: TFunction) {
+export function formatDuring(time: number) {
     let days: string | number = Math.floor(time / (1000 * 60 * 60 * 24));
     let hours: string | number = Math.floor(time % (1000 * 60 * 60 * 24) / (1000 * 60 * 60));
     let minutes: string | number = Math.floor(time % (1000 * 60 * 60) / (1000 * 60));
@@ -118,7 +156,7 @@ export function formatDuring(time: number, t: TFunction) {
     if (seconds < 10) {
         seconds = '0' + seconds
     }
-    return days + t(`Day`) + hours + t(`h`) + minutes + t(`min`) + seconds + t(`seconds`);
+    return hours + `:` + minutes + `:` + seconds;
 }
 
 
@@ -162,6 +200,12 @@ export function formatSeconds(value: number) {
 
 export function isNumber(str: string) {
     return new RegExp(NUMBER_REG, "gi").test(str);
+}
+export function isIntNumber(str: string) {
+    return new RegExp(INT_REG, "gi").test(str);
+}
+export function isInputNumber(str: string) {
+    return new RegExp(INPUT_NUMBER_REG, "gi").test(str);
 }
 
 /*Dynamic Strings
@@ -240,4 +284,16 @@ export function styleToString(style: CSSProperties) {
         // @ts-ignore
         return acc + key.split(/(?=[A-Z])/).join('-').toLowerCase() + ':' + style[key] + ';'
     }, '');
+}
+
+export function isEmptyObject(data: Object) {
+    return !data || Object.keys(data).length === 0;
+}
+
+export function getDayStartTime(date?: Date): Date {
+    if (date) {
+        return new Date(new Date(date.toLocaleDateString()).getTime())
+    } else {
+        return new Date(new Date(new Date().toLocaleDateString()).getTime())
+    }
 }

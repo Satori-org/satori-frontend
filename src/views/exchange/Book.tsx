@@ -5,6 +5,8 @@ import OrderBook from "./OrderBook";
 import Transaction from "./Transaction";
 import {IDepthData} from "src/components/kline/depthChart/DepthChart";
 import {ITrade} from "src/ajax/contract/contract";
+import {ORDER_TYPE} from "../../common/enum";
+import Tab from "../../components/tab/Tab";
 
 type IProps = {
     depthData: IDepthData
@@ -24,13 +26,25 @@ export default function Book(props: IProps) {
 
     return (
         <BookStyle>
-            <BookTab>
+            <Tab
+                options={[
+                    {text: t(`OrderBook`), value: 0},
+                    {text: t(`Latest Transactions`), value: 1}
+                ]}
+                onChange={(value) => {
+                    setActive(value);
+                    //state.quantity = "";
+                    //state.percent = 0;
+                    //state.orderType = value;
+                }} />
+            {/*<BookTab>
                 <span className={`tabItem ${active === 0 ? 'active' : ''}`} onClick={() => setActive(0)}>{t(`OrderBook`)}</span>
-                <span className={`tabItem ${active === 1 ? 'active' : ''}`} onClick={() => setActive(1)}>{t(`Transaction`)}</span>
-            </BookTab>
+                <span className={`tabItem ${active === 1 ? 'active' : ''}`} onClick={() => setActive(1)}>{t(`Latest Transactions`)}</span>
+            </BookTab>*/}
             {
                 active === 0 ?  OrderBookMemo : TransactionMemo
             }
+            {/*{TransactionMemo}*/}
         </BookStyle>
     )
 }

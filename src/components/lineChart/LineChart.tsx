@@ -3,6 +3,8 @@ import {ActiveLabel, ChartContainer, ChartTitle, LineChartStyle} from './LineCha
 import {useEffectState} from "src/hooks/useEffectState";
 import {colors} from "../../styles/style";
 import Toggle from '../toggle/Toggle';
+import useTheme from "../../hooks/useTheme";
+import {useUpdateEffect} from "ahooks";
 
 
 type IProps = {
@@ -16,15 +18,18 @@ type IProps = {
     cMargin?: number
     cSpace?: number
     lineColor?: string
+    labelColor?: string
     lineWidth?: number
 }
 export default function LineChart(props: IProps) {
     const chartRef = useRef<HTMLCanvasElement>(null);
     const [chartInstance, setChartInstance] = useState<CanvasRenderingContext2D | null>();
+    const {theme} = useTheme();
     const state = useEffectState({
         cWidth: 0,
         cHeight: 0,
         cMargin: 0,
+        yMargin: 30,
         cSpace: 0,
         originX: 0,
         originY: 0,
@@ -48,7 +53,7 @@ export default function LineChart(props: IProps) {
         if (chartInstance) {
             initChart();
             if (!props.onlyLine) {
-                initEvent();
+                //initEvent();
             }
             chartRender();
         }
@@ -58,6 +63,12 @@ export default function LineChart(props: IProps) {
             state.showLabel = true;
         }
     }, [state.activeIndex]);
+
+    useUpdateEffect(() => {
+        if (props.dataArr.length > 0) {
+            chartRender();
+        }
+    }, [props.dataArr]);
 
     function chartRender() {
         if (props.onlyLine) {
@@ -76,7 +87,8 @@ export default function LineChart(props: IProps) {
         let canvas = chartRef.current!;
         //state.cMargin = 60;
         if (!props.onlyLine) {
-            state.cMargin = props.cMargin ?? 60;
+            //state.cMargin = props.cMargin ?? 60;
+            state.cMargin = props.cMargin ?? 0;
             state.cSpace = props.cSpace ?? 80;
         }
         /*Here's how it works for HD screens.
@@ -92,19 +104,20 @@ export default function LineChart(props: IProps) {
         canvas.style.height = canvas.height/2 + "px";
         canvas.style.width = canvas.width/2 + "px";
 
-        state.cHeight = canvas.height - state.cMargin - state.cSpace;
+        state.cHeight = canvas.height - state.cMargin - state.cSpace - state.yMargin;
         //state.cWidth = canvas.width - state.cMargin - state.cSpace;
-        state.cWidth = canvas.width - state.cMargin;
+        state.cWidth = canvas.width - state.cSpace*2 + 30;
         state.originX = state.cMargin + state.cSpace;
-        state.originY = state.cMargin + state.cHeight;
+        state.originY = state.yMargin + state.cHeight;
 
         // Folding Line Chart Information
         state.tobalDots = props.dataArr.length;
-        if (props.onlyLine) {
+        /*if (props.onlyLine) {
             state.dotSpace = Math.floor( state.cWidth/(state.tobalDots - 1) );
         } else {
             state.dotSpace = Math.floor( state.cWidth/state.tobalDots );
-        }
+        }*/
+        state.dotSpace = Math.floor( state.cWidth/(state.tobalDots - 1) );
         state.maxValue = 0;
         for(let i=0; i<props.dataArr.length; i++){
             let dotVal = Math.floor( props.dataArr[i][1] );
@@ -113,7 +126,7 @@ export default function LineChart(props: IProps) {
             }
         }
         state.maxValue += 50;
-        state.totalYNomber = 4;
+        state.totalYNomber = 6;
         // Sports Related
         state.ctr = 1;
         //state.numctr = 100;
@@ -131,7 +144,7 @@ export default function LineChart(props: IProps) {
         ctx.fillStyle = "#566a80";
         ctx.strokeStyle = colors.tradeBgColor;
         // y-axis
-        drawLine(state.originX, state.originY, state.originX, state.cMargin);
+        //drawLine(state.originX, state.originY, state.originX, state.cMargin);
         // x-axis
         drawLine(state.originX, state.originY, state.originX+state.cWidth-state.cMargin*2, state.originY);
 
@@ -163,27 +176,35 @@ export default function LineChart(props: IProps) {
     function drawMarkers(){
         let canvas = chartRef.current!;
         let ctx = chartInstance!;
-        ctx.strokeStyle = "#E0E0E0";
-        ctx.fillStyle = colors.disabledFontColor;
+        ctx.strokeStyle = "#22352C";
+        ctx.fillStyle = props.labelColor || "#fff";
         // Plot the y-axis and the middle horizontal line
         let oneVal = Math.floor(state.maxValue/state.totalYNomber);
         ctx.textAlign = "right";
         for(let i = 0; i <= state.totalYNomber; i++){
             let markerVal =  i*oneVal;
             let xMarker = state.originX-5;
-            let yMarker = Math.floor( state.cHeight*(1-markerVal/state.maxValue) ) + state.cMargin;
+            let yMarker = Math.floor( state.cHeight*(1-markerVal/state.maxValue) ) + state.yMargin;
 
             ctx.fillText(String(markerVal), xMarker, yMarker+3, state.cSpace); // font
-            /*if(i>0){
+            if(i>0){
                 drawLine(state.originX + 2, yMarker, state.originX + state.cWidth, yMarker);
-            }*/
+            }
         }
         // Plot the x-axis and the middle vertical line
-        ctx.textAlign = "center";
+
         for(let i=0; i < state.tobalDots; i++){
             let markerVal = props.dataArr[i][0];
             let xMarker = state.originX + i*state.dotSpace;
             let yMarker = state.originY + 30;
+            if (i === 0) {
+                ctx.textAlign = "left";
+            } else if(i === state.tobalDots - 1) {
+                ctx.textAlign = "right";
+            } else {
+                ctx.textAlign = "center";
+            }
+
             ctx.fillText(String(markerVal), xMarker, yMarker, state.cSpace); // font
             /*if(i>0){
                 drawLine(xMarker, state.originY - 2, xMarker, state.cMargin    );
@@ -225,15 +246,15 @@ export default function LineChart(props: IProps) {
         let canvas = chartRef.current!;
         let ctx = chartInstance!;
         drawLineOnly();
-
+        //background: linear-gradient(180deg, #25A69A 30.34%, rgba(255, 254, 252, 0) 100%);
         //Background
         ctx.lineTo( state.originX + state.dotSpace * (state.tobalDots-1), state.originY);
         ctx.lineTo( state.originX, state.originY);
         //Background gradient color
         //Histogram gradient color
         let gradient = ctx.createLinearGradient(0, 0, 0, 600);
-        gradient.addColorStop(0, 'rgba(177, 224, 247, 0.24)');
-        gradient.addColorStop(1, 'rgba(121, 189, 235, 0)');
+        gradient.addColorStop(0, 'rgba(37, 166, 154)');
+        gradient.addColorStop(1, 'rgba(255, 254, 252, 0)');
 
         ctx.fillStyle = gradient;
         ctx.fill();
@@ -241,14 +262,14 @@ export default function LineChart(props: IProps) {
         ctx.fillStyle = "#566a80";
 
         //Plot points
-        /*for(let i=0; i<state.tobalDots; i++){
+        for(let i=0; i<state.tobalDots; i++){
             let dotVal = props.dataArr[i][1];
             let barH = Math.floor( state.cHeight*dotVal/state.maxValue * state.ctr/state.numctr );
             let y = state.originY - barH;
             let x = state.originX + state.dotSpace*i;
             drawArc( x, y );  //Plot points
-            ctx.fillText(Math.floor(dotVal*state.ctr/state.numctr).toString(), x+15, y-8); // font
-        }*/
+            //ctx.fillText(Math.floor(dotVal*state.ctr/state.numctr).toString(), x+15, y-8); // font
+        }
 
         if(state.ctr<state.numctr){
             state.ctr++;
@@ -266,7 +287,7 @@ export default function LineChart(props: IProps) {
         let ctx = chartInstance!;
         ctx.beginPath();
         ctx.arc( x, y, 9, 0, Math.PI*2 );
-        ctx.fillStyle = "#DBEEFC";
+        ctx.fillStyle = "#39AC59";
         ctx.fill();
         ctx.closePath();
     }
@@ -301,7 +322,7 @@ export default function LineChart(props: IProps) {
             let barH = Math.floor( state.cHeight*dotVal/state.maxValue * state.ctr/state.numctr );
             let y = state.originY - barH;
             let x = state.originX + state.dotSpace*index;
-            drawArc( x, y );  //绘制点
+            drawArc( x, y );  //Plot points
             state.activeIndex = index;
         }
     }

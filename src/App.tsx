@@ -1,7 +1,6 @@
 import React from 'react';
 import './App.css';
 import './assets/css/animate.css';
-import Nav from './components/nav/Nav';
 import RouterView from "./router/RouterView";
 import {AppStyle} from "./styles/App.style";
 import connect, {IConnectProps} from "./store/connect";
@@ -14,6 +13,8 @@ import {PROVIDER} from "./config";
 import Header from "./components/header/Header";
 import {generateNonce, getUserToken} from "./ajax/auth/auth";
 import {getWallet} from "./contract/wallet";
+import {ThemeProviderWrapper} from "./ThemeProviderWrapper";
+import {showMessage} from "./common/utilTools";
 
 interface IProps extends IConnectProps, WithTranslation{
 
@@ -34,9 +35,9 @@ class App extends React.Component<IProps, any>{
     }
 
     componentDidUpdate(prevProps: Readonly<IProps>, prevState: Readonly<any>, snapshot?: any): void {
-        if (!prevProps.redux.address && this.props.redux.address) {
+        /*if (!prevProps.redux.address && this.props.redux.address) {
             this.checkLoginStatus();
-        }
+        }*/
     }
 
     addEventListener() {
@@ -53,15 +54,18 @@ class App extends React.Component<IProps, any>{
         window['ethereum'].on('accountsChanged',  (accounts:string[]) => {
             if (accounts && accounts[0]) {
                 const address = accounts[0];
+                this.logout();
+                if (this.props.redux.address) {
+                    this.getGenerateNonce(address);
+                }
                 this.props.setWalletAddress(address);
-                this.getGenerateNonce(address);
             }
         });
     }
 
     checkNetwork(ID:number) {
         if (ID !== chainID) {
-            Toast(this.props.t(`请连接正确的网络`));
+            showMessage(this.props.t(`请连接正确的网络`));
         }
     }
 
@@ -73,6 +77,9 @@ class App extends React.Component<IProps, any>{
     }
 
     async getGenerateNonce(address: string) {
+        if (!address) {
+            return ;
+        }
         const nonceInfo = await generateNonce(address);
         const signStr = await getWallet().signMessage(nonceInfo.data.nonce);
         this.login(address, signStr);
@@ -80,16 +87,21 @@ class App extends React.Component<IProps, any>{
 
     async login(address: string, signStr: string) {
         const userInfo = await getUserToken(address, signStr);
-        sessionStorage.setItem("token", userInfo.data);
         this.props.setToken(userInfo.data);
+    }
+
+    logout() {
+        this.props.setToken("");
     }
 
     render(): React.ReactElement<any, string | React.JSXElementConstructor<any>> | string | number | {} | React.ReactNodeArray | React.ReactPortal | boolean | null | undefined {
         return (
-            <AppStyle className="App">
-                <Header />
-                <RouterView></RouterView>
-            </AppStyle>
+            <ThemeProviderWrapper>
+                <AppStyle className="App">
+                    <Header />
+                    <RouterView></RouterView>
+                </AppStyle>
+            </ThemeProviderWrapper>
         );
     }
 }

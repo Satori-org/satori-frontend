@@ -7,18 +7,30 @@ const History = () => import(/* webpackChunkName: "portfolio" */"src/views/portf
 export const routes: Iroutes[] = [
     {
         path: "/portfolio/account",
-        component: Account
+        component: Account,
+        meta: {
+            title: "Account Balance"
+        }
     },
     {
         path: "/portfolio/positions",
-        component: Positions
+        component: Positions,
+        meta: {
+            title: "All Portfolio"
+        }
     },
     {
         path: "/portfolio/orders",
-        component: Orders
+        component: Orders,
+        meta: {
+            title: "All Orders"
+        }
     },
     {
         path: "/portfolio/history",
-        component: History
+        component: History,
+        meta: {
+            title: "History"
+        }
     }
 ];

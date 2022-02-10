@@ -3,15 +3,37 @@ import {colors} from "../../styles/style";
 
 export const MarginModalStyle  = styled.div`
     .label{
-        font-size: 12px;
-        color: ${colors.labelColor};
+        color: ${({theme}) => theme.colors.labelColor};
     }
 `;
 
-export const RightBtn = styled.span`
-    font-size: 14px;
-    font-weight: 400;
-    margin: 0 8px;
-    color: ${colors.activeColor};
-    cursor:pointer;
+export const Tab = styled.div`
+    height: 42px;
+    border: 1px solid ${({theme}) => theme.colors.boxBgColor};
+    box-sizing: border-box;
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 24px;
+    .item{
+        border-radius: 6px;
+        cursor:pointer;
+        &.active{
+            background: ${({theme}) => theme.colors.boxBgColor};
+        }
+    }
+`;
+
+export const RightBtn = styled.button`
+    min-width: 50px;
+    height: 30px;
+    padding: 0 10px;
+    box-sizing: border-box;
+    color: ${({theme}) => theme.colors.labelColor};
+    background: rgba(255,255,255,.08);
+    border-radius: 8px;
+    margin-left: 8px;
+`;
+
+export const Group = styled.div`
+    margin-bottom: 16px;
 `;

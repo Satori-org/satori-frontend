@@ -6,9 +6,10 @@ export const SettingStyle = styled.div`
    right: 0;
    top: 0;
    bottom: 0;
-   padding: 0 24px;
-   background: ${colors.backgroundColor};
+   /*padding: 0 24px;*/
+   background: ${({theme}) => theme.colors.backgroundColor};
    z-index: 10;
+   width: 0;
    .icon{
         width: 28px;
         height: 28px;

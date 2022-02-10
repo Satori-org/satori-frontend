@@ -10,6 +10,7 @@ type IProps = {
     close?(): void
     disableHead?: boolean
     style?: CSSProperties
+    titleStyle?: CSSProperties
     fullScreen?: boolean
 }
 export default function Modal(props: IProps) {
@@ -21,11 +22,11 @@ export default function Modal(props: IProps) {
                 {
                     props.disableHead
                         ? null
-                        : <div className={"flex-sb"} style={{marginBottom: "24px"}}>
+                        : <div className={"flex-sb"} style={Object.assign({}, {marginBottom: "24px"}, props.titleStyle)}>
                             <h1 className="title">{props.title}</h1>
-                            <div className={"close"} onClick={props.close}>
+                            {/*<div className={"close"} onClick={props.close}>
                                 <img src={require("src/assets/images/close.png")} className={"closeIcon"} alt=""/>
-                            </div>
+                            </div>*/}
                         </div>
                 }
                 {props.children}

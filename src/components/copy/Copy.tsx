@@ -1,8 +1,9 @@
 import React, {CSSProperties} from 'react';
-import { useTranslation } from 'react-i18next';
-import { CopyStyle } from './Copy.style';
+import {useTranslation} from 'react-i18next';
+import {CopyStyle} from './Copy.style';
 import CopyToClipboard from 'react-copy-to-clipboard';
-import {Toast} from "../toast/Toast";
+import {showMessage} from "../../common/utilTools";
+import {MsgStatus} from "../../common/enum";
 
 type IProps = {
     text: string,
@@ -16,7 +17,7 @@ export default function Copy(props: IProps) {
         if (props.callback) {
             props.callback();
         } else {
-            Toast(t(`Copy success`))
+            showMessage(t(`Copy success`), MsgStatus.success)
         }
     }
 

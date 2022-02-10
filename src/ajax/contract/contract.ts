@@ -1,5 +1,13 @@
 import {fetchGet, fetchPost} from "../index";
 
+export type IQuotation = {
+    contractPairId: number
+    last24hVol: string
+    lastPrice: string
+    marketChangeRate: string
+    marketPrice: string
+    symbol: string
+}
 /*Get Trading Pairs*/
 export interface IPair {
     change: number
@@ -10,6 +18,7 @@ export interface IPair {
     symbol: string
     tradeCoin: TradeCoin
     tradeCoinId: number
+    tradeFeeRate: string
 }
 export interface SettleCoin {
     icon: string
@@ -24,6 +33,9 @@ export interface TradeCoin {
     name: string
     settleDecimal: number
     symbol: string
+    websiteUrl: string
+    whitePaperUrl: string
+    coinInfo: string
 }
 export function getContractPairList() {
     return fetchPost<IPair[]>("/contract-provider/contract/contractPairList")
@@ -39,7 +51,7 @@ export function withdraw(amount: string, originMsg: string, signHash: string) {
     return fetchPost<IWithdraw>("/contract-provider/withdraw/ask", {amount, originMsg, signHash})
 }
 interface IAddOrderParams {
-    amount?: number
+    amount?: string
     contractPairId: number
     contractPositionId?: number
     isClose: boolean
@@ -57,6 +69,16 @@ export async function addOrder(params: IAddOrderParams) {
     return data;
 }
 
+export type IChangeMargin = {
+    call: boolean,
+    id: number,
+    marginAmount: string
+}
+export async function changePositionMargin(params: IChangeMargin) {
+    const { data } = await fetchPost<IPair>("/contract-provider/contract/callMarginAmount", params);
+    return data;
+}
+
 /*Get Position List*/
 export type IPositionList = {
     amount: number
@@ -67,12 +89,17 @@ export type IPositionList = {
     id: number
     isLong: boolean
     marginAmount: number
+    marginCallAmount: string
     openingPrice: number
     quantity: number
     restrictPrice: number
     status: number
     symbol: string
     lever: number
+    tariffAmount: string
+    remainingCloseQuantity: string
+    unrealizedPnl: string
+    realizedPnl: string
 }
 export const getPositionList = "/contract-provider/contract/selectContractPositionList";
 /*Get the current delegate*/
@@ -90,6 +117,7 @@ export type ICurrentEntrustList = {
     price: number
     quantity: number
     symbol: string
+    lever: number
 }
 export const getCurrentEntrustList = "/contract-provider/contract/selectContractCurrentEntrustList";
 
@@ -101,6 +129,22 @@ export type IAccount = {
     id: number
     userId: number
 }
+
+export type IMarket24 = {
+    amount: number
+    changePrice: string
+    changeRate: number
+    close: number
+    contractPairId: number
+    count: number
+    hight: number
+    indexPrice: number
+    low: number
+    open: number
+    quantity: number
+    tariffRate: number
+}
+
 export async function getAccountDetail(coinId: number) {
     const { data } = await fetchPost<IAccount>(`/contract-provider/contract-account/account/${coinId}`);
     return data;
@@ -123,6 +167,7 @@ export type IFills = {
     isClose: boolean
     isLong: boolean
     isMarket: boolean
+    lever: number
     isTaker: boolean
     positionFee: number
     profitLoss: number
@@ -141,6 +186,7 @@ export type ITransRecord = {
     id: number
     logType: string
     operateAmount: string
+    positive: boolean
 }
 export const getTransRecord = "/contract-provider/contract/selectContractTransactionList";
 
@@ -161,6 +207,21 @@ export type IKlineParams = {
     limit: number
     period: string
 }
+export type IMarketData = {
+    close: number
+    contractPairId: number
+    hight: number
+    low: number
+    open: number
+    period: string
+    time: number
+}
+export type ISocketRes = {
+    success: boolean
+    event: string
+    data: any
+    contractPairId: number
+};
 export const selectKlinePillarList = "/contract-quotes-provider/contract-quotes/selectKlinePillarList";
 
 export type ITrade = {
@@ -172,3 +233,27 @@ export type ITrade = {
     quantity: number
     time: string
 }
+
+
+export type ITransfer = {
+    address: string
+    amount: number
+    createTime: string
+    status: number
+    transHash: string
+    type: number
+    userId: number
+}
+export const getTransferRecord = "/contract-provider/contract-account/transferRecords";
+
+export type ITariff = {
+    fundingTime: string
+    id: number
+    isLong: boolean
+    openingPrice: number
+    quantity: number
+    settledRate: number
+    symbol: string
+    tariffAmount: number
+}
+export const getContractTariffList = "/contract-provider/contract/selectContractTariffList";

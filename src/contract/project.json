@@ -1,14 +1,14 @@
 {
-  "timestamp": "2021-12-29 16:50:36",
-  "node": "https://data-seed-prebsc-1-s2.binance.org:8545/",
-  "browser": "https://testnet.bscscan.com/tx/",
-  "chainid": 97,
-  "chainName": "BSC Testnet",
+  "timestamp": "2022-01-14 11:18:53",
+  "node": "http://52.87.195.210:9933",
+  "browser": "https://clover-testnet.subscan.io",
+  "chainid": 1023,
+  "chainName": "Clover Testnet",
   "chainSymbol": "BNB",
   "chainSymbolDecimals": 18,
   "contracts": {
     "USDC": {
-      "address": "0xb92BfCB7896e363E95Ea747F32eD16CaD471209b",
+      "address": "0xe6147095722EC87aC39572DE24bD951C5B60f228",
       "abi": [
         {
           "inputs": [
@@ -34,7 +34,8 @@
             }
           ],
           "stateMutability": "nonpayable",
-          "type": "constructor"
+          "type": "constructor",
+          "signature": "constructor"
         },
         {
           "anonymous": false,
@@ -326,10 +327,10 @@
           "signature": "0xa457c2d7"
         }
       ],
-      "decimals": 8
+      "decimals": 6
     },
     "Oracle": {
-      "address": "0x388C3EB53381ACb77b51eE02Ca3aD70874D781eD",
+      "address": "0xB759DB2f7C0ea7d17c457cEf424cDCd5e07B36F8",
       "abi": [
         {
           "inputs": [
@@ -493,7 +494,7 @@
       ]
     },
     "Satori": {
-      "address": "0x6a29fa01EC5856B5737B7A580950A19527E4fC4B",
+      "address": "0x3389aD75d43eCe2c347E3FAE0A0380e0AA1f830a",
       "abi": [
         {
           "anonymous": false,
@@ -920,7 +921,7 @@
       ]
     },
     "Admin": {
-      "address": "0xB71187Ad020320e8e24865981e0610c2697E5a24",
+      "address": "0xd7F85fd3496e76301fc45E14Ff6A8df071B5A5c0",
       "abi": [
         {
           "anonymous": false,
@@ -1087,7 +1088,7 @@
       ]
     },
     "Proxy": {
-      "address": "0x5163c934bDAe666B75EcC04383B898c422481261",
+      "address": "0x362a8703B419230cC8BC3EdC67321f0BDBd1abdc",
       "abi": [
         {
           "inputs": [

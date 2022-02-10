@@ -42,6 +42,34 @@ export function useFetchPost<T>(url: string, params = {}, require: any[] = []) {
         if (require.every((item) => !!item)) {
             setLoading(true);
             const [res, error] = await awaitWrap(fetchPost<T>(url, params));
+            console.log(res)
+            if (res) {
+                setData(res.data);
+            }
+            setLoading(false);
+        }
+    }
+
+    return {data, loading, reload};
+}
+
+export function useFetchGet<T>(url: string, params = {}, require: any[] = []) {
+    const [data, setData] = useState<T>({} as T);
+    const [loading, setLoading] = useState(false);
+
+    useEffect(() => {
+        loadData();
+    }, [...Object.values(params).concat(require)]);
+
+    const reload = useCallback(() => {
+        loadData();
+    }, [...Object.values(params).concat(require)]);
+
+    async function loadData() {
+        if (require.every((item) => !!item)) {
+            setLoading(true);
+            const [res, error] = await awaitWrap(fetchGet<T>(url, params));
+            console.log(res)
             if (res) {
                 setData(res.data);
             }
@@ -54,7 +82,7 @@ export function useFetchPost<T>(url: string, params = {}, require: any[] = []) {
 
 export function useFetchPostPage<T>(url: string, params = {}, require: any[] = []) {
     const [data, setData] = useState<T[]>([]);
-    const [total, setTotal] = useState(0);
+    const [total, setTotal] = useState<number | null>(null);
     const [loading, setLoading] = useState(false);
 
     useEffect(() => {
@@ -76,6 +104,9 @@ export function useFetchPostPage<T>(url: string, params = {}, require: any[] = [
                 setTotal(res.data.total);
             }
             setLoading(false);
+        } else {
+            setData([]);
+            setTotal(0);
         }
     }
 

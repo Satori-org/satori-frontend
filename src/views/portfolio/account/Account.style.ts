@@ -3,24 +3,30 @@ import {colors} from "../../../styles/style";
 
 export const AccountStyle = styled.div`
     .title{
-        font-size: 14px;
-        font-weight: 400;
-        line-height: 24px;
-        margin: 48px 0 20px;
+        font-size: 36px;
+        font-weight: bold;
+        margin: 120px 0 34px;
     }
     .detail{
-        display: grid;
-        grid-template-columns: 416px 1fr;
-        grid-column-gap: 32px;
+        
     }
     .userInfo{
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        grid-gap: 16px;
-        .label{
-            font-size: 12px;
-            color: ${colors.labelColor};
-            line-height: 24px;
+        margin-bottom: 54px;
+        .info{
+            margin-right: 36px;
+            color: ${({theme}) => theme.colors.filedColor};
+            .label{
+                margin-bottom: 8px;
+            }
+            .long{
+                color: ${({theme}) => theme.colors.long};
+            }
+            .short{
+                color: ${({theme}) => theme.colors.short};
+            }
+            .val{
+                font-size: 36px;
+            }
         }
         .balanceBox{
             grid-column-start: 1;
@@ -53,13 +59,36 @@ export const AccountStyle = styled.div`
         }
     }
     .Trend{
-        display: flex;
-        flex-direction: column;
         .chartContainer{
-            margin-top: 16px;
-            flex: 1;
+            height: 260px;
+            /*margin-top: 16px;*/
             border-radius: 8px;
-            border: 1px solid ${colors.tradeBgColor};
+        }
+    }
+`;
+
+export const ChartTab = styled.div`
+    display: flex;
+    align-items: center;
+    /*border-bottom: 1px solid ${({theme}) => theme.colors.boxBgColor};*/
+    .tabItem{
+        position: relative;
+        margin-right: 28px;
+        line-height: 36px;
+        color: ${({theme}) => theme.colors.labelColor};
+        padding-bottom: 8px;
+        cursor:pointer;
+        &.active{
+            color: ${({theme}) => theme.colors.filedColor};
+            /*&:after{
+                content: "";
+                position: absolute;
+                left: 0;
+                bottom: -1px;
+                width: 100%;
+                height: 2px;
+                background: ${({theme}) => theme.colors.filedColor};
+            }*/
         }
     }
 `;

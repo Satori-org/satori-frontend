@@ -11,3 +11,11 @@ export type IResArr<R = any> = {
     records: R[]
     total: number
 }
+
+export const getNotice = "/contract-provider/notice/list";
+export type INotice = {
+    createTime: string,
+    id: number,
+    title: string
+    info: string
+}

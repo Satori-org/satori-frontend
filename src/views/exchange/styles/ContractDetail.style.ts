@@ -2,26 +2,35 @@ import styled from "styled-components";
 import {colors} from "../../../styles/style";
 
 export const ContractDetailStyle = styled.div`
-    padding: 68px 24px 24px;
-    background: ${colors.backgroundColor};
-    flex: 1;
+    padding: 24px 20px 32px 20px;
+    background: ${({theme}) => theme.colors.backgroundColor};
     display: flex;
     flex-direction: column;
+    width: 360px;
+    margin-left: 1px;
+    box-sizing: border-box;
 `;
 
 
 export const Title = styled.div`
     margin-bottom: 16px;
+    font-size: 18px;
+    color: ${({theme}) => theme.colors.labelColor};
 `;
 
 export const FieldLabel = styled.div`
     line-height: 24px;
-    color: #B2B6BC;
+    color: ${({theme}) => theme.colors.baseColor};
     &:not(:last-child){
-        margin-bottom: 10px;
+        margin-bottom: 8px;
     }
     .label{
-        color: ${colors.labelColor};
+        font-size: 14px;
+        color: ${({theme}) => theme.colors.labelColor};
+        box-sizing: border-box;
+        &.border{
+            border-bottom: 1px dashed ${({theme}) => theme.colors.linkDefaultColor};
+        }
     }
 `;
 
@@ -29,15 +38,20 @@ export const ButtonGroup = styled.div`
     grid-column-gap: 14px;
     margin-top: 15px;
     .button{
-        height: 38px;
-        background: ${colors.activeColor};
-        color: ${colors.pageBgColor};
+        height: 42px;
+        background: ${({theme}) => theme.colors.activeColor};
+        color: ${({theme}) => theme.colors.backgroundColor};
         border-radius: 8px;
         box-sizing: border-box;
+        font-size: 14px;
         &.Withdraw{
-            background: transparent;
-            color: ${colors.activeColor};
-            border: 1px solid ${colors.activeColor};
+            background: ${({theme}) => theme.colors.boxBgColor};
+            border: none;
+            color: ${({theme}) => theme.colors.activeColor};
+        }
+        &:disabled{
+            opacity: 0.6;
+            cursor: not-allowed;
         }
     }
 `;

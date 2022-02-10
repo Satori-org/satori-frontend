@@ -46,11 +46,12 @@ export const PageItem = styled.span`
     font-weight: 400;
     cursor:pointer;
     &.active{
-        color: ${colors.activeColor};
+        background: ${({theme}) => theme.colors.filedColor};
+        color: ${({theme}) => theme.colors.modalBgColor};
     }
-    &:hover{
+    /*&:hover{
         color: ${colors.activeColor};
-    }
+    }*/
     &:not(:last-child){
         margin-right: 4px;
     }

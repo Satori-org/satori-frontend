@@ -28,6 +28,7 @@ function Row(props: IRow) {
                         if (props.item.children && props.item.children.length > 0) {
                             state.showChild = !state.showChild
                         }
+                        return Promise.resolve();
                     }}>
             <span className={"parentLabel"}>{props.item.text}</span>
             <img src={state.selected ? require("src/assets/images/arrow_right_active.png") : require("src/assets/images/arrow_right.png")}
