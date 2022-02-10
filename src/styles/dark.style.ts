@@ -26,6 +26,6 @@ export const dark: ITheme = {
         warnBgColor: "#121212",
         menuBgColor: "#121212",
         articleColor: "#FFFEFC",
-        articleHrColor: "#0D0D0D"
+        articleHrColor: "#0D0D0D",
     }
 };
