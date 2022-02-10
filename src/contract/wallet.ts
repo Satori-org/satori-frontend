@@ -1,31 +1,9 @@
-import Web3 from "web3";
-import {Dispatch} from "redux";
-import {chainID, chainNode, erc20, MaxApproveBalance, minAllowance, nft, project} from "./config";
+import {chainNode, erc20, MaxApproveBalance, minAllowance, project} from "./config";
 import {ethers, utils} from "ethers";
 import {ITrans} from "./types";
 import PubSub from "pubsub-js";
-import web3 from 'web3';
-import {useEffect, useState} from "react";
 import {Decimal} from "decimal.js";
 import {PROVIDER} from "../config";
-var networks = require('@ethersproject/networks');
-var providers = require('@ethersproject/providers');
-
-// function connectWallet(dispatch: Dispatch) {
-//     let web3js = new Web3(window['ethereum']);//web3js就是你需要的web3实例
-//
-//     web3js.eth.getAccounts(function (error, result) {
-//         /* alert(result[0]);*/
-//         if (result.length !== 0) {
-//             dispatch.setWalletAddress(result[0]);
-//         } else {
-//             connect('injected')
-//         }
-//
-//         if (!error)
-//             console.log(result)//授权成功后result能正常获取到账号了
-//     });
-// }
 
 export async function getBalance(address: string) {
     let balance = await getWallet().provider.getBalance(address);
@@ -75,24 +53,6 @@ export function needApprove(params: IApprove): Promise<boolean> {
         }
     });
 }
-
-type IApproveNft = {
-    token: string,
-    spender: string,
-    tokenId: number
-}
-export function needApproveNFT(params: IApproveNft): Promise<boolean> {
-    return new Promise(async (resolve, reject) => {
-        let contract = NewReadContract(params.token, nft);
-        let spender = await contract.getApproved(params.tokenId);
-        if (spender === params.spender) {
-            resolve(true);
-        } else {
-            resolve(false);
-        }
-    });
-}
-
 
 export function approve(params: IApprove): Promise<ITrans> {
     return new Promise(async (resolve, reject) => {
