@@ -3,11 +3,9 @@ import {fonts} from "src/styles/style";
 
 export const TokenInfoStyle = styled.div`
     position: relative;
-    height: 82px;
     background: ${({theme}) => theme.colors.backgroundColor};
-    grid-column-start: 1;
-    grid-column-end: 3;
-    margin-bottom: 1px;
+    margin-top: 0.22rem;
+    margin-bottom: 0.18rem;
 `;
 
 export const Hr = styled.hr`

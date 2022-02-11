@@ -33,16 +33,16 @@ export default function Header(props: IProps) {
                 </RouterLink>
                 {/*<RouterLink to={"/"} className={"logoName"}>Satori</RouterLink>*/}
                 <Nav className={"flex-row"}>
-                    <RouterLink className={"item flex-box"} activeClassName={"active"} to={"/"} exact={true}>{t(`Perpetual Trade`)}</RouterLink>
-                    <RouterLink className={"item flex-box"} activeClassName={"active"} to={"/portfolio"}>{t(`Portfolio`)}</RouterLink>
-                    <NavChild className={"item"} onMouseOver={() => state.showDrop = true} onMouseLeave={() => state.showDrop = false}>
-                        <RouterLink className={"flex-box menuLabel"}
+                    <RouterLink className={"item flex-box font12"} activeClassName={"active"} to={"/"} exact={true}>{t(`Perpetual Trade`)}</RouterLink>
+                    <RouterLink className={"item flex-box font12"} activeClassName={"active"} to={"/portfolio"}>{t(`Portfolio`)}</RouterLink>
+                    <NavChild className={"item font12"} onMouseOver={() => state.showDrop = true} onMouseLeave={() => state.showDrop = false}>
+                        <RouterLink className={"flex-box menuLabel font12"}
                                     activeClassName={"active"}
                                     beforeOnClick={() => Promise.reject()}
                                     to="/doc">{t(`Developers`)}</RouterLink>
                         <Toggle vIf={state.showDrop}>
                             <NavMenuContainer>
-                                <NavMenu className={"navMenu"}>
+                                <NavMenu className={"navMenu font12"}>
                                     <RouterLink className={"menuItem flex-box"} activeClassName={"active"} to={"/doc/status"} beforeOnClick={() => {
                                         state.showDrop = false;
                                         return Promise.resolve()
@@ -59,13 +59,13 @@ export default function Header(props: IProps) {
                     {/*<RouterLink className={"item"} activeClassName={"active"} to={"/Docs"}>{t(`Docs`)}</RouterLink>*/}
                 </Nav>
             </div>
-            <div className={"flex-row"}>
-                <Guide style={{marginRight: "30px"}} />
+            <div className={"flex-row font12"}>
+                <Guide style={{marginRight: "0.34rem"}} />
                 {/*<Language style={{marginRight: "24px"}} />*/}
                 <Network />
-                <ConectWallet style={{margin: "0 16px"}} />
-                <Msg></Msg>
-                <ThemeControl style={{marginLeft: "16px"}} />
+                <ConectWallet style={{margin: "0 0.14rem 0 0.1rem"}} />
+                <Msg />
+                <ThemeControl style={{marginLeft: "0.08rem"}} />
             </div>
         </HeaderStyle>
     )

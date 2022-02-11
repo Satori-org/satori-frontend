@@ -3,11 +3,12 @@ import { ITheme } from "./style";
 export const light: ITheme = {
     colors: {
         activeColor: "#000",
-        gapColor: "#22352C",
+        gapColor: "#F7F7F7",
         linkDefaultColor: "#617168",
         linkActiveBgColor: "#DFE1E0",
+        headerButtonColor: "#57625C",
         boxBgColor: "#22352C",
-        baseColor: "#F6F7F0",
+        baseColor: "#000",
         backgroundColor: "#fff",
         labelColor: "#999897",
         long: "#157336",

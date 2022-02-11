@@ -1,10 +1,10 @@
 @font-face{
-    font-family: "Montserrat-Regular";
-    src: url("./Montserrat-Regular-8.otf");
+    font-family: "NHaas";
+    src: url("./NHaasGroteskDSPro-55Rg.OTF");
 }
 /*html body{
     font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
 }*/
-.FuturaBT{
-    font-family: "Montserrat-Regular";
+.NHaas{
+    font-family: "NHaas";
 }

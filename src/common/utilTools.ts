@@ -248,7 +248,7 @@ export function getDecimalLen(val: string | number) {
 }
 
 /*Formatted Address*/
-export function formatAddress(address: string, start = 12, end = 5) {
+export function formatAddress(address: string, start = 6, end = 4) {
     if (!address) {
         return "";
     }

@@ -1,14 +1,14 @@
 import styled from "styled-components";
 
 export const ThemeControlStyle = styled.div`
-    width: 36px;
-    height: 36px;
+    width: 0.32rem;
+    height: 0.32rem;
     position: relative;
     background: ${({theme}) => theme.colors.boxBgColor};
-    border-radius: 6px;
+    color: ${({theme}) => theme.colors.headerButtonColor};
     cursor:pointer;
     .icon{
-        width: 19px;
-        height: 19px;
+        width: 0.167rem;
+        height: 0.167rem;
     }
 `;

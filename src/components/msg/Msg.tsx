@@ -25,7 +25,7 @@ export default function Msg() {
 
 
     return (
-        <MsgStyle className={"flex-box"} onClick={(event) => {
+        <MsgStyle className={"flex-box borderRadius"} onClick={(event) => {
             state.showModal = !state.showModal;
             event.stopPropagation();
         }}>

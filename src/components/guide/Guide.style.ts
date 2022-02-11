@@ -1,11 +1,11 @@
 import styled from "styled-components";
 
 export const GuideStyle = styled.div`
-    height: 36px;
+    font-weight: bold;
     color: ${({theme}) => theme.colors.labelColor};
     .icon{
-        width: 20px;
-        height: 20px;
-        margin-right: 12px;
+        width: 0.133rem;
+        height: 0.133rem;
+        margin-right: 0.0533rem;
     }
 `;

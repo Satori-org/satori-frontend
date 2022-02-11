@@ -93,7 +93,7 @@ export default function Exchange() {
             <ExchangeStyle>
                 <TokenInfo />
                 <div className={"trade-box"}>
-                    <div style={{flex: 1, width: "calc(100% - 722px)"}}>
+                    <div>
                         <div style={{height: "100%"}}>
                             <Toggle vIf={!!reducerState.currentPair.symbol}>
                                 <Kline symbol={reducerState.currentPair.symbol}

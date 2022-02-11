@@ -3,11 +3,10 @@ import {colors} from "../../../styles/style";
 
 export const TradingviewToolStyle = styled.div`
     width: 100%;
-    height: 50px;
+    height: 0.4rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: ${({theme}) => theme.colors.backgroundColor};
     color: ${({theme}) => theme.colors.baseColor};
     margin-bottom: 1px;
     .toolItem{

@@ -82,10 +82,12 @@ class App extends React.Component<IProps, any>{
         }
 
         const [nonceInfo, error] = await awaitWrap(generateNonce(address));
-        const [signData, error2] = await awaitWrap(signString(nonceInfo.data.nonce, address));
-        this.login(address, signData.signatrue);
-
-
+        if (nonceInfo) {
+            const [signData, error2] = await awaitWrap(signString(nonceInfo.data.nonce, address));
+            if (signData) {
+                this.login(address, signData.signatrue);
+            }
+        }
         /*const nonceInfo = await generateNonce(address);
         const signStr = await getWallet().signMessage(nonceInfo.data.nonce);
         this.login(address, signStr);*/

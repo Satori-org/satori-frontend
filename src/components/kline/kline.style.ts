@@ -3,6 +3,8 @@ import styled from "styled-components";
 export const KlineBox = styled.div`
 	height: 100%;
 	position: relative;
+	background: ${({theme}) => theme.colors.boxBgColor};
+	border-radius: 0.16rem;
 	.depthChart{
 		visibility: hidden;
 		&.active{

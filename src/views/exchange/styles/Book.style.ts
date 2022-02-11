@@ -8,10 +8,9 @@ export const BookStyle = styled.div`
     grid-column-end: 4;
     grid-row-start: 1;
     grid-row-end: 3;*/
-    width: 360px;
     display: flex;
     flex-direction: column;
-    background: ${({theme}) => theme.colors.backgroundColor};
+    background: ${({theme}) => theme.colors.boxBgColor};
     margin: 0 1px;
     flex-shrink: 0;
 `;

@@ -3,8 +3,7 @@ import {colors} from "../../../styles/style";
 
 export const TradeStyle = styled.div`
     position: relative;
-    width: 360px;
-    background: ${({theme}) => theme.colors.backgroundColor};
+    background: ${({theme}) => theme.colors.boxBgColor};
     flex-shrink: 0;
     /*border-bottom: 1px solid ${({theme}) => theme.colors.gapColor};*/
 `;

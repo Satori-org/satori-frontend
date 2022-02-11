@@ -3,15 +3,19 @@ import {colors} from "../../styles/style";
 
 export const ConectWalletStyle = styled.div`
     position: relative;
-    min-width: 170px;
-    line-height: 36px;
+    min-width: 1.17rem;
+    line-height: 0.32rem;
     background: ${({theme}) => theme.colors.boxBgColor};
-    color: ${({theme}) => theme.colors.baseColor};
-    border-radius: 6px;
+    color: ${({theme}) => theme.colors.headerButtonColor};
     padding: 0 16px;
     box-sizing: border-box;
     text-align: center;
     cursor:pointer;
+    .arrow{
+        width: 0.08rem;
+        height: 0.0495rem;
+        margin-left: 0.12rem;
+    }
 `;
 
 export const DropMenuContainer = styled.div`

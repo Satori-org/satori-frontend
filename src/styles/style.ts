@@ -8,6 +8,7 @@ export type IColors = {
     gapColor: string
     linkDefaultColor: string
     linkActiveBgColor: string
+    headerButtonColor: string
     boxBgColor: string
     baseColor: string
     backgroundColor: string
@@ -67,7 +68,6 @@ export const fonts = {
 
 
 export const Anchor = styled.a`
-    font-size: ${fonts.h5};
     color: ${colors.baseColor};
     &.active{
         color: ${colors.activeColor};

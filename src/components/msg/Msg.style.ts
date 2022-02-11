@@ -2,11 +2,10 @@ import styled from "styled-components";
 
 export const MsgStyle = styled.div`
     position: relative;
-    width: 36px;
-    height: 36px;
-    position: relative;
+    width: 0.32rem;
+    height: 0.32rem;
     background: ${({theme}) => theme.colors.boxBgColor};
-    border-radius: 6px;
+    color: ${({theme}) => theme.colors.headerButtonColor};
     cursor:pointer;
     .icon{
         width: 15px;

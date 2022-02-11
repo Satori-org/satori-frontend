@@ -6,8 +6,11 @@ export const ExchangeStyle = styled.div`
     display: flex;
     flex-direction: column;
     background: ${({theme}) => theme.colors.gapColor };
+    padding: 0 0.08rem;
     .trade-box{
-        display: flex;
+        display: grid;
+        grid-template-columns: 1fr 3rem 3rem;
+        grid-column-gap: 0.04rem;
         height: calc(100% - 35.3vh - 80px);
         margin-bottom: 1px;
         /*flex: 1;

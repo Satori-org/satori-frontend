@@ -4,30 +4,25 @@ import {colors} from "../../styles/style";
 export const HeaderStyle = styled.div`
     display: flex;
     justify-content: space-between;
-    height: 48px;
+    height: 0.48rem;
     position: relative;
-    padding: 0 24px;
-    .logoName{
-        font-size: 40px;
-        font-weight: bold;
-        color: ${({theme}) => theme.colors.baseColor};
-    }
+    padding-left: 0.16rem;
 `;
 
 export const Logo = styled.img`
-    width: 78px;
-    height: 16px;
+    width: 0.78rem;
+    height: 0.16rem;
 `;
 
 export const Nav = styled.nav`
     height: 100%;
-    margin-left: 24px;
+    margin-left: 0.24rem;
     .item{
-        font-size: 12px;
+        font-weight: bold;
         color: ${({theme}) => theme.colors.linkDefaultColor};
         cursor:pointer;
-        padding: 8px;
-        border-radius: 8px;
+        padding: 0.08rem;
+        border-radius: 0.08rem;
         &.active{
             color: ${({theme}) => theme.colors.activeColor};
             background: ${({theme}) => theme.colors.linkActiveBgColor};
@@ -36,7 +31,7 @@ export const Nav = styled.nav`
             color: ${({theme}) => theme.colors.activeColor};
         }
         &:not(:last-child){
-            margin-right: 8px;
+            margin-right: 0.08rem;
         }
     }
 `;
@@ -44,18 +39,18 @@ export const Nav = styled.nav`
 export const NavChild = styled.ul`
     position: relative;
     list-style: none;
-    font-size: 18px;
     &:hover{
         .navMenu{
             //display: inline-block;
         }
         .menuLabel{
+            font-weight: bold;
             color: ${({theme}) => theme.colors.activeColor};
         }
     }
     .menuLabel{
         height: 100%;
-        font-size: 12px;
+        font-weight: bold;
         color: ${({theme}) => theme.colors.linkDefaultColor};
         &.active{
             color: ${({theme}) => theme.colors.activeColor};

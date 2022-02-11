@@ -1,17 +1,21 @@
 import styled from "styled-components";
 
 export const NetworkStyle = styled.div`
-    min-width: 80px;
-    line-height: 36px;
-    padding: 0 12px;
+    width: 0.86rem;
+    line-height: 0.32rem;
+    padding: 0 0.12rem;
     box-sizing: border-box;
     background: ${({theme}) => theme.colors.boxBgColor};
-    border-radius: 6px;
+    color: ${({theme}) => theme.colors.headerButtonColor};
     text-align: center;
-    font-size: 14px;
     .icon{
-        width: 12px;
-        height: 12px;
-        margin-right: 11px;
+        width: 0.12rem;
+        height: 0.12rem;
+        margin-right: 0.08rem;
+    }
+    .arrow{
+        width: 0.08rem;
+        height: 0.0495rem;
+        margin-left: 0.12rem;
     }
 `;

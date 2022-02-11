@@ -16,6 +16,8 @@ import Toggle from '../toggle/Toggle';
 import {useEffectState} from "../../hooks/useEffectState";
 import {MsgStatus} from "../../common/enum";
 import CopyToClipboard from 'react-copy-to-clipboard';
+import {NetworkStyle} from "../network/Network.style";
+import {useThemeManager} from "../../hooks/useThemeManager";
 
 type IProp = {
     style?: CSSProperties
@@ -27,6 +29,7 @@ export default function ConectWallet(props: IProp) {
     const storeData = store.getState();
     const dispatch = mapDispatchToProps(store.dispatch);
     const { account, connect, reset } = useWallet();
+    const { isDark } = useThemeManager();
     const state = useEffectState({
         showModal: false,
         showDropMenu: false
@@ -126,6 +129,7 @@ export default function ConectWallet(props: IProp) {
     return (
         <div>
             <ConectWalletStyle
+                className={"borderRadius"}
                 style={props.style}
                 onMouseOver={() => {
                     if (storeData.address) {
@@ -141,7 +145,13 @@ export default function ConectWallet(props: IProp) {
                         event.stopPropagation();
                     }
                 }}>
-                <span>{storeData.address? formatAddress(storeData.address) : t(`Connect Wallet`)}</span>
+                <Toggle vIf={!!storeData.address}>
+                    <div className={"flex-row"}>
+                        <span>{formatAddress(storeData.address)}</span>
+                        <img src={isDark ? require("src/assets/images/dark/icon_arrow_down.png") : require("src/assets/images/light/icon_arrow_down.png")} className={"arrow"} alt=""/>
+                    </div>
+                    <span>{t(`Connect Wallet`)}</span>
+                </Toggle>
                 <Toggle vIf={state.showDropMenu}>
                     <DropMenuContainer>
                         <DropMenu onClick={(event) => event.stopPropagation()}>
