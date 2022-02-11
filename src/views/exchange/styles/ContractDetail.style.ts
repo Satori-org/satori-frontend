@@ -19,14 +19,15 @@ export const Title = styled.div`
 `;
 
 export const FieldLabel = styled.div`
-    line-height: 24px;
+    font-size: 0.12rem;
+    line-height: 0.28rem;
     color: ${({theme}) => theme.colors.baseColor};
     &:not(:last-child){
-        margin-bottom: 8px;
+        /*margin-bottom: 8px;*/
     }
     .label{
-        font-size: 14px;
-        color: ${({theme}) => theme.colors.labelColor};
+        font-size: 0.12rem;
+        color: ${({theme}) => theme.colors.borderColor};
         box-sizing: border-box;
         &.border{
             border-bottom: 1px dashed ${({theme}) => theme.colors.linkDefaultColor};

@@ -218,7 +218,7 @@ class Kline extends React.Component<Ikline, any>{
                 // datafeed: new Datafeeds.UDFCompatibleDatafeed(websocketAdd, exSymbol),
                 library_path: "/static/tradeview/charting_library/charting_library/",
                 //locale: this.getLanguage(this.props.redux.lang),
-                toolbar_bg: colors.backgroundColor,
+                toolbar_bg: colors.boxBgColor,
                 studies_access: {
                     type: "black", //| "white",
                     tools: [{
@@ -226,7 +226,7 @@ class Kline extends React.Component<Ikline, any>{
                         grayed: true
                     }, ]
                 },
-                loading_screen: { backgroundColor: colors.backgroundColor },
+                loading_screen: { backgroundColor: colors.boxBgColor },
                 customFormatters: {
                     timeFormatter: {
                         format: function(date:number) {
@@ -292,13 +292,13 @@ class Kline extends React.Component<Ikline, any>{
                     'mainSeriesProperties.candleStyle.upColor': colors.long,
                     'mainSeriesProperties.candleStyle.wickDownColor': colors.short,
                     'mainSeriesProperties.candleStyle.wickUpColor': colors.long,
-                    'paneProperties.background': colors.backgroundColor,
+                    'paneProperties.background': colors.boxBgColor,
                     'paneProperties.horzGridProperties.color': "rgba(28, 37, 59, 0.4)",
                     'paneProperties.topMargin': 5,
                     'paneProperties.bottomMargin': 1,
-                    'paneProperties.vertGridProperties.color': colors.backgroundColor,
+                    'paneProperties.vertGridProperties.color': colors.boxBgColor,
                     'paneProperties.vertGridProperties.style': 0,
-                    'scalesProperties.lineColor': colors.gapColor,
+                    'scalesProperties.lineColor': colors.borderColor2,
                     'scalesProperties.textColor': "#999",
                     'volumePaneSize': "medium"
                 }

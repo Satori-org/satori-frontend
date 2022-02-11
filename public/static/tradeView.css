@@ -1,8 +1,8 @@
 .js-rootresizer__contents{
-	background: #000 !important;
+	background: #181E1B !important;
 }
 body ,html{
-    background: #000;
+    background: #181E1B;
 }
 
 .chart-widget{
@@ -13,16 +13,16 @@ body ,html{
 	height:100% !important;
 }
 .chart-markup-table{
-    background-color: #000 !important;
+    background-color: #181E1B !important;
 }
 .chart-container-border{
-	background-color: #000 !important;
+	background-color: #181E1B !important;
 }
 /*.layout__area--left{
-	background-color: #000 !important;
+	background-color: #181E1B !important;
 }*/
 /*.layout__area--left div:nth-child(1){
-	background-color: #000 !important;
+	background-color: #181E1B !important;
 }*/
 /*这个会使分隔线变粗*/
 /*.chart-markup-table canvas{
@@ -84,7 +84,7 @@ body ,html{
 .chart-container {
     border: none !important;
     width: 100% !important;
-    background-color: #000 !important;
+    background-color: #181E1B !important;
 }
 
 .content-3_f7yH29- .customButton--jqJTfH5-:hover {
