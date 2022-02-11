@@ -84,12 +84,12 @@ export default function TokenInfo() {
     return (
         <TokenInfoStyle className={"flex-row"}>
             <TokenList />
-            <Hr />
-            <TokenData className={"flex-row scrollbar"}>
+            {/*<Hr />*/}
+            <TokenData className={"flex-row font14 scrollbar"}>
                 {/*<Price>{ fixedNumber(reducerState.marketPrice, decimal)}</Price>*/}
-                <Price className={`${isRise ? 'long' : 'short'}`}>{reducerState.tiker.close || "0"}</Price>
+                {/*<Price className={`${isRise ? 'long' : 'short'}`}>{reducerState.tiker.close || "0"}</Price>*/}
                 <div className={"dataGroup"}>
-                    <p className={"label"}>{t(`24h Change`)}</p>
+                    <p className={"label font10"}>{t(`24h Change`)}</p>
                     <p className={`${rise.className}`}>{rise.dotal}{reducerState.market24Data.changePrice || "0"}({reducerState.market24Data.changeRate || "0"}%)</p>
                 </div>
                 <div className={"dataGroup"}>

@@ -5,18 +5,18 @@ export const RecordStyle = styled.div`
     /*grid-column-end: span 3;*/
     flex: 1;
     /*min-height: 338px;*/
-    padding: 0 0 16px;
-    background: ${({theme}) => theme.colors.backgroundColor};
+    padding: 0 0.16rem;
+    background: ${({theme}) => theme.colors.boxBgColor};
 `;
 
 export const RecordHeader = styled.div`
-    border-bottom: 1px solid ${({theme}) => theme.colors.gapColor};
+    border-bottom: 1px solid ${({theme}) => theme.colors.borderColor2};
     margin-bottom: 16px;
 `;
 
 export const RecordTab = styled.div`
-    height: 50px;
-    padding: 0 20px;
+    height: 0.4rem;
+    /*padding: 0 20px;*/
     .tabItem{
         position: relative;
         height: 100%;
@@ -28,6 +28,7 @@ export const RecordTab = styled.div`
             color: ${({theme}) => theme.colors.activeColor};
         }
         &.active{
+            font-weight: bold;
             color: ${({theme}) => theme.colors.activeColor};
             &:after{
                 content: "";

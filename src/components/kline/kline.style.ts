@@ -1,10 +1,12 @@
 import styled from "styled-components";
 
 export const KlineBox = styled.div`
+    display: flex;
+    flex-direction: column;
 	height: 100%;
 	position: relative;
 	background: ${({theme}) => theme.colors.boxBgColor};
-	border-radius: 0.16rem;
+	border-top-left-radius: 0.16rem;
 	.depthChart{
 		visibility: hidden;
 		&.active{
@@ -15,6 +17,7 @@ export const KlineBox = styled.div`
 export const TradeViewStyle = styled.div`
 	position: relative;
 	visibility: hidden;
+	flex: 1;
 	&.loaded{
         visibility: visible;
     }

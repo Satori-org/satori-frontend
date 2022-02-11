@@ -1,5 +1,5 @@
 import React, {useState, useEffect, useMemo} from 'react';
-import {TradingviewToolStyle} from './tradingviewTool.style';
+import {FullImageIcon, TradingviewToolStyle} from './tradingviewTool.style';
 import { useTranslation } from 'react-i18next';
 import { ReloadOutlined } from '@ant-design/icons';
 
@@ -24,7 +24,7 @@ interface Iprops {
 export default function TradingviewTool(props:Iprops) {
     const {t} = useTranslation();
     //const [resolution, setResolution] = useState(props.resolution || "15");
-    const [activeIndex, setActive] = useState(-1);
+    const [activeIndex, setActive] = useState(0);
     let isFull = useFullScreenChange();
 
     const types = useMemo(() => {
@@ -56,7 +56,7 @@ export default function TradingviewTool(props:Iprops) {
                 {
                     types.map((item, index) => {
                         return <span className={`typeItem flex-box ${props.chartType === index ?'active':''}`}
-                                     style={{marginRight: "18px"}}
+                                     style={{marginRight: "0.16rem"}}
                                      key={index}
                                      onClick={() => props.toggle && props.toggle(index)}>{item}</span>
                     })
@@ -74,18 +74,23 @@ export default function TradingviewTool(props:Iprops) {
                 {
                     props.timeAry.map((item:Itime, index) => {
                         return (
-                            <span className={`toolItem ${(index === activeIndex && !props.showDepthChart)?'active':''}`} key={index}
+                            <span className={`toolItem font10 ${(index === activeIndex && !props.showDepthChart)?'active':''}`} key={index}
                                   onClick={() => changeResolution(item, index)}>
                                 {item.name}
                             </span>
                         )
                     })
                 }
-                <div style={{marginLeft: "26px"}}>
-                    {
+                <div style={{marginLeft: "0.26rem"}}>
+                    {/*{
                         isFull
                             ? <FullscreenExitOutlined className={'fullscreenIcon'} onClick={() => exitFullscreen()} />
                             : <FullscreenOutlined className={'fullscreenIcon'} title={t(`Full Screen`)} onClick={() => props.showFullScreen && props.showFullScreen()} />
+                    }*/}
+                    {
+                        isFull
+                            ? <FullImageIcon src={require("src/assets/images/full.png")} onClick={() => exitFullscreen()} alt=""/>
+                            : <FullImageIcon src={require("src/assets/images/full.png")} title={t(`Full Screen`)} onClick={() => props.showFullScreen && props.showFullScreen()} alt=""/>
                     }
                 </div>
                 {/*<span className={'toolItem'} onClick={() => props.executeActionById("insertIndicator")}>{t(`Indicators`)}</span>

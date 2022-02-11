@@ -5,11 +5,11 @@ type Itab = {len: number};
 export const TabStyle = styled.div<Itab>`
     display: flex;
     align-items: center;
-    height: 50px;
+    height: 0.4rem;
     text-align: center;
-    border-bottom: 1px solid ${({theme}) => theme.colors.gapColor};
+    border-bottom: 1px solid ${({theme}) => theme.colors.borderColor2};
     position: relative;
-    padding: 0 20px;
+    /*padding: 0 20px;*/
     box-sizing: border-box;
     .item{
         position: relative;

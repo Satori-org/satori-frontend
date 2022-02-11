@@ -55,7 +55,7 @@ export default function ConnectWalletModal(props: IProps) {
     }
 
     async function connectWallet() {
-        const accounts = await window.clover.request({ method: 'eth_requestAccounts' });
+        const accounts = await getWalletProvider().request({ method: 'eth_requestAccounts' });
         console.log('accounts:', accounts);
         dispatch.setWalletAddress(accounts[0]);
         /*let web3js = new Web3(getWalletProvider());//web3js is the web3 example you need

@@ -2,19 +2,19 @@ import styled from "styled-components";
 import {colors} from "../../../styles/style";
 
 export const TradingviewToolStyle = styled.div`
-    width: 100%;
+    /*width: 100%;*/
     height: 0.4rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
     color: ${({theme}) => theme.colors.baseColor};
-    margin-bottom: 1px;
+    margin: 0 0.16rem;
+    border-bottom: 1px solid ${({theme}) => theme.colors.borderColor2};
+    
     .toolItem{
         display: inline-block;
         border-right: 1px solid transparent;
-        font-size: 16px;
         padding: 0 10px;
-        line-height: 20px;
         cursor: pointer;
         color: ${({theme}) => theme.colors.labelColor};
         &.active{
@@ -38,7 +38,6 @@ export const TradingviewToolStyle = styled.div`
         height: 100%;
         display: flex;
         align-items: center;
-        margin-left: 20px;
         .typeItem{
             position: relative;
             height: 100%;
@@ -62,4 +61,13 @@ export const TradingviewToolStyle = styled.div`
             }
         }
     }
+`;
+
+
+export const FullImageIcon = styled.img`
+    width: 0.093rem;
+    height: 0.093rem;
+    vertical-align: baseline;
+    cursor:pointer;
+    margin-right: 0.01rem;
 `;

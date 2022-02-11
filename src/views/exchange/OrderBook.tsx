@@ -72,7 +72,7 @@ export default function OrderBook(props: IProps) {
 
     return (
         <ListContainer>
-            <LabelBox>
+            <LabelBox className={"font10"}>
                 <span className={"labelItem"}>{t(`Price`)}(USDT)</span>
                 <span
                     className={"labelItem"}>{t(`Amount`)}({reducerState.currentPair.tradeCoin && reducerState.currentPair.tradeCoin.symbol})</span>

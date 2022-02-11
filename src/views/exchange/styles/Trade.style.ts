@@ -5,6 +5,9 @@ export const TradeStyle = styled.div`
     position: relative;
     background: ${({theme}) => theme.colors.boxBgColor};
     flex-shrink: 0;
+    height: 100%;
+    overflow-y: hidden;
+    padding: 0 0.16rem;
     /*border-bottom: 1px solid ${({theme}) => theme.colors.gapColor};*/
 `;
 

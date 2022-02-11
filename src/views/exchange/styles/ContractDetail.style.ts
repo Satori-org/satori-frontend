@@ -2,20 +2,20 @@ import styled from "styled-components";
 import {colors} from "../../../styles/style";
 
 export const ContractDetailStyle = styled.div`
-    padding: 24px 20px 32px 20px;
-    background: ${({theme}) => theme.colors.backgroundColor};
+    padding: 0 0.16rem;
+    background: ${({theme}) => theme.colors.boxBgColor};
     display: flex;
     flex-direction: column;
-    width: 360px;
-    margin-left: 1px;
     box-sizing: border-box;
 `;
 
 
 export const Title = styled.div`
-    margin-bottom: 16px;
-    font-size: 18px;
-    color: ${({theme}) => theme.colors.labelColor};
+    margin-bottom: 0.16rem;
+    font-weight: bold;
+    line-height: 0.4rem;
+    color: ${({theme}) => theme.colors.baseColor};
+    border-bottom: 1px solid ${({theme}) => theme.colors.borderColor2};
 `;
 
 export const FieldLabel = styled.div`
@@ -35,19 +35,20 @@ export const FieldLabel = styled.div`
 `;
 
 export const ButtonGroup = styled.div`
-    grid-column-gap: 14px;
-    margin-top: 15px;
+    grid-column-gap: 0.12rem;
+    margin-top: 0.16rem;
     .button{
-        height: 42px;
-        background: ${({theme}) => theme.colors.activeColor};
-        color: ${({theme}) => theme.colors.backgroundColor};
+        height: 0.4rem;
+        background: ${({theme}) => theme.colors.depositBgColor};
+        color: ${({theme}) => theme.colors.depositColor};
         border-radius: 8px;
         box-sizing: border-box;
-        font-size: 14px;
+        font-size: 0.12rem;
+        font-weight: bold;
         &.Withdraw{
-            background: ${({theme}) => theme.colors.boxBgColor};
+            background: ${({theme}) => theme.colors.withdrawBgColor};
             border: none;
-            color: ${({theme}) => theme.colors.activeColor};
+            color: ${({theme}) => theme.colors.withdrawColor};
         }
         &:disabled{
             opacity: 0.6;

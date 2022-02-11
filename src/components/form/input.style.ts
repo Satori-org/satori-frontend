@@ -9,7 +9,7 @@ export const InputBox = styled.div`
     padding: 0 12px;
     font-size: 16px;
     height: ${$height};
-    background: ${({theme}) => theme.colors.boxBgColor};
+    background: ${({theme}) => theme.colors.inputBgColor};
     border-radius: 6px;
     border: 1px solid transparent;
     .label{

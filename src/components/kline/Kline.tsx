@@ -170,17 +170,17 @@ class Kline extends React.Component<Ikline, any>{
     getTimeAry() {
         const t = this.props.t;
         return [
-            {name: t(`Time`), value: '1MIN',resolution: '1', chartType: 3},
-            /*{name: t(`1分`), value: '1min',resolution: '1'},
+            /*{name: t(`Time`), value: '1MIN',resolution: '1', chartType: 3},
+            {name: t(`1分`), value: '1min',resolution: '1'},
             {name: t(`5分`), value: '5min',resolution: '5'},*/
-            {name: t(`15m`), value: '15MIN',resolution: '15'},
+            {name: t(`15M`), value: '15MIN',resolution: '15', chartType: 1},
             /*{name: t(`30min`), value: '30MIN',resolution: '30'},*/
-            {name: t(`1h`), value: '1HOUR',resolution: '60'},
-            {name: t(`4h`), value: '4HOUR',resolution: '240'},
+            {name: t(`1H`), value: '1HOUR',resolution: '60'},
+            {name: t(`4H`), value: '4HOUR',resolution: '240'},
             /*{name: t(`8h`), value: '8HOUR',resolution: '240'},
             {name: t(`12h`), value: '12HOUR',resolution: '720'},*/
-            {name: t(`1d`), value: '1DAY',resolution: '1D'},
-            {name: t(`1w`), value: '1WEEK',resolution: '1W'},
+            {name: t(`1D`), value: '1DAY',resolution: '1D'},
+            {name: t(`1W`), value: '1WEEK',resolution: '1W'},
            /* {name: t(`1M`), value: '1MONTH',resolution: '1M'}*/
         ];
     }
@@ -512,9 +512,9 @@ class Kline extends React.Component<Ikline, any>{
                      chartType={this.state.chartType}
                      toggle={(type) => this.setState({chartType: type})}
                 ></TradingviewTool>
-                <TradeViewStyle id={"trade-view"} className={`${this.state.loading?'':'loaded'}`} style={{height: "calc(100% - 51px)"}}></TradeViewStyle>
+                <TradeViewStyle id={"trade-view"} className={`${this.state.loading?'':'loaded'}`}></TradeViewStyle>
                 {this.state.loading?<Loading style={{backgroundColor: "transparent"}}></Loading>:null}
-                {
+                {/*{
                     this.props.depthData
                         ? <MyChartStyle id="myChart" className={`${this.state.chartType === 1?'active':''}`}>
                             <DepthChart
@@ -525,7 +525,7 @@ class Kline extends React.Component<Ikline, any>{
                                 asks={this.props.depthData.asks.map((item) => [item.price, item.quantity])}/>
                           </MyChartStyle>
                         : null
-                }
+                }*/}
                 { this.state.chartType === 2 ? <SymbolDetail /> :null }
 
                 {/*<DepthChart

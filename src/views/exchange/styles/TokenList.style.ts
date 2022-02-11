@@ -4,13 +4,15 @@ import {colors, fonts} from "src/styles/style";
 export const TokenListStyle = styled.div`
     position: relative;
     height: 100%;
-    padding: 0 24px;
+    padding: 0 0.16rem;
     text-align: center;
     font-size: ${fonts.h2};
+    /*border-right: 1px solid ${({theme}) => theme.colors.borderColor};*/
     .icon{
         display: inline-block;
-        margin-left: 12px;
-        width: 8px;
+        width: 0.08rem;
+        height: 0.0495rem;
+        margin-left: 0.12rem;
         /*margin-top: 4px;
         border-top: 6px solid ${colors.baseColor};
         border-right: 5px solid transparent;

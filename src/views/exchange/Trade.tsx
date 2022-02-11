@@ -302,7 +302,7 @@ export default function Trade(props: IProps) {
                      state.percent = 0;
                      state.orderType = value;
                  }} />
-            <div style={{padding: "0 20px", marginTop: "20px"}}>
+            <div style={{marginTop: "20px"}}>
                 <div>
                     {/*<LabelButton>{t(`Isolated`)}</LabelButton>*/}
                     <LabelButton onClick={() => {

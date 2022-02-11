@@ -2,7 +2,6 @@
 html body {
     margin: 0;
     min-width: 1380px;
-    font-size: 16px;
     line-height: initial;
     font-family: NHaas, Helvetica, Montserrat-Regular, PingFang SC, Microsoft YaHei, SourceHanSerifCN-Medium, robotoregular, Hiragino Sans GB, Heiti SC, WenQuanYi Micro Hei, Helvetica, Arial, monospace, serif;
     -webkit-font-smoothing: antialiased;
@@ -105,6 +104,10 @@ html ::-webkit-scrollbar-thumb {
 
 .font16 {
     font-size: 0.16rem;
+}
+
+.font20 {
+    font-size: 0.2rem;
 }
 
 .borderRadius{

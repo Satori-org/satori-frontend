@@ -2,16 +2,21 @@ import styled from "styled-components";
 
 export const ExchangeStyle = styled.div`
     /*display: flex;*/
-    height: calc(100vh - 48px);
+    /*height: calc(100vh - 0.48rem);*/
+    
     display: flex;
     flex-direction: column;
+    min-height: calc(100vh - 0.48rem);
     background: ${({theme}) => theme.colors.gapColor };
     padding: 0 0.08rem;
     .trade-box{
         display: grid;
         grid-template-columns: 1fr 3rem 3rem;
         grid-column-gap: 0.04rem;
-        height: calc(100% - 35.3vh - 80px);
+        /*height: calc(100% - 35.3vh - 80px);*/
+        /*flex: 1;
+        height: 0;*/
+        height: 5rem;
         margin-bottom: 1px;
         /*flex: 1;
         display: grid;
@@ -19,10 +24,13 @@ export const ExchangeStyle = styled.div`
         grid-gap: 1px;*/
     }
     .bottom-box{
-        display: flex;
-        height: 35.3vh;
+        display: grid;
+        grid-template-columns: 1fr 3rem;
+        grid-column-gap: 0.04rem;
+        height: 3rem;
         overflow-y: hidden;
         flex-shrink: 0;
+        margin-top: 0.04rem;
         /*flex-shrink: 0;
         width: 350px;
         display: flex;

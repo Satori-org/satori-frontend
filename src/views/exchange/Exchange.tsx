@@ -93,28 +93,26 @@ export default function Exchange() {
             <ExchangeStyle>
                 <TokenInfo />
                 <div className={"trade-box"}>
-                    <div>
-                        <div style={{height: "100%"}}>
-                            <Toggle vIf={!!reducerState.currentPair.symbol}>
-                                <Kline symbol={reducerState.currentPair.symbol}
-                                       kData={klineData}
-                                       ticker={ticker}
-                                       amountPrecision={"0"}
-                                       depthData={depthData}
-                                       resolution={reducerState.resolutionData.resolution}
-                                       resolutionData={reducerState.resolutionData}
-                                       saveChartData={saveChartData}
-                                       localResolutionKey={RESOLUTION_KEY}
-                                       localDataKey={TRADINGVIEW_SETTING}
-                                       changeResolution={(item:Itime) => {
-                                           dispatch({
-                                               type: exchangeActions.SET_RESOLUTION_DATA,
-                                               data: item
-                                           })
-                                       }}>
-                                </Kline>
-                            </Toggle>
-                        </div>
+                    <div style={{height: "100%"}}>
+                        <Toggle vIf={!!reducerState.currentPair.symbol}>
+                            <Kline symbol={reducerState.currentPair.symbol}
+                                   kData={klineData}
+                                   ticker={ticker}
+                                   amountPrecision={"0"}
+                                   depthData={depthData}
+                                   resolution={reducerState.resolutionData.resolution}
+                                   resolutionData={reducerState.resolutionData}
+                                   saveChartData={saveChartData}
+                                   localResolutionKey={RESOLUTION_KEY}
+                                   localDataKey={TRADINGVIEW_SETTING}
+                                   changeResolution={(item:Itime) => {
+                                       dispatch({
+                                           type: exchangeActions.SET_RESOLUTION_DATA,
+                                           data: item
+                                       })
+                                   }}>
+                            </Kline>
+                        </Toggle>
                     </div>
                     <Book depthData={depthData} tradeData={tradeData} />
                     <Trade longPrice={depthData.bids[0] && depthData.bids[0].price}

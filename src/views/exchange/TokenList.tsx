@@ -8,6 +8,8 @@ import {exchangeActions, mapExchangeDispatch} from "./exchangeReducer";
 import useExchangeStore from "./ExchangeProvider";
 import {$router} from "../../react-router-perfect/Index";
 import {fixedNumber, formatAmount, formatAmountRise} from "../../common/utilTools";
+import {Price} from "./styles/TokenInfo.style";
+import {useThemeManager} from "../../hooks/useThemeManager";
 
 
 type IPairRow = {
@@ -57,6 +59,7 @@ export default function TokenList() {
     const {t} = useTranslation();
     const [ reducerState, dispath ] = useExchangeStore();
     const mapDispatch = mapExchangeDispatch(dispath);
+    const {isDark} = useThemeManager();
     const state = useEffectState({
         showPanel: false,
         pairInfo: {} as IPair
@@ -74,6 +77,10 @@ export default function TokenList() {
             document.removeEventListener("click", docOnClick);
         }*/
     }, []);
+
+    const isRise = useMemo(() => {
+        return reducerState.tiker.close >= reducerState.tiker.open;
+    }, [reducerState.tiker]);
 
     function docOnClick() {
         state.showPanel = false;
@@ -115,10 +122,12 @@ export default function TokenList() {
         <TokenListStyle className={"flex-box"}
                         onMouseOver={() => state.showPanel = true}
                         onMouseLeave={() => state.showPanel = false}>
-            <div className={"flex-row"} style={{cursor: "pointer", userSelect: "none", whiteSpace: "nowrap"}}
-                 >
+            <div className={"flex-row font20"} style={{cursor: "pointer", userSelect: "none", whiteSpace: "nowrap"}}>
                 <span>{reducerState.currentPair.symbol}</span>
-                <img src={require("src/assets/images/icon_arrow_down.png")} className={`icon ${state.showPanel ? 'active' : ''}`} alt="" />
+                <Price className={`${isRise ? 'long' : 'short'}`}>{reducerState.tiker.close || "0"}</Price>
+                <img src={isDark ? require("src/assets/images/dark/icon_arrow_down.png") : require("src/assets/images/light/icon_arrow_down.png")}
+                     className={`icon ${state.showPanel ? 'active' : ''}`}
+                     alt="" />
                 {/*<span className={`icon ${state.showPanel ? 'active' : ''}`}></span>*/}
             </div>
             <Toggle vIf={state.showPanel}>

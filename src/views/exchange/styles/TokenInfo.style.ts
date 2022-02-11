@@ -20,17 +20,17 @@ export const TokenData = styled.div`
     white-space: nowrap;
     /*overflow: hidden;*/
     overflow-x: auto;
-    padding-left: 24px;
-    font-size: 14px;
     .dataGroup{
+        padding: 0 0.16rem;
+        border-left: 1px solid ${({theme}) => theme.colors.borderColor};
         &:not(:last-child){
             margin-right: 24px;
         }
         .label{
-            font-size: 10px;
+            font-size: 0.1rem;
             color: ${({theme}) => theme.colors.labelColor};
-            padding-bottom: 2px;
-            margin-bottom: 6px;
+            /*padding-bottom: 2px;*/
+            margin-bottom: 0.03rem;
             box-sizing: border-box;
             border-bottom: transparent;
             &.border{
@@ -47,10 +47,8 @@ export const TokenData = styled.div`
 `;
 
 export const Price = styled.div`
-    font-size: ${fonts.h2};
-    font-weight: bold;
     color: ${({theme}) => theme.colors.long};
-    margin-right: 24px;
+    margin: 0 0.16rem;
     &.long{
         color: ${({theme}) => theme.colors.long};
     }

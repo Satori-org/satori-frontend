@@ -105,7 +105,7 @@ class App extends React.Component<IProps, any>{
     render(): React.ReactElement<any, string | React.JSXElementConstructor<any>> | string | number | {} | React.ReactNodeArray | React.ReactPortal | boolean | null | undefined {
         return (
             <ThemeProviderWrapper>
-                <AppStyle className="App">
+                <AppStyle className="App font12">
                     <Header />
                     <RouterView></RouterView>
                 </AppStyle>

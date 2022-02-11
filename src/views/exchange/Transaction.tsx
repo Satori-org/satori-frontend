@@ -12,7 +12,7 @@ export default function Transaction(props: IProps) {
     const [reducerState] = useExchangeStore();
 
     return (
-        <ListContainer className={"scrollbar"}>
+        <ListContainer className={"scrollbar font10"}>
             <LabelBox>
                 <span className={"labelItem"}>{t(`Price`)}(USDT)</span>
                 <span className={"labelItem"}>{t(`Amount`)}({reducerState.currentPair.tradeCoin && reducerState.currentPair.tradeCoin.symbol})</span>

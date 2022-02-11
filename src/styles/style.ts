@@ -15,6 +15,7 @@ export type IColors = {
     labelColor: string
     long: string
     short: string
+    inputBgColor: string
     modalTitle: string
     subtitle: string
     filedColor: string
@@ -22,6 +23,11 @@ export type IColors = {
     activeBgColor: string
     explain: string
     borderColor: string
+    depositBgColor: string,
+    depositColor: string,
+    withdrawBgColor: string,
+    withdrawColor: string,
+    borderColor2: string
     tabActiveColor: string
     stepColor: string
     stepActiveColor: string
