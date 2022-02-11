@@ -2,7 +2,9 @@ import React from 'react';
 import {MyChartStyle} from './depthChart.style';
 import {withTranslation, WithTranslation, WithTranslationProps} from 'react-i18next';
 import connect, {IConnectProps} from "../../../store/connect";
-import {colors} from "../../../styles/style";
+import {THEME} from "../../../common/enum";
+import {light} from "../../../styles/light.style";
+import {dark} from "../../../styles/dark.style";
 //引入基本模板
 const echarts = require('echarts/lib/echarts');
 // 引入饼状图组件
@@ -11,7 +13,7 @@ require('echarts/lib/chart/line');
 require('echarts/lib/component/tooltip');
 require('echarts/lib/component/grid');
 
-interface IDepthItem {
+export interface IDepthItem {
     quantity:string,
     price:string
 }
@@ -83,10 +85,11 @@ class DepthChart extends React.Component<IuserProps, any>{
         if (!this.myChart) {
             return;
         }
+        const theme = this.props.redux.theme === THEME.dark ? dark : light;
         // 绘制图表
         this.myChart.setOption({
             animation: false,
-            backgroundColor: colors.backgroundColor,
+            backgroundColor: theme.colors.backgroundColor,
             tooltip: {
                 trigger: 'axis',
                 confine: true,
@@ -97,12 +100,12 @@ class DepthChart extends React.Component<IuserProps, any>{
                     }
                 },
                 alwaysShowContent: true,
-                backgroundColor: colors.pageBgColor,
-                borderColor: colors.pageBgColor,
+                backgroundColor: theme.colors.backgroundColor,
+                borderColor: theme.colors.backgroundColor,
                 formatter: (params:any) => {
                     let data = params && params[0].data;
-                    return [`<p style="text-align: left;color: ${colors.baseColor}"><span style="color: ${colors.labelColor}">${this.props.t(`价格`)}</span>  ：${data[0]}</p>
-                                <p style="text-align: left;color: ${colors.baseColor}"><span style="color: ${colors.labelColor}">${this.props.t(`总量`)}</span> ：${data[1].toFixed(this.amountPrecision)}</p>`].join('\n')
+                    return [`<p style="text-align: left;color: ${theme.colors.baseColor}"><span style="color: ${theme.colors.labelColor}">${this.props.t(`价格`)}</span>  ：${data[0]}</p>
+                                <p style="text-align: left;color: ${theme.colors.baseColor}"><span style="color: ${theme.colors.labelColor}">${this.props.t(`总量`)}</span> ：${data[1].toFixed(this.amountPrecision)}</p>`].join('\n')
                 }
             },
             grid: {
@@ -157,8 +160,8 @@ class DepthChart extends React.Component<IuserProps, any>{
                 showSymbol: false,
                 symbolSize: 10,
                 itemStyle: {
-                    color: colors.long,
-                    borderColor: colors.long,
+                    color: theme.colors.long,
+                    borderColor: theme.colors.long,
                     shadowColor: 'rgba(0, 0, 0, 0.5)',
                     shadowBlur: 10
                 },
@@ -183,7 +186,7 @@ class DepthChart extends React.Component<IuserProps, any>{
                     }
                 },
                 lineStyle: {
-                    color: colors.long,
+                    color: theme.colors.long,
                 },
                 areaStyle: {
                     color: 'rgba(152,227,158,0.49)'
@@ -196,8 +199,8 @@ class DepthChart extends React.Component<IuserProps, any>{
                     showSymbol: false,
                     symbolSize: 10,
                     itemStyle: {
-                        color: colors.short,
-                        borderColor: colors.short,
+                        color: theme.colors.short,
+                        borderColor: theme.colors.short,
                         shadowColor: 'rgba(0, 0, 0, 0.5)',
                         shadowBlur: 10
                     },
@@ -222,7 +225,7 @@ class DepthChart extends React.Component<IuserProps, any>{
                         }
                     },
                     lineStyle: {
-                        color: colors.short,
+                        color: theme.colors.short,
                     },
                     areaStyle: {
                         color: 'rgba(232,107,74,0.49)'

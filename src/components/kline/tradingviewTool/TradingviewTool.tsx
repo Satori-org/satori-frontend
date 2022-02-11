@@ -28,7 +28,7 @@ export default function TradingviewTool(props:Iprops) {
     let isFull = useFullScreenChange();
 
     const types = useMemo(() => {
-        return [t(`Price`), t(`Depth`), t(`Details`)]
+        return [t(`Index Chart`), t(`Depth`), t(`Funding`)]
     }, [t]);
 
     useEffect(() => {
@@ -52,7 +52,25 @@ export default function TradingviewTool(props:Iprops) {
 
     return (
         <TradingviewToolStyle>
-            <div>
+            <div className={'toolRight'}>
+                {
+                    types.map((item, index) => {
+                        return <span className={`typeItem flex-box ${props.chartType === index ?'active':''}`}
+                                     style={{marginRight: "18px"}}
+                                     key={index}
+                                     onClick={() => props.toggle && props.toggle(index)}>{item}</span>
+                    })
+                }
+                {/*<span className={`toolItem ${props.showDepthChart?'':'active'}`} style={{marginRight: "34px"}}
+                                              onClick={() => props.toggleDepthChart && props.toggleDepthChart(false)}>{t(`Price`)}</span>
+                <span className={`toolItem ${props.showDepthChart?'active':''}`} style={{marginRight: "34px"}}
+                                onClick={() => props.toggleDepthChart && props.toggleDepthChart(true)}>{t(`Depth`)}</span>*/}
+                {/*<ReloadOutlined className={'reloadIcon'} title={t(`重置`)} onClick={props.refresh} />*/}
+                {/*<span className={styles.fullscreenIcon} onClick={showFullScreen} title={isFullscreen?t(`退出全屏`):t(`全屏`)}>{isFullscreen?"&#xe63b;":"&#xe640;"}</span>*/}
+
+
+            </div>
+            <div className={"flex-row"}>
                 {
                     props.timeAry.map((item:Itime, index) => {
                         return (
@@ -63,28 +81,15 @@ export default function TradingviewTool(props:Iprops) {
                         )
                     })
                 }
+                <div style={{marginLeft: "26px"}}>
+                    {
+                        isFull
+                            ? <FullscreenExitOutlined className={'fullscreenIcon'} onClick={() => exitFullscreen()} />
+                            : <FullscreenOutlined className={'fullscreenIcon'} title={t(`Full Screen`)} onClick={() => props.showFullScreen && props.showFullScreen()} />
+                    }
+                </div>
                 {/*<span className={'toolItem'} onClick={() => props.executeActionById("insertIndicator")}>{t(`Indicators`)}</span>
                 <span className={'toolItem'} onClick={() => props.executeActionById("chartProperties")}>{t(`Settings`)}</span>*/}
-            </div>
-            <div className={'toolRight'}>
-                {
-                    types.map((item, index) => {
-                        return <span className={`toolItem ${props.chartType === index ?'active':''}`} style={{marginRight: "18px"}}
-                                     onClick={() => props.toggle && props.toggle(index)}>{item}</span>
-                    })
-                }
-                {/*<span className={`toolItem ${props.showDepthChart?'':'active'}`} style={{marginRight: "34px"}}
-                                              onClick={() => props.toggleDepthChart && props.toggleDepthChart(false)}>{t(`Price`)}</span>
-                <span className={`toolItem ${props.showDepthChart?'active':''}`} style={{marginRight: "34px"}}
-                                onClick={() => props.toggleDepthChart && props.toggleDepthChart(true)}>{t(`Depth`)}</span>*/}
-                {/*<ReloadOutlined className={'reloadIcon'} title={t(`重置`)} onClick={props.refresh} />*/}
-                {/*<span className={styles.fullscreenIcon} onClick={showFullScreen} title={isFullscreen?t(`退出全屏`):t(`全屏`)}>{isFullscreen?"&#xe63b;":"&#xe640;"}</span>*/}
-                {
-                    isFull
-                        ? <FullscreenExitOutlined className={'fullscreenIcon'} onClick={() => exitFullscreen()} />
-                        : <FullscreenOutlined className={'fullscreenIcon'} title={t(`Full Screen`)} onClick={() => props.showFullScreen && props.showFullScreen()} />
-                }
-
             </div>
         </TradingviewToolStyle>
     )

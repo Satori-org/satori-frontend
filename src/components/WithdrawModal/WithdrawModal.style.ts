@@ -23,12 +23,15 @@ export const AssetBox = styled.div`
     }
 `;
 
-export const RightBtn = styled.span`
-    font-size: 14px;
-    font-weight: 400;
-    margin: 0 8px;
-    color: ${colors.activeColor};
-    cursor:pointer;
+export const RightBtn = styled.button`
+    min-width: 50px;
+    height: 30px;
+    padding: 0 10px;
+    box-sizing: border-box;
+    color: ${({theme}) => theme.colors.labelColor};
+    background: rgba(255,255,255,.08);
+    border-radius: 8px;
+    margin-left: 8px;
 `;
 
 export const BalanceBox = styled.div`

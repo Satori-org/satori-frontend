@@ -14,7 +14,7 @@ export default function Header() {
             <div className={"content flex-row"}>
                 <div className={"flex-row"}>
                     <a href={"/"}>
-                        <Logo src={require("src/assets/images/logo.png")} />
+                        <Logo src={require("src/assets/images/logo_dark.png")} />
                     </a>
                     <a href="/" className={"link"}>{t(`Go to the official website`)}</a>
                 </div>

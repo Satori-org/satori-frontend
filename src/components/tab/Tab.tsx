@@ -7,6 +7,7 @@ type IProps<T = number> = {
     options: IOption<T>[]
     onChange(value: T, selected: IOption<T>): void
     defaultValue?: T
+    style?: CSSProperties
 }
 export default function Tab<T>(props: IProps<T>) {
     const state = useEffectState({
@@ -36,7 +37,7 @@ export default function Tab<T>(props: IProps<T>) {
     }, [state.active]);
 
     return (
-        <TabStyle len={props.options.length}>
+        <TabStyle len={props.options.length} style={props.style}>
             {
                 props.options.map((item,index) => {
                     return <div className={`item ${state.selected.value === item.value ? 'active' : ''}`}
@@ -47,7 +48,7 @@ export default function Tab<T>(props: IProps<T>) {
                                 }}>{item.text}</div>
                 })
             }
-            <TabSlider len={props.options.length} style={sliderStyle} />
+            {/*<TabSlider len={props.options.length} style={sliderStyle} />*/}
         </TabStyle>
     )
 }

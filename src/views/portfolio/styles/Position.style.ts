@@ -2,13 +2,12 @@ import styled from "styled-components";
 import {colors} from "src/styles/style";
 
 export const PositionStyle = styled.div`
+    position: relative;
     .tokenIcon{
         width: 16px;
         height: 16px;
     }
-    .name{
-        margin: 0 6px;
-    }
+    
     .Leverage{
         display: inline-block;
         min-width: 36px;
@@ -18,9 +17,14 @@ export const PositionStyle = styled.div`
         text-align: center;
     }
     .long{
-        color: ${colors.long};
+        color: ${({theme}) => theme.colors.long};
     }
     .short{
-        color: ${colors.short};
+        color: ${({theme}) => theme.colors.short};
+    }
+    .table{
+        td{
+            line-height: 54px;
+        }
     }
 `;

@@ -8,4 +8,5 @@ export interface Iroutes {
     exact?:boolean
     render?():  ReactComponent | LazyComponent
     beforeRender?(): void
+    meta?: any
 }

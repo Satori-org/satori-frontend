@@ -26,7 +26,7 @@ export interface IdefalutProps extends Pick<InputHTMLAttributes<HTMLInputElement
     onChange?(value:string, params?:any):void
 }
 
-interface inputProps extends IdefalutProps, WithTranslation{
+export interface inputProps extends IdefalutProps, WithTranslation{
 
 }
 interface inputState {
@@ -205,7 +205,10 @@ class Input extends React.Component<inputProps, inputState>{
                            required={this.props.required || this.context.required}
                            {...rest}
                            style={inputStyle}
-                           onBlur={this.handle}
+                           onBlur={(event) => {
+                               this.handle();
+                               this.props.onBlur && this.props.onBlur(event);
+                           }}
                            onChange={(event) => {this.changeState(event)}}/>
                 </div>
                 {

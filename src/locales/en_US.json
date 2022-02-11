@@ -1,4 +1,4 @@
 {
-    "您的300.00 USDT提现将在15次确认后获得。": "您的${amount} USDT提现将在15次确认后获得。",
-    "Your recharge cannot exceed the available pledge.": "您的${amount} USDT充值将在15次确认后获得。"
+    "Your 300.00 USDT withdraw will be successful after confirmation on the mainnet.": "Your ${amount} USDT withdraw will be successful after confirmation on the mainnet.",
+    "Your 300.00 USDT recharge will be available after confirmation on the mainnet.": "Your ${amount} USDT recharge will be available after confirmation on the mainnet."
 }

@@ -2,11 +2,12 @@
 html body {
   margin: 0;
   min-width: 1380px;
-  font-size: 14px;
+  font-size: 16px;
   line-height: initial;
-  font-family: Montserrat-Regular, PingFang SC, Microsoft YaHei, SourceHanSerifCN-Medium, robotoregular, Hiragino Sans GB, Heiti SC, WenQuanYi Micro Hei, Helvetica, Arial, monospace, serif;
+  font-family: Helvetica, Montserrat-Regular, PingFang SC, Microsoft YaHei, SourceHanSerifCN-Medium, robotoregular, Hiragino Sans GB, Heiti SC, WenQuanYi Micro Hei, Helvetica, Arial, monospace, serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overflow-x: auto;
 }
 *{
   margin: 0;
@@ -59,4 +60,18 @@ ul{
 }
 .inputWarn{
   border-color: #E86B4A!important;
+}
+
+/*scrollbar*/
+html ::-webkit-scrollbar-thumb {
+  border-radius: 4px;
+  background-color: #22352C;
+}
+.scrollbar::-webkit-scrollbar-thumb{
+  border-radius: 4px;
+  background-color: #22352C;
+}
+.scrollbar::-webkit-scrollbar{
+  width: 6px;
+  height: 6px;
 }

@@ -4,9 +4,9 @@ import {colors, fonts} from "../../../styles/style";
 export const SymbolDetailStyle = styled.div`
     position: absolute;
     width: 100%;
-	height: calc(100% - 56px);
-	bottom: 0;
-    background: ${colors.backgroundColor};
+	height: calc(100% - 58px);
+	bottom: 1px;
+    background: ${({theme}) => theme.colors.backgroundColor};
 `;
 
 export const Title = styled.div`

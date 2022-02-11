@@ -8,17 +8,19 @@ export const ModalBox = styled.div`
     top: 0;
     height: 100vh;
     z-index: 888;
+    background: rgb(13,13,13,0.7);
     .content{
         position: absolute;
         left: 50%;
         top: 50%;
         transform: translate(-50%, -50%);
-        width: 386px;
-        border-radius: 24px;
-        background: ${colors.tradeBgColor};
-        padding: 26px 31px;
+        width: 384px;
+        border-radius: 16px;
+        background: #000;
+        padding: 32px;
         box-sizing: border-box;
-        color: ${colors.baseColor};
+        color: #F6F7F0;
+        border: 1px solid rgba(255, 255, 255, 0.12);
         .close{
             /*position: absolute;
             right: 0;
@@ -33,8 +35,9 @@ export const ModalBox = styled.div`
         }
     }
     .title{
-        font-size: 18px;
+        font-size: 24px;
         font-weight: bold;
         text-align: left;
+        color: ${({theme}) => theme.colors.modalTitle};
     }
 `;

@@ -1,3 +1,11 @@
 .App {
 
 }
+
+#root{
+    /*position: absolute;
+    inset: 0;
+    margin-right: -17px;*/
+    overflow-y: auto;
+    min-width: 1380px;
+}

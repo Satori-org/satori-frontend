@@ -1,16 +1,10 @@
-import Web3 from "web3";
-import {Dispatch} from "redux";
-import {chainID, chainNode, erc20, MaxApproveBalance, minAllowance, nft, project} from "./config";
+import {chainNode, erc20, MaxApproveBalance, minAllowance, project} from "./config";
 import {ethers, utils} from "ethers";
 import {ITrans} from "./types";
 import PubSub from "pubsub-js";
-import web3 from 'web3';
-import {useEffect, useState} from "react";
 import {Decimal} from "decimal.js";
-import {PROVIDER} from "../config";
-var networks = require('@ethersproject/networks');
-var providers = require('@ethersproject/providers');
-
+import {getWalletProvider} from "../config";
+import Web3 from "web3";
 
 export async function getBalance(address: string) {
     let balance = await getWallet().provider.getBalance(address);
@@ -23,7 +17,7 @@ export function getProvider() {
 }
 
 export function getWallet() {
-    return new ethers.providers.Web3Provider(window["ethereum"]).getSigner();
+    return new ethers.providers.Web3Provider(getWalletProvider()).getSigner();
 }
 
 export function NewReadContract(address: string, abi: any[]) {
@@ -61,24 +55,6 @@ export function needApprove(params: IApprove): Promise<boolean> {
     });
 }
 
-type IApproveNft = {
-    token: string,
-    spender: string,
-    tokenId: number
-}
-export function needApproveNFT(params: IApproveNft): Promise<boolean> {
-    return new Promise(async (resolve, reject) => {
-        let contract = NewReadContract(params.token, nft);
-        let spender = await contract.getApproved(params.tokenId);
-        if (spender === params.spender) {
-            resolve(true);
-        } else {
-            resolve(false);
-        }
-    });
-}
-
-
 export function approve(params: IApprove): Promise<ITrans> {
     return new Promise(async (resolve, reject) => {
         let contract = NewWriteContract(params.token, erc20);
@@ -94,7 +70,7 @@ export function approve(params: IApprove): Promise<ITrans> {
 export function checkHashStatus(tranInfo: ITrans) {
 
     function checkStatus(currentHash:string, callback: Function) {
-        let instance = new ethers.providers.Web3Provider(PROVIDER);
+        let instance = new ethers.providers.Web3Provider(getWalletProvider());
         //const instance = new web3(chainNode);
         //instance.eth.getTransactionReceipt(currentHash).then((res) => {
         instance.getTransactionReceipt(currentHash).then((res) => {
@@ -138,10 +114,26 @@ interface ISignatrua {
     signatrue: string
 }
 
-export async function signMsg(signObj: any) : Promise<ISignatrua>{
+export async function signMsg(signObj: any, walletAddress: string) : Promise<ISignatrua>{
     const originData = JSON.stringify(signObj);
-    const withdrawSignature = await getWallet().signMessage(originData);
-    return {origin: originData, signatrue:withdrawSignature}
+    /*const signature = await getWallet().signMessage(originData);
+    return {origin: originData, signatrue: signature}*/
+
+    return signString(originData, walletAddress);
+}
+
+export async function signString(str: string, address: string) : Promise<ISignatrua>{
+    let web3Provider = new Web3(getWalletProvider());
+
+    return new Promise((resolve, reject) => {
+        web3Provider.eth.personal.sign(str, address, "", (err: any, res: any) => {
+            if (!err) {
+                resolve({origin: str, signatrue: res});
+            } else {
+                reject(err);
+            }
+        })
+    });
 }
 
 export function signExpire(duration = 30 * 1000) {

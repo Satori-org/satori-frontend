@@ -3,16 +3,38 @@ import {colors} from "../../styles/style";
 
 type Itab = {len: number};
 export const TabStyle = styled.div<Itab>`
-    display: grid;
-    grid-template-columns: repeat(${(props: Itab) => props.len}, 1fr);
-    border-bottom: 2px solid ${colors.auxiBgColor};
+    display: flex;
+    align-items: center;
+    height: 50px;
     text-align: center;
+    border-bottom: 1px solid ${({theme}) => theme.colors.gapColor};
     position: relative;
+    padding: 0 20px;
+    box-sizing: border-box;
     .item{
-        padding: 7px 0;
+        position: relative;
+        height: 100%;
+        display: flex;
+        align-items: center;
         cursor:pointer;
+        color: ${({theme}) => theme.colors.labelColor};
+        &:hover{
+            color: ${({theme}) => theme.colors.activeColor};
+        }
         &.active{
-            color: ${colors.activeColor};
+            color: ${({theme}) => theme.colors.activeColor};
+            &:after{
+                content: "";
+                position: absolute;
+                bottom: 0;
+                width: 100%;
+                height: 2px;
+                background: ${({theme}) => theme.colors.activeColor};
+                transform: translateY(50%);
+            }
+        }
+        &:not(:last-child){
+            margin-right: 24px;
         }
     }
     

@@ -6,7 +6,7 @@ export const OperationBtnStyle = styled.button`
     height: 28px;
     font-size: 12px;
     font-weight: 400;
-    color: ${colors.baseColor};
+    color: ${({theme}) => theme.colors.baseColor};
     background: ${colors.auxiBgColor};
     border-radius: 8px;
 `;

@@ -8,6 +8,7 @@ export function useRouteChange(hashModel?: boolean) {
     const [pathname, setPathname] = useState(initPathname());
     const [routeData, setRouteData] = useState<any>($router.params);
     const [routeQuery, setRouteQuery] = useState<any>($router.query);
+    const [routeMeta, setRouteMeta] = useState<any>($router.meta);
     const pathRef = useRef(pathname);
     /*const state: any = useEffectState({
         pathname: initPathname(),
@@ -21,7 +22,7 @@ export function useRouteChange(hashModel?: boolean) {
         } else {
             addHistoryListener();
         }
-
+        effectRouteData();
         return () => {
             window.removeEventListener("popstate", callback);
             window.removeEventListener("pushState", callback);
@@ -59,12 +60,15 @@ export function useRouteChange(hashModel?: boolean) {
     }
 
     function effectRouteData() {
-        let { query, params } = $router.getRouteData();
+        let { query, params, meta } = $router.getRouteData();
         if (!deepCompare(params, routeData)) {
             setRouteData(params)
         }
         if (!deepCompare(query, routeQuery)) {
             setRouteQuery(query)
+        }
+        if (!deepCompare(meta, routeMeta)) {
+            setRouteMeta(meta)
         }
     }
 
@@ -72,5 +76,5 @@ export function useRouteChange(hashModel?: boolean) {
         return hash.replace(/(#)(\/.+)([\?\/]).+/g, function(a,b,c){return c})
     }
 
-    return {pathname, routeData, routeQuery};
+    return {pathname, routeData, routeQuery, meta: routeMeta};
 }

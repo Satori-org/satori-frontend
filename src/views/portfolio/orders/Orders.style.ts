@@ -8,4 +8,18 @@ export const OrdersStyle = styled.div`
     .short{
         color: ${colors.short};
     }
+    .table{
+        th{
+            &:last-child{
+                text-align: center;
+            }
+        }
+        td{
+            line-height: 54px;
+            &:last-child{
+                text-align: center;
+            }
+        }
+    }
 `;
+

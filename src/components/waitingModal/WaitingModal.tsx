@@ -4,8 +4,9 @@ import {ProgressBar, WaitingModalStyle} from './WaitingModal.style';
 import ReactDOM from "react-dom";
 import {useEffectState} from "../../hooks/useEffectState";
 import {ethers} from "ethers";
-import {PROVIDER} from "../../config";
+import {getWalletProvider} from "../../config";
 import PubSub from "pubsub-js";
+import {getProvider} from "../../contract/wallet";
 
 interface IParams {
     title: string
@@ -30,10 +31,10 @@ function WaitingModal(props: INotification) {
     }, []);
 
     async function checkConfirm() {
-        let instance = new ethers.providers.Web3Provider(PROVIDER);
+        // let instance = new ethers.providers.Web3Provider(getWalletProvider());
         //const instance = new web3(chainNode);
         //instance.eth.getTransactionReceipt(currentHash).then((res) => {
-        instance.getTransactionReceipt(props.hash).then((res) => {
+        getProvider().getTransactionReceipt(props.hash).then((res) => {
             console.log("confirmations",res.confirmations);
             console.log(res);
             console.log(res.status);
@@ -53,14 +54,14 @@ function WaitingModal(props: INotification) {
 
     return (
         <WaitingModalStyle>
-            <h3 className={"flex-box title"}>
+            <h3 className={"flex-row title"}>
                 <img src={require("src/assets/images/wait.png")} className={"icon"} alt="" />
                 <div>{props.title}</div>
             </h3>
             <div className={"content"}>
                 {props.content}
             </div>
-            <div className={"label"}>{state.count}/15 {t(`confirmations`)}</div>
+            {/*<div className={"label"}>{state.count}/15 {t(`confirmations`)}</div>*/}
             <ProgressBar>
                 <div className={"progress"} style={{width: `${state.count/15*100}%`, maxWidth: "100%"}}></div>
             </ProgressBar>

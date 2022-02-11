@@ -1,16 +1,19 @@
 import React from 'react';
 import { withTranslation, WithTranslation } from 'react-i18next';
-import {KlineBox, TradeViewStyle} from './kline.style';
+import {KlineBox, MyChartStyle, TradeViewStyle} from './kline.style';
 import datafeeds from './datafeeds/datafees.js'
 //import TradingView from 'public/static/tradeview/charting_library/charting_library/charting_library.min';
 import TradingviewTool from './tradingviewTool/TradingviewTool';
-import DepthChart, {IDepthData} from './depthChart/DepthChart';
+import {IDepthData} from './depthChart/DepthChart';
+import DepthChart from 'src/components/depthChart/DepthChart';
 import { formatDate, fullscreen } from 'src/common/utilTools';
 import connect, {IConnectProps} from 'src/store/connect';
 import {langType} from "src/locales/i18n";
 import Loading from "../loadStatus/Loading";
-import {colors} from "../../styles/style";
 import SymbolDetail from "./symbol/SymbolDetail";
+import {THEME} from "../../common/enum";
+import { dark } from 'src/styles/dark.style';
+import {light} from "../../styles/light.style";
 
 export interface Idata {
     time: number,
@@ -26,10 +29,20 @@ export interface Itime {
     resolution:string,
     chartType?:number
 }
+
+export interface IAccountInfo {
+    availableAmount: string
+    coinId: number
+    frozenMargin: string
+    realizedPnl: string
+    totalAssets: string
+    unrealizedPnl: string
+}
+
 interface Ikline extends WithTranslation, IConnectProps{
     symbol:string,
     kData: Array<Idata>,
-    depthData?: IDepthData,
+    depthData: IDepthData,
     precision?: number,
     ticker?:Idata | undefined,
     hideTimeValue?: string[],
@@ -100,6 +113,9 @@ class Kline extends React.Component<Ikline, any>{
             }
         }
         if (this.props.kData.length !==0 && prevProps.kData !== this.props.kData) {
+            /*if (!this.widget._ready) {
+                alert("error")
+            }*/
             this.onMessage({
                 data: this.props.kData
             });
@@ -122,6 +138,9 @@ class Kline extends React.Component<Ikline, any>{
                 }
                 this.datafeeds.barsUpdater.updateData();
             }
+        }
+        if (this.props.redux.theme !== prevProps.redux.theme) {
+            this.refresh();
         }
         if (prevProps.redux.lang !== this.props.redux.lang) {
             this.timeAry = this.getTimeAry();
@@ -154,15 +173,15 @@ class Kline extends React.Component<Ikline, any>{
             {name: t(`Time`), value: '1MIN',resolution: '1', chartType: 3},
             /*{name: t(`1分`), value: '1min',resolution: '1'},
             {name: t(`5分`), value: '5min',resolution: '5'},*/
-            {name: t(`15min`), value: '15MIN',resolution: '15'},
-            {name: t(`30min`), value: '30MIN',resolution: '30'},
+            {name: t(`15m`), value: '15MIN',resolution: '15'},
+            /*{name: t(`30min`), value: '30MIN',resolution: '30'},*/
             {name: t(`1h`), value: '1HOUR',resolution: '60'},
             {name: t(`4h`), value: '4HOUR',resolution: '240'},
-            {name: t(`8h`), value: '8HOUR',resolution: '240'},
-            {name: t(`12h`), value: '12HOUR',resolution: '720'},
-            {name: t(`1D`), value: '1DAY',resolution: '1D'},
-            {name: t(`1W`), value: '1WEEK',resolution: '1W'},
-            {name: t(`1M`), value: '1MONTH',resolution: '1M'}
+            /*{name: t(`8h`), value: '8HOUR',resolution: '240'},
+            {name: t(`12h`), value: '12HOUR',resolution: '720'},*/
+            {name: t(`1d`), value: '1DAY',resolution: '1D'},
+            {name: t(`1w`), value: '1WEEK',resolution: '1W'},
+           /* {name: t(`1M`), value: '1MONTH',resolution: '1M'}*/
         ];
     }
 
@@ -178,10 +197,12 @@ class Kline extends React.Component<Ikline, any>{
             this.widget = null;
         }
         if (!this.widget) {
-            const bgColor = colors.backgroundColor;
+            const isDark = this.props.redux.theme === THEME.dark;
+            //const bgColor = isDark ? dark.colors.backgroundColor : light.colors.backgroundColor;
+            const colors = isDark ? dark.colors : light.colors;
             // @ts-ignore
             this.widget = new window.TradingView.widget({
-                custom_css_url: '/static/tradeView.css?v=2.2',
+                custom_css_url: isDark ? '/static/tradeView.css?v=2.2' : '/static/tradeView.light.css?v=2.2',
                 symbol: this.props.symbol,
                 // fullscreen: true,
                 container_id: 'trade-view',
@@ -191,13 +212,13 @@ class Kline extends React.Component<Ikline, any>{
                 debug: false, // uncomment this line to see Library errors and warnings in the console
                 fullscreen: false,
                 interval: this.resolution,
-                theme: 'Dark',
+                theme: isDark?'Dark':'Light',
                 timezone: "Asia/Shanghai",
                 saved_data: this.state.settings?JSON.parse(this.state.settings || ""):null,
                 // datafeed: new Datafeeds.UDFCompatibleDatafeed(websocketAdd, exSymbol),
                 library_path: "/static/tradeview/charting_library/charting_library/",
-                locale: this.getLanguage(this.props.redux.lang),
-                toolbar_bg: bgColor,
+                //locale: this.getLanguage(this.props.redux.lang),
+                toolbar_bg: colors.backgroundColor,
                 studies_access: {
                     type: "black", //| "white",
                     tools: [{
@@ -205,7 +226,7 @@ class Kline extends React.Component<Ikline, any>{
                         grayed: true
                     }, ]
                 },
-                loading_screen: { backgroundColor: bgColor },
+                loading_screen: { backgroundColor: colors.backgroundColor },
                 customFormatters: {
                     timeFormatter: {
                         format: function(date:number) {
@@ -219,8 +240,8 @@ class Kline extends React.Component<Ikline, any>{
                     }
                 },
                 studies_overrides: {
-                    "volume.volume.color.0": "rgba(152,227,158,0.3)",
-                    "volume.volume.color.1": "rgba(232,107,74,0.3)"
+                    "volume.volume.color.0": "rgba(219,87,75,0.5)",
+                    "volume.volume.color.1": "rgba(57,172,89,0.5)"
                 },
                 disabled_features: [
                     "display_market_status",
@@ -263,21 +284,21 @@ class Kline extends React.Component<Ikline, any>{
                 user_id: 'public_user_id',
                 overrides: {
                     'MACDPaneSize': "tiny",
-                    'mainSeriesProperties.candleStyle.borderDownColor': colors.long,
-                    'mainSeriesProperties.candleStyle.borderUpColor': colors.short,
-                    'mainSeriesProperties.candleStyle.downColor': colors.long,
+                    'mainSeriesProperties.candleStyle.borderDownColor': colors.short,
+                    'mainSeriesProperties.candleStyle.borderUpColor': colors.long,
+                    'mainSeriesProperties.candleStyle.downColor': colors.short,
                     'mainSeriesProperties.candleStyle.drawBorder': true,
                     'mainSeriesProperties.candleStyle.drawWick': true,
-                    'mainSeriesProperties.candleStyle.upColor': colors.short,
-                    'mainSeriesProperties.candleStyle.wickDownColor': colors.long,
-                    'mainSeriesProperties.candleStyle.wickUpColor': colors.short,
-                    'paneProperties.background': bgColor,
+                    'mainSeriesProperties.candleStyle.upColor': colors.long,
+                    'mainSeriesProperties.candleStyle.wickDownColor': colors.short,
+                    'mainSeriesProperties.candleStyle.wickUpColor': colors.long,
+                    'paneProperties.background': colors.backgroundColor,
                     'paneProperties.horzGridProperties.color': "rgba(28, 37, 59, 0.4)",
                     'paneProperties.topMargin': 5,
                     'paneProperties.bottomMargin': 1,
-                    'paneProperties.vertGridProperties.color': bgColor,
+                    'paneProperties.vertGridProperties.color': colors.backgroundColor,
                     'paneProperties.vertGridProperties.style': 0,
-                    'scalesProperties.lineColor': "#525a77",
+                    'scalesProperties.lineColor': colors.gapColor,
                     'scalesProperties.textColor': "#999",
                     'volumePaneSize': "medium"
                 }
@@ -296,6 +317,14 @@ class Kline extends React.Component<Ikline, any>{
             this.widget.subscribe("onAutoSaveNeeded", () => {
                 this.saveChartData();
             })
+            if (this.props.kData.length > 0) {
+                console.log("初始化  data")
+                this.onMessage({
+                    data: this.props.kData
+                });
+            } else {
+                console.log("初始化  失败")
+            }
             //Load the depth chart after the k-line is finished
             /*setTimeout(() => {
                 this.loadDepthChart = true;
@@ -483,20 +512,28 @@ class Kline extends React.Component<Ikline, any>{
                      chartType={this.state.chartType}
                      toggle={(type) => this.setState({chartType: type})}
                 ></TradingviewTool>
-                <TradeViewStyle id={"trade-view"} className={`${this.state.loading?'':'loaded'}`} style={{height: "calc(100% - 58px)"}}></TradeViewStyle>
+                <TradeViewStyle id={"trade-view"} className={`${this.state.loading?'':'loaded'}`} style={{height: "calc(100% - 51px)"}}></TradeViewStyle>
                 {this.state.loading?<Loading style={{backgroundColor: "transparent"}}></Loading>:null}
                 {
                     this.props.depthData
-                        ? <DepthChart
-                             depthData={this.props.depthData}
-                             precision={this.props.precision}
-                             amountPrecision={this.props.amountPrecision}
-                             show={this.state.chartType === 1}>
-                          </DepthChart>
+                        ? <MyChartStyle id="myChart" className={`${this.state.chartType === 1?'active':''}`}>
+                            <DepthChart
+                                style={{width: "100%", height: "100%"}}
+                                chartSpace={0}
+                                cSpace={0}
+                                bids={this.props.depthData.bids.map((item) => [item.price, item.quantity])}
+                                asks={this.props.depthData.asks.map((item) => [item.price, item.quantity])}/>
+                          </MyChartStyle>
                         : null
                 }
                 { this.state.chartType === 2 ? <SymbolDetail /> :null }
 
+                {/*<DepthChart
+                    depthData={this.props.depthData}
+                    precision={this.props.precision}
+                    amountPrecision={this.props.amountPrecision}
+                    show={this.state.chartType === 1}>
+                </DepthChart>*/}
             </KlineBox>
         )
     }

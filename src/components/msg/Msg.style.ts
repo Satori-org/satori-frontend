@@ -1,15 +1,16 @@
 import styled from "styled-components";
 
 export const MsgStyle = styled.div`
+    position: relative;
     width: 36px;
     height: 36px;
     position: relative;
-    background: #1A1D27;
-    border-radius: 50%;
+    background: ${({theme}) => theme.colors.boxBgColor};
+    border-radius: 6px;
     cursor:pointer;
     .icon{
-        width: 16px;
-        height: 16px;
+        width: 15px;
+        height: 20px;
     }
     .tag{
         position: absolute;

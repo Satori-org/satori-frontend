@@ -9,9 +9,8 @@ import { CSSTransition } from 'react-transition-group';
 interface INotification {
     className?: string,
     style?: CSSProperties,
-    destoryComponent():void,
 }
-function NotificationModal(props: INotification) {
+export function NotificationModal(props: INotification) {
     const {t} = useTranslation();
     const state = useEffectState({
        active: false
@@ -22,42 +21,33 @@ function NotificationModal(props: INotification) {
     }, []);
 
     const list = [
-        {icon: require("src/assets/images/n_buy.png"), title: t(`Deposit`), content: t(`300.00BNB has been successfully depositted.`), createTime: "2021-11-22 23:00:00"},
-        {icon: require("src/assets/images/n_sell.png"), title: t(`Deposit`), content: t(`300.00BNB has been successfully depositted.`), createTime: "2021-11-22 23:00:00"}
+        {icon: require("src/assets/images/n_deposit.png"), title: t(`Deposit`), content: t(`300.00BNB has been successfully depositted.`), createTime: "2021-11-22 23:00:00"},
+        {icon: require("src/assets/images/n_withdraw.png"), title: t(`withdraw`), content: t(`300.00BNB has been successfully depositted.`), createTime: "2021-11-22 23:00:00"}
     ];
 
     return (
-        <NotificationModalStyle className={`${state.active ? 'active' : ''}`} onClick={() => {
-            state.active = false;
-
-        }}>
-            <CSSTransition in={state.active} timeout={200} classNames={"my-slider-right"} unmountOnExit onExited={() => {
-                props.destoryComponent();
-            }}>
-                <NotificationContent>
-                    <Title>{t(`Notifications`)}</Title>
-                    <List>
-                        {
-                            list.map((item, index) => {
-                                return <div className={"item"} key={index}>
-                                    <div className={"flex-row itemTitle"}>
-                                        <img src={item.icon} className={"titleIcon"} alt="" />
-                                        <span>{item.title}</span>
-                                    </div>
-                                    <div className={"content"}>{item.content} </div>
-                                    <div className={"time"}>{item.createTime}</div>
-                                </div>
-                            })
-                        }
-                    </List>
-                </NotificationContent>
-            </CSSTransition>
-        </NotificationModalStyle>
+        <NotificationContent>
+            {/*<Title>{t(`Notifications`)}</Title>*/}
+            <List>
+                {
+                    list.map((item, index) => {
+                        return <div className={"item"} key={index}>
+                            <div className={"flex-row itemTitle"}>
+                                <img src={item.icon} className={"titleIcon"} alt="" />
+                                <span>{item.title}</span>
+                            </div>
+                            <div className={"content"}>{item.content} </div>
+                            <div className={"time"}>{item.createTime}</div>
+                        </div>
+                    })
+                }
+            </List>
+        </NotificationContent>
     )
 }
 
 
-export default function OpenNotificationModal() {
+/*export default function OpenNotificationModal() {
     let id = "notification-box";
     let toastBox = document.getElementById(id);
     if (!toastBox) {
@@ -71,4 +61,4 @@ export default function OpenNotificationModal() {
         }
     };
     ReactDOM.render(<NotificationModal destoryComponent={destoryComponent}></NotificationModal>, toastBox);
-}
+}*/

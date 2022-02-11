@@ -5,6 +5,8 @@ import {Iroutes} from "../react-router-perfect/types";
 const Home = () => import(/* webpackChunkName: "index" */"src/views/home/Home");
 const Exchange = () => import(/* webpackChunkName: "exchange" */"src/views/exchange/Exchange");
 const Portfolio = () => import(/* webpackChunkName: "portfolio" */"src/views/portfolio/Portfolio");
+//const DepthChartDemo = () => import(/* webpackChunkName: "DepthChartDemo" */"src/views/DepthChartDemo");
+const Status = () => import(/* webpackChunkName: "status" */"src/views/status/Status");
 
 export default function RouterView() {
 
@@ -21,6 +23,14 @@ export default function RouterView() {
         {
             path: "/portfolio",
             component: Portfolio
+        },
+        /*{
+            path: "/DepthChartDemo",
+            component: DepthChartDemo
+        },*/
+        {
+            path: "/doc/status",
+            component: Status
         }
     ];
 

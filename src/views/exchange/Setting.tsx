@@ -9,9 +9,10 @@ const checkbox_selected = require("src/assets/images/icon_checkbox_selected@2x.p
 
 type IProps = {
     onChange(customerTokens: ICustomerToken[]): void
+    symbol: string
 }
 export default function Setting(props: IProps) {
-    const {customerTokenInfo, toggleTokenInfo} = useCustomerTokenInfo();
+    const {customerTokenInfo, toggleTokenInfo} = useCustomerTokenInfo(props.symbol);
     const state = useEffectState({
         showPanel: false
     });
@@ -22,7 +23,7 @@ export default function Setting(props: IProps) {
 
     return (
         <SettingStyle className={"flex-box"}>
-            <img src={require("src/assets/images/settings.png")} className={"icon"} alt=""
+            {/*<img src={require("src/assets/images/settings.png")} className={"icon"} alt=""
                  onClick={() => state.showPanel = !state.showPanel}/>
                 <CSSTransition in={state.showPanel} timeout={200} classNames={"my-slider-right"} unmountOnExit>
                     <PanelStyle>
@@ -36,7 +37,7 @@ export default function Setting(props: IProps) {
                             })
                         }
                     </PanelStyle>
-                </CSSTransition>
+                </CSSTransition>*/}
         </SettingStyle>
     )
 }

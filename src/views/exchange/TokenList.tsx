@@ -1,67 +1,140 @@
-import React, {useEffect, useReducer} from 'react';
+import React, {CSSProperties, useEffect, useMemo} from 'react';
 import { useTranslation } from 'react-i18next';
 import Toggle from 'src/components/toggle/Toggle';
 import {PanelStyle, TokenListStyle } from './styles/TokenList.style';
 import {useEffectState} from "src/hooks/useEffectState";
-import {getContractPairList} from "src/ajax/contract/contract";
-import {exchangeActions} from "./exchangeReducer";
+import {getContractPairList, IPair, IQuotation} from "src/ajax/contract/contract";
+import {exchangeActions, mapExchangeDispatch} from "./exchangeReducer";
 import useExchangeStore from "./ExchangeProvider";
+import {$router} from "../../react-router-perfect/Index";
+import {fixedNumber, formatAmount, formatAmountRise} from "../../common/utilTools";
+
+
+type IPairRow = {
+    data: IPair,
+    onChange(): void
+}
+function PairRow(props: IPairRow) {
+    const [ reducerState, dispath ] = useExchangeStore();
+
+    const pairQuotation = useMemo(() => {
+        let obj = reducerState.quotation.find((item) => {
+            return item.contractPairId === props.data.id;
+        });
+
+        return obj || {} as IQuotation;
+    }, [reducerState.quotation, props.data.id]);
+
+    const rowClassName = useMemo(() => {
+        let rate = Number(pairQuotation.marketChangeRate);
+        if (!pairQuotation.marketChangeRate || rate === 0) {
+            return "";
+        }
+        return rate > 0 ? 'long' : 'short';
+    }, [pairQuotation]);
+
+    const tdStyle: CSSProperties = {
+        verticalAlign: "top",
+        lineHeight: "24px",
+        fontSize: "20px",
+        paddingTop: "10px",
+        paddingBottom: "10px"
+    };
+
+    return <tr key={props.data.id} onClick={() => props.onChange()}>
+        <td style={tdStyle}>{props.data.symbol}</td>
+        <td style={tdStyle}>
+            <p>{pairQuotation.marketPrice}</p>
+            <span className={rowClassName} style={{fontSize: "16px"}}>{formatAmount(pairQuotation.marketChangeRate || "", true)}</span>
+        </td>
+        <td style={tdStyle}>
+            <span>{fixedNumber(pairQuotation.last24hVol, reducerState.currentPairDecimal)}</span>
+        </td>
+    </tr>
+}
 
 export default function TokenList() {
     const {t} = useTranslation();
     const [ reducerState, dispath ] = useExchangeStore();
-
+    const mapDispatch = mapExchangeDispatch(dispath);
     const state = useEffectState({
-        showPanel: false
+        showPanel: false,
+        pairInfo: {} as IPair
     });
 
     useEffect(() => {
+        state.pairInfo = reducerState.currentPair;
+    }, [reducerState.currentPair])
+
+    useEffect(() => {
         getPairList();
+        /*document.addEventListener("click", docOnClick);
+
+        return () => {
+            document.removeEventListener("click", docOnClick);
+        }*/
     }, []);
+
+    function docOnClick() {
+        state.showPanel = false;
+    }
 
     async function getPairList() {
         const pairs = await getContractPairList();
-        console.log("=============")
+        if ($router.query.pairId) {
+            let selectPair;
+            pairs.data.some((item) => {
+                if (item.id == $router.query.pairId) {
+                    selectPair = item;
+                    return true;
+                }
+                return false;
+            });
+            changePair(selectPair || pairs.data[0]);
+        } else if(!state.pairInfo.settleCoinId) {
+            changePair(pairs.data[0]);
+        }
+
         dispath({
             type: exchangeActions.SET_PAIR,
             data: pairs.data
         })
     }
 
-    const list = [
-        { symbol: "BTC/USDT", lastPrice: "48,409.09", "rise": "+19.08%" },
-        { symbol: "ETH/USDT", lastPrice: "48,409.09", "rise": "+19.08%" },
-        { symbol: "DOT/USDT", lastPrice: "48,409.09", "rise": "+19.08%" },
-    ];
+    function changePair(pair: IPair) {
+        localStorage.setItem("pair", JSON.stringify(pair));
+        mapDispatch.setCurrentPair(pair);
+        /*dispath({
+            type: exchangeActions.SET_CURRENT_PAIR,
+            data: pair
+        });*/
+        state.showPanel = false;
+    }
 
     return (
-        <TokenListStyle className={"flex-box"}>
-            <div className={"flex-row"} style={{cursor: "pointer", userSelect: "none"}} onClick={() => state.showPanel = !state.showPanel}>
-                <span>BTC/USDT</span>
-                <span className={`icon ${state.showPanel ? 'active' : ''}`}></span>
+        <TokenListStyle className={"flex-box"}
+                        onMouseOver={() => state.showPanel = true}
+                        onMouseLeave={() => state.showPanel = false}>
+            <div className={"flex-row"} style={{cursor: "pointer", userSelect: "none", whiteSpace: "nowrap"}}
+                 >
+                <span>{reducerState.currentPair.symbol}</span>
+                <img src={require("src/assets/images/icon_arrow_down.png")} className={`icon ${state.showPanel ? 'active' : ''}`} alt="" />
+                {/*<span className={`icon ${state.showPanel ? 'active' : ''}`}></span>*/}
             </div>
             <Toggle vIf={state.showPanel}>
-                <PanelStyle>
+                <PanelStyle onClick={(event) => event.stopPropagation()}>
                     <table>
                         <thead>
                             <tr>
-                                <th>{t(`Symbols`)}</th>
-                                <th>{t(`Last Price`)}</th>
-                                <th>{t(`24h%`)}</th>
+                                <th  style={{fontSize: "16px"}}>{t(`Pairs`)}</th>
+                                <th  style={{fontSize: "16px"}}>{t(`Oracle Price`)}</th>
+                                <th  style={{fontSize: "16px"}}>{t(`24h Vol`)}</th>
                             </tr>
                         </thead>
                         <tbody>
                         {
-                            list.map((item,index) => {
-                                return <tr key={index}>
-                                    <td>{item.symbol}</td>
-                                    <td>
-                                        <span className={"short"}>{item.lastPrice}</span>
-                                    </td>
-                                    <td>
-                                        <span className={"long"}>{item.rise}</span>
-                                    </td>
-                                </tr>
+                            reducerState.pairs.map((item) => {
+                                return <PairRow data={item} key={item.id} onChange={() => changePair(item)}></PairRow>
                             })
                         }
                         </tbody>

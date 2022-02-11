@@ -19,11 +19,17 @@ export const NotificationModalStyle = styled.div`
 
 export const NotificationContent = styled.div`
     position: absolute;
-    top: 0;
-    right: 0;
-    width: 386px;
-    height: 100%;
-    background: ${colors.tradeBgColor};
+    bottom: -12px;
+    right: -30px;
+    width: 360px;
+    height: 512px;
+    transform: translateY(100%);
+    background: ${({theme}) => theme.colors.warnBgColor };
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-sizing: border-box;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+    z-index: 1000;
 `;
 
 export const Title = styled.h3`
@@ -33,24 +39,28 @@ export const Title = styled.h3`
 `;
 
 export const List = styled.div`
-    padding: 15px 24px;
+    padding: 32px 20px;
     .item{
-        margin-bottom: 16px;
+        margin-bottom: 20px;
     }
     .itemTitle{
-        margin-bottom: 14px;
+        margin-bottom: 6px;
+        color: #F6F7F0;
         .titleIcon{
-            width: 20px;
-            height: 20px;
-            margin-right: 10px;
+            width: 22px;
+            height: 22px;
+            margin-right: 12px;
         }
     }
     .content{
         color: ${colors.artContentColor};
         line-height: 24px;
+        margin-bottom: 4px;
+        margin-left: 34px;
     }
     .time{
-        font-size: 12px;
+        font-size: 14px;
         color: ${colors.labelColor};
+        margin-left: 34px;
     }
 `;

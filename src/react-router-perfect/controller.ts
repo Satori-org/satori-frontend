@@ -11,6 +11,7 @@ class Controller {
     params: any = {};
     query: any = {};
     match: any = {};
+    meta: any = {};
     pathname = "/";
     hashModel = false;
     routes: Iroutes[] = [];
@@ -31,7 +32,7 @@ class Controller {
             this.params = JSON.parse(cacheStr);
         }
         this.buildMatchParams();
-        return {query: this.query, params: this.params};
+        return {query: this.query, params: this.params, meta: this.meta};
     }
 
     async push(data: IRouteParams, disabledProgress?: boolean) {
@@ -77,7 +78,7 @@ class Controller {
         return new Promise((resolve) => {
             this.routes.forEach((item) => {
                 let isMatch = item.path === browserPath || (!item.exact && browserPath.indexOf(item.path) === 0);
-                /* :xxx 模式匹配路由 */
+                /* :xxx Pattern Matching Router */
                 let { isMatchModel } = checkMatchModel(item.path, browserPath);
                 if (isMatch || isMatchModel) {
                     if (this.showProgress && !disabledProgress) {

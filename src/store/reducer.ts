@@ -1,6 +1,8 @@
 import { ITrans } from 'src/contract/types';
 import * as actions from './actionTypes';
 import {langType} from "../locales/i18n";
+import {THEME} from "../common/enum";
+import {getWalletProvider} from "../config";
 
 export type IState = {
     address: string
@@ -9,14 +11,16 @@ export type IState = {
     completedHash: string,
     lang: string
     token: string
+    theme: string
 };
 let initState: IState = {
-    address: sessionStorage.getItem("wallet_address") || (window['ethereum'] && window['ethereum'].selectedAddress) || "",
+    address: sessionStorage.getItem("wallet_address") || (getWalletProvider() && getWalletProvider().selectedAddress) || "",
     trans: [],
     localTrans: sessionStorage.getItem("trans") ? JSON.parse(sessionStorage.getItem("trans") || "{}") :  [],
     completedHash: "",
-    lang: localStorage.getItem("lang") || langType.zh_CN,
-    token: sessionStorage.getItem("token") || ""
+    lang: localStorage.getItem("lang") || langType.en_US,
+    token: sessionStorage.getItem("token") || "",
+    theme: sessionStorage.getItem("theme") || THEME.dark
 };
 
 export default function reducer(state = initState, action: any): IState  {
@@ -33,6 +37,8 @@ export default function reducer(state = initState, action: any): IState  {
             return {...state, lang: action.data};
         case actions.SET_TOKEN:
             return {...state, token: action.data};
+        case actions.TOGGLE_THEME:
+            return {...state, theme: action.data};
         default:
             return state;
     }

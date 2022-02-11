@@ -9,7 +9,7 @@ export default function Positions() {
 
     return (
         <PositionsStyle>
-            <Title>{t(`All Position`)}</Title>
+            {/*<Title>{t(`All Position`)}</Title>*/}
             <Position />
         </PositionsStyle>
     )

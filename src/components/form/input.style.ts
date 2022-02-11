@@ -6,28 +6,37 @@ export const InputBox = styled.div`
     position: relative;
     display: flex;
     align-items: center;
-    padding-left: 8px;
-    padding-right: 8px;
-    font-size: 14px;
+    padding: 0 12px;
+    font-size: 16px;
     height: ${$height};
-    background: ${colors.inputBgColor};
-    border-radius: 8px;
+    background: ${({theme}) => theme.colors.boxBgColor};
+    border-radius: 6px;
     border: 1px solid transparent;
-    box-sizing: border-box;
     .label{
         display: inline-block;
-        color: #B2B6BC;
+        color: ${({theme}) => theme.colors.labelColor};
         text-align: left;
     }
     .input{
         flex: 1;
         background-color: transparent;
-        font-size: 14px;
+        font-size: 16px;
         height: 100%;
-        text-align: right;
-        color: ${colors.baseColor};
-        padding: 0 0 0 8px;
+        text-align: left;
+        color: ${({theme}) => theme.colors.baseColor};
+        padding: 0 4px 0 8px;
         box-sizing: border-box;
+        &::-webkit-input-placeholder {
+            color: ${({theme}) => theme.colors.baseColor};
+        }
+        
+        &::-moz-input-placeholder {
+            color: ${({theme}) => theme.colors.baseColor};
+        }
+        
+        &::-ms-input-placeholder {
+            color: ${({theme}) => theme.colors.baseColor};
+        }
     }
     .inputWarn{
         display: inline-block;

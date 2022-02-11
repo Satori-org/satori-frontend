@@ -29,7 +29,7 @@ export default function ReactRouter(props: IProps) {
                         // let Component = item.isLazy ? React.lazy(item.component as LazyComponent) : item.component;
                         let Component = React.lazy(item.component as LazyComponent);
                         // @ts-ignore
-                        return <Component path={item.path} key={item.path} exact={item.exact} beforeRender={item.beforeRender}></Component>
+                        return <Component path={item.path} key={item.path} exact={item.exact} beforeRender={item.beforeRender} meta={item.meta}></Component>
                     })
                 }
             </Switch>

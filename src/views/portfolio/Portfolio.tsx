@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import { useTranslation } from 'react-i18next';
 import Nav from './Nav';
 import { PortfolioStyle } from './styles/Portfolio.style';
@@ -7,16 +7,19 @@ import {LazyComponent} from "../../react-router-perfect/types";
 import Switch from "../../react-router-perfect/Switch";
 import Redirect from "../../react-router-perfect/Redirect";
 import Footer from './Footer';
+import {$router, useRouteChange} from "../../react-router-perfect/Index";
 
 export default function Portfolio() {
     const {t} = useTranslation();
-
+    const { meta } = useRouteChange();
     return (
         <PortfolioStyle>
-            <div className="left">
+            {/*<div className="left">
                 <Nav />
-            </div>
-            <div className="right">
+            </div>*/}
+            <div className="content">
+                <h2 className={"title"}>{t(meta.title)}</h2>
+                <Nav />
                 <div style={{flex: 1}}>
                     <Switch>
                         {
@@ -24,13 +27,13 @@ export default function Portfolio() {
                                 // let Component = item.isLazy ? React.lazy(item.component as LazyComponent) : item.component;
                                 let Component = React.lazy(item.component as LazyComponent);
                                 // @ts-ignore
-                                return <Component path={item.path} key={item.path} exact={item.exact} beforeRender={item.beforeRender}></Component>
+                                return <Component path={item.path} key={item.path} exact={item.exact} beforeRender={item.beforeRender} meta={item.meta}></Component>
                             })
                         }
                         <Redirect to={routes[0].path} />
                     </Switch>
                 </div>
-                <Footer />
+                {/*<Footer />*/}
             </div>
         </PortfolioStyle>
     )
