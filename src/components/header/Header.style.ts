@@ -4,9 +4,9 @@ import {colors} from "../../styles/style";
 export const HeaderStyle = styled.div`
     display: flex;
     justify-content: space-between;
-    height: 60px;
+    height: 48px;
     position: relative;
-    padding: 0 20px;
+    padding: 0 24px;
     .logoName{
         font-size: 40px;
         font-weight: bold;
@@ -15,27 +15,28 @@ export const HeaderStyle = styled.div`
 `;
 
 export const Logo = styled.img`
-    width: 117px;
-    height: 37px;
+    width: 78px;
+    height: 16px;
 `;
 
 export const Nav = styled.nav`
     height: 100%;
-    display: flex;
-    margin-left: 40px;
+    margin-left: 24px;
     .item{
-        font-size: 18px;
+        font-size: 12px;
         color: ${({theme}) => theme.colors.linkDefaultColor};
         cursor:pointer;
+        padding: 8px;
+        border-radius: 8px;
         &.active{
             color: ${({theme}) => theme.colors.activeColor};
-            border-bottom: 2px solid ${colors.activeColor};
+            background: ${({theme}) => theme.colors.linkActiveBgColor};
         }
         &:hover{
             color: ${({theme}) => theme.colors.activeColor};
         }
         &:not(:last-child){
-            margin-right: 32px;
+            margin-right: 8px;
         }
     }
 `;
@@ -54,7 +55,7 @@ export const NavChild = styled.ul`
     }
     .menuLabel{
         height: 100%;
-        font-size: 18px;
+        font-size: 12px;
         color: ${({theme}) => theme.colors.linkDefaultColor};
         &.active{
             color: ${({theme}) => theme.colors.activeColor};

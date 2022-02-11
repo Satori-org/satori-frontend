@@ -50,6 +50,13 @@
         styleElement.rel="stylesheet";
         document.head.appendChild(styleElement);
       }
+
+      function setRem () {
+        var w_width = window.innerWidth;
+        document.documentElement.style.fontSize = w_width/14.4 + 'px';
+      }
+      setRem();
+      window.addEventListener('resize', setRem)
     </script>
   </body>
 </html>

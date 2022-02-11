@@ -21,7 +21,7 @@ export const TradeViewStyle = styled.div`
 export const MyChartStyle = styled.div`
 	position: absolute;
 	width: 100%;
-	height: calc(100% - 52px);
+	height: calc(100% - 50px);
 	bottom: 1px;
 	z-index: 5;
 	padding-bottom: 0;

@@ -2,15 +2,16 @@ import { ITheme } from "./style";
 
 export const light: ITheme = {
     colors: {
-        activeColor: "red",
+        activeColor: "#000",
         gapColor: "#22352C",
-        linkDefaultColor: "#999897",
+        linkDefaultColor: "#617168",
+        linkActiveBgColor: "#DFE1E0",
         boxBgColor: "#22352C",
         baseColor: "#F6F7F0",
         backgroundColor: "#fff",
         labelColor: "#999897",
-        long: "#39AC59",
-        short: "#DB574B",
+        long: "#157336",
+        short: "#B4190D",
         modalTitle: "#000",
         subtitle: "#525150",
         filedColor: "#fff",

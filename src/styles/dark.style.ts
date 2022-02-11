@@ -2,15 +2,16 @@ import { ITheme } from "./style";
 
 export const dark: ITheme = {
     colors: {
-        activeColor: "#F6F7F0",
+        activeColor: "#fff",
         gapColor: "#22352C",
-        linkDefaultColor: "#999897",
+        linkDefaultColor: "#617168",
+        linkActiveBgColor: "#323433",
         boxBgColor: "#22352C",
         baseColor: "#F6F7F0",
         backgroundColor: "#000",
         labelColor: "#999897",
-        long: "#39AC59",
-        short: "#DB574B",
+        long: "#63B48E",
+        short: "#EC605A",
         modalTitle: "#fff",
         subtitle: "#525150",
         filedColor: "#fff",

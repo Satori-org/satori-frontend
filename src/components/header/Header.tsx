@@ -1,6 +1,6 @@
 import React, {CSSProperties} from 'react';
 import {useTranslation} from 'react-i18next';
-import {HeaderStyle, Nav, NavChild, NavMenu, NavMenuContainer} from './Header.style';
+import {HeaderStyle, Logo, Nav, NavChild, NavMenu, NavMenuContainer} from './Header.style';
 import {RouterLink} from "../../react-router-perfect/Index";
 import Network from "../network/Network";
 import ConectWallet from "../connectWallet/ConectWallet";
@@ -28,11 +28,11 @@ export default function Header(props: IProps) {
     return (
         <HeaderStyle style={props.style}>
             <div className={"flex-row"}>
-                {/*<RouterLink to={"/"}>
-                    <Logo src={require("src/assets/images/logo.png")} />
-                </RouterLink>*/}
-                <RouterLink to={"/"} className={"logoName"}>Satori</RouterLink>
-                <Nav>
+                <RouterLink to={"/"}>
+                    <Logo src={require("src/assets/images/logo_dark.png")} />
+                </RouterLink>
+                {/*<RouterLink to={"/"} className={"logoName"}>Satori</RouterLink>*/}
+                <Nav className={"flex-row"}>
                     <RouterLink className={"item flex-box"} activeClassName={"active"} to={"/"} exact={true}>{t(`Perpetual Trade`)}</RouterLink>
                     <RouterLink className={"item flex-box"} activeClassName={"active"} to={"/portfolio"}>{t(`Portfolio`)}</RouterLink>
                     <NavChild className={"item"} onMouseOver={() => state.showDrop = true} onMouseLeave={() => state.showDrop = false}>

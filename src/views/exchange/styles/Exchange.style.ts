@@ -2,14 +2,13 @@ import styled from "styled-components";
 
 export const ExchangeStyle = styled.div`
     /*display: flex;*/
-    height: calc(100vh - 61px);
+    height: calc(100vh - 48px);
     display: flex;
     flex-direction: column;
     background: ${({theme}) => theme.colors.gapColor };
-    padding-top: 1px;
     .trade-box{
         display: flex;
-        height: calc(100% - 35.3vh - 1px);
+        height: calc(100% - 35.3vh - 80px);
         margin-bottom: 1px;
         /*flex: 1;
         display: grid;

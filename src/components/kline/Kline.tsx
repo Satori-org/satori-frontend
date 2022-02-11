@@ -512,7 +512,7 @@ class Kline extends React.Component<Ikline, any>{
                      chartType={this.state.chartType}
                      toggle={(type) => this.setState({chartType: type})}
                 ></TradingviewTool>
-                <TradeViewStyle id={"trade-view"} className={`${this.state.loading?'':'loaded'}`} style={{height: "calc(100% - 52px)"}}></TradeViewStyle>
+                <TradeViewStyle id={"trade-view"} className={`${this.state.loading?'':'loaded'}`} style={{height: "calc(100% - 51px)"}}></TradeViewStyle>
                 {this.state.loading?<Loading style={{backgroundColor: "transparent"}}></Loading>:null}
                 {
                     this.props.depthData

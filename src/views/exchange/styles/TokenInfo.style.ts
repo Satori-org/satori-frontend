@@ -23,13 +23,13 @@ export const TokenData = styled.div`
     /*overflow: hidden;*/
     overflow-x: auto;
     padding-left: 24px;
-    font-size: 16px;
+    font-size: 14px;
     .dataGroup{
         &:not(:last-child){
             margin-right: 24px;
         }
         .label{
-            font-size: ${fonts.h5};
+            font-size: 10px;
             color: ${({theme}) => theme.colors.labelColor};
             padding-bottom: 2px;
             margin-bottom: 6px;

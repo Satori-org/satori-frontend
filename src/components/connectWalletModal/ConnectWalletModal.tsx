@@ -83,9 +83,9 @@ export default function ConnectWalletModal(props: IProps) {
         }, 0);
         const [nonceInfo, error] = await awaitWrap(generateNonce(address));
         if (nonceInfo) {
-            const [signStr, error] = await awaitWrap(signString(nonceInfo.data.nonce, storeData.address));
-            if (signStr) {
-                login(storeData.address, signStr);
+            const [signData, error] = await awaitWrap(signString(nonceInfo.data.nonce, storeData.address));
+            if (signData) {
+                login(storeData.address, signData.signatrue);
             } else {
                 console.error(error);
                 state.loading = false;

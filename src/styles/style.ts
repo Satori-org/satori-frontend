@@ -7,6 +7,7 @@ export type IColors = {
     activeColor: string
     gapColor: string
     linkDefaultColor: string
+    linkActiveBgColor: string
     boxBgColor: string
     baseColor: string
     backgroundColor: string

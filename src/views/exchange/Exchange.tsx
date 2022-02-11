@@ -91,10 +91,10 @@ export default function Exchange() {
     return (
         <ExchangeContext.Provider value={[reducerState, dispatch]}>
             <ExchangeStyle>
+                <TokenInfo />
                 <div className={"trade-box"}>
                     <div style={{flex: 1, width: "calc(100% - 722px)"}}>
-                        <TokenInfo />
-                        <div style={{height: "calc(100% - 82px)"}}>
+                        <div style={{height: "100%"}}>
                             <Toggle vIf={!!reducerState.currentPair.symbol}>
                                 <Kline symbol={reducerState.currentPair.symbol}
                                        kData={klineData}
