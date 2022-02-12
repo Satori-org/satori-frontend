@@ -3,17 +3,17 @@ import styled from "styled-components";
 export const ClosePositionModalStyle = styled.div`
     .btnText{
         background: transparent;
-        font-size: 16px;
+        font-size: 0.12rem;
         color: ${({theme}) => theme.colors.baseColor};
     }
 `;
 
 export const ClosePositionModalContentStyle = styled.div`
-    padding: 28px 32px 32px 32px;
+    padding-top: 0.24rem;
 `;
 
 export const Group = styled.div`
-    margin-bottom: 16px;
+    margin-bottom: 0.16rem;
     color: ${({theme}) => theme.colors.filedColor};
     .label{
         color: ${({theme}) => theme.colors.labelColor};
@@ -21,10 +21,11 @@ export const Group = styled.div`
 `;
 
 export const ButtonGroup = styled.div`
-    grid-column-gap: 12px;
-    margin-top: 26px;
+    grid-column-gap: 0.12rem;
+    margin-top: 0.24rem;
     .cancel{
-        background: ${({theme}) => theme.colors.boxBgColor};
-        color: ${({theme}) => theme.colors.baseColor};
+        background: ${({theme}) => theme.colors.cancelBgColor};
+        font-weight: bold;
+        color: ${({theme}) => theme.colors.cancelColor};
     }
 `;

@@ -4,10 +4,10 @@ import {colors} from "../../styles/style";
 export const TableStyle = styled.table`
     width: 100%;
     th{
-        font-size: 14px;
+        font-size: 0.1rem;
         font-weight: 400;
         color: ${({theme}) => theme.colors.labelColor};
-        line-height: 36px;
+        line-height: 0.28rem;
         &.left{
             text-align: left;
         }
@@ -19,9 +19,9 @@ export const TableStyle = styled.table`
         }
     }
     td{
-        font-size: 16px;
+        font-size: 0.12rem;
         font-weight: 400;
-        line-height: 36px;
+        line-height: 0.28rem;
         &.left{
             text-align: left;
         }

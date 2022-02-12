@@ -22,11 +22,9 @@ export default function ModalFooter(props: IProps) {
                 <LoadButton
                     className={"cancel"}
                     loading={false}
-                    style={{height: "42px"}}
                     onClick={props.onCancel}>{props.cancelText || t(`Cancel`)}</LoadButton>
                 <LoadButton
                     loading={!!props.loading}
-                    style={{height: "42px"}}
                     onClick={props.onConfirm}>{props.confirmText || t(`Confirm`)}</LoadButton>
             </ButtonGroup>
         </ModalFooterStyle>

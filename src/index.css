@@ -8,6 +8,9 @@ html body {
     -moz-osx-font-smoothing: grayscale;
     overflow-x: auto;
 }
+body{
+    font-size: 0.12rem;
+}
 
 * {
     margin: 0;

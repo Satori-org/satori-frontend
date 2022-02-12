@@ -6,31 +6,31 @@ export const WaitingModalStyle = styled.div`
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
-    width: 360px;
-    padding: 20px;
-    background: #121212;
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    width: 3.54rem;
+    padding: 0.18rem;
+    background: ${({theme}) => theme.colors.boxBgColor};
+    color: ${({theme}) => theme.colors.baseColor};
+    border: 1px solid ${({theme}) => theme.colors.modalBorderColor};
     box-sizing: border-box;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-    border-radius: 8px;
+    border-radius: 0.08rem;
     .title{
-        font-size: 18px;
-        font-weight: 400;
-        color: #fff;
-        margin-bottom: 8px;
+        font-size: 0.16rem;
+        font-weight: 600;
+        color: ${({theme}) => theme.colors.baseColor};
+        margin-bottom: 0.04rem;
     }
     .icon{
-        width: 22px;
-        height: 22px;
-        margin-right: 12px;
+        width: 0.2rem;
+        height: 0.2rem;
+        margin-right: 0.14rem;
     }
     .content{
-        font-size: 14px;
+        font-size: 0.14rem;
         font-weight: 400;
-        color: #999897;
+        color: ${({theme}) => theme.colors.headerButtonColor};
         line-height: 150%;
-        margin-bottom: 12px;
-        padding-left: 34px;
+        margin-bottom: 0.12rem;
+        padding-left: 0.34rem;
     }
     /*.label{
         color: ${colors.labelColor};
@@ -39,16 +39,16 @@ export const WaitingModalStyle = styled.div`
 
 export const ProgressBar = styled.div`
     position: relative;
-    height: 8px;
-    background: #525150;
-    border-radius: 8px;
+    height: 0.08rem;
+    background: ${({theme}) => theme.colors.backgroundColor};
+    border-radius: 0.08rem;
     overflow: hidden;
-    margin-top: 10px;
-    margin-left: 34px;
+    margin-top: 0.12rem;
+    margin-left: 0.34rem;
     .progress{
         height: 100%;
-        background: #fff;
-        border-radius: 8px;
+        background: ${({theme}) => theme.colors.baseColor};
+        border-radius: 0.08rem;
         transition: width 0.25s;
     }
 `;

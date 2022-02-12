@@ -1,15 +1,12 @@
-import React, {useEffect, useMemo} from 'react';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
-import {AssetBox, BalanceBox, RightBtn, StickyBox, Warn} from './WithdrawModal.style';
+import {RightBtn} from './WithdrawModal.style';
 import Modal from "../modal/Modal";
-import Input from "../form/Input";
 import Form from "../form/Form";
-import LoadButton from '../loadButton/LoadButton';
-import {colors} from "src/styles/style";
 import {withdraw} from "src/ajax/contract/contract";
 import {useEffectState} from "src/hooks/useEffectState";
 import {NUMBER_REG} from "src/common/regExp";
-import {checkHashStatus, getWallet, NewWriteContract, signMsg, unpackEIP712} from 'src/contract/wallet';
+import {checkHashStatus, NewWriteContract, signMsg, unpackEIP712} from 'src/contract/wallet';
 import {project} from "src/contract/config";
 import {
     awaitWrap,
@@ -20,7 +17,6 @@ import {
     showError,
     showMessage
 } from "src/common/utilTools";
-import OpenWaitingModal from "../waitingModal/WaitingModal";
 import OpenMessageBox from "../messageBox/MessageBox";
 import {useStore} from "react-redux";
 import {IState} from "src/store/reducer";
@@ -32,6 +28,8 @@ import ModalFooter from "../modal/ModalFooter";
 import {RELOAD_ACCOUNT_INFO} from "../../common/PubSubEvents";
 import {USDT_decimal} from "../../config";
 import InputNumber from "../inputNumber/InputNumber";
+import openModal from "../openModal";
+import {IWaitParams, WaitingModal} from "../waitingModal/WaitingModal";
 
 type IProps = {
     onClose(): void
@@ -91,7 +89,7 @@ export default function WithdrawModal(props: IProps) {
         } else {
             await checkHashStatus(transInfo);
             const tipText = regExpTemplate(t(`Your 300.00 USDT withdraw will be successful after confirmation on the mainnet.`), {amount: state.amount});
-            OpenWaitingModal({
+            openModal<IWaitParams>(WaitingModal, {
                 title: t(`Withdrawing...`),
                 content: tipText,
                 hash: transInfo.hash,
@@ -101,7 +99,18 @@ export default function WithdrawModal(props: IProps) {
                     });
                     PubSub.publish(RELOAD_ACCOUNT_INFO);
                 }
-            });
+            })
+            /*OpenWaitingModal({
+                title: t(`Withdrawing...`),
+                content: tipText,
+                hash: transInfo.hash,
+                callback(result: boolean): void {
+                    OpenMessageBox({
+                        title: t(`Withdraw Successfully!`)
+                    });
+                    PubSub.publish(RELOAD_ACCOUNT_INFO);
+                }
+            });*/
             state.loading = false;
             props.onClose();
         }
@@ -110,11 +119,11 @@ export default function WithdrawModal(props: IProps) {
     return (
         <Modal title={t(`Withdraw`)} close={props.onClose}>
             <Form>
-                <Label className={"label"}>{t(`Amount`)}</Label>
+                <Label>{t(`Amount`)}</Label>
                 <InputNumber
                     right={<div className={`flex-row`}>
-                        <span style={{color: theme.colors.explain, pointerEvents: "none"}}>USDT</span>
-                        <RightBtn onClick={() => state.amount = String(fixedNumber(reducerState.accountInfo.availableAmount, USDT_decimal))}>{t(`Max`)}</RightBtn>
+                        <span style={{color: theme.colors.headerButtonColor, pointerEvents: "none"}}>USDT</span>
+                        <RightBtn onClick={() => state.amount = String(fixedNumber(reducerState.accountInfo.availableAmount, USDT_decimal))}>{t(`MAX`)}</RightBtn>
                     </div>
                     }
                     inputStyle={{width: "110px"}}
@@ -132,7 +141,7 @@ export default function WithdrawModal(props: IProps) {
                         }
                     }}  />
                 <Explain>
-                    {t(`* Please make sure that there is a certain amount of USDT in the account balance, otherwise the withdrawal will fail.`)}
+                    {t(`* Please make sure there is a certain amount of BNB in the wallet balance, otherwise the deposit will fail due to insufficient handling fees.`)}
                 </Explain>
                 {/*<Group className={"flex-sb"}>
                     <span className={"label"}>{t(`Fee`)}</span>

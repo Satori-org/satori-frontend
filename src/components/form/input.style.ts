@@ -1,16 +1,16 @@
 import styled from "styled-components";
 import {colors} from "../../styles/style";
 
-const $height = "48px";
+const $height = "0.32rem";
 export const InputBox = styled.div`
     position: relative;
     display: flex;
     align-items: center;
-    padding: 0 12px;
-    font-size: 16px;
+    padding: 0 0.12rem;
+    font-size: 0.12rem;
     height: ${$height};
     background: ${({theme}) => theme.colors.inputBgColor};
-    border-radius: 6px;
+    border-radius: 0.08rem;
     border: 1px solid transparent;
     .label{
         display: inline-block;
@@ -20,11 +20,11 @@ export const InputBox = styled.div`
     .input{
         flex: 1;
         background-color: transparent;
-        font-size: 16px;
+        font-size: 0.12rem;
         height: 100%;
         text-align: left;
         color: ${({theme}) => theme.colors.baseColor};
-        padding: 0 4px 0 8px;
+        padding-right: 0.04rem;
         box-sizing: border-box;
         &::-webkit-input-placeholder {
             color: ${({theme}) => theme.colors.baseColor};

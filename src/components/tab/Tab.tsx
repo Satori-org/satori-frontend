@@ -9,7 +9,7 @@ type IProps<T = number> = {
     defaultValue?: T
     style?: CSSProperties
 }
-export default function Tab<T>(props: IProps<T>) {
+export default function Tab<T = number>(props: IProps<T>) {
     const state = useEffectState({
         active: 0,
         selected: (() => {

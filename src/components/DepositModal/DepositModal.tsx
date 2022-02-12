@@ -1,8 +1,7 @@
-import React, {useEffect, useMemo} from 'react';
+import React, {useEffect} from 'react';
 import { useTranslation } from 'react-i18next';
 import {Explain, Label, RightBtn, Group} from './DepositModal.style';
 import Modal from "../modal/Modal";
-import Input from "../form/Input";
 import Form from "../form/Form";
 import {useStore} from "react-redux";
 import {IState} from "src/store/reducer";
@@ -19,7 +18,7 @@ import {
 import {approve, checkHashStatus, extendTran, getInput, needApprove, NewWriteContract} from "src/contract/wallet";
 import {mapDispatchToProps} from "src/store/connect";
 import {NUMBER_REG} from "src/common/regExp";
-import OpenWaitingModal from "../waitingModal/WaitingModal";
+import {IWaitParams, WaitingModal} from "../waitingModal/WaitingModal";
 import OpenMessageBox from "../messageBox/MessageBox";
 import ModalFooter from "../modal/ModalFooter";
 import {useAccountInfo} from "../../hooks/useAccountInfo";
@@ -28,6 +27,7 @@ import useTheme from "../../hooks/useTheme";
 import {RELOAD_ACCOUNT_INFO} from "../../common/PubSubEvents";
 import {USDT_decimal} from "../../config";
 import InputNumber from "../inputNumber/InputNumber";
+import openModal from "../openModal";
 
 type IProps = {
     onClose(): void
@@ -102,6 +102,18 @@ export default function DepositModal(props: IProps) {
     }, [state.balance, state.amount]);*/
 
     async function submit() {
+        openModal<IWaitParams>(WaitingModal, {
+            title: t(`Recharging...`),
+            content: "tipText",
+            hash: "transInfo.hash",
+            callback(result: boolean): void {
+                OpenMessageBox({
+                    title: t(`Deposit Successfully!`)
+                });
+                PubSub.publish(RELOAD_ACCOUNT_INFO);
+            }
+        })
+        return ;
         if (!isNumber(state.amount)) {
             showMessage(`Please enter the quantity`);
             return ;
@@ -117,7 +129,7 @@ export default function DepositModal(props: IProps) {
             dispatch.setLocalTrans(storeData.localTrans.concat(transData));
             dispatch.setTrans(storeData.trans.concat(transData));
             const tipText = regExpTemplate(t(`Your 300.00 USDT recharge will be available after confirmation on the mainnet.`), {amount: state.amount});
-            OpenWaitingModal({
+            openModal<IWaitParams>(WaitingModal, {
                 title: t(`Recharging...`),
                 content: tipText,
                 hash: transInfo.hash,
@@ -127,7 +139,18 @@ export default function DepositModal(props: IProps) {
                     });
                     PubSub.publish(RELOAD_ACCOUNT_INFO);
                 }
-            });
+            })
+            /*OpenWaitingModal({
+                title: t(`Recharging...`),
+                content: tipText,
+                hash: transInfo.hash,
+                callback(result: boolean): void {
+                    OpenMessageBox({
+                        title: t(`Deposit Successfully!`)
+                    });
+                    PubSub.publish(RELOAD_ACCOUNT_INFO);
+                }
+            });*/
             props.onClose()
         }
         state.loading = false;
@@ -143,10 +166,10 @@ export default function DepositModal(props: IProps) {
                         <span>USDT</span>
                     </div>
                 </AssetBox>*/}
-                <Label className={"label"}>{t(`Amount`)}</Label>
+                <Label>{t(`Amount`)}</Label>
                 <InputNumber
                        right={<div className={`flex-row`}>
-                           <span style={{color: theme.colors.explain}}>USDT</span>
+                           <span style={{color: theme.colors.headerButtonColor}}>USDT</span>
                            <RightBtn onClick={() => state.amount = String(fixedNumber(walletBalance, USDT_decimal))}>{t(`MAX`)}</RightBtn>
                        </div>
                        }
@@ -165,7 +188,7 @@ export default function DepositModal(props: IProps) {
                            }
                        }}  />
                        <Explain>
-                           {t(`* Please make sure that there is a certain amount of USDT in the wallet balance, otherwise the recharge will fail.`)}
+                           {t(`* Please make sure there is a certain amount of USDT in the wallet balance, otherwise the deposit will fail due to insufficient handling fees.`)}
                        </Explain>
                 <Group className={"flex-sb"}>
                     <span className={"label"}>{t(`Wallet Balance`)}</span>

@@ -14,9 +14,9 @@ export default function Transaction(props: IProps) {
     return (
         <ListContainer className={"scrollbar font10"}>
             <LabelBox>
-                <span className={"labelItem"}>{t(`Price`)}(USDT)</span>
-                <span className={"labelItem"}>{t(`Amount`)}({reducerState.currentPair.tradeCoin && reducerState.currentPair.tradeCoin.symbol})</span>
-                <span className={"labelItem"}>{t(`Time`)}</span>
+                <span className={"labelItem"}>{t(`PRICE`)}(USDT)</span>
+                <span className={"labelItem"}>{t(`AMOUNT`)}({reducerState.currentPair.tradeCoin && reducerState.currentPair.tradeCoin.symbol})</span>
+                <span className={"labelItem"}>{t(`TIME`)}</span>
             </LabelBox>
             <BookContent>
                 <RowContainer className={"scrollbar"} style={{height: "calc(100% - 36px)", overflowY: "initial"}}>

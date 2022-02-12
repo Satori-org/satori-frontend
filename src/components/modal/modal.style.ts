@@ -14,13 +14,12 @@ export const ModalBox = styled.div`
         left: 50%;
         top: 50%;
         transform: translate(-50%, -50%);
-        width: 384px;
-        border-radius: 16px;
-        background: #000;
-        padding: 32px;
+        width: 3.44rem;
+        background: ${({theme}) => theme.colors.boxBgColor};
+        padding: 0.32rem;
         box-sizing: border-box;
-        color: #F6F7F0;
-        border: 1px solid rgba(255, 255, 255, 0.12);
+        color: ${({theme}) => theme.colors.baseColor};
+        border: 1px solid ${({theme}) => theme.colors.modalBorderColor};
         .close{
             /*position: absolute;
             right: 0;
@@ -35,8 +34,7 @@ export const ModalBox = styled.div`
         }
     }
     .title{
-        font-size: 24px;
-        font-weight: bold;
+        font-size: 0.24rem;
         text-align: left;
         color: ${({theme}) => theme.colors.modalTitle};
     }

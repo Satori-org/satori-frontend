@@ -13,30 +13,27 @@ export const ConnectWalletModalStyle = styled.div`
         left: 50%;
         top: 50%;
         transform: translate(-50%, -50%);
-        width: 360px;
-        border-radius: 8px;
-        background: ${({theme}) => theme.colors.modalBgColor};
-        padding: 32px;
+        width: 3.44rem;
+        border-radius: 0.08rem;
+        background: ${({theme}) => theme.colors.boxBgColor};
+        padding: 0.32rem;
         box-sizing: border-box;
         color: ${({theme}) => theme.colors.baseColor};
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        border: 1px solid ${({theme}) => theme.colors.modalBorderColor};
     }
 `;
 export const StepBox = styled.div`
+    padding: 0 0.1rem;
     color: ${({theme}) => theme.colors.explain};
     .mark{
-        min-width: 50px;
         justify-content: center;
-        font-size: 14px;
-        margin-right: 6px;
+        font-size: 0.12rem;
+        margin-right: 0.1rem;
     }
     &.active{
         color: ${({theme}) => theme.colors.baseColor};
         justify-content: flex-start;
         .step{
-            width: 38px;
-            height: 38px;
             text-align: center;
             border: 4px solid ${({theme}) => theme.colors.stepBorderColor};
             box-sizing: border-box;
@@ -45,43 +42,50 @@ export const StepBox = styled.div`
         }
     }
     .step{
-        width: 28px;
-        height: 28px;
+        width: 0.32rem;
+        height: 0.32rem;
         border-radius: 50%;
-        background: ${({theme}) => theme.colors.modalTitle};
-        color: ${({theme}) => theme.colors.stepColor};
+        border: 0.04rem solid ${({theme}) => theme.colors.explain};
+        background: ${({theme}) => theme.colors.modalBorderColor};
+        color: ${({theme}) => theme.colors.explain};
+        box-sizing: border-box;
     }
     .explain{
-        margin-left: 56px;   
+        margin-left: 0.42rem;   
     }
 `;
 export const Title = styled.h3`
-    font-size: 24px;
+    font-size: 0.24rem;
     font-weight: bold;
     color: ${({theme}) => theme.colors.modalTitle};
+    margin-bottom: 0.2rem;
+    padding: 0 0.1rem;
 `;
 
 export const Subtitle = styled.div`
-    font-size: 14px;
+    font-size: 0.12rem;
     font-weight: 400;
     color: ${({theme}) => theme.colors.subtitle};
-    margin: 6px 0 32px;
+    margin-bottom: 0.2rem;
+    padding: 0.1rem;
 `;
 
 export const Process = styled.div`
     position: absolute;
-    width: 3px;
+    width: 0.02rem;
     transform: translateX(-50%);
-    background: ${({theme}) => theme.colors.modalTitle};
+    //background: ${({theme}) => theme.colors.modalTitle};
+    background: #C4C4C4;
 `;
 
 export const ConnectButton = styled.button`
     width: 100%;
-    height: 42px;
-    margin-top: 32px;
+    height: 0.4rem;
+    margin-top: 0.34rem;
     background: ${({theme}) => theme.colors.baseColor};
-    border-radius: 6px;
+    border-radius: 0.08rem;
     box-sizing: border-box;
-    font-size: 14px;
+    font-size: 0.12rem;
+    font-weight: bold;
     color: ${({theme}) => theme.colors.modalBgColor};
 `;

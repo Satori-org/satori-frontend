@@ -24,14 +24,15 @@ export const AssetBox = styled.div`
 `;
 
 export const RightBtn = styled.button`
-    min-width: 50px;
-    height: 30px;
-    padding: 0 10px;
+    min-width: 0.36rem;
+    height: 0.24rem;
+    padding: 0 0.06rem;
     box-sizing: border-box;
-    color: ${({theme}) => theme.colors.labelColor};
-    background: rgba(255,255,255,.08);
-    border-radius: 8px;
-    margin-left: 8px;
+    color: ${({theme}) => theme.colors.headerButtonColor};
+    background: ${({theme}) => theme.colors.confirmColor};
+    border-radius: 0.08rem;
+    margin-left:  0.08rem;
+    font-weight: 600;
 `;
 
 export const BalanceBox = styled.div`

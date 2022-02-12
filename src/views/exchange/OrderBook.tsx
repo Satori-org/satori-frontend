@@ -73,11 +73,11 @@ export default function OrderBook(props: IProps) {
     return (
         <ListContainer>
             <LabelBox className={"font10"}>
-                <span className={"labelItem"}>{t(`Price`)}(USDT)</span>
+                <span className={"labelItem"}>{t(`PRICE`)}(USDT)</span>
                 <span
-                    className={"labelItem"}>{t(`Amount`)}({reducerState.currentPair.tradeCoin && reducerState.currentPair.tradeCoin.symbol})</span>
+                    className={"labelItem"}>{t(`SIZE`)}({reducerState.currentPair.tradeCoin && reducerState.currentPair.tradeCoin.symbol})</span>
                 <span
-                    className={"labelItem"}>{t(` Sum`)}({reducerState.currentPair.tradeCoin && reducerState.currentPair.tradeCoin.symbol})</span>
+                    className={"labelItem"}>{t(`SUM`)}({reducerState.currentPair.tradeCoin && reducerState.currentPair.tradeCoin.symbol})</span>
             </LabelBox>
             <BookContent>
                 <RowContainer className={"reverse"} style={{flexShrink: 0, flex: 1}}>

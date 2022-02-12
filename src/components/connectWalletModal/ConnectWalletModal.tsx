@@ -1,19 +1,18 @@
-import React, {CSSProperties, useCallback, useEffect, useMemo, useRef, useState} from 'react';
+import React, {CSSProperties, useEffect, useRef, useState} from 'react';
 import { useTranslation } from 'react-i18next';
 import {ConnectButton, ConnectWalletModalStyle, Process, StepBox, Subtitle, Title} from './ConnectWalletModal.style';
-import Modal from "../modal/Modal";
-import Web3 from "web3";
 import {getWalletProvider} from "../../config";
 import {useWallet} from "use-wallet";
 import {useStore} from "react-redux";
 import {IState} from "../../store/reducer";
 import {mapDispatchToProps} from "../../store/connect";
 import {generateNonce, getUserToken} from "../../ajax/auth/auth";
-import {getWallet, signString} from "../../contract/wallet";
+import {signString} from "../../contract/wallet";
 import {useEffectState} from "../../hooks/useEffectState";
 import Toggle from "../toggle/Toggle";
 import Spin from "../Spin/Spin";
 import {awaitWrap} from "../../common/utilTools";
+import useTheme from "../../hooks/useTheme";
 
 type IProps = {
     onClose(): void
@@ -28,6 +27,7 @@ export default function ConnectWalletModal(props: IProps) {
     const step1Ref = useRef<HTMLDivElement | null>(null);
     const step2Ref = useRef<HTMLDivElement | null>(null);
     const [processStyle, setProcessStyle] = useState<CSSProperties>({});
+    const { theme } = useTheme();
     const state = useEffectState({
         stepNum: 1,
         loading: false
@@ -140,7 +140,7 @@ export default function ConnectWalletModal(props: IProps) {
                             <div className={"step flex-box"} id={"step1"} ref={step1Ref}>
                                 <Toggle vIf={state.stepNum === 1}>
                                     <span>1</span>
-                                    <img src={require("src/assets/images/icon_connectwallet_step2_ok.png")} style={{width: "100%"}} alt=""/>
+                                    <img src={require("src/assets/images/dark/ok.png")} style={{width: "0.12rem", height: "0.1rem"}} alt=""/>
                                 </Toggle>
                             </div>
                         </div>
@@ -152,7 +152,7 @@ export default function ConnectWalletModal(props: IProps) {
                 <StepBox className={`${state.stepNum === 2 ?'active':''}`} style={{marginTop: "28px"}}>
                     <div className={"flex-row"}>
                         <div className={"mark flex-row"}>
-                            <div className={"step flex-box"} id={"step2"} ref={step2Ref} style={{border: "none"}}>
+                            <div className={"step flex-box"} id={"step2"} ref={step2Ref} style={state.stepNum === 2 ?{background: theme.colors.baseColor}:{}}>
                                 <Toggle vIf={state.stepNum === 1}>
                                     <span>2</span>
                                     <img src={require("src/assets/images/icon_connectwallet_step2_refresh.png")}

@@ -20,13 +20,14 @@ export type IColors = {
     subtitle: string
     filedColor: string
     modalBgColor: string
+    modalBorderColor: string
     activeBgColor: string
     explain: string
     borderColor: string
-    depositBgColor: string,
-    depositColor: string,
-    withdrawBgColor: string,
-    withdrawColor: string,
+    cancelBgColor: string,
+    cancelColor: string,
+    confirmBgColor: string,
+    confirmColor: string,
     borderColor2: string
     tabActiveColor: string
     stepColor: string

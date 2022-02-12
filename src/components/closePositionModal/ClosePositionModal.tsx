@@ -124,12 +124,9 @@ export function ClosePositionModal(props: IProps) {
     }
 
     return (
-        <Modal title={t(`Close Position`)} close={props.onClose}
-               style={{padding: 0}}
-               titleStyle={{marginLeft: "32px", marginTop: "31px", marginBottom: "2px"}}>
+        <Modal title={t(`Close Position`)} close={props.onClose}>
             <ClosePositionModalStyle>
                 <Tab<boolean>
-                    style={{padding: "0 32px"}}
                     options={[
                         {text: t(`Market`), value: ORDER_TYPE.market},
                         {text: t(`Limit`), value: ORDER_TYPE.limit}
@@ -143,6 +140,7 @@ export function ClosePositionModal(props: IProps) {
                     <Toggle vIf={state.orderType !== ORDER_TYPE.market}>
                         <InputNumber
                             label={t(`Price`)}
+                            style={{marginBottom: "0.15rem"}}
                             right={<div className={`flex-row`}>
                                 <button className={"btnText"} onClick={() => state.price = String(reducerState.marketPrice)}>Last</button>
                             </div>
@@ -156,7 +154,7 @@ export function ClosePositionModal(props: IProps) {
                     </Toggle>
                     <InputNumber
                         label={t(`Amount`)}
-                        style={{marginTop: "14px"}}
+                        style={{marginBottom: "0.16rem"}}
                         right={<span>{reducerState.currentPair.tradeCoin && reducerState.currentPair.tradeCoin.symbol}</span>}
                         placeholder={state.quantityPlaceholder}
                         maxDecimal={symbolDecimal}
@@ -175,7 +173,7 @@ export function ClosePositionModal(props: IProps) {
                         <span className={"label"}>{t(`Fee`)}</span>
                         <span>{fixedNumberStr("3.35624", USDT_decimal)} USDT</span>
                     </Group>*/}
-                    <Group className={"flex-sb"} style={{marginTop: "32px"}}>
+                    <Group className={"flex-sb"} style={{marginTop: "0.28rem"}}>
                         <span className={"label"}>{t(`Total`)}</span>
                         <span>{fixedNumber(amount, settleDecimal)} USDT</span>
                     </Group>

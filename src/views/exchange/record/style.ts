@@ -21,13 +21,13 @@ export const RowStyle = styled.tr`
 `;
 
 export const CloseBtn = styled.button`
-    min-width: 62px;
-    height: 26px;
-    background: ${({theme}) => theme.colors.boxBgColor};
-    font-size: 13px;
+    min-width: 0.51rem;
+    height: 0.24rem;
+    background: ${({theme}) => theme.colors.borderColor2};
+    font-size: 0.12rem;
     font-weight: 400;
-    color: ${({theme}) => theme.colors.baseColor};
-    border-radius: 4px;
+    color: ${({theme}) => theme.colors.headerButtonColor};
+    border-radius: 0.08rem;
 `;
 
 export const RecordListStyle = styled.div`

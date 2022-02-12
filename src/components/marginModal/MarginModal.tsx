@@ -1,11 +1,11 @@
 import React, {useMemo} from 'react';
 import {useTranslation} from 'react-i18next';
-import {MarginModalStyle, RightBtn, Tab} from './MarginModal.style';
+import {Group, MarginModalStyle, RightBtn} from './MarginModal.style';
+import Tab from "../tab/Tab";
 import Modal from "../modal/Modal";
 import ModalFooter from "../modal/ModalFooter";
 import {useEffectState} from "src/hooks/useEffectState";
 import useTheme from "src/hooks/useTheme";
-import {Group} from "../DepositModal/DepositModal.style";
 import InputNumber from "../inputNumber/InputNumber";
 import {changePositionMargin, IPositionList} from "src/ajax/contract/contract";
 import Decimal from "decimal.js";
@@ -133,9 +133,15 @@ export default function MarginModal(props: IProps) {
 
 
     return (
-        <Modal title={t(`Adjust Margin`)} close={props.onClose} style={{minWidth: "384px", width: "auto"}}>
+        <Modal title={t(`Adjust Margin`)} close={props.onClose} style={{minWidth: "3.44rem", width: "auto"}}>
             <MarginModalStyle>
-                <Tab className={"grid-2"}>
+                <Tab options={types}
+                     style={{marginBottom: "0.24rem"}}
+                     onChange={(value, selected) => {
+                    state.amount = "";
+                    state.type = value
+                }}></Tab>
+                {/*<Tab className={"grid-2"}>
                     {
                         types.map((item) => {
                             return <div key={item.value}
@@ -146,21 +152,21 @@ export default function MarginModal(props: IProps) {
                                 }}>{item.text}</div>
                         })
                     }
-                   {/*<div className={`flex-box item ${state.type === 0 ? 'active' : ''}`} onClick={() => state.type = 0}>{t(`Add`)}</div>
-                   <div className={`flex-box item ${state.type === 1 ? 'active' : ''}`} onClick={() => state.type = 1}>{t(`Reduce`)}</div>*/}
-                </Tab>
+                   <div className={`flex-box item ${state.type === 0 ? 'active' : ''}`} onClick={() => state.type = 0}>{t(`Add`)}</div>
+                   <div className={`flex-box item ${state.type === 1 ? 'active' : ''}`} onClick={() => state.type = 1}>{t(`Reduce`)}</div>
+                </Tab>*/}
                 <div className={"flex-sb"}>
-                    <span className={"label"}>{t(`Total`)}</span>
+                    <span>{t(`Total`)}</span>
                 </div>
                 <InputNumber
                     right={<div className={`flex-row`}>
-                        <span style={{color: theme.colors.explain}}>USDT</span>
+                        <span style={{color: theme.colors.headerButtonColor}}>USDT</span>
                         <RightBtn onClick={() => state.amount = String(available)}>{t(`MAX`)}</RightBtn>
                      </div>
                     }
-                    style={{margin: "6px 0"}}
+                    style={{margin: "0.08rem 0"}}
                     maxDecimal={USDT_decimal}
-                    inputStyle={{width: "110px", textAlign: "left"}}
+                    inputStyle={{width: "1.1rem", textAlign: "left"}}
                     placeholder={state.placeholde}
                     value={state.amount}
                     onChange={(value) => {
@@ -190,7 +196,7 @@ export default function MarginModal(props: IProps) {
                     <span className={"label"}>{t(`Reference strong parity after adjustment`)}</span>
                     <span> 1,616.58 USDT</span>
                 </div>*/}
-                <ModalFooter style={{marginTop: "32px"}} onCancel={props.onClose} onConfirm={submit} loading={state.loading} />
+                <ModalFooter style={{marginTop: "0.23rem"}} onCancel={props.onClose} onConfirm={submit} loading={state.loading} />
                 {/*<LoadButton loading={false} style={{marginTop: "32px"}}>{t(`Confirm`)}</LoadButton>*/}
             </MarginModalStyle>
         </Modal>

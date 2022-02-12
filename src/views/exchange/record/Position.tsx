@@ -150,17 +150,17 @@ function Row(props: IRow) {
             <td>{props.item.symbol} </td>
             <td className={`${props.item.isLong ? 'long' : 'short'}`}>{getOrderType(props.item.isLong, t)}</td>
             <td>{props.item.lever}x</td>
-            <td>{props.item.quantity} {props.item.symbol.split("-")[0]}</td>
-            <td>{props.item.openingPrice}</td>
-            <td>{Number(props.item.restrictPrice) < 0 ? "--" : props.item.restrictPrice}</td>
-            <td>
-                <div className={"flex-row"}>
+            <td className={"right"}>{props.item.quantity} {props.item.symbol.split("-")[0]}</td>
+            <td className={"right"}>{props.item.openingPrice}</td>
+            <td className={"right"}>{Number(props.item.restrictPrice) < 0 ? "--" : props.item.restrictPrice}</td>
+            <td className={"right"}>
+                <div className={"flex-row"} style={{justifyContent: "flex-end"}}>
                     <span style={{marginRight: "4px"}}>{props.item.marginAmount}</span>
                     <img src={require("src/assets/images/edit.png")} style={{width: "16px", height: "16px", cursor: "pointer"}} alt=""
                          onClick={() => state.showMarin = true} />
                 </div>
             </td>
-            <td>{props.item.tariffAmount}</td>
+            <td className={"right"}>{props.item.tariffAmount}</td>
             {/*<td>
                 <div className={"flex-row"}>
                     <span style={{marginRight: "4px"}}>{props.item.marginAmount}</span>
@@ -168,7 +168,7 @@ function Row(props: IRow) {
                          onClick={() => state.showMarin = true} />
                 </div>
             </td>*/}
-            <td className={`${pnl.className}`}>{pnl.profit}({pnl.percent})</td>
+            <td className={`${pnl.className} right`}>{pnl.profit}({pnl.percent})</td>
             {/*<td className={"long"}>{props.item.amount}</td>*/}
             <td className={"right"}>
                 <div className={"flex-row"} style={{position: "relative", justifyContent: "flex-end"}}>
@@ -267,16 +267,16 @@ export default function Position(props: IProps) {
                     <Table>
                         <thead>
                         <tr>
-                            <th style={{width: "8%"}}>{t(`Pairs`)}</th>
-                            <th>{t(`Type`)}</th>
-                            <th>{t(`Leverage`)}</th>
-                            <th>{t(`Amount`)}</th>
-                            <th>{t(`Entry Price`)}</th>
-                            <th>{t(`Liquidation Price`)}</th>
-                            <th>{t(`Margin`)}</th>
-                            <th>{t(`Funding costs`)}</th>
-                            <th>{t(`Unrealized PnL(ROE%)`)}</th>
-                            <th className={"right"} style={{width: "6%"}}>{t(`Operation`)}</th>
+                            <th style={{width: "8%"}}>{t(`PAIRS`)}</th>
+                            <th>{t(`TYPE`)}</th>
+                            <th>{t(`LEVERAGE`)}</th>
+                            <th className={"right"}>{t(`AMOUNT`)}</th>
+                            <th className={"right"}>{t(`ENTRY PRICE`)}</th>
+                            <th className={"right"}>{t(`LIQUIDATION PRICE`)}</th>
+                            <th className={"right"}>{t(`MARGIN`)}</th>
+                            <th className={"right"}>{t(`FUNDING COSTS`)}</th>
+                            <th className={"right"}>{t(`UNREALIZED PNL(ROE%)`)}</th>
+                            <th className={"right"} style={{width: "1rem"}}></th>
                         </tr>
                         </thead>
                         <tbody>

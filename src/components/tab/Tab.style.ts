@@ -17,6 +17,7 @@ export const TabStyle = styled.div<Itab>`
         display: flex;
         align-items: center;
         cursor:pointer;
+        font-weight: bold;
         color: ${({theme}) => theme.colors.labelColor};
         &:hover{
             color: ${({theme}) => theme.colors.activeColor};
@@ -34,7 +35,7 @@ export const TabStyle = styled.div<Itab>`
             }
         }
         &:not(:last-child){
-            margin-right: 24px;
+            margin-right: 0.16rem;
         }
     }
     

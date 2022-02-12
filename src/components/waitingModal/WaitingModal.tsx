@@ -1,26 +1,23 @@
-import React, {CSSProperties, ReactNode, useEffect} from 'react';
-import { useTranslation } from 'react-i18next';
+import React, {ReactNode, useEffect} from 'react';
 import {ProgressBar, WaitingModalStyle} from './WaitingModal.style';
-import ReactDOM from "react-dom";
 import {useEffectState} from "../../hooks/useEffectState";
-import {ethers} from "ethers";
-import {getWalletProvider} from "../../config";
-import PubSub from "pubsub-js";
 import {getProvider} from "../../contract/wallet";
+import {IOpenModal} from "../openModal";
+import {useTranslation} from "react-i18next";
 
-interface IParams {
+export interface IWaitParams {
     title: string
     content?: ReactNode
     hash: string
     callback?(result: boolean): void
 }
 
-interface INotification extends IParams{
+/*interface INotification extends IWaitParams{
     className?: string,
     style?: CSSProperties,
     destoryComponent():void
-}
-function WaitingModal(props: INotification) {
+}*/
+export function WaitingModal(props: IWaitParams & IOpenModal) {
     const {t} = useTranslation();
     const state = useEffectState({
         count: 0
@@ -61,15 +58,15 @@ function WaitingModal(props: INotification) {
             <div className={"content"}>
                 {props.content}
             </div>
-            {/*<div className={"label"}>{state.count}/15 {t(`confirmations`)}</div>*/}
             <ProgressBar>
                 <div className={"progress"} style={{width: `${state.count/15*100}%`, maxWidth: "100%"}}></div>
             </ProgressBar>
+            <div style={{paddingLeft: "0.34rem", marginTop: "0.12rem"}}>{state.count}/15 {t(`confirmations`)}</div>
         </WaitingModalStyle>
     )
 }
 
-export default function OpenWaitingModal(params: IParams) {
+/*export default function OpenWaitingModal(params: IWaitParams) {
     let id = "Waitin-box";
     let waitBox = document.getElementById(id);
     if (!waitBox) {
@@ -83,4 +80,4 @@ export default function OpenWaitingModal(params: IParams) {
         }
     };
     ReactDOM.render(<WaitingModal destoryComponent={destoryComponent} {...params}></WaitingModal>, waitBox);
-}
+}*/
