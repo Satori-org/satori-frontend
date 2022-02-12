@@ -7,6 +7,9 @@ import Toggle from '../toggle/Toggle';
 import LoadButton from "../loadButton/LoadButton";
 import {CSSTransition} from "react-transition-group";
 import {useEffectState} from "../../hooks/useEffectState";
+import {store} from "../../store";
+import {ThemeProviderWrapper} from "../../ThemeProviderWrapper";
+import {Provider} from "react-redux";
 
 const success_icon = require("src/assets/images/success.png");
 const fail_icon = require("src/assets/images/fail.png");
@@ -84,5 +87,10 @@ export default function OpenMessageBox(params: IParams) {
             ReactDOM.unmountComponentAtNode(messageBox);
         }
     };
-    ReactDOM.render(<MessageBox destoryComponent={destoryComponent} {...params}></MessageBox>, messageBox);
+    ReactDOM.render(
+        <Provider store={store}>
+            <ThemeProviderWrapper>
+                <MessageBox destoryComponent={destoryComponent} {...params}></MessageBox>
+            </ThemeProviderWrapper>
+        </Provider>, messageBox);
 }

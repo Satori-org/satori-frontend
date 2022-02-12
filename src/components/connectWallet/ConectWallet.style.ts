@@ -30,17 +30,15 @@ export const DropMenuContainer = styled.div`
 
 export const DropMenu = styled.ul`
     list-style: none;
-    
-    font-size: 14px;
     text-align: center;
-    color: ${({theme}) => theme.colors.labelColor};
-    background: #121212;
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: ${({theme}) => theme.colors.baseColor};
+    background: ${({theme}) => theme.colors.boxBgColor};
+    //border: 1px solid ${({theme}) => theme.colors.borderColor};
     box-sizing: border-box;
-    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.2);
-    border-radius: 8px;
+    border-radius: 0.08rem;
+    overflow: hidden;
     .menuItem{
-        height: 50px;
+        height: 0.36rem;
         &.exit{
             color: ${({theme}) => theme.colors.short};
         }

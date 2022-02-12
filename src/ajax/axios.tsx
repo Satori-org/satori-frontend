@@ -1,11 +1,9 @@
 import axios, {AxiosRequestConfig, AxiosResponse} from 'axios';
 import IAjax from './types';
-import {Toast} from 'src/components/toast/Toast';
 import { service_api } from 'src/config';
 import { store } from 'src/store';
 import { $router } from 'src/react-router-perfect/Index';
 import PubSub from "pubsub-js";
-import OpenMessageBox from "../components/messageBox/MessageBox";
 import {showMessage} from "../common/utilTools";
 
 axios.defaults.baseURL = service_api;

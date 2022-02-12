@@ -60,7 +60,7 @@ export default function TransactionHistory() {
     const store = useStore<IState>();
     const storeData = store.getState();
     const [reducerState] = useExchangeStore();
-    const PADDING = "0 5% 0 24px";
+    const PADDING = "0 5% 0 0";
     const state = useEffectState({
         pageNo: 1,
         pageSize: 4,
@@ -90,7 +90,7 @@ export default function TransactionHistory() {
     return (
         <div>
             <RecordDatePicker
-                style={{paddingLeft: "24px", marginBottom: "18px"}}
+                style={{marginBottom: "0.12rem"}}
                 onChange={(value) => {
                     state.pageNo = 1;
                     state.timeType = value;
@@ -107,11 +107,11 @@ export default function TransactionHistory() {
                     <Table>
                         <thead>
                         <tr>
-                            <th style={{width: "20%"}}>{t(`Time`)}</th>
-                            <th style={{width: "20%"}}>{t(`Pairs`)}</th>
-                            <th style={{width: "20%"}}>{t(`Type`)}</th>
-                            <th style={{width: "20%"}}>{t(`Total(USDT)`)}</th>
-                            <th className={"right"} style={{width: "20%"}}>{t(`Account Balance(USDT)`)}</th>
+                            <th style={{width: "20%"}}>{t(`TIME`)}</th>
+                            <th style={{width: "20%"}}>{t(`PAIRS`)}</th>
+                            <th style={{width: "20%"}}>{t(`TYPE`)}</th>
+                            <th style={{width: "20%"}}>{t(`TOTAL(USDT)`)}</th>
+                            <th className={"right"} style={{width: "20%"}}>{t(`ACCOUNT BALANCE(USDT)`)}</th>
                         </tr>
                         </thead>
                         <tbody>

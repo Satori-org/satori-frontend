@@ -51,20 +51,6 @@ export default function WithdrawModal(props: IProps) {
     const { walletBalance } = useAccountInfo(reducerState.currentPair.settleCoinId);
 
     async function submit() {
-        /*const tipText = regExpTemplate(t(`Your 300.00 USDT withdraw will be successful after confirmation on the mainnet.`), {amount: "1235.2564"});
-        OpenWaitingModal({
-            title: t(`Withdrawing...`),
-            content: tipText,
-            hash: "transInfo.hash",
-            callback(result: boolean): void {
-                OpenMessageBox({
-                    title: t(`Withdraw Successfully!`),
-                    content: tipText
-                });
-                PubSub.publish(RELOAD_ACCOUNT_INFO);
-            }
-        });
-        return ;*/
         if (!isNumber(state.amount)) {
             showMessage(`Please enter the quantity`);
             return ;
@@ -99,7 +85,7 @@ export default function WithdrawModal(props: IProps) {
                     });
                     PubSub.publish(RELOAD_ACCOUNT_INFO);
                 }
-            })
+            });
             /*OpenWaitingModal({
                 title: t(`Withdrawing...`),
                 content: tipText,

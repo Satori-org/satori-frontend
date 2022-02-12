@@ -12,13 +12,12 @@ import Loading from "src/components/loadStatus/Loading";
 import {RELOAD_RECORD} from "src/common/PubSubEvents";
 import {useFetchPostPage} from "src/ajax";
 import {usePubSubEvents} from "src/hooks/usePubSubEvents";
-import {useUpdateEffect} from 'ahooks';
-import {showMessage} from "../../../common/utilTools";
-import {MsgStatus} from "../../../common/enum";
-import NotConnect from "../../../components/NotConnect/NotConnect";
-import Toggle from "../../../components/toggle/Toggle";
-import Pagination from "../../../components/pagination/Pagination";
-import EmptyData from "../../../components/noData/EmptyData";
+import {showMessage} from "src/common/utilTools";
+import {MsgStatus} from "src/common/enum";
+import NotConnect from "src/components/NotConnect/NotConnect";
+import Toggle from "src/components/toggle/Toggle";
+import Pagination from "src/components/pagination/Pagination";
+import EmptyData from "src/components/noData/EmptyData";
 
 type IRow = {
     item: ICurrentEntrustList
@@ -45,8 +44,8 @@ function Row(props: IRow) {
         {/*<td>{props.item.dealQuantity === "0" ? t(`Not Sold`) : t(`Partial Transaction`)}</td>*/}
         <td className={`${props.item.isLong ? 'long' : 'short'}`}>{getOrderType(props.item.isLong, t)}</td>
         <td>{props.item.isMarket ? t(`Market`) : t(`Limit`)}</td>
-        <td className={"right"}>{props.item.price || "--"}</td>
-        <td className={"right"}>{props.item.dealQuantity}/{props.item.quantity} {props.item.symbol}</td>
+        <td>{props.item.price || "--"}</td>
+        <td className={"center"}>{props.item.dealQuantity}/{props.item.quantity} {props.item.symbol}</td>
        {/* <td className={"right"}>{props.item.amount}</td>*/}
         {/*<td>{props.item.contractPairId}</td>*/}
         <td className={"right"}>
@@ -98,16 +97,17 @@ export default function OpenOrder(props: IProps) {
                     <Table>
                         <thead>
                         <tr>
-                            <th style={{width: "13%"}}>{t(`Time`)}</th>
-                            <th>{t(`Pairs`)}</th>
-                            <th>{t(`Type`)}</th>
+                            <th style={{width: "13%"}}>{t(`TIME`)}</th>
+                            <th>{t(`PAIRS`)}</th>
+                            <th>{t(`TYPE`)}</th>
                             {/*<th>{t(`Status`)}</th>*/}
-                            <th>{t(`Commission type`)}</th>
-                            <th className={"right"}>{t(`Price(USDT)`)}</th>
-                            <th className={"right"}>{t(`Completed / Commission Cont`)}</th>
+                            <th>{t(`COMMISSION TYPE`)}</th>
+                            <th>{t(`PRICE(USDT)`)}</th>
+                            <th className={"center"}>{t(`COMPLETED / COMMISSION CONT`)}</th>
                             {/*<th className={"right"}>{t(`Margin(USDT)`)}</th>*/}
                             {/*<th>{t(`Fee`)}</th>*/}
-                            <th className={"right"} style={{width: "10%", minWidth: "130px"}}>{t(`Operation`)}</th>
+                            {/*<th className={"right"} style={{width: "10%", minWidth: "130px"}}>{t(`OPERATION`)}</th>*/}
+                            <th className={"right"} style={{width: "10%", minWidth: "130px"}}></th>
                         </tr>
                         </thead>
                         <tbody>

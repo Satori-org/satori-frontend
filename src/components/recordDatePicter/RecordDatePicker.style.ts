@@ -1,25 +1,25 @@
 import styled from "styled-components";
 
 export const RecordDatePickerStyle = styled.div`
-    font-size: 12px;
+    font-size: 0.12rem;
 `;
 
 export const DateTab = styled.div`
     .tabItem{
-        
-        margin-right: 12px;
-        line-height: 26px;
+        margin-right: 0.12rem;
+        line-height: 0.26rem;
         text-align: center;
+        font-size: 0.12rem;
         color: ${({theme}) => theme.colors.labelColor};
         cursor:pointer;
         &.active{
             display: inline-block;
-            min-width: 48px;
-            padding: 0 5px;
+            min-width: 0.48rem;
+            padding: 0 0.06rem;
             box-sizing: border-box;
-            border-radius: 6px;
-            background: ${({theme}) => theme.colors.gapColor};
-            color: ${({theme}) => theme.colors.modalTitle};
+            border-radius: 0.06rem;
+            background: ${({theme}) => theme.colors.linkActiveBgColor};
+            color: ${({theme}) => theme.colors.baseColor};
         }
     }
 `;
@@ -33,19 +33,19 @@ export const DateContainer = styled.div`
         }
     }
     .calendar{
-        width: 20px;
-        height: 20px;
-        margin-left: 12px;
+        width: 0.2rem;
+        height: 0.2rem;
+        margin-left: 0.12rem;
         vertical-align: middle;
     }
 `;
 
 export const Search = styled.button`
-    min-width: 64px;
-    height: 26px;
-    border-radius: 6px;
-    background: ${({theme}) => theme.colors.gapColor};
-    font-size: 12px;
-    color: ${({theme}) => theme.colors.modalTitle};
-    margin-left: 12px;
+    min-width: 0.64rem;
+    height: 0.26rem;
+    border-radius: 0.06rem;
+    background: ${({theme}) => theme.colors.linkActiveBgColor};
+    font-size: 0.12rem;
+    color: ${({theme}) => theme.colors.baseColor};
+    margin-left: 0.12rem;
 `;

@@ -102,18 +102,6 @@ export default function DepositModal(props: IProps) {
     }, [state.balance, state.amount]);*/
 
     async function submit() {
-        openModal<IWaitParams>(WaitingModal, {
-            title: t(`Recharging...`),
-            content: "tipText",
-            hash: "transInfo.hash",
-            callback(result: boolean): void {
-                OpenMessageBox({
-                    title: t(`Deposit Successfully!`)
-                });
-                PubSub.publish(RELOAD_ACCOUNT_INFO);
-            }
-        })
-        return ;
         if (!isNumber(state.amount)) {
             showMessage(`Please enter the quantity`);
             return ;
@@ -139,7 +127,7 @@ export default function DepositModal(props: IProps) {
                     });
                     PubSub.publish(RELOAD_ACCOUNT_INFO);
                 }
-            })
+            });
             /*OpenWaitingModal({
                 title: t(`Recharging...`),
                 content: tipText,

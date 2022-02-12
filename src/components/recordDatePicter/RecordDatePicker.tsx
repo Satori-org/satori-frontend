@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import {DateContainer, DateTab, RecordDatePickerStyle, Search} from './RecordDatePicker.style';
 import {useEffectState} from "../../hooks/useEffectState";
 import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
+import "src/lib/react-datepicker.css";
 import {formatDate} from "../../common/utilTools";
 
 type IProps = {
@@ -42,7 +42,7 @@ export default function RecordDatePicker(props: IProps) {
                     })
                 }
             </DateTab>
-            <div className={"flex-row"} style={{marginLeft: "32px"}}>
+            <div className={"flex-row"} style={{marginLeft: "32px", fontSize: "16px"}}>
                 <span className={"label"} style={{marginRight: "12px"}}>{t(`Time`)}</span>
                 <DatePicker
                     customInput={<DateContainer className={"flex-row"}>

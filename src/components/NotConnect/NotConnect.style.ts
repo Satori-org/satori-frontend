@@ -4,21 +4,24 @@ export const NotConnectStyle = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-top: 40px;
+    margin-top: 0.4rem;
     .walletIcon{
-        width: 54px;
-        height: 54px;
-        margin-bottom: 20px;
+        width: 0.44rem;
+        height: 0.44rem;
+        margin-bottom: 0.2rem;
     }
     .label{
-        font-size: 24px;
+        font-size: 0.2rem;
+        color: ${({theme}) => theme.colors.headerButtonColor}
     }
     .connectBtn{
-        width: 148px;
-        height: 42px;
-        border-radius: 6px;
-        background: ${({theme}) => theme.colors.modalTitle};
-        margin-top: 24px;
-        font-size: 14px;
+        width: 1.44rem;
+        height: 0.4rem;
+        border-radius: 0.08rem;
+        background: ${({theme}) => theme.colors.cancelBgColor};
+        color: ${({theme}) => theme.colors.cancelColor};
+        margin-top: 0.2rem;
+        font-size: 0.12rem;
+        font-weight: bold;
     }
 `;

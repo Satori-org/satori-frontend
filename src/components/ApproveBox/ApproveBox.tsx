@@ -9,7 +9,6 @@ import {useStore} from "react-redux";
 import {IState} from "../../store/reducer";
 import {mapDispatchToProps} from "../../store/connect";
 import {project} from "../../contract/config";
-import OpenMessageBox from "../messageBox/MessageBox";
 
 type IProps = {
     onCallback(approveStatus: boolean): void

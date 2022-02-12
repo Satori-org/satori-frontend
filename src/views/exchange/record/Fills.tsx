@@ -35,12 +35,17 @@ function Row(props: IRow) {
         </td>
         <td>{props.item.symbol}</td>
         <td className={`${props.item.isLong ? 'long' : 'short'}`}>{getOrderType(props.item.isLong, t)}</td>
+        <td>{props.item.isMarket ? t(`Market`) : t(`Limit`)}</td>
         <td>{props.item.averagePrice}</td>
         <td>{props.item.quantity} {props.item.symbol.split("-")[0]}</td>
-        <td>{props.item.profitLoss}</td>
-        <td>{props.item.positionFee}</td>
-        <td>{props.item.isMarket ? t(`Market`) : t(`Limit`)}</td>
+        {/*<td>{props.item.profitLoss}</td>
+        <td>{props.item.positionFee}</td>*/}
         <td>{props.item.isTaker ? t(`Taker`) : t(`Maker`)}</td>
+        <td className={"right"}>
+            <span>{props.item.amount}</span>
+            <span>/</span>
+            <span>{props.item.positionFee}</span>
+        </td>
     </RowStyle>
 }
 
@@ -84,7 +89,7 @@ export default function Fills() {
     return (
         <div>
             <RecordDatePicker
-                style={{paddingLeft: "24px", marginBottom: "18px"}}
+                style={{marginBottom: "0.12rem"}}
                 onChange={(value) => {
                     state.pageNo = 1;
                     state.timeType = value;
@@ -101,16 +106,18 @@ export default function Fills() {
                     <Table style={{whiteSpace: "nowrap"}}>
                         <thead>
                         <tr>
-                            <th style={ItemStyle}>{t(`Time`)}</th>
-                            <th style={ItemStyle}>{t(`Pairs`)}</th>
-                            <th style={ItemStyle}>{t(`Type`)}</th>
-                            <th style={ItemStyle}>{t(`Price`)}</th>
-                            <th style={ItemStyle}>{t(`Cont`)}</th>
-                            <th style={ItemStyle}>{t(`Realized PnL(USDT) `)}</th>
-                            <th style={ItemStyle}>{t(`Funding costs(USDT) `)}</th>
+                            <th style={ItemStyle}>{t(`TIME`)}</th>
+                            <th style={ItemStyle}>{t(`PAIRS`)}</th>
+                            <th style={ItemStyle}>{t(`TYPE`)}</th>
+                            <th style={ItemStyle}>{t(`ORDER TYPE`)}</th>
+                            <th style={ItemStyle}>{t(`PRICE`)}</th>
+                            <th style={ItemStyle}>{t(`CONT`)}</th>
+                            {/*<th style={ItemStyle}>{t(`REALIZED PNL(USDT) `)}</th>
+                            <th style={ItemStyle}>{t(`FUNDING COSTS(USDT) `)}</th>*/}
                             {/*<th>{t(`Fee`)}</th>*/}
-                            <th style={ItemStyle}>{t(`Order Type`)}</th>
-                            <th style={ItemStyle}>{t(`Transaction Type`)}</th>
+
+                            <th style={ItemStyle}>{t(`TRANSACTION TYPE`)}</th>
+                            <th className={"right"} style={ItemStyle}>{t(`TOTAL/FEE(USDT)`)}</th>
                         </tr>
                         </thead>
                         <tbody>
