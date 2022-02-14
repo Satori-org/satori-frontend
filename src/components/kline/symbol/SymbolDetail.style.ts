@@ -6,49 +6,49 @@ export const SymbolDetailStyle = styled.div`
     width: 100%;
 	height: calc(100% - 58px);
 	bottom: 1px;
-    background: ${({theme}) => theme.colors.backgroundColor};
+    background: ${({theme}) => theme.colors.boxBgColor};
 `;
 
 export const Title = styled.div`
-    font-size: 18px;
+    font-size: 0.12rem;
     font-weight: 600;
     .icon{
-        width: 26px;
-        height: 26px;
-        margin-right: 6px;
+        width: 0.24rem;
+        height: 0.24rem;
+        margin-right: 0.06rem;
     }
 `;
 
 export const Content = styled.article`
     margin: 18px 0 12px 0;
-    font-size: ${fonts.h6};
+    font-size: 0.1rem;
     font-weight: 400;
-    color: ${colors.baseColor};
+    color: ${({theme}) => theme.colors.baseColor};
 `;
 
 export const Explain = styled.article`
-    font-size: ${fonts.h6};
+    font-size: 0.1rem;
     font-weight: 400;
-    color: ${colors.labelColor};
+    color: ${({theme}) => theme.colors.labelColor};
 `;
 
 export const ButtonGroup = styled.div`
     margin-top: 20px;
     .btnItem{
-        background: ${colors.activeColor};
-        font-size: 14px;
+        background: ${({theme}) => theme.colors.activeColor};
+        font-size: 0.12rem;
         font-weight: 400;
-        line-height: 38px;
-        color: ${colors.buttonTextColor};
-        padding: 0 18px;
-        border-radius: 8px;
+        line-height: 0.28rem;
+        color: ${({theme}) => theme.colors.confirmColor};
+        padding: 0 0.12rem;
+        border-radius: 0.08rem;
         &:not(:last-child){
-            margin-right: 44px;
+            margin-right: 0.32rem;
         }
     }
     .icon{
-        width: 14px;
-        height: 14px;
-        margin-left: 4px;
+        width: 0.12rem;
+        height: 0.12rem;
+        margin-left: 0.04rem;
     }
 `;

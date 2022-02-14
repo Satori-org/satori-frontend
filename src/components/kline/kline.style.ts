@@ -30,7 +30,7 @@ export const MyChartStyle = styled.div`
 	bottom: 1px;
 	z-index: 5;
 	padding-bottom: 0;
-	background-color: ${({theme}) => theme.colors.backgroundColor};
+	background-color: ${({theme}) => theme.colors.boxBgColor};
 	visibility: hidden;
 	&.active{
 		visibility: visible;

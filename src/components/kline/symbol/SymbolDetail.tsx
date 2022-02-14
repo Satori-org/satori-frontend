@@ -12,7 +12,7 @@ export default function SymbolDetail() {
     return (
         <SymbolDetailStyle className={"flex-box"}>
             <div style={{width: "464px"}}>
-                <Title>
+                <Title className={"flex-row"}>
                     <img src={tradeCoin.icon} className={"icon"} alt=""/>
                     <span>{tradeCoin.name}</span>
                 </Title>

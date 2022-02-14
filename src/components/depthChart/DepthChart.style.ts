@@ -21,7 +21,8 @@ export const ToolTip = styled.div`
     top: 50%;
     display: none;
     min-width: 206px;
-    background: ${colors.tradeBgColor};
+    background: ${({theme}) => theme.colors.boxBgColor};
+    border: 1px solid ${({theme}) => theme.colors.borderColor};
     border-radius: 4px;
     font-size: 12px;
     line-height: 24px;
@@ -30,6 +31,6 @@ export const ToolTip = styled.div`
     pointer-events: none;
     transition: left 0.5s, top 0.5s;
     .label{
-        color: ${colors.labelColor};
+        color: ${({theme}) => theme.colors.labelColor};
     }
 `;
