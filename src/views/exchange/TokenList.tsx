@@ -37,17 +37,17 @@ function PairRow(props: IPairRow) {
 
     const tdStyle: CSSProperties = {
         verticalAlign: "top",
-        lineHeight: "24px",
-        fontSize: "20px",
-        paddingTop: "10px",
-        paddingBottom: "10px"
+        lineHeight: "0.56rem",
+        fontSize: "0.16rem"
     };
 
     return <tr key={props.data.id} onClick={() => props.onChange()}>
         <td style={tdStyle}>{props.data.symbol}</td>
-        <td style={tdStyle}>
-            <p>{pairQuotation.marketPrice}</p>
-            <span className={rowClassName} style={{fontSize: "16px"}}>{formatAmount(pairQuotation.marketChangeRate || "", true)}</span>
+        <td style={Object.assign({textAlign: "left"}, tdStyle)}>
+            <span>{pairQuotation.marketPrice || "-"}</span>
+            <Toggle vIf={!!pairQuotation.marketChangeRate}>
+                <span className={rowClassName}>({formatAmount(pairQuotation.marketChangeRate || "", true)})</span>
+            </Toggle>
         </td>
         <td style={tdStyle}>
             <span>{fixedNumber(pairQuotation.last24hVol, reducerState.currentPairDecimal)}</span>
@@ -132,22 +132,24 @@ export default function TokenList() {
             </div>
             <Toggle vIf={state.showPanel}>
                 <PanelStyle onClick={(event) => event.stopPropagation()}>
-                    <table>
-                        <thead>
+                    <div className={"panelContent"}>
+                        <table style={{textAlign: "left"}}>
+                            <thead>
                             <tr>
-                                <th  style={{fontSize: "16px"}}>{t(`Pairs`)}</th>
-                                <th  style={{fontSize: "16px"}}>{t(`Oracle Price`)}</th>
-                                <th  style={{fontSize: "16px"}}>{t(`24h Vol`)}</th>
+                                <th  style={{fontSize: "0.1rem", fontWeight: "bold"}}>{t(`PAIRS`)}</th>
+                                <th  style={{fontSize: "0.1rem", fontWeight: "bold", textAlign:"left"}}>{t(`ORACLE PRICE`)}</th>
+                                <th  style={{fontSize: "0.1rem", fontWeight: "bold"}}>{t(`24H VOL`)}</th>
                             </tr>
-                        </thead>
-                        <tbody>
-                        {
-                            reducerState.pairs.map((item) => {
-                                return <PairRow data={item} key={item.id} onChange={() => changePair(item)}></PairRow>
-                            })
-                        }
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody>
+                            {
+                                reducerState.pairs.map((item) => {
+                                    return <PairRow data={item} key={item.id} onChange={() => changePair(item)}></PairRow>
+                                })
+                            }
+                            </tbody>
+                        </table>
+                    </div>
                 </PanelStyle>
             </Toggle>
         </TokenListStyle>

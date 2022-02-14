@@ -1,14 +1,12 @@
-import React, {useContext, useEffect, useMemo, useReducer, useState} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 import { useTranslation } from 'react-i18next';
-import {Hr, Price, TokenData, TokenInfoStyle} from './styles/TokenInfo.style';
+import {TokenData, TokenInfoStyle} from './styles/TokenInfo.style';
 import Setting from "./Setting";
 import {ICustomerToken} from "./useCustomerTokenInfo";
 import TokenList from "./TokenList";
-import {exchangeReducer, initExchangeState} from "./exchangeReducer";
-import useExchangeStore, {ExchangeContext} from "./ExchangeProvider";
-import {fixedNumber, formatAmount, formatDuring} from "../../common/utilTools";
-import Toggle from 'src/components/toggle/Toggle';
-import {useEffectState} from "../../hooks/useEffectState";
+import useExchangeStore from "./ExchangeProvider";
+import {formatDuring} from "src/common/utilTools";
+import {useEffectState} from "src/hooks/useEffectState";
 
 export default function TokenInfo() {
     const {t} = useTranslation();

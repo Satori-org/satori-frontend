@@ -6,7 +6,7 @@ export const TokenListStyle = styled.div`
     height: 100%;
     padding: 0 0.16rem;
     text-align: center;
-    font-size: ${fonts.h2};
+    font-size: 0.2rem;
     /*border-right: 1px solid ${({theme}) => theme.colors.borderColor};*/
     .icon{
         display: inline-block;
@@ -27,33 +27,35 @@ export const TokenListStyle = styled.div`
 
 export const PanelStyle = styled.div`
     position: absolute;
-    left: 0;
+    left: 0.16rem;
     bottom: 0;
     z-index: 800;
     transform: translateY(100%);
-    width: 460px;
-    padding: 16px 0;
-    background: #121212;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    box-sizing: border-box;
-    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.2);
-    border-radius: 8px;
+    width: 3.8rem;
+    padding-top: 0.08rem;
+    .panelContent{
+        padding: 0.16rem 0;
+        background: ${({theme}) => theme.colors.boxBgColor};
+        border: 1px solid ${({theme}) => theme.colors.modalBorderColor};
+        box-sizing: border-box;
+        border-radius: 0.08rem;
+    }
     table{
         width: 100%;
         line-height: 28px;
         text-align: left;
         th{
-            font-size: 12px;
+            font-size: 0.1rem;
             font-weight: 400;
             color: ${({theme}) => theme.colors.labelColor};
-            padding-bottom: 8px;
+            padding-bottom: 0.08rem;
             text-align: center;
             &:first-child{
-                padding-left: 24px;
+                padding-left: 0.16rem;
                 text-align: left;
             }
             &:last-child{
-                padding-right: 24px;
+                padding-right: 0.16rem;
                 text-align: right;
             }
         }
@@ -62,10 +64,10 @@ export const PanelStyle = styled.div`
             text-align: center;
             &:first-child{
                 text-align: left;
-                padding-left: 24px;
+                padding-left: 0.16rem;
             }
             &:last-child{
-                padding-right: 24px;
+                padding-right: 0.16rem;
                 text-align: right;
             }
             .short{

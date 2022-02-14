@@ -20,6 +20,7 @@ export const TokenData = styled.div`
     white-space: nowrap;
     /*overflow: hidden;*/
     overflow-x: auto;
+    font-size: 0.16rem;
     .dataGroup{
         padding: 0 0.16rem;
         border-left: 1px solid ${({theme}) => theme.colors.borderColor};

@@ -83,7 +83,7 @@ export const LabelBox = styled.div`
             text-align: left;
         }
         &:last-child{
-            min-width: 106px;
+            min-width: 1.07rem;
         }
     }
 `;
