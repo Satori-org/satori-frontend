@@ -16,6 +16,7 @@ export type IColors = {
     long: string
     short: string
     inputBgColor: string
+    disabledButtonBgColor: string
     modalTitle: string
     subtitle: string
     filedColor: string

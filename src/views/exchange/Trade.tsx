@@ -1,30 +1,24 @@
 import React, {useEffect, useMemo, useRef} from 'react';
-import { useTranslation } from 'react-i18next';
+import {useTranslation} from 'react-i18next';
 import Tab from 'src/components/tab/Tab';
-import {BalanceBox, ButtonGroup, FeeBox, LabelButton, TradeStyle} from './styles/Trade.style';
+import {Direction, FeeBox, InputLabel, LeverageBtn, Submit, TradeStyle} from './styles/Trade.style';
 import {useEffectState} from "src/hooks/useEffectState";
 import Form from "src/components/form/Form";
 import Input from "src/components/form/Input";
-import RSlider from "src/components/slider/RSlider";
-import LoadButton from "src/components/loadButton/LoadButton";
 import useExchangeStore from "./ExchangeProvider";
 import {addOrder, IAccount} from "src/ajax/contract/contract";
-import {ORDER_TYPE} from "src/common/enum";
+import {ORDER_DIRECTION, ORDER_TYPE} from "src/common/enum";
 import {signExpire, signMsg} from "src/contract/wallet";
 import {useStore} from "react-redux";
 import {IState} from "src/store/reducer";
-import {ILeverageModal, LeverageModal} from "src/components/LeverageModal/LeverageModal";
 import Decimal from "decimal.js";
 import {awaitWrap, fixedNumber, fixedNumberStr, isNumber, showMessage} from "src/common/utilTools";
 import PubSub from "pubsub-js";
-import {getOrderType} from "./config";
 import {RELOAD_RECORD, USER_SELECT_PRICE} from "src/common/PubSubEvents";
 import useTheme from "src/hooks/useTheme";
 import Toggle from "src/components/toggle/Toggle";
-import Percent from "src/components/percent/Percent";
 import InputNumber from "src/components/inputNumber/InputNumber";
-import openModal from "../../components/openModal";
-import SettlementModal from "./SettlementModal";
+import Divider from "../../components/divider/Divider";
 
 type IProps = {
     longPrice: string
@@ -45,6 +39,7 @@ export default function Trade(props: IProps) {
         sliderValue: 0,
         leverage: 10,
         isRISE: true,
+        isLong: true,
         disabledCtroll: false,
         quantity: "",
         quantityPlaceholder: placeholderText,
@@ -53,23 +48,34 @@ export default function Trade(props: IProps) {
         balance: 0,
         loading: false,
         accountInfo: {} as IAccount,
-        percent: 0
+        percent: 0,
+        levers: [5, 10 ,20]
     });
     const symbolDecimal = reducerState.currentPair.settleCoin && reducerState.currentPair.settleCoin.settleDecimal || 4;
     const settleDecimal = useMemo(() => {
-        return reducerState.currentPairDecimal;
+        //return reducerState.currentPairDecimal;
+        return 3;
     }, [reducerState.currentPairDecimal]);
     /* Currently selected trading pairs */
     //const pairInfo = useCurrentPairInfo();, textAlign: "right
     /*Get contract account information*/
     //const { accountInfo, reloadData } = useAccountInfo(reducerState.currentPair.settleCoinId);
     /* Total amount of orders placed */
+    const orderDirections = useMemo(() => {
+        return [
+            {text: t(`Buy`), isLong: ORDER_DIRECTION.buy},
+            {text: t(`Sell`), isLong: ORDER_DIRECTION.sell},
+        ]
+    }, [t]);
     const isLimit = useMemo(() => {
         return state.orderType === ORDER_TYPE.limit;
     }, [state.orderType]);
     const isMarket = useMemo(() => {
         return state.orderType === ORDER_TYPE.market;
     }, [state.orderType]);
+    const disabledAddOrder = useMemo(() => {
+        return state.loading || !state.quantity || (state.orderType === ORDER_TYPE.limit && !state.price);
+    }, [state.loading, state.orderType, state.quantity, state.price]);
     useEffect(() => {
         const namespace = PubSub.subscribe(USER_SELECT_PRICE, (event: string, price: string) => {
             if (isLimit) {
@@ -135,6 +141,62 @@ export default function Trade(props: IProps) {
         let rate = reducerState.currentPair.tradeFeeRate || 0;
         return Decimal.mul(margin, rate).div(100).toFixed();
     }, [shortMargin, reducerState.currentPair.tradeFeeRate]);
+
+    const ExpectedPrice = useMemo(() => {
+        if (state.isLong) {
+            let _price = props.shortPrice || reducerState.marketPrice;
+            return Decimal.mul(_price, 1 + 0.0005).toFixed();
+        } else {
+            return props.longPrice ? Math.max(Number(props.longPrice), reducerState.marketPrice) : reducerState.marketPrice;
+        }
+    }, [state.isLong, props.longPrice, props.shortPrice, reducerState.marketPrice]);
+    const orderTotalAmount = useMemo(() => {
+        if (!state.quantity) {
+            return "0";
+        }
+        if (isLimit) {
+            if (state.isLong) {
+                return Decimal.mul(state.price || 0, state.quantity || 0).div(state.leverage).toFixed();
+            } else {
+                let arr = [state.price, props.longPrice];
+                let r = arr.filter((item) => !!item);
+                // @ts-ignore
+                let maxPrice = Math.max(...r);
+                return Decimal.mul(maxPrice || 0, state.quantity || 0).div(state.leverage).toFixed();
+            }
+        } else if(ExpectedPrice) {
+            return Decimal.mul(ExpectedPrice, state.quantity).div(state.leverage).toFixed();
+        } else {
+            return "0";
+        }
+        /*if (state.isLong) {
+            if (isLimit) {
+                return Decimal.mul(state.price || 0, state.quantity || 0).div(state.leverage).toFixed();
+            } else {
+                /!*let _price = props.shortPrice || reducerState.marketPrice;
+                let calcPrice = Decimal.mul(_price, 1 + 0.0005);*!/
+                return Decimal.mul(ExpectedPrice, state.quantity).div(state.leverage).toFixed();
+            }
+        } else {
+            if (isLimit) {
+                let arr = [state.price, props.longPrice];
+                let r = arr.filter((item) => !!item);
+                // @ts-ignore
+                let maxPrice = Math.max(...r);
+                return Decimal.mul(maxPrice || 0, state.quantity || 0).div(state.leverage).toFixed();
+            } else if (reducerState.marketPrice){
+                //let _price = props.longPrice ? Math.max(Number(props.longPrice), reducerState.marketPrice) : reducerState.marketPrice;
+                return Decimal.mul(ExpectedPrice, state.quantity).div(state.leverage).toFixed()
+            } else {
+                return "0";
+            }
+        }*/
+    }, [state.isLong, isLimit, state.price, state.quantity, state.leverage, props.longPrice, ExpectedPrice]);
+    const orderFee = useMemo(() => {
+        let margin = orderTotalAmount || 0;
+        let rate = reducerState.currentPair.tradeFeeRate || 0;
+        return Decimal.mul(margin, rate).div(100).toFixed();
+    }, [orderTotalAmount, reducerState.currentPair.tradeFeeRate]);
 
     const orderValue = useMemo(() => {
         if (!state.quantity) {
@@ -227,7 +289,7 @@ export default function Trade(props: IProps) {
         return (<span>{value}%</span>)
     }
 
-    async function submit(isLong: boolean) {
+    async function submit() {
         if (isLimit && !Number(state.price)) {
             showMessage(t(`Please enter the price`));
             return ;
@@ -249,7 +311,7 @@ export default function Trade(props: IProps) {
         }
         state.loading = true;
         const isClose = false;
-        const total = isLong ? Decimal.mul(longMargin, state.leverage).toFixed() : Decimal.mul(shortMargin, state.leverage).toFixed();
+        const total = state.isLong ? Decimal.mul(longMargin, state.leverage).toFixed() : Decimal.mul(shortMargin, state.leverage).toFixed();
         const [signData, error] = await awaitWrap(signMsg({
             "quantity": state.quantity,
             "address": storeData.address,
@@ -263,7 +325,7 @@ export default function Trade(props: IProps) {
                 contractPairId: reducerState.currentPair.id,
                 contractPositionId: 0,
                 isClose: isClose,
-                isLong: isLong,
+                isLong: state.isLong,
                 isMarket: state.orderType,
                 quantity: Number(state.quantity),
                 signHash: signData.signatrue,
@@ -302,9 +364,9 @@ export default function Trade(props: IProps) {
                      state.percent = 0;
                      state.orderType = value;
                  }} />
-            <div style={{marginTop: "20px"}}>
-                <div>
-                    {/*<LabelButton>{t(`Isolated`)}</LabelButton>*/}
+            <div style={{flex: 1, padding: "0.16rem 0"}}>
+                {/*<div>
+                    <LabelButton>{t(`Isolated`)}</LabelButton>
                     <LabelButton onClick={() => {
                         openModal<ILeverageModal>(LeverageModal, {
                             defaultValue: String(state.leverage),
@@ -315,44 +377,86 @@ export default function Trade(props: IProps) {
                             }
                         })
                     }}>{t(`Leverage`)} {state.leverage}x</LabelButton>
-                </div>
-
-                <Form childRef={childRef} ref={$form}>
-                    <BalanceBox className={"flex-row"}>
+                </div>*/}
+                <Form childRef={childRef} ref={$form}
+                      style={{display: "flex", flexDirection: "column", justifyContent: "space-between", height: "100%"}}>
+                    <div>
+                        <Direction className={"borderRadius"} style={{marginBottom: "0.16rem"}}>
+                            {
+                                orderDirections.map((item, index) => {
+                                    return <button className={`button font12 
+                                ${item.isLong ? '' : 'sell'} 
+                                ${state.isLong === item.isLong ? 'active' : ''}`}
+                                                   onClick={() => state.isLong = item.isLong}>{item.text}</button>
+                                })
+                            }
+                        </Direction>
+                        {/*<BalanceBox className={"flex-row"}>
                         <span className={"label"}>{t(`Avbl`)}</span>
                         <span style={{color: theme.colors.baseColor}}>{reducerState.accountInfo.availableAmount}</span>
                         <span className={"unit"}>USDT</span>
-                    </BalanceBox>
-                    <Toggle vIf={isLimit}>
-                        <InputNumber
-                               label={t(`Price`)}
-                               right={<div className={`flex-row`}>
-                                   <span>USDT</span>
-                               </div>
-                               }
-                               placeholder={state.pricePlaceholder}
-                               maxDecimal={symbolDecimal}
-                               value={state.price}
-                               onChange={(value) => {
-                                   state.price = value;
-                               }}  />
-                    </Toggle>
-                    <InputNumber
-                           label={t(`Amount`)}
-                           style={{marginTop: "14px"}}
-                           right={<span>{reducerState.currentPair.tradeCoin && reducerState.currentPair.tradeCoin.symbol}</span>}
-                           placeholder={state.quantityPlaceholder}
-                           value={state.quantity}
-                           maxDecimal={symbolDecimal}
-                           onChange={(value) => {
-                               state.percent = 0;
-                               state.quantity = value;
-                               //calcSliderValue();
-                           }}/>
-                   <div style={{textAlign: "right", marginTop: "12px"}}>
+                    </BalanceBox>*/}
+                        <Toggle vIf={isLimit}>
+                            <div>
+                                <InputLabel>
+                                    <span>{t(`Price`)}</span>
+                                    <span className={"explain"}>{t(`Set Order Price`)}</span>
+                                </InputLabel>
+                                <InputNumber
+                                    inputStyle={{textAlign: "left"}}
+                                    right={<div className={`flex-row`}>
+                                        <span>USDT</span>
+                                    </div>
+                                    }
+                                    placeholder={state.pricePlaceholder}
+                                    maxDecimal={symbolDecimal}
+                                    value={state.price}
+                                    onChange={(value) => {
+                                        state.price = value;
+                                    }}  />
+                            </div>
+                        </Toggle>
+                        <div style={{marginTop: "0.12rem"}}>
+                            <InputLabel>
+                                <span>{t(`Amount`)}</span>
+                                <span className={"explain"}>{t(`Set Order Size`)}</span>
+                            </InputLabel>
+                            <InputNumber
+                                inputStyle={{textAlign: "left"}}
+                                right={<span>{reducerState.currentPair.tradeCoin && reducerState.currentPair.tradeCoin.symbol}</span>}
+                                placeholder={state.quantityPlaceholder}
+                                value={state.quantity}
+                                maxDecimal={symbolDecimal}
+                                onChange={(value) => {
+                                    state.percent = 0;
+                                    state.quantity = value;
+                                    //calcSliderValue();
+                                }}/>
+                        </div>
+                        {/*<div style={{textAlign: "right", marginTop: "12px"}}>
                        <span className={"label"} style={{marginRight: "4px"}}>{t(`Order Value`)}</span>
                        <span>≈{fixedNumber(orderValue, settleDecimal)} USDT</span>
-                   </div>
+                   </div>*/}
+                        <Divider style={{margin: "0.16rem 0"}}>{t(`OR`)}</Divider>
+                        <InputLabel>
+                            <span>{t(`Leverage`)}</span>
+                            <span className={"explain"}>{t(`Up to 10x`)}</span>
+                        </InputLabel>
+                        <Input
+                            readOnly={true}
+                            value={`${state.leverage}X`}
+                            inputStyle={{width: "1rem"}}
+                            right={
+                                <>
+                                    {
+                                        state.levers.map((item, index) => {
+                                            return <LeverageBtn className={`${state.leverage === item ? 'active' : ''}`} key={index}
+                                                                onClick={() => state.leverage = item}>{item}X</LeverageBtn>
+                                        })
+                                    }
+                                </>
+                            } />
+                    </div>
                     {/*<div style={{margin: "44px auto 20px"}}>
                         <RSlider marks={[{value: 0},{value: 25},{value: 50},{value: 75},{value: 100}]}
                                  tipFormatter={tipFormatter}
@@ -364,12 +468,12 @@ export default function Trade(props: IProps) {
                                      calcQuantity();
                                  }}></RSlider>
                     </div>*/}
-                    <Percent<number>
+                    {/*<Percent<number>
                         data={[{value: 25},{value: 50},{value: 75},{value: 100}]}
                         value={state.percent}
                         onChange={(value) => {
                             state.percent = value
-                        }} />
+                        }} />*/}
                     {/*<Percent>
                         {
                             [{value: 25},{value: 50},{value: 75},{value: 100}].map((item, index) => {
@@ -389,7 +493,26 @@ export default function Trade(props: IProps) {
                     <span style={{color: "#B2B6BC"}}>{amount} USDT</span>
                 </FeeBox>*/}
                     {/*<TotleAmount className={"disabled"}>{t(`Total(BTC)`)}</TotleAmount>*/}
-                    <ButtonGroup className={"grid-2"}>
+                    <div>
+                        <Toggle vIf={state.orderType === ORDER_TYPE.market}>
+                            <FeeBox>
+                                <div className={"label"}>{t(`Expected Price`)}</div>
+                                <div>{fixedNumber(ExpectedPrice, settleDecimal) || "--"} USDT</div>
+                            </FeeBox>
+                        </Toggle>
+                        <FeeBox>
+                            <div className={"label"}>{t(`Fee`)}</div>
+                            <div>{fixedNumber(orderFee, settleDecimal) || "--"} USDT</div>
+                        </FeeBox>
+                        <FeeBox>
+                            <div className={"label"}>{t(`Total`)}</div>
+                            <div>{fixedNumber(Decimal.add(orderFee || 0, orderTotalAmount || 0).toFixed(), settleDecimal) || "--"} USDT</div>
+                        </FeeBox>
+                        <Submit className={`font12 borderRadius ${state.isLong ? '' : 'sell'}`}
+                                disabled={disabledAddOrder}
+                                onClick={submit}>{ state.orderType === ORDER_TYPE.market ? t(`Place Market Order`) : t(`Place Limit Order`)}</Submit>
+                    </div>
+                    {/*<ButtonGroup className={"grid-2"}>
                         <div>
                             <LoadButton
                                 loading={state.loading}
@@ -417,7 +540,7 @@ export default function Trade(props: IProps) {
                                 <div>{fixedNumber(Decimal.add(shortFee || 0, shortMargin || 0).toFixed(), settleDecimal) || "--"} USDT</div>
                             </FeeBox>
                         </div>
-                    </ButtonGroup>
+                    </ButtonGroup>*/}
                 </Form>
             </div>
             {/*<SettlementModal />*/}

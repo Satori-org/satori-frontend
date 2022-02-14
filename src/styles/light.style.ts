@@ -14,6 +14,7 @@ export const light: ITheme = {
         long: "#157336",
         short: "#B4190D",
         inputBgColor: "#EEEFEF",
+        disabledButtonBgColor: "#F3F3F3",
         modalTitle: "#000",
         subtitle: "#525150",
         filedColor: "#fff",

@@ -1,9 +1,10 @@
-import React, {MutableRefObject, ReactNode, useImperativeHandle} from 'react';
+import React, {CSSProperties, MutableRefObject, ReactNode, useImperativeHandle} from 'react';
 
 interface formProps{
     onSubmit?():void,
     children: ReactNode
     childRef?: MutableRefObject<{ validate(): void } | undefined>
+    style?: CSSProperties
 }
 
 export default React.forwardRef(function Form(props:formProps, $form: any) {
@@ -43,7 +44,7 @@ export default React.forwardRef(function Form(props:formProps, $form: any) {
     }
 
     return (
-        <form ref={$form} autoComplete={"off"} onSubmit={handleSubmit}>
+        <form ref={$form} autoComplete={"off"} onSubmit={handleSubmit} style={props.style}>
             {props.children}
         </form>
     )

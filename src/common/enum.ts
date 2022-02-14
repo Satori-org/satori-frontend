@@ -29,3 +29,8 @@ export enum TRANSFER_TYPE {
     Deposit = 1,
     Withdraw = 2
 }
+
+export const ORDER_DIRECTION = {
+    buy: true,
+    sell: false
+};
