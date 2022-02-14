@@ -140,7 +140,7 @@ export function ClosePositionModal(props: IProps) {
                     <Toggle vIf={state.orderType !== ORDER_TYPE.market}>
                         <InputNumber
                             label={t(`Price`)}
-                            style={{marginBottom: "0.15rem"}}
+                            style={{marginBottom: "0.16rem"}}
                             right={<div className={`flex-row`}>
                                 <button className={"btnText"} onClick={() => state.price = String(reducerState.marketPrice)}>Last</button>
                             </div>

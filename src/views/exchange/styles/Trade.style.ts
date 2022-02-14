@@ -36,15 +36,12 @@ export const Direction = styled.div`
     .button{
         height: 0.24rem;
         font-weight: bold;
-        color: ${({theme}) => theme.colors.headerButtonColor};
+        color: ${({theme}) => theme.colors.tabColor};
         background: transparent;
         border-radius: 0.06rem;
         &.active{
-            color: ${({theme}) => theme.colors.baseColor};
-            background: ${({theme}) => theme.colors.long};
-            &.sell{
-                background: ${({theme}) => theme.colors.short};
-            }
+            color: ${({theme}) => theme.colors.tabSelectedColor};
+            background: ${({theme}) => theme.colors.tabSelectedBColor};
         }
     }
 `;

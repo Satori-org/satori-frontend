@@ -28,8 +28,10 @@ export const RightBtn = styled.button`
     height: 0.24rem;
     padding: 0 0.06rem;
     box-sizing: border-box;
+    /*color: ${({theme}) => theme.colors.headerButtonColor};
+    background: ${({theme}) => theme.colors.confirmColor};*/
     color: ${({theme}) => theme.colors.headerButtonColor};
-    background: ${({theme}) => theme.colors.confirmColor};
+    background: ${({theme}) => theme.colors.modalBorderColor};
     border-radius: 0.08rem;
     margin-left:  0.08rem;
     font-weight: 600;

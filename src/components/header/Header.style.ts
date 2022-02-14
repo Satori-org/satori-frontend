@@ -6,7 +6,8 @@ export const HeaderStyle = styled.div`
     justify-content: space-between;
     height: 0.48rem;
     position: relative;
-    padding-left: 0.16rem;
+    padding-left: 0.24rem;
+    padding-right: 0.08rem;
 `;
 
 export const Logo = styled.img`

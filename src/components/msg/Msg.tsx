@@ -4,9 +4,11 @@ import { MsgStyle } from './Msg.style';
 import {NotificationModal} from "src/views/exchange/NotificationModal";
 import {useEffectState} from "src/hooks/useEffectState";
 import Toggle from '../toggle/Toggle';
+import {useThemeManager} from "../../hooks/useThemeManager";
 
 export default function Msg() {
     const {t} = useTranslation();
+    const {isDark} = useThemeManager();
     const state = useEffectState({
         showModal: false
     });
@@ -29,7 +31,7 @@ export default function Msg() {
             state.showModal = !state.showModal;
             event.stopPropagation();
         }}>
-            <img src={require("src/assets/images/notice.png")} className={"icon"} alt=""/>
+            <img src={isDark?require("src/assets/images/dark/notice.png"):require("src/assets/images/light/notice.png")} className={"icon"} alt=""/>
             {/*<span className={"tag"}></span>*/}
             {/*<Toggle vIf={state.showModal}>
                 <NotificationModal />

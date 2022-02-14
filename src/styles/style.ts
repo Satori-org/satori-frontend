@@ -15,6 +15,9 @@ export type IColors = {
     labelColor: string
     long: string
     short: string
+    tabColor: string,
+    tabSelectedColor: string,
+    tabSelectedBColor: string,
     inputBgColor: string
     disabledButtonBgColor: string
     modalTitle: string

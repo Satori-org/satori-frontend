@@ -11,12 +11,14 @@ import {showMessage} from "../../common/utilTools";
 import {MsgStatus} from "../../common/enum";
 import Toggle from "../toggle/Toggle";
 import {useEffectState} from "../../hooks/useEffectState";
+import {useThemeManager} from "../../hooks/useThemeManager";
 
 type IProps = {
     style?: CSSProperties
 }
 export default function Header(props: IProps) {
     const {t, i18n} = useTranslation();
+    const {isDark} = useThemeManager();
     const state = useEffectState({
         showDrop: false
     });
@@ -29,7 +31,7 @@ export default function Header(props: IProps) {
         <HeaderStyle style={props.style}>
             <div className={"flex-row"}>
                 <RouterLink to={"/"}>
-                    <Logo src={require("src/assets/images/logo_dark.png")} />
+                    <Logo src={isDark?require("src/assets/images/logo_dark.png"):require("src/assets/images/logo_light.png")} />
                 </RouterLink>
                 {/*<RouterLink to={"/"} className={"logoName"}>Satori</RouterLink>*/}
                 <Nav className={"flex-row"}>

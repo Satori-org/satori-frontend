@@ -42,6 +42,10 @@ export const ButtonGroup = styled.div`
         color: ${({theme}) => theme.colors.confirmColor};
         padding: 0 0.12rem;
         border-radius: 0.08rem;
+        &.light{
+            background: ${({theme}) => theme.colors.borderColor2};
+            color: ${({theme}) => theme.colors.headerButtonColor};
+        }
         &:not(:last-child){
             margin-right: 0.32rem;
         }

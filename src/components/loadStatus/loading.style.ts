@@ -60,7 +60,7 @@ export const LoadingSpinner = styled.div`
 		stroke-dasharray: 90,150;
 		stroke-dashoffset: 0;
 		stroke-width: 2;
-		stroke: ${colors.activeColor};
+		stroke: ${({theme}) => theme.colors.activeColor};
 		stroke-linecap: round;
 	}
 `;
