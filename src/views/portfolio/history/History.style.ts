@@ -2,30 +2,46 @@ import styled from "styled-components";
 import {colors} from "../../../styles/style";
 
 export const HistoryStyle = styled.div`
+    position: relative;
+    min-height: 2rem;
+    margin-top: 0.08rem;
+    /*padding: 0 0.24rem 0.28rem;*/
+    box-sizing: border-box;
     .long{
         color: ${({theme}) => theme.colors.long};
     }
     .short{
         color: ${({theme}) => theme.colors.short};
     }
-    .table{
-        td{
-            line-height: 54px;
-        }
+    .listContainer{
+        position: relative;
+        min-height: 1.6rem;
+        padding: 0.16rem 0.24rem;
+        box-sizing: border-box;
+        border-top: 0.04rem solid ${({theme}) => theme.colors.backgroundColor};
     }
+    /*.table{
+        th{
+        
+        }
+        td{
+            line-height: 0.28rem;
+        }
+    }*/
 `;
 
 export const RecordHeader = styled.div`
-    margin-bottom: 34px;
+    margin: 0.16rem 0;
+    padding: 0 0.24rem;
 `;
 
 export const RecordTab = styled.div`
-    width: 294px;
-    height: 48px;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    width: 2.66rem;
+    height: 0.32rem;
+    /*display: grid;
+    grid-template-columns: repeat(3, 1fr);*/
     background: ${({theme}) => theme.colors.boxBgColor};
-    border-radius: 6px;
+    /*border-radius: 6px;*/
     overflow: hidden;
     .tabItem{
         height: 100%;
@@ -94,12 +110,12 @@ export const DropMenu = styled.ul`
 `;
 
 export const DateContainer = styled.div`
-    width: 228px;
-    height: 48px;
-    padding: 0 16px;
+    width: 2.66rem;
+    height: 0.32rem;
+    padding: 0 0.12rem;
     box-sizing: border-box;
-    border-radius: 6px;
-    background: ${({theme}) => theme.colors.boxBgColor};
+    border-radius: 0.06rem;
+    background: ${({theme}) => theme.colors.inputBgColor};
     margin-left: 28px;
     .calendar{
         width: 20px;

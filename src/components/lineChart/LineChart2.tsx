@@ -57,24 +57,24 @@ export default function LineChart2(props: IProps) {
         let colorStops = [];
         if (max !== 0 && min === 0) {
             colorStops = [
-                { offset: 0.0,  color: '#25A69A' },
-                { offset: 0.3,  color: '#25A69A' },
-                {offset: 1,  color: 'rgba(255, 254, 252, 0)'}
+                { offset: 0.0,  color: 'rgba(99, 180, 142, 0.066)' },
+                { offset: 0.3,  color: 'rgba(99, 180, 142, 0.066)' },
+                {offset: 1,  color: 'rgba(99, 180, 142, 0)'}
             ];
         } else if(max === 0 && min !== 0) {
             colorStops = [
-                { offset: 0.0,  color: 'rgba(255, 254, 252, 0)'},
-                { offset: 0.7,  color: '#25A69A' },
-                { offset: 1,  color: '#25A69A' }
+                { offset: 0.0,  color: 'rgba(99, 180, 142, 0)'},
+                { offset: 0.7,  color: 'rgba(99, 180, 142, 0.066)' },
+                { offset: 1,  color: 'rgba(99, 180, 142, 0.066)' }
             ];
         } else {
             let totalHeight = max - min;
             colorStops = [
-                { offset: 0.0,  color: '#25A69A'},
-                { offset: max*0.7/totalHeight/2,  color: '#25A69A'},
-                { offset: max/totalHeight,  color: 'rgba(255, 254, 252, 0)'},
-                { offset: (0.6*Math.abs(min) + max)/totalHeight,  color: '#25A69A' },
-                { offset: 1,  color: '#25A69A' }
+                { offset: 0.0,  color: 'rgba(99, 180, 142, 0.066)'},
+                { offset: max*0.7/totalHeight/2,  color: 'rgba(99, 180, 142, 0.066)'},
+                { offset: max/totalHeight,  color: 'rgba(99, 180, 142, 0)'},
+                { offset: (0.6*Math.abs(min) + max)/totalHeight,  color: 'rgba(99, 180, 142, 0.066)' },
+                { offset: 1,  color: 'rgba(99, 180, 142, 0.066)' }
             ];
         }
         chartInstance.setOption({
@@ -82,23 +82,32 @@ export default function LineChart2(props: IProps) {
                 type: 'category',
                 boundaryGap: false,
                 data: props.dataArr.map((item) => {
-                    console.log(item[0])
                     return item[0]
-                })
+                }),
+                axisLine: {
+                    show: false
+                },
+                axisTick: {
+                    show: false
+                },
+                axisLabel: {
+                    showMinLabel: true,
+                    showMaxLabel: true
+                }
             },
             grid: {
                bottom: "20px",
                 top: "20px",
-                left: "5%",
-                right: "5%"
+                left: "3%",
+                right: "3%"
             },
             yAxis: {
                 type: 'value',
+                show: false,
                 splitLine: {
                     lineStyle: {
                         color: props.slitLineColor
                     }
-
                 }
             },
             /*visualMap: [
@@ -129,8 +138,10 @@ export default function LineChart2(props: IProps) {
                         shadowBlur: 0,
                         borderWidth: 0
                     },
+                    showSymbol: false,
                     symbol: "circle",
                     symbolSize: 12,
+                    smooth: true,
                     areaStyle: {
                         color: {
                             type: 'linear',

@@ -27,7 +27,7 @@ export const ExchangeStyle = styled.div`
         display: grid;
         grid-template-columns: 1fr 3rem;
         grid-column-gap: 0.04rem;
-        height: 3rem;
+        min-height: 3rem;
         overflow-y: hidden;
         flex-shrink: 0;
         margin-top: 0.04rem;

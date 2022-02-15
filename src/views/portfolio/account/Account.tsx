@@ -54,18 +54,18 @@ export default function Account() {
             <div className={"detail"}>
                 <div className={"userInfo flex-row"}>
                     <div className={"info"}>
-                        <p className={"label"}>{t(`Portfolio value`)}</p>
+                        <p className={"label"}>{t(`PORTFOLIO VALUE`)}</p>
                         <p className={"val"}>$ {state.data.totalAssets}</p>
                     </div>
                     <div className={"info"}>
-                        <p className={"label"}>{t(`Today PnL`)}</p>
+                        <p className={"label"}>{t(`TODAY PNL`)}</p>
                         <p className={getRiseInfo(state.data.todayProfitLoss).className}>
                             <span className={`val`}>{getRiseInfo(state.data.todayProfitLoss).dotal} $ {state.data.todayProfitLoss}</span>
                             {/*<span>({state.data.todayIncreaseRate}%)</span>*/}
                         </p>
                     </div>
                     <div className={"info"}>
-                        <p className={"label"}>{t(`Total PnL`)}</p>
+                        <p className={"label"}>{t(`TOTAL PNL`)}</p>
                         {/*<Toggle vIf={!!state.data.totalProfitLoss && state.data.totalProfitLoss !== "0"}>
                             <p className={getRiseInfo(state.data.totalProfitLoss).className}>
                                 <span className={"val"}>{getRiseInfo(state.data.totalProfitLoss).dotal} $ {formatAmount(state.data.totalProfitLoss)}</span>
@@ -83,7 +83,7 @@ export default function Account() {
                     {/*<p>{t(`Total PnL Trend`)}</p>*/}
                     <ChartTab>
                         {/*<div className={"tabItem active"}>{t(`Value Trend`)}</div>*/}
-                        <div className={"tabItem active"}>{t(`Total Pnl Trend`)}</div>
+                        {/*<div className={"tabItem active"}>{t(`Total Pnl Trend`)}</div>*/}
                     </ChartTab>
                     <div className={"chartContainer"}>
                         <Toggle vIf={dataArr.length > 0}>
@@ -95,15 +95,16 @@ export default function Account() {
                                 dataArr={dataArr}
                             />*/}
                             <LineChart2 dataArr={dataArr}
-                                        slitLineColor={theme.colors.borderColor}
                                         lineColor={theme.colors.long}
-                                        chartStyle={{height: "310px"}} style={{height: "100%"}} />
+                                        chartStyle={{height: "2rem"}} style={{height: "100%"}} />
                         </Toggle>
                     </div>
                 </div>
             </div>
-            <h3 className={"title"}>{t(`Portfolios`)}</h3>
-            <Position></Position>
+            <div className={"listContainer"}>
+                <h3 className={"title"} style={{marginBottom: "0.08rem"}}>{t(`Portfolios`)}</h3>
+                <Position></Position>
+            </div>
         </AccountStyle>
     )
 }

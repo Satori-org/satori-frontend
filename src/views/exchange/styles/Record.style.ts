@@ -5,7 +5,7 @@ export const RecordStyle = styled.div`
     /*grid-column-end: span 3;*/
     flex: 1;
     /*min-height: 338px;*/
-    padding: 0 0.16rem;
+    padding: 0 0.16rem 0.2rem;
     background: ${({theme}) => theme.colors.boxBgColor};
 `;
 

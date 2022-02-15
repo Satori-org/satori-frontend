@@ -2,20 +2,25 @@ import styled from "styled-components";
 import {colors} from "../../../styles/style";
 
 export const AccountStyle = styled.div`
+    margin-top: 0.24rem;
     .title{
-        font-size: 36px;
+        font-size: 0.12rem;
         font-weight: bold;
-        margin: 120px 0 34px;
+        padding: 0.16rem 0;
+        border-bottom: 1px solid ${({theme}) => theme.colors.borderColor};
     }
     .detail{
-        
+        border-bottom: 0.04rem solid ${({theme}) => theme.colors.backgroundColor};
+        padding-bottom: 0.16rem;
     }
     .userInfo{
-        margin-bottom: 54px;
+        padding: 0 0.24rem;
         .info{
-            margin-right: 36px;
-            color: ${({theme}) => theme.colors.filedColor};
+            margin-right: 0.48rem;
             .label{
+                font-size: 0.1rem;
+                font-weight: 600;
+                color: ${({theme}) => theme.colors.labelColor};
                 margin-bottom: 8px;
             }
             .long{
@@ -25,7 +30,7 @@ export const AccountStyle = styled.div`
                 color: ${({theme}) => theme.colors.short};
             }
             .val{
-                font-size: 36px;
+                font-size: 0.2rem;
             }
         }
         .balanceBox{
@@ -59,11 +64,16 @@ export const AccountStyle = styled.div`
         }
     }
     .Trend{
+        margin-top: 0.24rem;
         .chartContainer{
-            height: 260px;
+            /*height: 2rem;*/
+            /*height: 260px;*/
             /*margin-top: 16px;*/
-            border-radius: 8px;
+            /*border-radius: 8px;*/
         }
+    }
+    .listContainer{
+        padding: 0 0.24rem 0.2rem;
     }
 `;
 

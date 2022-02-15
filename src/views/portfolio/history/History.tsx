@@ -1,4 +1,4 @@
-import React, {useEffect, useMemo, useRef, useState} from 'react';
+import React, {CSSProperties, useEffect, useMemo, useRef, useState} from 'react';
 import { useTranslation } from 'react-i18next';
 import {
     DateContainer,
@@ -17,6 +17,12 @@ import "react-datepicker/dist/react-datepicker.css";
 import {formatDate, getDayStartTime} from "../../../common/utilTools";
 import Toggle from "../../../components/toggle/Toggle";
 import DropDown from '../DropDown';
+import Tab2 from "../../../components/tab2/Tab2";
+
+export const tdStyle: CSSProperties = {
+    fontSize: "0.14rem",
+    lineHeight: "0.4rem"
+};
 
 type IDate = Date | null
 export default function History() {
@@ -46,9 +52,9 @@ export default function History() {
     }, [t]);
     const tabs = useMemo(() => {
         return [
-            {text: t(`Trades`)},
-            {text: t(`Transfer`)},
-            {text: t(`Funding`)}
+            {text: t(`Trades`), value: 0},
+            {text: t(`Transfer`), value: 1},
+            {text: t(`Funding`), value: 2}
         ]
     }, [t]);
     const endTime = useMemo(() => {
@@ -119,13 +125,19 @@ export default function History() {
         <HistoryStyle>
             <RecordHeader className={"flex-row"}>
                 <RecordTab className={"flex-row"}>
-                    {
+                    <Tab2
+                        options={tabs}
+                        style={{width: "100%"}}
+                        onChange={(value) => {
+                        state.active = value;
+                    }}></Tab2>
+                    {/*{
                         tabs.map((item, index) => {
                             return <div key={index}
                                         className={`tabItem flex-box ${state.active === index ? 'active' : ''}`}
                                         onClick={() => state.active = index}>{item.text}</div>
                         })
-                    }
+                    }*/}
                 </RecordTab>
                 {SearchComponent}
                 {/*<DropDown
@@ -172,7 +184,7 @@ export default function History() {
                             state.startDate = value[0];
                             state.endDate = value[1];
                         }}
-                        customInput={<DateContainer className={"flex-sb"} style={{width: "340px"}}>
+                        customInput={<DateContainer className={"flex-sb"}>
                             <span className={"label"}>{t(`Date`)}</span>
                             <div className={"flex-row"}>
                                 <span style={{marginTop: "2px"}}>{state.startDate ? formatDate(state.startDate.getTime(), "yyyy-MM-dd") : "YYYY-MM-DD"}</span>
@@ -184,7 +196,9 @@ export default function History() {
                     />
                 </div>
             </RecordHeader>
-            {RecordComponent}
+            <div className={"listContainer"}>
+                {RecordComponent}
+            </div>
         </HistoryStyle>
     )
 }

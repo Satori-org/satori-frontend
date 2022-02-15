@@ -3,6 +3,9 @@ import {colors} from "src/styles/style";
 
 export const PositionStyle = styled.div`
     position: relative;
+    min-height: 2rem;
+    padding-bottom: 0.28rem;
+    box-sizing: border-box;
     .tokenIcon{
         width: 16px;
         height: 16px;

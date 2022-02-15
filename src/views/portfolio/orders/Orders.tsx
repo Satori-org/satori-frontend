@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {CSSProperties, useEffect} from 'react';
 import {useTranslation} from 'react-i18next';
 import {OrdersStyle} from './Orders.style';
 import Table from "src/components/table/Table";
@@ -17,6 +17,7 @@ import EmptyData from "../../../components/noData/EmptyData";
 import {awaitWrap, showMessage} from "../../../common/utilTools";
 import {MsgStatus} from "../../../common/enum";
 import {ThButton} from "../history/History.style";
+import {tdStyle} from "../history/History";
 
 const data = [
     { Pairs: "BTC/USDT", time: "2021-11-22 13:00:45", Status: "Limit",isLong: true,Leverage: 10,margin: "12.88", Type: "Sell/Short", Price: "6.998", Completed: "1,297.60", Commission: "1.894541" },
@@ -41,19 +42,19 @@ function Row(props: IRow) {
     }
 
     return <tr>
-        <td>
+        <td style={tdStyle}>
             <div className={"flex-row"}>
                 <span className={"name"}>{props.item.createTime}</span>
             </div>
         </td>
-        <td>{props.item.symbol}</td>
-        <td className={`${props.item.isLong ? 'long' : 'short'}`}>{getOrderType(props.item.isLong, t)}</td>
-        <td>{props.item.lever}x</td>
-        <td>{props.item.price}</td>
-        <td>{props.item.dealQuantity}/{props.item.quantity}</td>
+        <td style={tdStyle}>{props.item.symbol}</td>
+        <td style={tdStyle} className={`${props.item.isLong ? 'long' : 'short'}`}>{getOrderType(props.item.isLong, t)}</td>
+        <td style={tdStyle}>{props.item.lever}x</td>
+        <td style={tdStyle}>{props.item.price}</td>
+        <td style={tdStyle}>{props.item.dealQuantity}/{props.item.quantity}</td>
         {/*<td>{props.item.amount}</td>*/}
-        <td>
-            <OperationBtn style={{background: "transparent"}} onClick={cancelOrder}>{t(`Cancel`)}</OperationBtn>
+        <td style={tdStyle}>
+            <OperationBtn onClick={cancelOrder}>{t(`Cancel`)}</OperationBtn>
         </td>
     </tr>
 }
@@ -105,15 +106,15 @@ export default function Orders() {
                 <Table className={"table"}>
                     <thead>
                     <tr>
-                        <th style={{width: "16%"}}>{t(`Time`)}</th>
-                        <th>{t(`Pairs`)}</th>
-                        <th>{t(`Type`)}</th>
-                        <th>{t(`Leverage`)}</th>
-                        <th>{t(`Price`)}</th>
-                        <th style={{width: "26%"}}>{t(`Completed Cont`)}/{t(`Commission Cont`)}</th>
+                        <th style={{width: "16%"}}>{t(`TIME`)}</th>
+                        <th>{t(`PAIRS`)}</th>
+                        <th>{t(`TYPE`)}</th>
+                        <th>{t(`LEVERAGE`)}</th>
+                        <th>{t(`PRICE`)}</th>
+                        <th style={{width: "1.9rem"}}>{t(`COMPLETED`)}/{t(`COMMISSION`)}</th>
                         {/*<th>{t(`Margin`)}</th>*/}
                         <th>
-                            <ThButton onClick={cancelOrder}>{t(`Cancel all`)}</ThButton>
+                            {/*<ThButton onClick={cancelOrder}>{t(`CANCEL ALL`)}</ThButton>*/}
                         </th>
                     </tr>
                     </thead>

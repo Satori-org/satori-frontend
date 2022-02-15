@@ -80,17 +80,17 @@ export default function Transfer(props: IProps) {
     });
 
     return (
-        <div style={{position: "relative"}}>
+        <div>
             { loading ? <Loading /> :null }
             <Toggle vIf={!!storeData.token}>
                 <Table className={"table"}>
                     <thead>
                     <tr>
-                        <th style={{width: "17.2%"}}>{t(`Time`)}</th>
-                        <th>{t(`Type`)}</th>
-                        <th>{t(`Amount`)}</th>
-                        <th>{t(`Status`)}</th>
-                        <th style={{width: "26%"}}>{t(`Transaction Hash`)}</th>
+                        <th style={{width: "17.2%"}}>{t(`TIME`)}</th>
+                        <th>{t(`TYPE`)}</th>
+                        <th>{t(`AMOUNT`)}</th>
+                        <th>{t(`STATUS`)}</th>
+                        <th style={{width: "26%"}}>{t(`TRANSACTION HASH`)}</th>
                     </tr>
                     </thead>
                     <tbody>

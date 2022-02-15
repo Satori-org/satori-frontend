@@ -17,21 +17,23 @@ export default function Portfolio() {
             {/*<div className="left">
                 <Nav />
             </div>*/}
-            <div className="content">
+            <div className="container">
                 <h2 className={"title"}>{t(meta.title)}</h2>
-                <Nav />
-                <div style={{flex: 1}}>
-                    <Switch>
-                        {
-                            routes.map((item) => {
-                                // let Component = item.isLazy ? React.lazy(item.component as LazyComponent) : item.component;
-                                let Component = React.lazy(item.component as LazyComponent);
-                                // @ts-ignore
-                                return <Component path={item.path} key={item.path} exact={item.exact} beforeRender={item.beforeRender} meta={item.meta}></Component>
-                            })
-                        }
-                        <Redirect to={routes[0].path} />
-                    </Switch>
+                <div className={"content"}>
+                    <Nav />
+                    <div style={{flex: 1}}>
+                        <Switch>
+                            {
+                                routes.map((item) => {
+                                    // let Component = item.isLazy ? React.lazy(item.component as LazyComponent) : item.component;
+                                    let Component = React.lazy(item.component as LazyComponent);
+                                    // @ts-ignore
+                                    return <Component path={item.path} key={item.path} exact={item.exact} beforeRender={item.beforeRender} meta={item.meta}></Component>
+                                })
+                            }
+                            <Redirect to={routes[0].path} />
+                        </Switch>
+                    </div>
                 </div>
                 {/*<Footer />*/}
             </div>

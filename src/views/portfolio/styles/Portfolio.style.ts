@@ -12,25 +12,25 @@ export const PortfolioStyle = styled.div`
     .left{
         background: ${colors.tradeBgColor};
     }
-    .right{
-        display: flex;
-        flex-direction: column;
-        padding: 24px 30px;
-        background: ${colors.backgroundColor};
-    }
-    .content{
-        width: 1200px;
-        margin: 40px auto 0;
+   
+    .container{
+        min-width: 1200px;
+        width: 11.36rem;
+        margin: 0.48rem auto 0;
         padding-bottom: 40px;
     }
     .title{
-        font-size: 36px;
-        font-weight: bold;
+        font-size: 0.24rem;
+        font-weight: 600;
+    }
+    .content{
+        border-radius: 0.16rem;
+        background: ${({theme}) => theme.colors.boxBgColor};
     }
 `;
 
 export const Title = styled.h3`
-    font-size: 36px;
-    font-weight: bold;
-    margin-bottom: 18px;
+    font-size: 0.24rem;
+    font-weight: 600;
+    margin-bottom: 0.12rem;
 `;

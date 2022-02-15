@@ -12,22 +12,22 @@ export const PaginationStyle = styled.div`
 
 export const ArrowIcon = styled.span`
     display: inline-block;
-    width: 10px;
-    height: 10px;
-    padding: 7px;
+    width: 0.1rem;
+    height: 0.1rem;
+    padding: 0.06rem;
     cursor:pointer;
     background-origin: content-box;
     background-size: 100% 100%;
     background-repeat: no-repeat;
     &.arrowLeft{
-        margin-right: 4px;
+        margin-right: 0.04rem;
         background-image: url(${arrow_left});
         &:hover{
             background-image: url(${arrow_left_active});
         }
     }
     &.arrowRight{
-        margin-left: 4px;
+        margin-left: 0.04rem;
         background-image: url(${arrow_right});
         &:hover{
             background-image: url(${arrow_right_active});
@@ -37,30 +37,32 @@ export const ArrowIcon = styled.span`
 
 export const PageItem = styled.span`
     display: inline-block;
-    min-width: 24px;
-    line-height: 24px;
+    min-width: 0.28rem;
+    line-height: 0.28rem;
     text-align: center;
-    padding: 0 4px;
+    padding: 0 0.04rem;
     box-sizing: border-box;
-    font-size: 12px;
+    font-size: 0.12rem;
     font-weight: 400;
     cursor:pointer;
+    color: ${({theme}) => theme.colors.borderColor};
+    border-radius: 0.08rem;
     &.active{
-        background: ${({theme}) => theme.colors.filedColor};
-        color: ${({theme}) => theme.colors.modalBgColor};
+        background: ${({theme}) => theme.colors.inputBgColor};
+        color: ${({theme}) => theme.colors.baseColor};
     }
     /*&:hover{
         color: ${colors.activeColor};
     }*/
     &:not(:last-child){
-        margin-right: 4px;
+        margin-right: 0.04rem;
     }
 `;
 
 export const More = styled.span`
     display: inline-block;
-    width: 24px;
-    height: 24px;
+    width: 0.2rem;
+    height: 0.2rem;
     text-align: center;
     cursor:pointer;
     user-select: none;

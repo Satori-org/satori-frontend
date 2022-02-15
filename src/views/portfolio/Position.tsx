@@ -1,4 +1,4 @@
-import React, {useMemo} from 'react';
+import React, {CSSProperties, useMemo} from 'react';
 import { useTranslation } from 'react-i18next';
 import {PositionStyle} from './styles/Position.style';
 import Table from "src/components/table/Table";
@@ -50,20 +50,24 @@ function Row(props: IRow) {
         return obj;
     }, [props.item.unrealizedPnl]);
 
+    const tdStyle: CSSProperties = {
+        fontSize: "0.14rem",
+        lineHeight: "0.4rem"
+    };
     return <>
         <tr style={{lineHeight: "42px"}}>
-            <td>
+            <td style={tdStyle}>
                 <span className={"name"}>{props.item.symbol}</span>
             </td>
-            <td className={`${props.item.isLong ? 'long' : 'short'}`}>{getOrderType(props.item.isLong, t)}</td>
-            <td>{props.item.lever}x</td>
-            <td>{props.item.quantity} {props.item.symbol.split("-")[0]}</td>
-            <td>{props.item.openingPrice}</td>
-            <td>{Number(props.item.restrictPrice) < 0 ? "--" : props.item.restrictPrice}</td>
-            <td>{props.item.marginAmount}</td>
-            <td className={ operaInfo.className }>{operaInfo.value}</td>
-            <td>
-                <OperationBtn style={{background: "transparent"}} onClick={() => {
+            <td style={tdStyle} className={`${props.item.isLong ? 'long' : 'short'}`}>{getOrderType(props.item.isLong, t)}</td>
+            <td style={tdStyle}>{props.item.lever}x</td>
+            <td style={tdStyle} className={"right"}>{props.item.quantity} {props.item.symbol.split("-")[0]}</td>
+            <td style={tdStyle} className={"right"}>{props.item.openingPrice}</td>
+            <td style={tdStyle} className={"right"}>{Number(props.item.restrictPrice) < 0 ? "--" : props.item.restrictPrice}</td>
+            <td style={tdStyle} className={"right"}>{props.item.marginAmount}</td>
+            <td style={tdStyle} className={`right ${operaInfo.className}`}>{operaInfo.value}</td>
+            <td style={tdStyle} className={"right"}>
+                <OperationBtn onClick={() => {
                     $router.push({
                         pathname: "/",
                         query: {pairId: props.item.contractPairId}
@@ -100,15 +104,15 @@ export default function Position() {
                 <Table className={"table"}>
                     <thead>
                     <tr>
-                        <th>{t(`Pairs`)}</th>
-                        <th>{t(`Type`)}</th>
-                        <th>{t(`Leverage`)}</th>
-                        <th>{t(`Cont`)}</th>
-                        <th>{t(`Enter price`)}</th>
-                        <th>{t(`Liquid. Price`)}</th>
-                        <th>{t(`Margin`)}</th>
-                        <th style={{width: "16%"}}>{t(`Unrealiz. PnL`)}</th>
-                        <th></th>
+                        <th>{t(`PAIRS`)}</th>
+                        <th>{t(`TYPE`)}</th>
+                        <th>{t(`LEVERAGE`)}</th>
+                        <th className={"right"}>{t(`AMOUNT`)}</th>
+                        <th className={"right"}>{t(`ENTER PRICE`)}</th>
+                        <th className={"right"}>{t(`LIQUIDATION PRICE`)}</th>
+                        <th className={"right"}>{t(`MARGIN`)}</th>
+                        <th className={"right"}>{t(`LIQUIDATION PRICE`)}</th>
+                        <th className={"right"} style={{width: "1.2rem"}}></th>
                     </tr>
                     </thead>
                     <tbody>

@@ -92,18 +92,18 @@ export default function Funding(props: IProps) {
     }, [storeData.token]);
 
     return (
-        <div style={{position: "relative"}}>
+        <div>
             { loading ? <Loading /> :null }
             <Toggle vIf={!!storeData.token}>
                 <Table className={"table"}>
                     <thead>
                     <tr>
-                        <th style={{width: "17.2%"}}>{t(`Time`)}</th>
-                        <th>{t(`Markets`)}</th>
-                        <th>{t(`Payments`)}</th>
-                        <th>{t(`Funding Rate`)}</th>
-                        <th>{t(`Position`)}</th>
-                        <th>{t(`Oracle price`)}</th>
+                        <th style={{width: "17.2%"}}>{t(`TIME`)}</th>
+                        <th>{t(`MARKETS`)}</th>
+                        <th>{t(`PAYMENTS`)}</th>
+                        <th>{t(`FUNDING RATE`)}</th>
+                        <th>{t(`POSITION`)}</th>
+                        <th>{t(`ORACLE PRICE`)}</th>
                     </tr>
                     </thead>
                     <tbody>

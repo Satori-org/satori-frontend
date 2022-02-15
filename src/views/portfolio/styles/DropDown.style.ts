@@ -3,11 +3,11 @@ import styled from "styled-components";
 export const DropDownStyle = styled.div`
     position: relative;
     width: 228px;
-    height: 48px;
-    padding: 0 16px;
+    height: 0.32rem;
+    padding: 0 0.12rem;
     box-sizing: border-box;
-    border-radius: 6px;
-    background: ${({theme}) => theme.colors.boxBgColor};
+    border-radius: 0.06rem;
+    background: ${({theme}) => theme.colors.inputBgColor};
     margin-left: 28px;
     cursor:pointer;
     .icon{
@@ -31,8 +31,8 @@ export const DropMenu = styled.ul`
     font-size: 14px;
     text-align: center;
     color: ${({theme}) => theme.colors.labelColor};
-    background: #121212;
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: ${({theme}) => theme.colors.boxBgColor};
+    border: 1px solid ${({theme}) => theme.colors.modalBorderColor};
     box-sizing: border-box;
     box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.2);
     border-radius: 8px;

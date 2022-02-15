@@ -13,6 +13,7 @@ import NotConnect from "../../../components/NotConnect/NotConnect";
 import EmptyData from "../../../components/noData/EmptyData";
 import {getOrderType} from "../../exchange/config";
 import {formatDate} from "../../../common/utilTools";
+import {tdStyle} from "./History";
 
 const data = [
     {time: "2021-11-22 13:00:45", pairs: "BTC/USDT",type: 0,Leverage: 10,price: "1.078236",cont: "6.998 BTC", total: 2.568,pnl: "1,297.60 USDT",fee: "8.1334 USDT",status: "Limit",liquidty:"Maker"},
@@ -27,15 +28,15 @@ function Row(props: IRow) {
 
     return <>
         <tr>
-            <td style={{width: "17.2%"}}>{props.item.createTime}</td>
-            <td>{props.item.symbol}</td>
-            <td className={`${props.item.isLong ? 'long' : 'short'}`}>{getOrderType(props.item.isLong, t)}</td>
-            <td>{props.item.isMarket ? t(`Market`) : t(`Limit`)}</td>
-            <td>{props.item.lever}x</td>
-            <td>{props.item.averagePrice}</td>
-            <td>{props.item.quantity} {props.item.symbol.split("-")[0]}</td>
-            <td>{props.item.isTaker ? t(`Taker`) : t(`Maker`)}</td>
-            <td>
+            <td style={Object.assign({width: "17.2%"}, tdStyle)}>{props.item.createTime}</td>
+            <td style={tdStyle}>{props.item.symbol}</td>
+            <td style={tdStyle} className={`${props.item.isLong ? 'long' : 'short'}`}>{getOrderType(props.item.isLong, t)}</td>
+            <td style={tdStyle}>{props.item.isMarket ? t(`Market`) : t(`Limit`)}</td>
+            <td style={tdStyle}>{props.item.lever}x</td>
+            <td style={tdStyle}>{props.item.averagePrice}</td>
+            <td style={tdStyle}>{props.item.quantity} {props.item.symbol.split("-")[0]}</td>
+            <td style={tdStyle}>{props.item.isTaker ? t(`Taker`) : t(`Maker`)}</td>
+            <td style={tdStyle}>
                 <span className={"dashedBorder"}>{props.item.amount} / {props.item.tradeFee}</span>
             </td>
         </tr>
@@ -82,21 +83,21 @@ export default function TradesOrders(props: IProps) {
     }, [storeData.token]);
 
     return (
-        <div style={{position: "relative"}}>
+        <div>
             { loading ? <Loading /> :null }
             <Toggle vIf={!!storeData.token}>
                 <Table className={"table"}>
                     <thead>
                     <tr>
-                        <th>{t(`Time`)}</th>
-                        <th>{t(`Pairs`)}</th>
-                        <th>{t(`Type`)}</th>
-                        <th>{t(`Order Type`)}</th>
-                        <th>{t(`Leverage`)}</th>
-                        <th>{t(`Price`)}</th>
-                        <th>{t(`Cont`)}</th>
-                        <th>{t(`Transaction Type`)}</th>
-                        <th>{t(`Total / Fee(USDT)`)}</th>
+                        <th>{t(`TIME`)}</th>
+                        <th>{t(`PAIRS`)}</th>
+                        <th>{t(`TYPE`)}</th>
+                        <th>{t(`ORDER TYPE`)}</th>
+                        <th>{t(`LEVERAGE`)}</th>
+                        <th>{t(`PRICE`)}</th>
+                        <th>{t(`CONT`)}</th>
+                        <th>{t(`TRANSACTION TYPE`)}</th>
+                        <th>{t(`TOTAL / FEE(USDT)`)}</th>
                     </tr>
                     </thead>
                     <tbody>
