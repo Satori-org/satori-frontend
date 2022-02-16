@@ -41,7 +41,7 @@ export const Direction = styled.div`
         border-radius: 0.06rem;
         &.active{
             color: ${({theme}) => theme.colors.tabSelectedColor};
-            background: ${({theme}) => theme.colors.tabSelectedBColor};
+            background: ${({theme}) => theme.colors.inputBtnBgColor};
         }
     }
 `;
@@ -64,11 +64,11 @@ export const LeverageBtn = styled.button`
     font-size: 0.1rem;
     font-weight: 600;
     color: ${({theme}) => theme.colors.headerButtonColor};
-    background: ${({theme}) => theme.colors.modalBorderColor};
+    background: ${({theme}) => theme.colors.inputBtnBgColor};
     margin-left: 0.04rem;
     &.active{
         color: ${({theme}) => theme.colors.baseColor};
-        background: ${({theme}) => theme.colors.linkActiveBgColor};
+        /*background: ${({theme}) => theme.colors.linkActiveBgColor};*/
     }
 `;
 

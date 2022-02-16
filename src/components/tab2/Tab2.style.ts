@@ -15,7 +15,7 @@ export const Tab2Style = styled.div<Itab>`
         border-radius: 0.06rem;
         &.active{
             color: ${({theme}) => theme.colors.tabSelectedColor};
-            background: ${({theme}) => theme.colors.tabSelectedBColor};
+            background: ${({theme}) => theme.colors.inputBtnBgColor};
         }
     }
 `;

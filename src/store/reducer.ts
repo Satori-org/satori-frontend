@@ -20,7 +20,7 @@ let initState: IState = {
     completedHash: "",
     lang: localStorage.getItem("lang") || langType.en_US,
     token: sessionStorage.getItem("token") || "",
-    theme: sessionStorage.getItem("theme") || THEME.dark
+    theme: localStorage.getItem("theme") || THEME.dark
 };
 
 export default function reducer(state = initState, action: any): IState  {

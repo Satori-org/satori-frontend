@@ -4,12 +4,14 @@ import {Collapse, StatusItemStyle} from './Status.style';
 import {useEffectState} from "../../hooks/useEffectState";
 import Toggle from "../../components/toggle/Toggle";
 import {INotice} from "../../ajax/types";
+import {useThemeManager} from "../../hooks/useThemeManager";
 
 type IProps = {
     data: INotice
 }
 export default function StatusItem(props: IProps) {
     const {t} = useTranslation();
+    const {isDark} = useThemeManager();
     const state = useEffectState({
         collapse: true
     });
@@ -22,7 +24,7 @@ export default function StatusItem(props: IProps) {
                     <time className={"date"}>{props.data.createTime}</time>
                 </div>
                 <Collapse className={`flex-box ${state.collapse ? '' : 'active'}`} onClick={() => state.collapse = !state.collapse}>
-                    <img src={require("src/assets/images/icon_arrow_down.png")} className={"icon"} alt=""/>
+                    <img src={isDark ? require("src/assets/images/dark/icon_arrow_down.png") : require("src/assets/images/light/icon_arrow_down.png")} className={"icon"} alt=""/>
                 </Collapse>
             </div>
             <Toggle vIf={!state.collapse}>

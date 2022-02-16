@@ -54,6 +54,7 @@ export const mapDispatchToProps = (dispatch: Dispatch) => {
             })
         },
         toggleTheme(theme: THEME) {
+            localStorage.setItem("theme", theme);
             dispatch({
                 type: actions.TOGGLE_THEME,
                 data: theme

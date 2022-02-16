@@ -1,9 +1,9 @@
 import styled from "styled-components";
 
 export const StatusStyle = styled.div`
-    min-height: calc(100vh - 60px);
+    min-height: calc(100vh - 0.48rem);
     padding: 38px 0;
-    background: #0D0D0D;
+    background: ${({theme}) => theme.colors.backgroundColor};
     .content{
         width: 933px;
         margin: auto;
@@ -11,10 +11,10 @@ export const StatusStyle = styled.div`
 `;
 
 export const StatusTitle = styled.h3`
-    font-size: 36px;
+    font-size: 0.24rem;
     font-weight: bold;
-    color: ${({theme}) => theme.colors.filedColor};
-    margin-bottom: 24px;
+    color: ${({theme}) => theme.colors.baseColor};
+    margin-bottom: 0.16rem;
 `;
 
 
@@ -26,25 +26,25 @@ export const StatusItemStyle = styled.li`
     position: relative;
     padding: 46px 32px 38px 32px;
     margin-bottom: 24px;
-    background: #000000;
+    background: ${({theme}) => theme.colors.boxBgColor};
     border-radius: 6px;
     .title{
-        font-size: 24px;
+        font-size: 0.18rem;
         font-weight: normal;
-        color: ${({theme}) => theme.colors.articleColor};
+        color: ${({theme}) => theme.colors.baseColor};
         margin-bottom: 16px;
     }
     .date{
-        font-size: 18px;
+        font-size: 0.14rem;
         font-weight: 400;
         color: ${({theme}) => theme.colors.labelColor};
     }
     .statusContent{
         padding-top: 8px;
         margin-top: 8px;
-        font-size: 14px;
-        color: ${({theme}) => theme.colors.articleColor};
-        border-top: 1px solid ${({theme}) => theme.colors.articleHrColor};
+        font-size: 0.12rem;
+        color: ${({theme}) => theme.colors.baseColor};
+        border-top: 1px solid ${({theme}) => theme.colors.borderColor};
         img{
             width: 100%;
         }

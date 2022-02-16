@@ -7,7 +7,7 @@ import {getContractPairList, IPair, IQuotation} from "src/ajax/contract/contract
 import {exchangeActions, mapExchangeDispatch} from "./exchangeReducer";
 import useExchangeStore from "./ExchangeProvider";
 import {$router} from "../../react-router-perfect/Index";
-import {fixedNumber, formatAmount, formatAmountRise} from "../../common/utilTools";
+import {fixedNumber, formatAmount, formatAmountRise, formatNumber} from "../../common/utilTools";
 import {Price} from "./styles/TokenInfo.style";
 import {useThemeManager} from "../../hooks/useThemeManager";
 
@@ -124,7 +124,7 @@ export default function TokenList() {
                         onMouseLeave={() => state.showPanel = false}>
             <div className={"flex-row font20"} style={{cursor: "pointer", userSelect: "none", whiteSpace: "nowrap"}}>
                 <span>{reducerState.currentPair.symbol}</span>
-                <Price className={`${isRise ? 'long' : 'short'}`}>{reducerState.tiker.close || "0"}</Price>
+                <Price className={`${isRise ? 'long' : 'short'}`}>{formatNumber(reducerState.tiker.close || "0")}</Price>
                 <img src={isDark ? require("src/assets/images/dark/icon_arrow_down.png") : require("src/assets/images/light/icon_arrow_down.png")}
                      className={`icon ${state.showPanel ? 'active' : ''}`}
                      alt="" />

@@ -7,6 +7,7 @@ import TokenList from "./TokenList";
 import useExchangeStore from "./ExchangeProvider";
 import {formatDuring} from "src/common/utilTools";
 import {useEffectState} from "src/hooks/useEffectState";
+import SplitNumber from "../../components/splitNumber/SplitNumber";
 
 export default function TokenInfo() {
     const {t} = useTranslation();
@@ -88,17 +89,23 @@ export default function TokenInfo() {
                 {/*<Price className={`${isRise ? 'long' : 'short'}`}>{reducerState.tiker.close || "0"}</Price>*/}
                 <div className={"dataGroup"}>
                     <p className={"label font10"}>{t(`24h Change`)}</p>
-                    <p className={`${rise.className}`}>{rise.dotal}{reducerState.market24Data.changePrice || "0"}({reducerState.market24Data.changeRate || "0"}%)</p>
+                    <p className={`flex-row ${rise.className}`}>
+                       {/* {rise.dotal}*/}
+                        <span className={`riseIcon ${rise.className}`}></span>
+                        <span>{reducerState.market24Data.changePrice || "0"}({reducerState.market24Data.changeRate || "0"}%)</span>
+                    </p>
                 </div>
                 <div className={"dataGroup"}>
                     <p className={"label border"}>{t(`Mark price`)}</p>
-                    <p>{reducerState.marketPrice || "0"}</p>
+                    {/*<p>{reducerState.marketPrice || "0"}</p>*/}
+                    <SplitNumber value={reducerState.marketPrice || "0"} />
                 </div>
                 <div className={"dataGroup"}>
                     <p className={"label border"}>{t(`Oracle Price`)}</p>
-                    <p>{reducerState.market24Data.indexPrice || "0"}</p>
+                    {/*<p>{reducerState.market24Data.indexPrice || "0"}</p>*/}
+                    <SplitNumber value={reducerState.market24Data.indexPrice || "0"} />
                 </div>
-                <div className={"dataGroup"}>
+                <div className={"dataGroup"} style={{minWidth: "1.4rem"}}>
                     <p className={"label"}>{t(`Next funding`)}</p>
                     <p>{reducerState.market24Data.tariffRate || "0"}% {formatDuring(state.subTime)}</p>
                 </div>
@@ -106,7 +113,8 @@ export default function TokenInfo() {
                     customerToken.filter((item) => item.show).map((item, index) => {
                         return <div className={"dataGroup"} key={index}>
                             <p className={"label"}>{item.text}</p>
-                            <p>{item.value}</p>
+                            {/*<p>{item.value}</p>*/}
+                            <SplitNumber value={item.value} />
                         </div>
                     })
                 }

@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import {DropDownStyle, DropMenu, DropMenuContainer} from './styles/DropDown.style';
 import Toggle from "../../components/toggle/Toggle";
 import {useEffectState} from "../../hooks/useEffectState";
+import {useThemeManager} from "../../hooks/useThemeManager";
 
 type IItem<T> = {
     value: T,
@@ -16,6 +17,7 @@ type IProps<T> = {
 }
 export default function DropDown<T>(props: IProps<T>) {
     const {t} = useTranslation();
+    const {isDark} = useThemeManager();
     const state = useEffectState({
         value: props.value,
         showDropMenu: false
@@ -44,8 +46,8 @@ export default function DropDown<T>(props: IProps<T>) {
             onMouseLeave={() => state.showDropMenu = false}>
             <span className={"label"}>{props.label}</span>
             <div className={"flex-row"}>
-                <span>{selectedData && selectedData.text}</span>
-                <img src={require("src/assets/images/icon_arrow_down.png")} className={"icon"} alt="" />
+                <span className={"selected-text"}>{selectedData && selectedData.text}</span>
+                <img src={isDark ? require("src/assets/images/dark/icon_arrow_down2.png") : require("src/assets/images/light/icon_arrow_down2.png")} className={"icon"} alt="" />
             </div>
             <Toggle vIf={state.showDropMenu}>
                 <DropMenuContainer>

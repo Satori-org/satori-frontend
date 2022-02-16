@@ -26,7 +26,7 @@ export const Nav = styled.nav`
         border-radius: 0.08rem;
         &.active{
             color: ${({theme}) => theme.colors.activeColor};
-            background: ${({theme}) => theme.colors.linkActiveBgColor};
+            /*background: ${({theme}) => theme.colors.linkActiveBgColor};*/
         }
         &:hover{
             color: ${({theme}) => theme.colors.activeColor};
@@ -64,23 +64,22 @@ export const NavMenuContainer = styled.div`
     left: 50%;
     bottom: 0;
     transform: translate(-50%, 100%);
-    width: 124px;
+    width: 1rem;
     z-index: 1000;
 `;
 
 export const NavMenu = styled.nav`
-    line-height: 48px;
-    background: ${({theme}) => theme.colors.menuBgColor};
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    line-height: 0.32rem;
+    background: ${({theme}) => theme.colors.boxBgColor};
+    border: 1px solid ${({theme}) => theme.colors.modalBorderColor};
     box-sizing: border-box;
-    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.2);
-    border-radius: 8px;
+    border-radius: 0.08rem;
     .menuItem{
-        font-size: 14px;
+        font-size: 0.12rem;
         text-align: center;
         color: ${({theme}) => theme.colors.labelColor};
         &:hover{
-            color: ${({theme}) => theme.colors.filedColor};
+            color: ${({theme}) => theme.colors.baseColor};
             background: rgba(255, 255, 255, 0.04);
         }
     }

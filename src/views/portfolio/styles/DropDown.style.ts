@@ -11,8 +11,12 @@ export const DropDownStyle = styled.div`
     margin-left: 28px;
     cursor:pointer;
     .icon{
-        width: 8px;
-        margin-left: 12px;
+        width: 0.08rem;
+        height: 0.05rem;
+        margin-left: 0.12rem;
+    }
+    .selected-text{
+        color: ${({theme}) => theme.colors.labelColor};
     }
 `;
 
@@ -28,14 +32,14 @@ export const DropMenuContainer = styled.div`
 
 export const DropMenu = styled.ul`
     list-style: none;
-    font-size: 14px;
+    font-size: 0.12rem;
     text-align: center;
     color: ${({theme}) => theme.colors.labelColor};
     background: ${({theme}) => theme.colors.boxBgColor};
     border: 1px solid ${({theme}) => theme.colors.modalBorderColor};
     box-sizing: border-box;
     box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.2);
-    border-radius: 8px;
+    border-radius: 0.08rem;
     .label{
         height: 50px;
         padding-left: 24px;

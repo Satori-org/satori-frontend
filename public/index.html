@@ -53,7 +53,9 @@
 
       function setRem () {
         var w_width = window.innerWidth;
-        document.documentElement.style.fontSize = w_width/14.4 + 'px';
+        if (w_width > 1380) {
+          document.documentElement.style.fontSize = w_width/14.4 + 'px';
+        }
       }
       setRem();
       window.addEventListener('resize', setRem)
