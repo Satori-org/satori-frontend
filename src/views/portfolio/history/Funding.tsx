@@ -81,7 +81,6 @@ export default function Funding(props: IProps) {
         }),
         [],
     );
-
     const {data, loading, total, reload} = useFetchPostPage<ITariff>(getContractTariffList, {
         pageNo: state.pageNo,
         pageSize: state.pageSize,

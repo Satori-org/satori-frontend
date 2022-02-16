@@ -1,4 +1,4 @@
-import React, {MutableRefObject, useImperativeHandle} from 'react';
+import React, {MutableRefObject, useEffect, useImperativeHandle} from 'react';
 import { useTranslation } from 'react-i18next';
 import Table from "src/components/table/Table";
 import Pagination from "../../../components/pagination/Pagination";
@@ -70,14 +70,16 @@ export default function Transfer(props: IProps) {
         }),
         [],
     );
-
+    useEffect(() => {
+        console.log("storeData.token change")
+    }, [storeData.token])
     const {data, loading, total, reload} = useFetchPostPage<ITransfer>(getTransferRecord, {
         pageNo: state.pageNo,
         pageSize: state.pageSize,
         type: props.type,
         startTime: (props.startDate && props.endTime) ? props.startDate.getTime() : null,
         endTime: (props.startDate && props.endTime) ? props.endTime.getTime() : null
-    });
+    }, [storeData.token]);
 
     return (
         <div>

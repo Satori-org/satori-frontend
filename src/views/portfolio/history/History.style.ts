@@ -3,7 +3,6 @@ import {colors} from "../../../styles/style";
 
 export const HistoryStyle = styled.div`
     position: relative;
-    min-height: 2rem;
     margin-top: 0.08rem;
     /*padding: 0 0.24rem 0.28rem;*/
     box-sizing: border-box;
@@ -15,8 +14,8 @@ export const HistoryStyle = styled.div`
     }
     .listContainer{
         position: relative;
-        min-height: 1.6rem;
-        padding: 0.16rem 0.24rem;
+        min-height: 2rem;
+        padding: 0.08rem 0.24rem 0.28rem;
         box-sizing: border-box;
         border-top: 0.04rem solid ${({theme}) => theme.colors.backgroundColor};
     }

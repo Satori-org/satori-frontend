@@ -13,11 +13,13 @@ import TradesOrders from "./TradesOrders";
 import Transfer from './Transfer';
 import Funding from "./Funding";
 import DatePicker from 'react-datepicker';
-import "react-datepicker/dist/react-datepicker.css";
+import "src/lib/react-datepicker.css";
 import {formatDate, getDayStartTime} from "../../../common/utilTools";
 import Toggle from "../../../components/toggle/Toggle";
 import DropDown from '../DropDown';
 import Tab2 from "../../../components/tab2/Tab2";
+import {useStore} from "react-redux";
+import {IState} from "../../../store/reducer";
 
 export const tdStyle: CSSProperties = {
     fontSize: "0.14rem",
@@ -27,6 +29,8 @@ export const tdStyle: CSSProperties = {
 type IDate = Date | null
 export default function History() {
     const {t} = useTranslation();
+    const store = useStore<IState>();
+    const storeData = store.getState();
     const [startDate, setStartDate] = useState<Date>(getDayStartTime());
     const childRef = useRef<{ resetPage(): void }>();
     const state = useEffectState({
@@ -119,7 +123,7 @@ export default function History() {
                                      childRef={childRef}
                                      endTime={state.endDate}></TradesOrders>
         }
-    }, [state.active, state.orderType, state.pariId, state.type, startDate, state.orderType, state.startDate, state.endDate]);
+    }, [storeData.address, storeData.token, state.active, state.orderType, state.pariId, state.type, startDate, state.orderType, state.startDate, state.endDate]);
 
     return (
         <HistoryStyle>
