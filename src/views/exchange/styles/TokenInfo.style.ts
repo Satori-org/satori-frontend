@@ -38,6 +38,9 @@ export const TokenData = styled.div`
     }
     .dataGroup{
         min-width: 1rem;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
         padding: 0 0.16rem;
         box-sizing: border-box;
         border-left: 1px solid ${({theme}) => theme.colors.borderColor};
@@ -46,9 +49,10 @@ export const TokenData = styled.div`
         }
         .label{
             font-size: 0.1rem;
+            font-weight: bold;
             color: ${({theme}) => theme.colors.labelColor};
             /*padding-bottom: 2px;*/
-            margin-bottom: 0.03rem;
+            margin-bottom: 0.04rem;
             box-sizing: border-box;
             border-bottom: transparent;
             &.border{

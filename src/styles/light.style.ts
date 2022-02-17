@@ -11,6 +11,7 @@ export const light: ITheme = {
         baseColor: "#000",
         backgroundColor: "#F7F7F7",
         labelColor: "#617168",
+        thColor: "#617168",
         long: "#157336",
         short: "#B4190D",
         tabColor: "#617168",

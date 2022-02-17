@@ -13,6 +13,7 @@ export type IColors = {
     baseColor: string
     backgroundColor: string
     labelColor: string
+    thColor: string
     long: string
     short: string
     tabColor: string,

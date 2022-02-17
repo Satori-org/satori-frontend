@@ -74,7 +74,8 @@ export const LabelBox = styled.div`
     display: flex;
     padding: ${PADDING};
     box-sizing: border-box;
-    color: ${({theme}) => theme.colors.labelColor};
+    font-weight: 600;
+    color: ${({theme}) => theme.colors.thColor};
     text-align: right;
     .labelItem{
         line-height: 0.22rem;
@@ -138,7 +139,6 @@ export const Row = styled.div`
 `;
 
 export const Spread = styled.div`
-    display: flex;
     /*border-bottom: 1px solid #1C1F2C;
     border-top: 1px solid #1C1F2C;*/
     font-size: 0.14rem;
@@ -164,12 +164,14 @@ export const Spread = styled.div`
     .arrow{
         width: 0.06rem;
         height: 0.08rem;
+        margin-left: 0.07rem;
+        vertical-align: baseline;
         /*margin-left: 6px;*/
     }
     .marketPrice{
         font-size: 0.12rem;
         font-weight: 400;
         color: ${({theme}) => theme.colors.labelColor};
-        margin-left: 4px;
+        margin-left: 0.11rem;
     }
 `;

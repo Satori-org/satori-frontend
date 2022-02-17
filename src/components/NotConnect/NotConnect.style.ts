@@ -18,8 +18,8 @@ export const NotConnectStyle = styled.div`
         width: 1.44rem;
         height: 0.4rem;
         border-radius: 0.08rem;
-        background: ${({theme}) => theme.colors.cancelBgColor};
-        color: ${({theme}) => theme.colors.cancelColor};
+        background: ${({theme}) => theme.colors.confirmBgColor};
+        color: ${({theme}) => theme.colors.confirmColor};
         margin-top: 0.2rem;
         font-size: 0.12rem;
         font-weight: bold;

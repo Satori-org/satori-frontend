@@ -82,10 +82,10 @@ export const ConnectButton = styled.button`
     width: 100%;
     height: 0.4rem;
     margin-top: 0.34rem;
-    background: ${({theme}) => theme.colors.baseColor};
+    background: ${({theme}) => theme.colors.confirmBgColor};
     border-radius: 0.08rem;
     box-sizing: border-box;
     font-size: 0.12rem;
     font-weight: bold;
-    color: ${({theme}) => theme.colors.modalBgColor};
+    color: ${({theme}) => theme.colors.confirmColor};
 `;

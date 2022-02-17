@@ -6,7 +6,7 @@ export const TableStyle = styled.table`
     th{
         font-size: 0.1rem;
         font-weight: bold;
-        color: ${({theme}) => theme.colors.labelColor};
+        color: ${({theme}) => theme.colors.thColor};
         line-height: 0.28rem;
         &.left{
             text-align: left;

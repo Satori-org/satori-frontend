@@ -7,7 +7,7 @@ export default function Network() {
 
     return (
         <NetworkStyle className={"flex-box borderRadius"}>
-            <img src={require("src/assets/images/clv_nav.png")} className={"icon"} alt=""/>
+            <img src={require("src/assets/images/dark/clv.png")} className={"icon"} alt=""/>
             <span>CLV</span>
             <img src={isDark ? require("src/assets/images/dark/icon_arrow_down.png") : require("src/assets/images/light/icon_arrow_down.png")} className={"arrow"} alt=""/>
         </NetworkStyle>

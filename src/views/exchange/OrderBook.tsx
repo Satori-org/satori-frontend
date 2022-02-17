@@ -2,7 +2,7 @@ import React, {useMemo} from 'react';
 import {useTranslation} from 'react-i18next';
 import {BookContent, BookStyle, LabelBox, ListContainer, Row, RowContainer, Spread} from "./styles/Book.style";
 import {IDepthData, IDepthItem} from "../../components/kline/depthChart/DepthChart";
-import {fixedNumber} from "../../common/utilTools";
+import {fixedNumber, fixedNumberStr} from "../../common/utilTools";
 import Decimal from "decimal.js";
 import useExchangeStore from "./ExchangeProvider";
 import {USER_SELECT_PRICE} from "../../common/PubSubEvents";
@@ -92,14 +92,14 @@ export default function OrderBook(props: IProps) {
                         })
                     }
                 </RowContainer>
-                <Spread className={"flex-row"}>
+                <Spread>
                     <span className={rise.className}>{fixedNumber(reducerState.tiker.close, decimal)}</span>
                     <Toggle vIf={!!rise.className}>
                         <img
                             src={rise.className === "long" ? require("src/assets/images/long_icon.png") : require("src/assets/images/short_icon.png")}
                             className={"arrow"} alt=""/>
                     </Toggle>
-                    <span className={"marketPrice"}>{reducerState.marketPrice}</span>
+                    <span className={"marketPrice"}>{fixedNumberStr(reducerState.marketPrice, 3)}</span>
                     {/*<span style={{color: colors.labelColor}}>0.1</span>
                     <span>0.01%</span>*/}
                 </Spread>

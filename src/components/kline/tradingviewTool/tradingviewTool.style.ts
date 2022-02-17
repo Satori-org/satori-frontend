@@ -17,6 +17,8 @@ export const TradingviewToolStyle = styled.div`
         padding: 0 10px;
         cursor: pointer;
         color: ${({theme}) => theme.colors.labelColor};
+        font-size: 0.1rem;
+        font-weight: 600;
         &.active{
             color: ${({theme}) => theme.colors.activeColor};
         }
@@ -41,6 +43,8 @@ export const TradingviewToolStyle = styled.div`
         .typeItem{
             position: relative;
             height: 100%;
+            font-size: 0.12rem;
+            font-weight: bold;
             color: ${({theme}) => theme.colors.labelColor};
             cursor:pointer;
             &.active{

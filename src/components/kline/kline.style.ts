@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import {borderRadius} from "../../views/exchange/styles/Exchange.style";
 
 export const KlineBox = styled.div`
     display: flex;
@@ -6,7 +7,7 @@ export const KlineBox = styled.div`
 	height: 100%;
 	position: relative;
 	background: ${({theme}) => theme.colors.boxBgColor};
-	border-top-left-radius: 0.16rem;
+	/*border-top-left-radius: ${borderRadius};*/
 	.depthChart{
 		visibility: hidden;
 		&.active{

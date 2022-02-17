@@ -3,7 +3,8 @@ import {colors, fonts} from "src/styles/style";
 
 export const TokenListStyle = styled.div`
     position: relative;
-    height: 100%;
+    height: auto;
+    align-self: stretch;
     padding: 0 0.16rem;
     text-align: center;
     font-size: 0.2rem;
@@ -36,7 +37,8 @@ export const PanelStyle = styled.div`
     .panelContent{
         padding: 0.16rem 0;
         background: ${({theme}) => theme.colors.boxBgColor};
-        border: 1px solid ${({theme}) => theme.colors.modalBorderColor};
+        box-shadow: 0 0.16rem 0.64rem ${({theme}) => theme.colors.backgroundColor};
+        /*border: 1px solid ${({theme}) => theme.colors.modalBorderColor};*/
         box-sizing: border-box;
         border-radius: 0.08rem;
     }

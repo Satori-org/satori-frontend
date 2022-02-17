@@ -23,12 +23,12 @@ export const RecordTab = styled.div`
         margin-right: 24px;
         cursor:pointer;
         user-select: none;
+        font-weight: bold;
         color: ${({theme}) => theme.colors.labelColor};
         &:hover{
             color: ${({theme}) => theme.colors.activeColor};
         }
         &.active{
-            font-weight: bold;
             color: ${({theme}) => theme.colors.activeColor};
             &:after{
                 content: "";
@@ -44,12 +44,17 @@ export const RecordTab = styled.div`
 `;
 
 export const DisplayCtroll = styled.div`
-    margin-right: 20px;
     color: ${({theme}) => theme.colors.labelColor};
     cursor:pointer;
+    .checkbox{
+        width: 0.16rem;
+        height: 0.16rem;
+        margin-right: 0.08rem;
+        border-radius: 0.04rem;
+        border: 1px solid ${({theme}) => theme.colors.confirmBgColor};
+    }
     .checkIcon{
-        width: 18px;
-        height: 18px;
-        margin-right: 10px;
+        width: 0.1rem;
+        height: 0.08rem;
     }
 `;

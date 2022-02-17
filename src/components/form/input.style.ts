@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import {colors} from "../../styles/style";
 
-const $height = "calc(0.32rem - 2px)";
+const $height = "calc(0.4rem - 2px)";
 export const InputBox = styled.div`
     position: relative;
     display: flex;

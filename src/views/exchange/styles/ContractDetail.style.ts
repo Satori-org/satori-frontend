@@ -40,16 +40,16 @@ export const ButtonGroup = styled.div`
     margin-top: 0.16rem;
     .button{
         height: 0.4rem;
-        background: ${({theme}) => theme.colors.cancelBgColor};
-        color: ${({theme}) => theme.colors.cancelColor};
+        background: ${({theme}) => theme.colors.confirmBgColor};
+        color: ${({theme}) => theme.colors.confirmColor};
         border-radius: 8px;
         box-sizing: border-box;
         font-size: 0.12rem;
         font-weight: bold;
-        &.Withdraw{
-            background: ${({theme}) => theme.colors.confirmBgColor};
+        &.deposit{
+            background: ${({theme}) => theme.colors.cancelBgColor};
             border: none;
-            color: ${({theme}) => theme.colors.confirmColor};
+            color: ${({theme}) => theme.colors.cancelColor};
         }
         &:disabled{
             opacity: 0.6;

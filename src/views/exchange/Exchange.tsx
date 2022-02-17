@@ -1,5 +1,5 @@
 import React, {useEffect, useMemo, useReducer} from 'react';
-import { ExchangeStyle } from './styles/Exchange.style';
+import {ConnectStatus, ExchangeStyle } from './styles/Exchange.style';
 import TokenInfo from "./TokenInfo";
 import Book from "./Book";
 import Record from "./Record";
@@ -16,8 +16,10 @@ import {IState} from "../../store/reducer";
 import {IPair} from "../../ajax/contract/contract";
 import {$router} from "../../react-router-perfect/Index";
 import Toggle from 'src/components/toggle/Toggle';
+import {useTranslation} from "react-i18next";
 
 export default function Exchange() {
+    const {t} = useTranslation();
     const store = useStore<IState>();
     const storeData = store.getState();
     const [reducerState, dispatch] = useReducer(exchangeReducer, initExchangeState);
@@ -122,6 +124,10 @@ export default function Exchange() {
                     <Record />
                     <ContractDetail />
                 </div>
+                <ConnectStatus className={"flex-row"}>
+                    <div className="statusIcon"></div>
+                    <span>{t(`Stable Connection`)}</span>
+                </ConnectStatus>
             </ExchangeStyle>
         </ExchangeContext.Provider>
     )

@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import {colors} from "../../../styles/style";
+import { borderRadius } from "./Exchange.style";
 
 export const TradeStyle = styled.div`
     display: flex;
@@ -10,6 +11,7 @@ export const TradeStyle = styled.div`
     height: 100%;
     overflow-y: hidden;
     padding: 0 0.16rem;
+    /*border-top-right-radius: ${borderRadius};*/
     /*border-bottom: 1px solid ${({theme}) => theme.colors.gapColor};*/
 `;
 
@@ -34,7 +36,7 @@ export const Direction = styled.div`
     padding: 0.04rem;
     background: ${({theme}) => theme.colors.inputBgColor};
     .button{
-        height: 0.24rem;
+        height: 0.32rem;
         font-weight: bold;
         color: ${({theme}) => theme.colors.tabColor};
         background: transparent;
@@ -42,6 +44,9 @@ export const Direction = styled.div`
         &.active{
             color: ${({theme}) => theme.colors.tabSelectedColor};
             background: ${({theme}) => theme.colors.inputBtnBgColor};
+            &.sell{
+                color: ${({theme}) => theme.colors.short};
+            }
         }
     }
 `;

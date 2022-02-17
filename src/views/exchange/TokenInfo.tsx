@@ -89,7 +89,7 @@ export default function TokenInfo() {
                 {/*<Price>{ fixedNumber(reducerState.marketPrice, decimal)}</Price>*/}
                 {/*<Price className={`${isRise ? 'long' : 'short'}`}>{reducerState.tiker.close || "0"}</Price>*/}
                 <div className={"dataGroup"}>
-                    <p className={"label font10"}>{t(`24h Change`)}</p>
+                    <p className={"label font10"}>{t(`24H CHANGE`)}</p>
                     <p className={`flex-row ${rise.className}`}>
                        {/* {rise.dotal}*/}
                         <span className={`riseIcon ${rise.className}`}></span>
@@ -97,17 +97,17 @@ export default function TokenInfo() {
                     </p>
                 </div>
                 <div className={"dataGroup"}>
-                    <p className={"label border"}>{t(`Mark price`)}</p>
+                    <span className={"label border"}>{t(`MARK PRICE`)}</span>
                     {/*<p>{reducerState.marketPrice || "0"}</p>*/}
                     <SplitNumber value={fixedNumberStr(reducerState.marketPrice, USDT_decimal_show)} />
                 </div>
                 <div className={"dataGroup"}>
-                    <p className={"label border"}>{t(`Oracle Price`)}</p>
+                    <span className={"label border"}>{t(`ORACLE PRICE`)}</span>
                     {/*<p>{reducerState.market24Data.indexPrice || "0"}</p>*/}
                     <SplitNumber value={fixedNumberStr(reducerState.market24Data.indexPrice, USDT_decimal_show)} />
                 </div>
                 <div className={"dataGroup"} style={{minWidth: "1.4rem"}}>
-                    <p className={"label"}>{t(`Next funding`)}</p>
+                    <p className={"label"}>{t(`NEXT FUNDING`)}</p>
                     <p>{reducerState.market24Data.tariffRate || "0"}% {formatDuring(state.subTime)}</p>
                 </div>
                 {

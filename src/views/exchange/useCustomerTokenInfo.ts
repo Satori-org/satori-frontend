@@ -24,10 +24,10 @@ export function useCustomerTokenInfo(symbol: string) {
     });*/
     const tokenInfo = useMemo(() => {
         return [
-            {text: t(`24h High`), value: `${reducerState.market24Data.hight || "0"}`, show: switchs[0]},
-            {text: t(`24h Low`), value: `${reducerState.market24Data.low || "0"}`, show: switchs[1]},
-            {text: `${t(`24h Volume`)}(${symbol})`, value: `${reducerState.market24Data.quantity || "0"}`, show: switchs[2]},
-            {text: t(`24h Volume(USDT)`), value: `${fixedNumber(reducerState.market24Data.amount, reducerState.currentPairDecimal) || "0"}`, show: switchs[3]},
+            {text: t(`24H HIGH`), value: `${reducerState.market24Data.hight || "0"}`, show: switchs[0]},
+            {text: t(`24H LOW`), value: `${reducerState.market24Data.low || "0"}`, show: switchs[1]},
+            {text: `${t(`24H VOLUME`)}(${symbol})`, value: `${reducerState.market24Data.quantity || "0"}`, show: switchs[2]},
+            {text: t(`24H VOLUME(USDT)`), value: `${fixedNumber(reducerState.market24Data.amount, reducerState.currentPairDecimal) || "0"}`, show: switchs[3]},
         ]
     }, [symbol, t, switchs, reducerState.market24Data]);
     const toggleTokenInfo = useCallback((index: number, show: boolean) => {

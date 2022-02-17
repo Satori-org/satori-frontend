@@ -9,10 +9,12 @@ import TransactionHistory from "./record/TransactionHistory";
 import Toggle from "../../components/toggle/Toggle";
 import useExchangeStore from "./ExchangeProvider";
 import {exchangeActions} from "./exchangeReducer";
+import {useThemeManager} from "../../hooks/useThemeManager";
 
 export default function Record() {
     const {t} = useTranslation();
     const [ reducerState, dispath ] = useExchangeStore();
+    const {isDark} = useThemeManager();
     const state = useEffectState({
         active: 0,
         HideDifferent: reducerState.hideDifferent,
@@ -67,7 +69,11 @@ export default function Record() {
                     }
                 </RecordTab>
                 <DisplayCtroll className={"flex-row"} onClick={() => state.HideDifferent = !state.HideDifferent}>
-                    <img src={state.HideDifferent ? require("src/assets/images/icon_checked.png"):require("src/assets/images/icon_unchecked.png")} className={"checkIcon"} alt=""/>
+                    <div className={"flex-box checkbox"}>
+                        <Toggle vIf={state.HideDifferent}>
+                            <img src={isDark ? require("src/assets/images/dark/icon_checked.png"):require("src/assets/images/light/icon_checked.png")} className={"checkIcon"} alt=""/>
+                        </Toggle>
+                    </div>
                     <span>{t(`Hide different pare`)}</span>
                 </DisplayCtroll>
             </RecordHeader>

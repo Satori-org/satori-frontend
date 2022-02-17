@@ -57,10 +57,10 @@ export default function ContractDetail() {
                 <span>{formatAmount(reducerState.accountInfo.totalAssets)} USDT</span>
             </FieldLabel>
             <ButtonGroup className={"grid-2"}>
-                <button className={"button borderRadius"}
+                <button className={"button borderRadius deposit"}
                         disabled={!storeData.address}
                         onClick={() => state.showDeposit = true}>{t(`Deposit`)}</button>
-                <button className={"button borderRadius Withdraw"}
+                <button className={"button borderRadius"}
                         disabled={!storeData.address}
                         onClick={() => state.showWithdraw = !state.showWithdraw}>{t(`Withdraw`)}</button>
             </ButtonGroup>
