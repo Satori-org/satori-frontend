@@ -13,7 +13,7 @@ export default function SplitNumber(props: IProps) {
 
     return (
         <SplitNumberStyle>
-            <span>{formatNumber(arr[0] || props.value)}</span>
+            <span>{formatNumber(arr[1] || props.value)}</span>
             <span className={"decimal"}>{arr[2]}{arr[3]}</span>
         </SplitNumberStyle>
     )

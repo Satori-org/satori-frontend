@@ -17,6 +17,7 @@ export const light: ITheme = {
         tabSelectedColor: "#0A745A",
         tabSelectedBColor: "#fff",
         inputBgColor: "#DFE1E0",
+        paginationBgColor: "#C8CAC9",
         disabledButtonBgColor: "#F3F3F3",
         inputBtnBgColor: "#EEEFEF",
         modalTitle: "#000",

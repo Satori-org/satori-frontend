@@ -20,6 +20,8 @@ import DropDown from '../DropDown';
 import Tab2 from "../../../components/tab2/Tab2";
 import {useStore} from "react-redux";
 import {IState} from "../../../store/reducer";
+import AntDatePicker from "../../../components/antDatePicker/AntDatePicker";
+import {log} from "util";
 
 export const tdStyle: CSSProperties = {
     fontSize: "0.14rem",
@@ -180,7 +182,26 @@ export default function History() {
                     </div>
                 </DropDown>*/}
                 <div>
-                    <DatePicker
+                    <DateContainer className={"flex-sb"}>
+                        <span className={"label"}>{t(`Date`)}</span>
+                        <DatePicker
+                            selectsRange
+                            startDate={state.startDate}
+                            endDate={state.endDate}
+                            onChange={(value) => {
+                                state.startDate = value[0];
+                                state.endDate = value[1];
+                            }}
+                            customInput={
+                                <div className={"flex-row"} style={{justifyContent: "flex-end"}}>
+                                    <span className={"label"} style={{marginTop: "2px"}}>{state.startDate ? formatDate(state.startDate.getTime(), "yyyy-MM-dd") : "YYYY-MM-DD"}</span>
+                                    <span style={{margin: "0 4px"}}>To</span>
+                                    <span className={"label"} style={{marginTop: "2px"}}>{state.endDate ? formatDate(state.endDate.getTime(), "yyyy-MM-dd") : "YYYY-MM-DD"}</span>
+                                    <img src={require("src/assets/images/icon_calendar.png")} className={"calendar"} alt="" />
+                                </div>}
+                        />
+                    </DateContainer>
+                    {/*<DatePicker
                         selectsRange
                         startDate={state.startDate}
                         endDate={state.endDate}
@@ -197,7 +218,7 @@ export default function History() {
                                 <img src={require("src/assets/images/icon_calendar.png")} className={"calendar"} alt="" />
                             </div>
                         </DateContainer>}
-                    />
+                    />*/}
                 </div>
             </RecordHeader>
             <div className={"listContainer"}>

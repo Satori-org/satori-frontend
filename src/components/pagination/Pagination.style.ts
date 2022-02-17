@@ -48,7 +48,7 @@ export const PageItem = styled.span`
     color: ${({theme}) => theme.colors.borderColor};
     border-radius: 0.08rem;
     &.active{
-        background: ${({theme}) => theme.colors.inputBgColor};
+        background: ${({theme}) => theme.colors.paginationBgColor};
         color: ${({theme}) => theme.colors.baseColor};
     }
     /*&:hover{

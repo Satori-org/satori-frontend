@@ -21,6 +21,7 @@ export type IColors = {
     inputBgColor: string
     disabledButtonBgColor: string
     inputBtnBgColor: string
+    paginationBgColor: string
     modalTitle: string
     subtitle: string
     filedColor: string

@@ -5,9 +5,10 @@ import Setting from "./Setting";
 import {ICustomerToken} from "./useCustomerTokenInfo";
 import TokenList from "./TokenList";
 import useExchangeStore from "./ExchangeProvider";
-import {formatDuring} from "src/common/utilTools";
+import {fixedNumberStr, formatDuring} from "src/common/utilTools";
 import {useEffectState} from "src/hooks/useEffectState";
 import SplitNumber from "../../components/splitNumber/SplitNumber";
+import {USDT_decimal_show} from "../../config";
 
 export default function TokenInfo() {
     const {t} = useTranslation();
@@ -98,12 +99,12 @@ export default function TokenInfo() {
                 <div className={"dataGroup"}>
                     <p className={"label border"}>{t(`Mark price`)}</p>
                     {/*<p>{reducerState.marketPrice || "0"}</p>*/}
-                    <SplitNumber value={reducerState.marketPrice || "0"} />
+                    <SplitNumber value={fixedNumberStr(reducerState.marketPrice, USDT_decimal_show)} />
                 </div>
                 <div className={"dataGroup"}>
                     <p className={"label border"}>{t(`Oracle Price`)}</p>
                     {/*<p>{reducerState.market24Data.indexPrice || "0"}</p>*/}
-                    <SplitNumber value={reducerState.market24Data.indexPrice || "0"} />
+                    <SplitNumber value={fixedNumberStr(reducerState.market24Data.indexPrice, USDT_decimal_show)} />
                 </div>
                 <div className={"dataGroup"} style={{minWidth: "1.4rem"}}>
                     <p className={"label"}>{t(`Next funding`)}</p>

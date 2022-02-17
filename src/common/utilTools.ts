@@ -27,7 +27,7 @@ export const fixedNumber = (value:number|string, precision:number = 0) => {
 
 export const fixedNumberStr = (value:number|string, precision:number = 0) => {
     if (typeof value !== "number" && !isNumber(String(value))) {
-        return String(value);
+        return "";
     }
     if (!value) {
         return "0";

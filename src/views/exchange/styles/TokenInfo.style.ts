@@ -37,11 +37,12 @@ export const TokenData = styled.div`
         }
     }
     .dataGroup{
+        min-width: 1rem;
         padding: 0 0.16rem;
         box-sizing: border-box;
         border-left: 1px solid ${({theme}) => theme.colors.borderColor};
         &:not(:last-child){
-            margin-right: 24px;
+            /*margin-right: 24px;*/
         }
         .label{
             font-size: 0.1rem;

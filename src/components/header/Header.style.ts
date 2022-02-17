@@ -26,7 +26,7 @@ export const Nav = styled.nav`
         border-radius: 0.08rem;
         &.active{
             color: ${({theme}) => theme.colors.activeColor};
-            /*background: ${({theme}) => theme.colors.linkActiveBgColor};*/
+            background: ${({theme}) => theme.colors.linkActiveBgColor};
         }
         &:hover{
             color: ${({theme}) => theme.colors.activeColor};
