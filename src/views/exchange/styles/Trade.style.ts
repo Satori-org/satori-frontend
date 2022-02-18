@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, {keyframes} from "styled-components";
 import {colors} from "../../../styles/style";
 import { borderRadius } from "./Exchange.style";
 
@@ -62,6 +62,40 @@ export const InputLabel = styled.div`
     }
 `;
 
+const loading_rotate = keyframes`
+	0%,
+    100% {
+        opacity: 0;
+    }
+    50% {
+        opacity: 1;
+    }
+`;
+export const Lever = styled.div`
+    position: relative;
+    width: 100%;
+    height: 0.4rem;
+    background: ${({theme}) => theme.colors.inputBgColor};
+    color: ${({theme}) => theme.colors.baseColor};
+    border-radius: 0.08rem;
+    padding: 0 0.12rem;
+    box-sizing: border-box;
+    white-space: nowrap;
+    .leverText{
+        max-width: 0.68rem;
+        margin-left: 1px;
+        flex: 1;
+        height: 0.12rem;
+        color: transparent;
+        background: transparent;
+        &:focus{
+            border-left: 1px solid ${({theme}) => theme.colors.baseColor};
+            animation: ${loading_rotate} 1s infinite steps(1, start);
+        }
+        
+    }
+`;
+
 export const LeverageBtn = styled.button`
     min-width: 0.34rem;
     height: 0.24rem;
@@ -115,23 +149,23 @@ export const TotleAmount = styled.div`
 export const Submit = styled.button`
     width: 100%;
     height: 0.4rem;
-    background: ${({theme}) => theme.colors.long};
-    color: ${({theme}) => theme.colors.baseColor};
+    background: ${({theme}) => theme.colors.confirmBgColor};
+    color: ${({theme}) => theme.colors.confirmColor};
     font-weight: bold;
     margin-top: 0.12rem;
     &:disabled{
-        background: ${({theme}) => theme.colors.disabledButtonBgColor};
-        color: ${({theme}) => theme.colors.explain};
+        background: ${({theme}) => theme.colors.inputBtnBgColor};
+        color: ${({theme}) => theme.colors.btnNotAllow};
         cursor: not-allowed;
     }
-    &.sell{
+    /*&.sell{
         background: ${({theme}) => theme.colors.short};
         &:disabled{
             background: ${({theme}) => theme.colors.disabledButtonBgColor};
             color: ${({theme}) => theme.colors.explain};
             cursor: not-allowed;
         }
-    }
+    }*/
 `;
 
 export const ButtonGroup = styled.div`

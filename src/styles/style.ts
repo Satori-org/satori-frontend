@@ -22,6 +22,7 @@ export type IColors = {
     inputBgColor: string
     disabledButtonBgColor: string
     inputBtnBgColor: string
+    btnNotAllow: string
     paginationBgColor: string
     modalTitle: string
     subtitle: string
@@ -34,6 +35,7 @@ export type IColors = {
     cancelBgColor: string,
     cancelColor: string,
     confirmBgColor: string,
+    tokenBorderColor: string,
     confirmColor: string,
     borderColor2: string
     tabActiveColor: string

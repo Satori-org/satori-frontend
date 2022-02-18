@@ -514,7 +514,7 @@ class Kline extends React.Component<Ikline, any>{
                 ></TradingviewTool>
                 <TradeViewStyle id={"trade-view"} className={`${this.state.loading?'':'loaded'}`}></TradeViewStyle>
                 {this.state.loading?<Loading style={{backgroundColor: "transparent"}}></Loading>:null}
-                {/*{
+                {
                     this.props.depthData
                         ? <MyChartStyle id="myChart" className={`${this.state.chartType === 1?'active':''}`}>
                             <DepthChart
@@ -525,7 +525,7 @@ class Kline extends React.Component<Ikline, any>{
                                 asks={this.props.depthData.asks.map((item) => [item.price, item.quantity])}/>
                           </MyChartStyle>
                         : null
-                }*/}
+                }
                 { this.state.chartType === 2 ? <SymbolDetail /> :null }
 
                 {/*<DepthChart

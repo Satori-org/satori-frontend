@@ -1,7 +1,7 @@
 import React, {useEffect, useMemo, useRef} from 'react';
 import {useTranslation} from 'react-i18next';
 import Tab from 'src/components/tab/Tab';
-import {Direction, FeeBox, InputLabel, LeverageBtn, Submit, TradeStyle} from './styles/Trade.style';
+import {Direction, FeeBox, InputLabel, Lever, LeverageBtn, Submit, TradeStyle} from './styles/Trade.style';
 import {useEffectState} from "src/hooks/useEffectState";
 import Form from "src/components/form/Form";
 import Input from "src/components/form/Input";
@@ -12,7 +12,15 @@ import {signExpire, signMsg} from "src/contract/wallet";
 import {useStore} from "react-redux";
 import {IState} from "src/store/reducer";
 import Decimal from "decimal.js";
-import {awaitWrap, fixedNumber, fixedNumberStr, isInputNumber, isNumber, showMessage} from "src/common/utilTools";
+import {
+    awaitWrap,
+    fixedNumber,
+    fixedNumberStr,
+    isInputNumber,
+    isIntNumber,
+    isNumber,
+    showMessage
+} from "src/common/utilTools";
 import PubSub from "pubsub-js";
 import {RELOAD_RECORD, USER_SELECT_PRICE} from "src/common/PubSubEvents";
 import useTheme from "src/hooks/useTheme";
@@ -467,26 +475,55 @@ export default function Trade(props: IProps) {
                             <span>{t(`Leverage`)}</span>
                             <span className={"explain"}>{t(`Up to 10x`)}</span>
                         </InputLabel>
-                        <InputNumber
-                            value={state.leverage}
-                            inputStyle={{width: "1rem"}}
-                            placeholder={"0x"}
-                            onChange={(value) => {
-                                if ((value === "" || isInputNumber(value))) {
-                                    state.leverage = value;
-                                }
-                            }}
-                            right={
-                                <>
+                        <div style={{position: "relative"}} className={"flex-row"}>
+                            <Lever className={"flex-sb"}>
+                                <div className={"flex-row"}>
+                                    <Toggle vIf={!!state.leverage}>
+                                        <span>{state.leverage}x</span>
+                                    </Toggle>
+                                    <input type="text" className={"leverText"} value={state.leverage} onChange={(event) => {
+                                        let value = event.target.value;
+                                        if ((value === "" || isIntNumber(value))) {
+                                            let number_val = Number(value);
+                                            if(value && number_val < reducerState.currentPair.minLever) {
+                                                showMessage(t(`Below leverage min：`) + reducerState.currentPair.minLever);
+                                            } else if(number_val > reducerState.currentPair.maxLever){
+                                                showMessage(t(`Exceeds leverage maximum：`) + reducerState.currentPair.maxLever);
+                                            } else {
+                                                state.leverage = value;
+                                            }
+                                        }
+                                    }} />
+                                </div>
+                                <div>
                                     {
                                         state.levers.map((item, index) => {
                                             return <LeverageBtn className={`${Number(state.leverage) === item ? 'active' : ''}`} key={index}
                                                                 onClick={() => state.leverage = String(item)}>{item}x</LeverageBtn>
                                         })
                                     }
-                                </>
-                            } />
-                    </div>
+                                </div>
+                            </Lever>
+                            {/*<Input
+                                value={state.leverage}
+                                inputStyle={{width: "1rem"}}
+                                placeholder={"0x"}
+                                onChange={(value) => {
+                                    state.leverage = value;
+                                }}
+                                left={<span>{state.leverage}x</span>}
+                                right={
+                                    <>
+                                        {
+                                            state.levers.map((item, index) => {
+                                                return <LeverageBtn className={`${Number(state.leverage) === item ? 'active' : ''}`} key={index}
+                                                                    onClick={() => state.leverage = String(item)}>{item}x</LeverageBtn>
+                                            })
+                                        }
+                                    </>
+                                } />*/}
+                        </div>
+                        </div>
                     {/*<div style={{margin: "44px auto 20px"}}>
                         <RSlider marks={[{value: 0},{value: 25},{value: 50},{value: 75},{value: 100}]}
                                  tipFormatter={tipFormatter}
@@ -527,16 +564,16 @@ export default function Trade(props: IProps) {
                         <Toggle vIf={state.orderType === ORDER_TYPE.market}>
                             <FeeBox>
                                 <div className={"label"}>{t(`Expected Price`)}</div>
-                                <div>{fixedNumber(ExpectedPrice, settleDecimal) || "--"} USDT</div>
+                                <div>{fixedNumberStr(ExpectedPrice, settleDecimal) || "--"} USDT</div>
                             </FeeBox>
                         </Toggle>
                         <FeeBox>
                             <div className={"label"}>{t(`Fee`)}</div>
-                            <div>{fixedNumber(orderFee, settleDecimal) || "--"} USDT</div>
+                            <div>{fixedNumberStr(orderFee, settleDecimal) || "--"} USDT</div>
                         </FeeBox>
                         <FeeBox>
                             <div className={"label"}>{t(`Total`)}</div>
-                            <div>{fixedNumber(Decimal.add(orderFee || 0, orderTotalAmount || 0).toFixed(), settleDecimal) || "--"} USDT</div>
+                            <div>{fixedNumberStr(Decimal.add(orderFee || 0, orderTotalAmount || 0).toFixed(), settleDecimal) || "--"} USDT</div>
                         </FeeBox>
                         <Submit className={`font12 borderRadius ${state.isLong ? '' : 'sell'}`}
                                 disabled={disabledAddOrder}

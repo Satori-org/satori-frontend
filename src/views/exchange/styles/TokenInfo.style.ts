@@ -43,7 +43,7 @@ export const TokenData = styled.div`
         align-items: flex-start;
         padding: 0 0.16rem;
         box-sizing: border-box;
-        border-left: 1px solid ${({theme}) => theme.colors.borderColor};
+        border-left: 1px solid ${({theme}) => theme.colors.tokenBorderColor};
         &:not(:last-child){
             /*margin-right: 24px;*/
         }
