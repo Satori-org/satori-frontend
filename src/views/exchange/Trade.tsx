@@ -12,13 +12,15 @@ import {signExpire, signMsg} from "src/contract/wallet";
 import {useStore} from "react-redux";
 import {IState} from "src/store/reducer";
 import Decimal from "decimal.js";
-import {awaitWrap, fixedNumber, fixedNumberStr, isNumber, showMessage} from "src/common/utilTools";
+import {awaitWrap, fixedNumber, fixedNumberStr, isInputNumber, isNumber, showMessage} from "src/common/utilTools";
 import PubSub from "pubsub-js";
 import {RELOAD_RECORD, USER_SELECT_PRICE} from "src/common/PubSubEvents";
 import useTheme from "src/hooks/useTheme";
 import Toggle from "src/components/toggle/Toggle";
 import InputNumber from "src/components/inputNumber/InputNumber";
 import Divider from "../../components/divider/Divider";
+import {NUMBER_REG} from "../../common/regExp";
+import {Toast} from "../../components/toast/Toast";
 
 type IProps = {
     longPrice: string
@@ -37,7 +39,7 @@ export default function Trade(props: IProps) {
     const state = useEffectState({
         orderType: ORDER_TYPE.limit,   //false：Limit，true：Market
         sliderValue: 0,
-        leverage: 10,
+        leverage: "10",
         isRISE: true,
         isLong: true,
         disabledCtroll: false,
@@ -87,6 +89,17 @@ export default function Trade(props: IProps) {
             PubSub.unsubscribe(namespace);
         }
     }, [isLimit]);
+    /*useEffect(() => {
+        let lever = Number(state.leverage);
+        if (!state.leverage || !isNumber(state.leverage)) {
+            showMessage(t(`Please enter leverage`));
+        } else if(lever < reducerState.currentPair.minLever) {
+            showMessage(t(`Below leverage min：`) + reducerState.currentPair.minLever);
+        } else if(lever > reducerState.currentPair.maxLever){
+            showMessage(t(`Exceeds leverage maximum：`) + reducerState.currentPair.maxLever);
+        }
+    }, [t, state.leverage, reducerState.currentPair]);*/
+
     const amount = useMemo(() => {
         if (!state.quantity || !state.price || !isNumber(state.quantity)) {
             return "0.000";
@@ -94,7 +107,7 @@ export default function Trade(props: IProps) {
         return fixedNumber(Decimal.mul(state.quantity, state.price).toFixed(), 3)
     }, [state.quantity, state.price]);
     const longMargin = useMemo(() => {
-        if (!state.quantity) {
+        if (!state.quantity || !state.leverage) {
             return "0";
         }
         if (isLimit) {
@@ -117,7 +130,7 @@ export default function Trade(props: IProps) {
         return Decimal.mul(margin, rate).div(100).toFixed();
     }, [longMargin, reducerState.currentPair.tradeFeeRate]);
     const shortMargin = useMemo(() => {
-        if (!state.quantity) {
+        if (!state.quantity || !state.leverage) {
             return "0";
         }
         if (isLimit) {
@@ -151,7 +164,7 @@ export default function Trade(props: IProps) {
         }
     }, [state.isLong, props.longPrice, props.shortPrice, reducerState.marketPrice]);
     const orderTotalAmount = useMemo(() => {
-        if (!state.quantity) {
+        if (!state.quantity || !state.leverage) {
             return "0";
         }
         if (isLimit) {
@@ -294,6 +307,10 @@ export default function Trade(props: IProps) {
             showMessage(t(`Please enter the price`));
             return ;
         }
+        if (!isNumber(state.leverage)) {
+            showMessage(t(`Please enter leverage`));
+            return ;
+        }
         if (isMarket && !reducerState.marketPrice) {
             showMessage(t(`No marker price obtained`));
             return ;
@@ -302,7 +319,15 @@ export default function Trade(props: IProps) {
             showMessage(t(`Please enter the quantity`));
             return ;
         }
-        if ( Number(amount)/state.leverage > Number(reducerState.accountInfo.availableAmount)) {
+        if (Number(state.quantity) > Number(reducerState.currentPair.maxCount)) {
+            showMessage(t(`Exceed the maximum：`) +  reducerState.currentPair.maxCount);
+            return ;
+        }
+        if (Number(state.quantity) < Number(reducerState.currentPair.minCount)) {
+            showMessage(t(`Less than minimum：`) +  reducerState.currentPair.minCount);
+            return ;
+        }
+        if ( Decimal.div(amount, state.leverage).toNumber() > Number(reducerState.accountInfo.availableAmount)) {
             showMessage(t(`Insufficient available balance`));
             return ;
         }
@@ -330,7 +355,7 @@ export default function Trade(props: IProps) {
                 quantity: Number(state.quantity),
                 signHash: signData.signatrue,
                 originMsg: signData.origin,
-                lever: state.leverage,
+                lever: Number(state.leverage),
                 amount: total
             };
             if (isLimit) {
@@ -442,16 +467,21 @@ export default function Trade(props: IProps) {
                             <span>{t(`Leverage`)}</span>
                             <span className={"explain"}>{t(`Up to 10x`)}</span>
                         </InputLabel>
-                        <Input
-                            readOnly={true}
-                            value={`${state.leverage}X`}
+                        <InputNumber
+                            value={state.leverage}
                             inputStyle={{width: "1rem"}}
+                            placeholder={"0x"}
+                            onChange={(value) => {
+                                if ((value === "" || isInputNumber(value))) {
+                                    state.leverage = value;
+                                }
+                            }}
                             right={
                                 <>
                                     {
                                         state.levers.map((item, index) => {
-                                            return <LeverageBtn className={`${state.leverage === item ? 'active' : ''}`} key={index}
-                                                                onClick={() => state.leverage = item}>{item}X</LeverageBtn>
+                                            return <LeverageBtn className={`${Number(state.leverage) === item ? 'active' : ''}`} key={index}
+                                                                onClick={() => state.leverage = String(item)}>{item}x</LeverageBtn>
                                         })
                                     }
                                 </>

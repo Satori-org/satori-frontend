@@ -7,13 +7,14 @@ export const AccountStyle = styled.div`
         font-size: 0.12rem;
         font-weight: bold;
         padding: 0.16rem 0;
-        border-bottom: 1px solid ${({theme}) => theme.colors.borderColor};
+        border-bottom: 1px solid ${({theme}) => theme.colors.borderColor2};
     }
     .detail{
         border-bottom: 0.04rem solid ${({theme}) => theme.colors.backgroundColor};
         padding-bottom: 0.16rem;
     }
     .userInfo{
+        font-size: 0.2rem;
         padding: 0 0.24rem;
         .info{
             margin-right: 0.48rem;
@@ -73,7 +74,7 @@ export const AccountStyle = styled.div`
         }
     }
     .listContainer{
-        padding: 0 0.24rem 0.2rem;
+        padding: 0.08rem 0.24rem 0.2rem;
     }
 `;
 

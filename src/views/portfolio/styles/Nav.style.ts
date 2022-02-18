@@ -5,7 +5,7 @@ export const NavStyle = styled.nav`
     align-items: center;
     //flex-direction: column;
     //padding: 16px 24px;
-    margin: 0.32rem 0.24rem 0;
+    margin: 0 0.24rem;
     border-bottom: 1px solid ${({theme}) => theme.colors.borderColor2};
     /*padding: 0.16rem 0.24rem 0;
     background: ${({theme}) => theme.colors.boxBgColor};*/
@@ -16,7 +16,7 @@ export const NavStyle = styled.nav`
         border-radius: 8px;*/
         position: relative;
         margin-right: 0.16rem;
-        padding: 0.16rem 0;
+        padding: 0.11rem 0;
         font-size: 0.12rem;
         font-weight: bold;
         color: ${({theme}) => theme.colors.labelColor};

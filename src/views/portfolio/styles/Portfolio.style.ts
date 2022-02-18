@@ -24,6 +24,8 @@ export const PortfolioStyle = styled.div`
         font-weight: 600;
     }
     .content{
+        margin-top: 0.32rem;
+        padding-top: 0.17rem;
         border-radius: 0.16rem;
         background: ${({theme}) => theme.colors.boxBgColor};
     }

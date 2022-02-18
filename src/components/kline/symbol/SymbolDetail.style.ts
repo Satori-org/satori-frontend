@@ -39,7 +39,7 @@ export const ButtonGroup = styled.div`
         font-size: 0.12rem;
         font-weight: 400;
         line-height: 0.28rem;
-        color: ${({theme}) => theme.colors.confirmColor};
+        color: ${({theme}) => theme.colors.cancelColor};
         padding: 0 0.12rem;
         border-radius: 0.08rem;
         &.light{

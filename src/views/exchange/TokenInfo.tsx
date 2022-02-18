@@ -9,6 +9,7 @@ import {fixedNumberStr, formatDuring} from "src/common/utilTools";
 import {useEffectState} from "src/hooks/useEffectState";
 import SplitNumber from "../../components/splitNumber/SplitNumber";
 import {USDT_decimal_show} from "../../config";
+import RiseIcon from "../../components/riseIcon/RiseIcon";
 
 export default function TokenInfo() {
     const {t} = useTranslation();
@@ -92,7 +93,7 @@ export default function TokenInfo() {
                     <p className={"label font10"}>{t(`24H CHANGE`)}</p>
                     <p className={`flex-row ${rise.className}`}>
                        {/* {rise.dotal}*/}
-                        <span className={`riseIcon ${rise.className}`}></span>
+                        <RiseIcon className={`${rise.className}`} />
                         <span>{reducerState.market24Data.changePrice || "0"}({reducerState.market24Data.changeRate || "0"}%)</span>
                     </p>
                 </div>

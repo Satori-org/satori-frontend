@@ -4,8 +4,8 @@ import {fonts} from "src/styles/style";
 export const TokenInfoStyle = styled.div`
     position: relative;
     background: ${({theme}) => theme.colors.backgroundColor};
-    margin-top: 0.22rem;
-    margin-bottom: 0.18rem;
+    margin-top: 0.2rem;
+    margin-bottom: 0.16rem;
 `;
 
 export const Hr = styled.hr`
@@ -49,7 +49,7 @@ export const TokenData = styled.div`
         }
         .label{
             font-size: 0.1rem;
-            font-weight: bold;
+            /*font-weight: bold;*/
             color: ${({theme}) => theme.colors.labelColor};
             /*padding-bottom: 2px;*/
             margin-bottom: 0.04rem;

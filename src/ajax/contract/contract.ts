@@ -12,6 +12,12 @@ export type IQuotation = {
 export interface IPair {
     change: number
     id: number
+    maxCount: string
+    maxLever: number
+    maxPosition: string
+    maxWayPosition: string
+    minCount: string
+    minLever: number
     price: number
     settleCoin: SettleCoin
     settleCoinId: number

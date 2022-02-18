@@ -7,11 +7,12 @@ import useTheme from "src/hooks/useTheme";
 import {useEffectState} from "src/hooks/useEffectState";
 import {useAccountInfo} from "src/hooks/useAccountInfo";
 import {IAccountPortfolio, useAccountAsset, useAccountPortfolio} from "src/ajax/user/user.type";
-import {formatAmount} from "../../../common/utilTools";
+import {formatAmount, formatNumber} from "../../../common/utilTools";
 import Toggle from 'src/components/toggle/Toggle';
 import LineChart2 from 'src/components/lineChart/LineChart2';
 import {useStore} from "react-redux";
 import {IState} from "src/store/reducer";
+import RiseIcon from "../../../components/riseIcon/RiseIcon";
 
 export default function Account() {
     const {t} = useTranslation();
@@ -49,19 +50,33 @@ export default function Account() {
         return obj;
     }, []);
 
+    const getTotalAssetInfo = useCallback((totalAsset: string) => {
+        let obj = {className: "", dotal: ""};
+        if (Number(totalAsset) > 0) {
+            obj.className = "long";
+            obj.dotal = "+";
+        } else if(Number(totalAsset) < 0) {
+            obj.className = "short";
+            obj.dotal = "";
+        }
+
+        return obj;
+    }, []);
+
     return (
         <AccountStyle>
             <div className={"detail"}>
                 <div className={"userInfo flex-row"}>
                     <div className={"info"}>
                         <p className={"label"}>{t(`PORTFOLIO VALUE`)}</p>
-                        <p className={"val"}>$ {state.data.totalAssets}</p>
+                        <p className={`val ${getTotalAssetInfo(state.data.totalAssets).className}`}>$ {formatNumber(state.data.totalAssets)}</p>
                     </div>
                     <div className={"info"}>
                         <p className={"label"}>{t(`TODAY PNL`)}</p>
-                        <p className={getRiseInfo(state.data.todayProfitLoss).className}>
+                        <p className={`flex-row ${getRiseInfo(state.data.todayProfitLoss).className}`}>
+                            <RiseIcon className={`${getRiseInfo(state.data.todayProfitLoss).className}`} />
                             <span className={`val`}>{getRiseInfo(state.data.todayProfitLoss).dotal} $ {state.data.todayProfitLoss}</span>
-                            {/*<span>({state.data.todayIncreaseRate}%)</span>*/}
+                            <span>({state.data.todayIncreaseRate}%)</span>
                         </p>
                     </div>
                     <div className={"info"}>
@@ -73,9 +88,10 @@ export default function Account() {
                             </p>
                             <span className={`val`}>--</span>
                         </Toggle>*/}
-                        <p className={getRiseInfo(state.data.totalProfitLoss).className}>
+                        <p className={`flex-row ${getRiseInfo(state.data.totalProfitLoss).className}`}>
+                            <RiseIcon className={`${getRiseInfo(state.data.totalProfitLoss).className}`} />
                             <span className={"val"}>{getRiseInfo(state.data.totalProfitLoss).dotal} $ {state.data.totalProfitLoss}</span>
-                            {/*<span>({state.data.totalIncreaseRate}%)</span>*/}
+                            <span>({state.data.totalIncreaseRate}%)</span>
                         </p>
                     </div>
                 </div>
