@@ -108,7 +108,7 @@ export default function WithdrawModal(props: IProps) {
                 <Label>{t(`Amount`)}</Label>
                 <InputNumber
                     right={<div className={`flex-row`}>
-                        <span style={{color: theme.colors.headerButtonColor, pointerEvents: "none"}}>USDT</span>
+                        <span style={{color: theme.colors.labelColor, pointerEvents: "none"}}>USDT</span>
                         <RightBtn onClick={() => state.amount = String(fixedNumber(reducerState.accountInfo.availableAmount, USDT_decimal))}>{t(`MAX`)}</RightBtn>
                     </div>
                     }

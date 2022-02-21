@@ -12,7 +12,7 @@ import {useEffectState} from "../../../hooks/useEffectState";
 import TradesOrders from "./TradesOrders";
 import Transfer from './Transfer';
 import Funding from "./Funding";
-import DatePicker from 'react-datepicker';
+//import DatePicker from 'react-datepicker';
 import "src/lib/react-datepicker.css";
 import {formatDate, getDayStartTime} from "../../../common/utilTools";
 import Toggle from "../../../components/toggle/Toggle";
@@ -22,6 +22,7 @@ import {useStore} from "react-redux";
 import {IState} from "../../../store/reducer";
 import AntDatePicker from "../../../components/antDatePicker/AntDatePicker";
 import {log} from "util";
+import DatePicker from "../../../components/datePicker/DatePicker";
 
 export const tdStyle: CSSProperties = {
     fontSize: "0.14rem",
@@ -185,9 +186,6 @@ export default function History() {
                     <DateContainer className={"flex-sb"}>
                         <span className={"label"}>{t(`Date`)}</span>
                         <DatePicker
-                            selectsRange
-                            startDate={state.startDate}
-                            endDate={state.endDate}
                             onChange={(value) => {
                                 state.startDate = value[0];
                                 state.endDate = value[1];
