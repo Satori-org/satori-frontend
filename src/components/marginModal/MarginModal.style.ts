@@ -28,11 +28,11 @@ export const RightBtn = styled.button`
     height: 0.24rem;
     padding: 0 0.06rem;
     box-sizing: border-box;
-    color: ${({theme}) => theme.colors.headerButtonColor};
-    background: ${({theme}) => theme.colors.confirmColor};
+    color: ${({theme}) => theme.colors.inputBtnColor};
+    background: ${({theme}) => theme.colors.inputBtnBgColor};
     border-radius: 0.08rem;
     margin-left:  0.08rem;
-    font-weight: 600;
+    font-weight: normal;
 `;
 
 export const Group = styled.div`

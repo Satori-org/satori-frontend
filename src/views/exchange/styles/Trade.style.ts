@@ -99,7 +99,7 @@ export const Lever = styled.div`
 export const LeverageBtn = styled.button`
     min-width: 0.34rem;
     height: 0.24rem;
-    border-radius: 0.06rem;
+    border-radius: 0.08rem;
     font-size: 0.12rem;
     font-weight: normal;
     color: ${({theme}) => theme.colors.inputBtnColor};

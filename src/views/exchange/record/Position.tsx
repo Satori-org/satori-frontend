@@ -26,10 +26,12 @@ import {ClosePositionModal} from "../../../components/closePositionModal/ClosePo
 import {useUpdateEffect} from "ahooks";
 import NotConnect from "../../../components/NotConnect/NotConnect";
 import EmptyData from "../../../components/noData/EmptyData";
+import {useThemeManager} from "../../../hooks/useThemeManager";
 
 type IRow = {
     item: IPositionList
     reload(): void
+    isDark: boolean
 }
 function Row(props: IRow) {
     const {t} = useTranslation();
@@ -156,7 +158,8 @@ function Row(props: IRow) {
             <td className={"right"}>
                 <div className={"flex-row"} style={{justifyContent: "flex-end"}}>
                     <span style={{marginRight: "4px"}}>{props.item.marginAmount}</span>
-                    <img src={require("src/assets/images/edit.png")} style={{width: "16px", height: "16px", cursor: "pointer"}} alt=""
+                    <img src={props.isDark?require("src/assets/images/dark/edit.png"):require("src/assets/images/light/edit.png")}
+                         style={{width: "0.12rem", height: "0.12rem", cursor: "pointer"}} alt=""
                          onClick={() => state.showMarin = true} />
                 </div>
             </td>
@@ -232,6 +235,7 @@ export default function Position(props: IProps) {
     const store = useStore<IState>();
     const storeData = store.getState();
     const [reducerState] = useExchangeStore();
+    const {isDark} = useThemeManager();
     const state = useEffectState({
         pageNo: 1,
         pageSize: 5
@@ -282,7 +286,7 @@ export default function Position(props: IProps) {
                         <tbody>
                         {
                             data.map((item) => {
-                                return <Row key={item.id} item={item} reload={reload}></Row>
+                                return <Row key={item.id} item={item} reload={reload} isDark={isDark}></Row>
                             })
                         }
                         </tbody>

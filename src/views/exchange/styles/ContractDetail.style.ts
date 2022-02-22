@@ -42,7 +42,7 @@ export const ButtonGroup = styled.div`
         height: 0.4rem;
         background: ${({theme}) => theme.colors.confirmBgColor};
         color: ${({theme}) => theme.colors.confirmColor};
-        border-radius: 8px;
+        border-radius: 0.08rem;
         box-sizing: border-box;
         font-size: 0.12rem;
         font-weight: bold;
