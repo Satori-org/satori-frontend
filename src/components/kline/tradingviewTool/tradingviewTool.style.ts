@@ -55,8 +55,8 @@ export const TradingviewToolStyle = styled.div`
                     left: 0;
                     bottom: 0;
                     width: 100%;
-                    height: 2px;
-                    transform: translateY(50%);
+                    height: 1px;
+                    transform: translateY(100%);
                     background: ${({theme}) => theme.colors.activeColor};
                 }
             }

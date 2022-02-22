@@ -5,7 +5,7 @@ export const ThemeControlStyle = styled.div`
     height: 0.32rem;
     position: relative;
     background: ${({theme}) => theme.colors.boxBgColor};
-    color: ${({theme}) => theme.colors.headerButtonColor};
+    color: ${({theme}) => theme.colors.linkDefaultColor};
     cursor:pointer;
     .icon{
         width: 0.167rem;

@@ -12,6 +12,7 @@ import {MsgStatus} from "../../common/enum";
 import Toggle from "../toggle/Toggle";
 import {useEffectState} from "../../hooks/useEffectState";
 import {useThemeManager} from "../../hooks/useThemeManager";
+import useTheme from "../../hooks/useTheme";
 
 type IProps = {
     style?: CSSProperties
@@ -19,6 +20,7 @@ type IProps = {
 export default function Header(props: IProps) {
     const {t, i18n} = useTranslation();
     const {isDark} = useThemeManager();
+    const { theme } = useTheme();
     const state = useEffectState({
         showDrop: false
     });
@@ -61,7 +63,7 @@ export default function Header(props: IProps) {
                     {/*<RouterLink className={"item"} activeClassName={"active"} to={"/Docs"}>{t(`Docs`)}</RouterLink>*/}
                 </Nav>
             </div>
-            <div className={"flex-row font12"}>
+            <div className={"flex-row font12"} style={{color: theme.colors.headerRightColor}}>
                 <Guide style={{marginRight: "0.34rem"}} />
                 {/*<Language style={{marginRight: "24px"}} />*/}
                 <Network />

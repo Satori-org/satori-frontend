@@ -6,7 +6,7 @@ export const NetworkStyle = styled.div`
     padding: 0 0.12rem;
     box-sizing: border-box;
     background: ${({theme}) => theme.colors.boxBgColor};
-    color: ${({theme}) => theme.colors.headerButtonColor};
+    /*color: ${({theme}) => theme.colors.linkDefaultColor};*/
     text-align: center;
     .icon{
         width: 0.12rem;

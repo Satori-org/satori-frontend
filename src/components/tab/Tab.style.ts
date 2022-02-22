@@ -27,11 +27,11 @@ export const TabStyle = styled.div<Itab>`
             &:after{
                 content: "";
                 position: absolute;
-                bottom: 0;
+                bottom: -1px;
                 width: 100%;
-                height: 2px;
+                height: 1px;
                 background: ${({theme}) => theme.colors.activeColor};
-                transform: translateY(50%);
+                /*transform: translateY(50%);*/
             }
         }
         &:not(:last-child){

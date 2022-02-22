@@ -6,7 +6,7 @@ export const ConectWalletStyle = styled.div`
     min-width: 1.17rem;
     line-height: 0.32rem;
     background: ${({theme}) => theme.colors.boxBgColor};
-    color: ${({theme}) => theme.colors.headerButtonColor};
+    /*color: ${({theme}) => theme.colors.linkDefaultColor};*/
     padding: 0 16px;
     box-sizing: border-box;
     text-align: center;

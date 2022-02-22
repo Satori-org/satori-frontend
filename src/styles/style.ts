@@ -16,12 +16,18 @@ export type IColors = {
     thColor: string
     long: string
     short: string
+    long2: string
+    short2: string
     tabColor: string,
     tabSelectedColor: string,
     tabSelectedBColor: string,
     inputBgColor: string
     disabledButtonBgColor: string
     inputBtnBgColor: string
+    inputBtnColor: string
+    unConnectBgColor: string
+    unConnectColor: string
+    headerRightColor: string
     btnNotAllow: string
     paginationBgColor: string
     modalTitle: string

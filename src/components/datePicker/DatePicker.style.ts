@@ -61,6 +61,9 @@ export const RowItem = styled.button`
     &.range{
         background: #A6ACA9;
         color: #fff;
+        &:hover{
+            //border-radius: 0 0.04rem 0.04rem 0;
+        }
     }
 `;
 export const PickerHeader = styled.div`

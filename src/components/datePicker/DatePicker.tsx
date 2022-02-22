@@ -27,8 +27,16 @@ export default function DatePicker(props: IProps) {
         pickerStyle: {} as CSSProperties
     });
 
+    const Week = ["MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN"];
+    const Mon = ["January", "February", "March", "April  ", "May", "June", "July ", "August", "September", "October", "November", "December"];
+
     function domOnClick() {
         state.showPanel = false;
+    }
+    function domOnScroll() {
+        setTimeout(() => {
+            calcPosition();
+        }, 1000);
     }
 
     function reset() {
@@ -39,9 +47,11 @@ export default function DatePicker(props: IProps) {
 
     useEffect(() => {
         document.addEventListener("click", domOnClick);
+        document.addEventListener("scroll", calcPosition);
 
         return () => {
             document.removeEventListener("click", domOnClick);
+            document.removeEventListener("scroll", calcPosition);
         }
     }, []);
     useEffect(() => {
@@ -59,31 +69,32 @@ export default function DatePicker(props: IProps) {
 
     useEffect(() => {
         setTimeout(() => {
-            if (customRef.current && panelRef.current) {
-                let left = customRef.current.getBoundingClientRect().left;
-                let _top = customRef.current.getBoundingClientRect().top;
-                let width = customRef.current.offsetWidth;
-                let height = customRef.current.offsetHeight;
-
-                if (window.innerHeight - _top - height - 20 < panelRef.current.offsetHeight) {
-                    _top = _top - panelRef.current.offsetHeight - 10
-                } else {
-                    _top = _top + height + 10
-                }
-
-                state.pickerStyle = {
-                    left: left,
-                    top: _top,
-                    opacity: 1
-                }
-            } else {
-                state.pickerStyle = {};
-            }
+            calcPosition();
         }, 0);
-    }, [state.showPanel]);
+    }, [state.showPanel, state.month]);
 
-    const Week = ["MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN"];
-    const Mon = ["January", "February", "March", "April  ", "May", "June", "July ", "August", "September", "October", "November", "December"];
+    function calcPosition() {
+        if (customRef.current && panelRef.current) {
+            let left = customRef.current.getBoundingClientRect().left;
+            let _top = customRef.current.getBoundingClientRect().top;
+            let width = customRef.current.offsetWidth;
+            let height = customRef.current.offsetHeight;
+
+            if (window.innerHeight - _top - height - 20 < panelRef.current.offsetHeight) {
+                _top = _top - panelRef.current.offsetHeight - 10
+            } else {
+                _top = _top + height + 10
+            }
+
+            state.pickerStyle = {
+                left: left,
+                top: _top,
+                opacity: 1
+            }
+        } else {
+            state.pickerStyle = {};
+        }
+    }
 
     const preDays = useMemo(() => {
         let dateInfo = new Date(`${state.year}/${state.month}/1`);
@@ -159,7 +170,11 @@ export default function DatePicker(props: IProps) {
         }}>
             {props.customInput}
             <Toggle vIf={state.showPanel}>
-                <DatePickerPanel ref={panelRef} onClick={(event) => event.stopPropagation()} style={state.pickerStyle}>
+                <DatePickerPanel
+                    ref={panelRef}
+                    style={state.pickerStyle}
+                    onMouseLeave={() => state.hoverValue = null}
+                    onClick={(event) => event.stopPropagation()} >
                     <PickerTitle className={"flex-sb"}>
                         <img src={require("src/assets/images/arrow-left.png")}
                              className={"icon"}

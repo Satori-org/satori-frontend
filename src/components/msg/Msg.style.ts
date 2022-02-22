@@ -5,7 +5,7 @@ export const MsgStyle = styled.div`
     width: 0.32rem;
     height: 0.32rem;
     background: ${({theme}) => theme.colors.boxBgColor};
-    color: ${({theme}) => theme.colors.headerButtonColor};
+    color: ${({theme}) => theme.colors.linkDefaultColor};
     cursor:pointer;
     .icon{
         width: 15px;

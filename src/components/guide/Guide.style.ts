@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const GuideStyle = styled.div`
     font-weight: bold;
-    color: ${({theme}) => theme.colors.labelColor};
+    color: ${({theme}) => theme.colors.linkDefaultColor};
     .icon{
         width: 0.133rem;
         height: 0.133rem;

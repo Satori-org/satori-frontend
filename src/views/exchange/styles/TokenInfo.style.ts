@@ -28,12 +28,14 @@ export const TokenData = styled.div`
             transform: rotate(180deg);
             border-left: 0.032rem solid transparent;
             border-right: 0.032rem solid transparent;
-            border-top: 0.032rem solid ${({theme}) => theme.colors.long};
+            border-top: 0.032rem solid ${({theme}) => theme.colors.long2};
+            color: ${({theme}) => theme.colors.long2};
         }
         &.short{
             border-left: 0.032rem solid transparent;
             border-right: 0.032rem solid transparent;
-            border-top: 0.032rem solid ${({theme}) => theme.colors.short};
+            border-top: 0.032rem solid ${({theme}) => theme.colors.short2};
+            color: ${({theme}) => theme.colors.short2};
         }
     }
     .dataGroup{
@@ -60,21 +62,21 @@ export const TokenData = styled.div`
             }
         }
         .long{
-            color: ${({theme}) => theme.colors.long};
+            color: ${({theme}) => theme.colors.long2};
         }
         .short{
-            color: ${({theme}) => theme.colors.short}
+            color: ${({theme}) => theme.colors.short2}
         }
     }
 `;
 
 export const Price = styled.div`
-    color: ${({theme}) => theme.colors.long};
-    margin: 0 0.16rem;
+    color: ${({theme}) => theme.colors.long2};
+    margin: 0 0.199rem 0 0.16rem;
     &.long{
-        color: ${({theme}) => theme.colors.long};
+        color: ${({theme}) => theme.colors.long2};
     }
     &.short{
-        color: ${({theme}) => theme.colors.short}
+        color: ${({theme}) => theme.colors.short2}
     }
 `;

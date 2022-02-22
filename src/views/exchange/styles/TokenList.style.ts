@@ -13,7 +13,7 @@ export const TokenListStyle = styled.div`
         display: inline-block;
         width: 0.08rem;
         height: 0.0495rem;
-        margin-left: 0.12rem;
+        /*margin-left: 0.12rem;*/
         /*margin-top: 4px;
         border-top: 6px solid ${colors.baseColor};
         border-right: 5px solid transparent;

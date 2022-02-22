@@ -17,7 +17,8 @@ export const exchangeActions = {
     SET_ACCOUNTINFO: "SET_ACCOUNTINFO",
     SET_MARKET24: "SET_MARKET24",
     set_HideDifferent: "set_HideDifferent",
-    set_quotation: "set_quotation"
+    set_quotation: "set_quotation",
+    set_leverage: "set_leverage"
 };
 
 
@@ -34,9 +35,16 @@ export function mapExchangeDispatch(dispatch: any) {
                     data: pairInfo.settleCoin.settleDecimal
                 })
             }
+        },
+        setLeverage(leverage: string) {
+            localStorage.setItem("leverage", leverage);
+            dispatch({
+                type: exchangeActions.set_leverage,
+                data: leverage
+            })
         }
     }
-};
+}
 
 export type IExchangeState = {
     pairs: IPair[]
@@ -51,6 +59,7 @@ export type IExchangeState = {
     market24Data: IMarket24,
     hideDifferent: boolean
     quotation: IQuotation[]
+    leverage: string
 }
 
 export const initExchangeState: IExchangeState = {
@@ -65,7 +74,8 @@ export const initExchangeState: IExchangeState = {
     accountInfo: {} as IAccountInfo,
     market24Data: {} as IMarket24,
     hideDifferent: false,
-    quotation: []
+    quotation: [],
+    leverage: localStorage.getItem("leverage") || "10"
 };
 
 export function exchangeReducer(state: IExchangeState, action: AnyAction): IExchangeState {
@@ -92,6 +102,8 @@ export function exchangeReducer(state: IExchangeState, action: AnyAction): IExch
             return {...state, hideDifferent: action.data};
         case exchangeActions.set_quotation:
             return {...state, quotation: action.data};
+        case exchangeActions.set_leverage:
+            return {...state, leverage: action.data};
         default:
             return state;
     }

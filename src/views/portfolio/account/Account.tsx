@@ -69,15 +69,21 @@ export default function Account() {
                 <div className={"userInfo flex-row"}>
                     <div className={"info"}>
                         <p className={"label"}>{t(`PORTFOLIO VALUE`)}</p>
-                        <p className={`val ${getTotalAssetInfo(state.data.totalAssets).className}`}>$ {formatNumber(state.data.totalAssets)}</p>
+                        <Toggle vIf={!!state.data.totalAssets}>
+                            <p className={`val ${getTotalAssetInfo(state.data.totalAssets).className}`}>$ {formatNumber(state.data.totalAssets)}</p>
+                            <p className={"val"}>-</p>
+                        </Toggle>
                     </div>
                     <div className={"info"}>
                         <p className={"label"}>{t(`TODAY PNL`)}</p>
-                        <p className={`flex-row ${getRiseInfo(state.data.todayProfitLoss).className}`}>
-                            <RiseIcon className={`${getRiseInfo(state.data.todayProfitLoss).className}`} />
-                            <span className={`val`}>{getRiseInfo(state.data.todayProfitLoss).dotal} $ {state.data.todayProfitLoss}</span>
-                            <span>({state.data.todayIncreaseRate}%)</span>
-                        </p>
+                        <Toggle vIf={!!state.data.todayProfitLoss}>
+                            <p className={`flex-row ${getRiseInfo(state.data.todayProfitLoss).className}`}>
+                                <RiseIcon className={`${getRiseInfo(state.data.todayProfitLoss).className}`} />
+                                <span className={`val`}>{getRiseInfo(state.data.todayProfitLoss).dotal} $ {state.data.todayProfitLoss}</span>
+                                <span>({state.data.todayIncreaseRate}%)</span>
+                            </p>
+                            <p className={"val"}>-</p>
+                        </Toggle>
                     </div>
                     <div className={"info"}>
                         <p className={"label"}>{t(`TOTAL PNL`)}</p>
@@ -88,11 +94,14 @@ export default function Account() {
                             </p>
                             <span className={`val`}>--</span>
                         </Toggle>*/}
-                        <p className={`flex-row ${getRiseInfo(state.data.totalProfitLoss).className}`}>
-                            <RiseIcon className={`${getRiseInfo(state.data.totalProfitLoss).className}`} />
-                            <span className={"val"}>{getRiseInfo(state.data.totalProfitLoss).dotal} $ {state.data.totalProfitLoss}</span>
-                            <span>({state.data.totalIncreaseRate}%)</span>
-                        </p>
+                        <Toggle vIf={!!state.data.totalProfitLoss}>
+                            <p className={`flex-row ${getRiseInfo(state.data.totalProfitLoss).className}`}>
+                                <RiseIcon className={`${getRiseInfo(state.data.totalProfitLoss).className}`} />
+                                <span className={"val"}>{getRiseInfo(state.data.totalProfitLoss).dotal} $ {state.data.totalProfitLoss}</span>
+                                <span>({state.data.totalIncreaseRate}%)</span>
+                            </p>
+                            <p className={"val"}>-</p>
+                        </Toggle>
                     </div>
                 </div>
                 <div className={"Trend"}>

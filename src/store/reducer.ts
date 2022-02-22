@@ -12,6 +12,7 @@ export type IState = {
     lang: string
     token: string
     theme: string
+    leverage: string
 };
 let initState: IState = {
     address: sessionStorage.getItem("wallet_address") || (getWalletProvider() && getWalletProvider().selectedAddress) || "",
@@ -20,7 +21,8 @@ let initState: IState = {
     completedHash: "",
     lang: localStorage.getItem("lang") || langType.en_US,
     token: sessionStorage.getItem("token") || "",
-    theme: localStorage.getItem("theme") || THEME.dark
+    theme: localStorage.getItem("theme") || THEME.dark,
+    leverage: localStorage.getItem("leverage") || "10"
 };
 
 export default function reducer(state = initState, action: any): IState  {
@@ -39,6 +41,8 @@ export default function reducer(state = initState, action: any): IState  {
             return {...state, token: action.data};
         case actions.TOGGLE_THEME:
             return {...state, theme: action.data};
+        case actions.SET_LEVERAGE:
+            return {...state, leverage: action.data};
         default:
             return state;
     }

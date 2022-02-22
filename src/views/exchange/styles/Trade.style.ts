@@ -100,9 +100,9 @@ export const LeverageBtn = styled.button`
     min-width: 0.34rem;
     height: 0.24rem;
     border-radius: 0.06rem;
-    font-size: 0.1rem;
-    font-weight: 600;
-    color: ${({theme}) => theme.colors.headerButtonColor};
+    font-size: 0.12rem;
+    font-weight: normal;
+    color: ${({theme}) => theme.colors.inputBtnColor};
     background: ${({theme}) => theme.colors.inputBtnBgColor};
     margin-left: 0.04rem;
     &.active{

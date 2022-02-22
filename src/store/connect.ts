@@ -59,6 +59,13 @@ export const mapDispatchToProps = (dispatch: Dispatch) => {
                 type: actions.TOGGLE_THEME,
                 data: theme
             })
+        },
+        setLeverage(leverage: string) {
+            localStorage.setItem("leverage", leverage);
+            dispatch({
+                type: actions.SET_LEVERAGE,
+                data: leverage
+            })
         }
     }
 };

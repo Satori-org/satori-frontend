@@ -28,7 +28,7 @@ export const NavStyle = styled.nav`
                 left: 0;
                 bottom: -1px;
                 width: 100%;
-                height: 2px;
+                height: 1px;
                 background: ${({theme}) => theme.colors.activeColor};
             }
         }
