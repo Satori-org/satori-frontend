@@ -9,7 +9,7 @@ export const DatePickerPanel = styled.div`
     z-index: 1000;
     width: 2.54rem;
     border-radius: 0.08rem;
-    background: #FFFFFF;
+    background: ${({theme}) => theme.colors.pickerBgColor};
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.05);
     padding-bottom: 0.08rem;
     opacity: 0;
@@ -19,7 +19,7 @@ export const PickerTitle = styled.div`
     padding: 0.12rem 0.1rem 0.04rem;
     font-size: 0.14rem;
     font-weight: normal;
-    color: #000;
+    color: ${({theme}) => theme.colors.activeColor};
     .icon{
         width: 0.1rem;
         height: 0.08rem;
@@ -38,28 +38,28 @@ export const RowItem = styled.button`
     margin-bottom: 0.02rem;
     background: transparent;
     font-size: 0.14rem;
-    color: #000;
+    color: ${({theme}) => theme.colors.baseColor};
     &.header{
         font-size: 0.1rem;
         font-weight: normal;
-        color: #A6ACA9;
+        color: ${({theme}) => theme.colors.pickerThColor};
     }
     &:disabled{
-        color: #C8CAC9;
+        color: ${({theme}) => theme.colors.pickerNotAllow};
         cursor: not-allowed;
     }
     &.start_date{
-        background: #83998D;
+        background: ${({theme}) => theme.colors.pickerOnSelect};
         border-radius: 0.04rem 0 0 0.04rem;
         color: #fff;
     }
     &.end_date{
-        background: #83998D;
+        background: ${({theme}) => theme.colors.pickerOnSelect};
         border-radius: 0 0.04rem 0.04rem 0;
         color: #fff;
     }
     &.range{
-        background: #A6ACA9;
+        background: ${({theme}) => theme.colors.pickerRangeBgColor};
         color: #fff;
         &:hover{
             //border-radius: 0 0.04rem 0.04rem 0;

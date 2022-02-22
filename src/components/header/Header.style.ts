@@ -71,13 +71,14 @@ export const NavMenuContainer = styled.div`
 export const NavMenu = styled.nav`
     line-height: 0.32rem;
     background: ${({theme}) => theme.colors.boxBgColor};
-    border: 1px solid ${({theme}) => theme.colors.modalBorderColor};
+   /* border: 1px solid ${({theme}) => theme.colors.modalBorderColor};*/
     box-sizing: border-box;
     border-radius: 0.08rem;
+    overflow: hidden;
     .menuItem{
         font-size: 0.12rem;
         text-align: center;
-        color: ${({theme}) => theme.colors.labelColor};
+        color: ${({theme}) => theme.colors.linkDefaultColor};
         &:hover{
             color: ${({theme}) => theme.colors.baseColor};
             background: rgba(255, 255, 255, 0.04);

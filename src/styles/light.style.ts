@@ -24,8 +24,8 @@ export const light: ITheme = {
         disabledButtonBgColor: "#F3F3F3",
         inputBtnBgColor: "#EEEFEF",
         inputBtnColor: "#3E403F",
-        unConnectBgColor: "#fff",
-        unConnectColor: "#484E4B",
+        disconnectBgColor: "#fff",
+        disconnectColor: "#484E4B",
         headerRightColor: "#484E4B",
         btnNotAllow: "#A6ACA9",
         modalTitle: "#000",
@@ -46,10 +46,15 @@ export const light: ITheme = {
         stepColor: "#AFAFC4",
         stepActiveColor: "#F6F7F0",
         stepBorderColor: "#D7D7E2",
-        emptyTextColor: "#525150",
+        emptyTextColor: "#617168",
         warnBgColor: "#121212",
         menuBgColor: "#121212",
         articleColor: "#FFFEFC",
         articleHrColor: "#0D0D0D",
+        pickerBgColor: "#fff",
+        pickerThColor: "#A6ACA9",
+        pickerNotAllow: "#C8CAC9",
+        pickerOnSelect: "#83998D",
+        pickerRangeBgColor: "#A6ACA9"
     }
 };

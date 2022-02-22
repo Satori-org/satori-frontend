@@ -129,7 +129,7 @@ export default function ConectWallet(props: IProp) {
     return (
         <div>
             <ConectWalletStyle
-                className={"borderRadius"}
+                className={`borderRadius ${storeData.address ? '' : 'disconnect'}`}
                 style={props.style}
                 onMouseOver={() => {
                     if (storeData.address) {
@@ -150,7 +150,10 @@ export default function ConectWallet(props: IProp) {
                         <span>{formatAddress(storeData.address)}</span>
                         <img src={isDark ? require("src/assets/images/dark/icon_arrow_down.png") : require("src/assets/images/light/icon_arrow_down.png")} className={"arrow"} alt=""/>
                     </div>
-                    <span>{t(`Connect Wallet`)}</span>
+                    <div className={"flex-row disconnect"}>
+                        <span>{t(`Connect Wallet`)}</span>
+                        <img src={isDark ? require("src/assets/images/dark/disconnect.png") : require("src/assets/images/dark/disconnect.png")} className={"arrow-disconnect"} alt=""/>
+                    </div>
                 </Toggle>
                 <Toggle vIf={state.showDropMenu}>
                     <DropMenuContainer>

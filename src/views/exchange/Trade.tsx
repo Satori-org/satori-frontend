@@ -457,7 +457,7 @@ export default function Trade(props: IProps) {
                             </InputLabel>
                             <InputNumber
                                 inputStyle={{textAlign: "left"}}
-                                right={<span>{reducerState.currentPair.tradeCoin && reducerState.currentPair.tradeCoin.symbol}</span>}
+                                right={<span style={{color: theme.colors.labelColor}}>{reducerState.currentPair.tradeCoin && reducerState.currentPair.tradeCoin.symbol}</span>}
                                 placeholder={state.quantityPlaceholder}
                                 value={state.quantity}
                                 maxDecimal={symbolDecimal}
@@ -491,7 +491,8 @@ export default function Trade(props: IProps) {
                                             } else if(number_val > reducerState.currentPair.maxLever){
                                                 showMessage(t(`Exceeds leverage maximum：`) + reducerState.currentPair.maxLever);
                                             } else {
-                                                reducerState.leverage = value;
+                                                //reducerState.leverage = value;
+                                                mapDispatch.setLeverage(value);
                                             }
                                         }
                                     }} />

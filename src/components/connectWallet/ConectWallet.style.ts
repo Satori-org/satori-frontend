@@ -11,10 +11,20 @@ export const ConectWalletStyle = styled.div`
     box-sizing: border-box;
     text-align: center;
     cursor:pointer;
+    &.disconnect{
+        background: ${({theme}) => theme.colors.disconnectBgColor};
+        color: ${({theme}) => theme.colors.disconnectColor};
+        font-weight: bold;
+    }
     .arrow{
         width: 0.08rem;
         height: 0.0495rem;
         margin-left: 0.12rem;
+    }
+    .arrow-disconnect{
+        width: 0.0495rem;
+        height: 0.08rem;
+        margin-left: 0.1353rem;
     }
 `;
 

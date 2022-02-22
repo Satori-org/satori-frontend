@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import {DateContent, DatePickerPanel, DatePickerStyle, PickerHeader, PickerTitle, RowItem} from './DatePicker.style';
 import {useEffectState} from "../../hooks/useEffectState";
 import Toggle from "../toggle/Toggle";
+import {useThemeManager} from "../../hooks/useThemeManager";
 
 type IProps = {
     selectsRange?: boolean
@@ -15,6 +16,7 @@ export default function DatePicker(props: IProps) {
     const {t} = useTranslation();
     const customRef = useRef<HTMLDivElement | null>(null);
     const panelRef = useRef<HTMLDivElement | null>(null);
+    const {isDark} = useThemeManager();
     const currentDate = new Date();
     const state = useEffectState({
         year: currentDate.getFullYear(),
@@ -176,7 +178,7 @@ export default function DatePicker(props: IProps) {
                     onMouseLeave={() => state.hoverValue = null}
                     onClick={(event) => event.stopPropagation()} >
                     <PickerTitle className={"flex-sb"}>
-                        <img src={require("src/assets/images/arrow-left.png")}
+                        <img src={isDark? require("src/assets/images/dark/arrow-left.png") : require("src/assets/images/light/arrow-left.png")}
                              className={"icon"}
                              alt=""
                              onClick={() => {
@@ -189,7 +191,7 @@ export default function DatePicker(props: IProps) {
                              }}/>
                         <span>{Mon[state.month - 1]} {state.year}</span>
                         <img
-                            src={require("src/assets/images/arrow-left.png")}
+                            src={isDark? require("src/assets/images/dark/arrow-left.png") : require("src/assets/images/light/arrow-left.png")}
                             className={"icon right"}
                             alt=""
                             onClick={() => {

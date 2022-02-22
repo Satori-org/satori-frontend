@@ -23,8 +23,8 @@ export const dark: ITheme = {
         disabledButtonBgColor: "#242A27",
         inputBtnBgColor: "#2F3532",
         inputBtnColor: "#A9AFAC",
-        unConnectBgColor: "#C8CAC9",
-        unConnectColor: "#3E403F",
+        disconnectBgColor: "#C8CAC9",
+        disconnectColor: "#3E403F",
         headerRightColor: "#8D9591",
         btnNotAllow: "#555F59",
         paginationBgColor: "#323433",
@@ -46,10 +46,15 @@ export const dark: ITheme = {
         stepColor: "#AFAFC4",
         stepActiveColor: "#F6F7F0",
         stepBorderColor: "#D7D7E2",
-        emptyTextColor: "#525150",
+        emptyTextColor: "#3E403F",
         warnBgColor: "#121212",
         menuBgColor: "#121212",
         articleColor: "#FFFEFC",
         articleHrColor: "#0D0D0D",
+        pickerBgColor: "#2F3532",
+        pickerThColor: "#8D9591",
+        pickerNotAllow: "#707A75",
+        pickerOnSelect: "#83998D",
+        pickerRangeBgColor: "#555F59"
     }
 };

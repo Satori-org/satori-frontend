@@ -23,10 +23,10 @@ export const RowStyle = styled.tr`
 export const CloseBtn = styled.button`
     min-width: 0.51rem;
     height: 0.24rem;
-    background: ${({theme}) => theme.colors.borderColor2};
+    background: ${({theme}) => theme.colors.inputBtnBgColor};
     font-size: 0.12rem;
     font-weight: 400;
-    color: ${({theme}) => theme.colors.headerButtonColor};
+    color: ${({theme}) => theme.colors.inputBtnColor};
     border-radius: 0.08rem;
 `;
 

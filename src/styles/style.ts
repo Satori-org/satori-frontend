@@ -25,8 +25,8 @@ export type IColors = {
     disabledButtonBgColor: string
     inputBtnBgColor: string
     inputBtnColor: string
-    unConnectBgColor: string
-    unConnectColor: string
+    disconnectBgColor: string
+    disconnectColor: string
     headerRightColor: string
     btnNotAllow: string
     paginationBgColor: string
@@ -53,6 +53,11 @@ export type IColors = {
     menuBgColor: string
     articleColor: string
     articleHrColor: string
+    pickerBgColor: string
+    pickerThColor: string,
+    pickerNotAllow: string,
+    pickerOnSelect: string,
+    pickerRangeBgColor: string
 }
 export type ITheme = {
     colors: IColors
