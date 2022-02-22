@@ -45,6 +45,7 @@ export type IColors = {
     confirmColor: string,
     borderColor2: string
     tabActiveColor: string
+    tabActiveBgColor2: string
     stepColor: string
     stepActiveColor: string
     stepBorderColor: string

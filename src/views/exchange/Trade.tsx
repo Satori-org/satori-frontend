@@ -15,7 +15,7 @@ import Decimal from "decimal.js";
 import {
     awaitWrap,
     fixedNumber,
-    fixedNumberStr,
+    fixedNumberStr, formatAmount,
     isInputNumber,
     isIntNumber,
     isNumber,
@@ -30,6 +30,7 @@ import Divider from "../../components/divider/Divider";
 import {NUMBER_REG} from "../../common/regExp";
 import {Toast} from "../../components/toast/Toast";
 import {mapExchangeDispatch} from "./exchangeReducer";
+import {USDT_decimal_show} from "../../config";
 
 type IProps = {
     longPrice: string
@@ -53,6 +54,7 @@ export default function Trade(props: IProps) {
         isLong: true,
         disabledCtroll: false,
         quantity: "",
+        quantityUSDT: "",
         quantityPlaceholder: placeholderText,
         price: "",
         pricePlaceholder: placeholderText,
@@ -60,7 +62,8 @@ export default function Trade(props: IProps) {
         loading: false,
         accountInfo: {} as IAccount,
         percent: 0,
-        levers: [5, 10 ,20]
+        levers: [5, 10 ,20],
+        showTogglePair: false
     });
     const symbolDecimal = reducerState.currentPair.settleCoin && reducerState.currentPair.settleCoin.settleDecimal || 4;
     const settleDecimal = useMemo(() => {
@@ -172,6 +175,15 @@ export default function Trade(props: IProps) {
             return props.longPrice ? Math.max(Number(props.longPrice), reducerState.marketPrice) : reducerState.marketPrice;
         }
     }, [state.isLong, props.longPrice, props.shortPrice, reducerState.marketPrice]);
+
+    const reversePrice = useMemo(() => {
+        if (state.orderType === ORDER_TYPE.market) {
+            return ExpectedPrice;
+        } else {
+            return state.price;
+        }
+    }, [state.orderType, ExpectedPrice, state.price]);
+
     const orderTotalAmount = useMemo(() => {
         if (!state.quantity || !reducerState.leverage) {
             return "0";
@@ -251,8 +263,8 @@ export default function Trade(props: IProps) {
         let sum = "0";
         let margin = Decimal.mul(reducerState.accountInfo.availableAmount, percent).div(RR);
 
-        /* 分别计算多头、空头的数量， 取最小价 */
-        /* 市价且空头 */
+        /* Calculate the number of long and short positions respectively and take the minimum price */
+        /* Market and short */
         if (isLimit) {
             let quantity = Decimal.mul(margin, reducerState.leverage).div(price).toFixed();
             state.quantity = fixedNumberStr(quantity, symbolDecimal)
@@ -395,6 +407,7 @@ export default function Trade(props: IProps) {
                     ]}
                  onChange={(value) => {
                      state.quantity = "";
+                     state.quantityUSDT = "";
                      state.percent = 0;
                      state.orderType = value;
                  }} />
@@ -439,7 +452,7 @@ export default function Trade(props: IProps) {
                                 <InputNumber
                                     inputStyle={{textAlign: "left"}}
                                     right={<div className={`flex-row`}>
-                                        <span>USDT</span>
+                                        <span style={{color: theme.colors.labelColor}}>USDT</span>
                                     </div>
                                     }
                                     placeholder={state.pricePlaceholder}
@@ -455,17 +468,42 @@ export default function Trade(props: IProps) {
                                 <span>{t(`Amount`)}</span>
                                 <span className={"explain"}>{t(`Set Order Size`)}</span>
                             </InputLabel>
-                            <InputNumber
-                                inputStyle={{textAlign: "left"}}
-                                right={<span style={{color: theme.colors.labelColor}}>{reducerState.currentPair.tradeCoin && reducerState.currentPair.tradeCoin.symbol}</span>}
-                                placeholder={state.quantityPlaceholder}
-                                value={state.quantity}
-                                maxDecimal={symbolDecimal}
-                                onChange={(value) => {
-                                    state.percent = 0;
-                                    state.quantity = value;
-                                    //calcSliderValue();
-                                }}/>
+                            <div className={"flex-row"}>
+                                <InputNumber
+                                    style={{flex: 1}}
+                                    inputStyle={{textAlign: "left"}}
+                                    right={<span style={{color: theme.colors.labelColor}}>{reducerState.currentPair.tradeCoin && reducerState.currentPair.tradeCoin.symbol}</span>}
+                                    placeholder={state.quantityPlaceholder}
+                                    value={state.quantity}
+                                    maxDecimal={symbolDecimal}
+                                    onChange={(value) => {
+                                        //state.percent = 0;
+                                        state.quantity = value;
+                                        if (value && reversePrice) {
+                                            state.quantityUSDT = fixedNumberStr(Decimal.mul(value, reversePrice).toFixed(), USDT_decimal_show);
+                                        } else {
+                                            state.quantityUSDT = "";
+                                        }
+                                    }}/>
+                                <InputNumber
+                                    style={{marginLeft: "0.04rem", flex: state.showTogglePair?1:0}}
+                                    inputStyle={{textAlign: "left"}}
+                                    right={
+                                        <span style={{color: theme.colors.labelColor, cursor: "pointer"}}
+                                              onClick={() => state.showTogglePair = !state.showTogglePair}>USDT</span>}
+                                    placeholder={state.quantityPlaceholder}
+                                    value={state.quantityUSDT}
+                                    maxDecimal={USDT_decimal_show}
+                                    onChange={(value) => {
+                                        //state.percent = 0;
+                                        state.quantityUSDT = value;
+                                        if (value && reversePrice) {
+                                            state.quantity = fixedNumberStr(Decimal.div(value, reversePrice).toFixed(), symbolDecimal);
+                                        } else {
+                                            state.quantity = "";
+                                        }
+                                    }}/>
+                            </div>
                         </div>
                         {/*<div style={{textAlign: "right", marginTop: "12px"}}>
                        <span className={"label"} style={{marginRight: "4px"}}>{t(`Order Value`)}</span>

@@ -12,30 +12,31 @@ export const InputBox = styled.div`
     background: ${({theme}) => theme.colors.inputBgColor};
     border-radius: 0.08rem;
     border: 1px solid transparent;
+    transition: all 0.25s;
     .label{
         display: inline-block;
         color: ${({theme}) => theme.colors.labelColor};
         text-align: left;
     }
     .input{
-        flex: 1;
+        width: 100%;
         background-color: transparent;
         font-size: 0.12rem;
         height: 100%;
         text-align: left;
         color: ${({theme}) => theme.colors.baseColor};
-        padding-right: 0.04rem;
+        /*padding-right: 0.04rem;*/
         box-sizing: border-box;
         &::-webkit-input-placeholder {
-            color: ${({theme}) => theme.colors.baseColor};
+            color: ${({theme}) => theme.colors.labelColor};
         }
         
         &::-moz-input-placeholder {
-            color: ${({theme}) => theme.colors.baseColor};
+            color: ${({theme}) => theme.colors.labelColor};
         }
         
         &::-ms-input-placeholder {
-            color: ${({theme}) => theme.colors.baseColor};
+            color: ${({theme}) => theme.colors.labelColor};
         }
     }
     .inputWarn{

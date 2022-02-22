@@ -21,7 +21,7 @@ export const AccountStyle = styled.div`
             .label{
                 font-size: 0.1rem;
                 font-weight: 600;
-                color: ${({theme}) => theme.colors.labelColor};
+                color: ${({theme}) => theme.colors.thColor};
                 margin-bottom: 8px;
             }
             .long{

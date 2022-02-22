@@ -43,7 +43,7 @@ export const Direction = styled.div`
         border-radius: 0.06rem;
         &.active{
             color: ${({theme}) => theme.colors.tabSelectedColor};
-            background: ${({theme}) => theme.colors.inputBtnBgColor};
+            background: ${({theme}) => theme.colors.tabActiveBgColor2};
             &.sell{
                 color: ${({theme}) => theme.colors.short};
             }

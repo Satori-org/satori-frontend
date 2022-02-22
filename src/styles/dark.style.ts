@@ -43,6 +43,7 @@ export const dark: ITheme = {
         confirmColor: "#DDDFDE",
         borderColor2: "#484E4B",
         tabActiveColor: "#233918",
+        tabActiveBgColor2: "#2F3532",
         stepColor: "#AFAFC4",
         stepActiveColor: "#F6F7F0",
         stepBorderColor: "#D7D7E2",

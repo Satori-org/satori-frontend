@@ -43,6 +43,7 @@ export const light: ITheme = {
         confirmColor: "#3E403F",
         borderColor2: "#DFE1E0",
         tabActiveColor: "#233918",
+        tabActiveBgColor2: "#fff",
         stepColor: "#AFAFC4",
         stepActiveColor: "#F6F7F0",
         stepBorderColor: "#D7D7E2",

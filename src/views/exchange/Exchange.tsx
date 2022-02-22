@@ -29,7 +29,7 @@ export default function Exchange() {
         ticker: {} as Idata,
         depthData: {asks: [], bids: []},
     });
-    /* 当前选择的交易对 */
+    /*  */
     /*const pairInfo = useMemo(() => {
         return reducerState.pairs[reducerState.currentTokenIndex] || {};
     }, [reducerState.currentPair]);*/
