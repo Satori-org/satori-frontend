@@ -29,7 +29,7 @@
   <body onload="windowLoaded()">
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
-    <div id="messageContainer" style="position: fixed;bottom: 50px;right: 50px;z-index: 1000;"></div>
+    <div id="messageContainer" style="position: fixed;bottom: 16px;left: 16px;z-index: 1000;"></div>
     <!--
       This HTML file is a template.
       If you open it directly in the browser, you will see an empty page.
@@ -52,10 +52,8 @@
       }
 
       function setRem () {
-        var w_width = window.innerWidth;
-        if (w_width > 1380) {
-          document.documentElement.style.fontSize = w_width/14.4 + 'px';
-        }
+        var w_width = window.innerWidth > 1380 ? window.innerWidth : 1380;
+        document.documentElement.style.fontSize = w_width/14.4 + 'px';
       }
       setRem();
       window.addEventListener('resize', setRem)

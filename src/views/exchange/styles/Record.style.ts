@@ -11,7 +11,7 @@ export const RecordStyle = styled.div`
 
 export const RecordHeader = styled.div`
     border-bottom: 1px solid ${({theme}) => theme.colors.borderColor2};
-    margin-bottom: 16px;
+    margin-bottom: 0.08rem;
 `;
 
 export const RecordTab = styled.div`

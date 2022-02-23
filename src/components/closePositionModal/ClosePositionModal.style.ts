@@ -20,6 +20,17 @@ export const Group = styled.div`
     }
 `;
 
+export const InputLabel = styled.div`
+    display: flex;
+    align-items: center;
+    font-size: 0.12rem;
+    margin-bottom: 0.08rem;
+    .explain{
+        margin-left: 0.12rem;
+        color: ${({theme}) => theme.colors.labelColor};
+    }
+`;
+
 export const ButtonGroup = styled.div`
     grid-column-gap: 0.12rem;
     margin-top: 0.24rem;

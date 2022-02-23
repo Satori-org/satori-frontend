@@ -13,6 +13,7 @@ import LineChart2 from 'src/components/lineChart/LineChart2';
 import {useStore} from "react-redux";
 import {IState} from "src/store/reducer";
 import RiseIcon from "../../../components/riseIcon/RiseIcon";
+import {MonArr} from "../../../config";
 
 export default function Account() {
     const {t} = useTranslation();
@@ -31,7 +32,13 @@ export default function Account() {
     }, [data]);
     const dataArr = useMemo(() => {
         if (state.data.profitList && state.data.profitList.length > 0) {
-            let result = state.data.profitList.map((item) => [item.dayDate, item.profitLoss]);
+
+            let result = state.data.profitList.map((item) => {
+                let itemDate = new Date(item.dayDate);
+                let Mon = itemDate.getMonth();
+                let label = `${MonArr[Mon]} ${itemDate.getDate()}`;
+                return [label, item.profitLoss]
+            });
             return result;
         }
         return  []

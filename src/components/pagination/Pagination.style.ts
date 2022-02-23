@@ -10,28 +10,28 @@ export const PaginationStyle = styled.div`
     
 `;
 
-export const ArrowIcon = styled.span`
-    display: inline-block;
-    width: 0.1rem;
-    height: 0.1rem;
-    padding: 0.06rem;
+export const ArrowIcon = styled.img`
+    width: 0.0643rem;
+    height: 0.1143rem;
     cursor:pointer;
+    /*padding: 0.06rem;
     background-origin: content-box;
     background-size: 100% 100%;
-    background-repeat: no-repeat;
+    background-repeat: no-repeat;*/
     &.arrowLeft{
-        margin-right: 0.04rem;
-        background-image: url(${arrow_left});
+        margin-right: 0.15rem;
+        /*background-image: url(${arrow_left});
         &:hover{
             background-image: url(${arrow_left_active});
-        }
+        }*/
     }
     &.arrowRight{
-        margin-left: 0.04rem;
-        background-image: url(${arrow_right});
+        margin-left: 0.15rem;
+        transform: rotate(180deg);
+        /*background-image: url(${arrow_right});
         &:hover{
             background-image: url(${arrow_right_active});
-        }
+        }*/
     }
 `;
 

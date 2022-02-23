@@ -13,7 +13,26 @@
 }
 .my-slider-right-exit-active {
     opacity: 0;
-    transform: translateX(100%);
+    transform: translateX(-100%);
+    transition: opacity 0.3s, transform 0.25s ease;
+}
+
+.my-slider-left-enter {
+    opacity: 0;
+    transform: translateX(-100%);
+}
+.my-slider-left-enter-active {
+    opacity: 1;
+    transform: translateX(0);
+    transition: opacity 0.3s, transform 0.25s ease;
+}
+.my-slider-left-exit {
+    opacity: 1;
+    transform: translateX(0);
+}
+.my-slider-left-exit-active {
+    opacity: 0;
+    transform: translateX(-100%);
     transition: opacity 0.3s, transform 0.25s ease;
 }
 

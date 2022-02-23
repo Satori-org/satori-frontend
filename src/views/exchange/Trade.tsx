@@ -395,6 +395,7 @@ export default function Trade(props: IProps) {
 
     function reset() {
         state.quantity = "";
+        state.quantityUSDT = "";
         state.sliderValue = 0;
     }
 

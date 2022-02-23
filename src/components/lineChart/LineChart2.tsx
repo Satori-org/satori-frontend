@@ -18,6 +18,7 @@ type IProps = {
     labelColor?: string
     slitLineColor?: string
     lineWidth?: number
+    formatLabel?(label: any): void
 }
 export default function LineChart2(props: IProps) {
     const {t} = useTranslation();
@@ -82,7 +83,7 @@ export default function LineChart2(props: IProps) {
                 type: 'category',
                 boundaryGap: false,
                 data: props.dataArr.map((item) => {
-                    return item[0]
+                    return props.formatLabel ? props.formatLabel(item[0]) : item[0]
                 }),
                 axisLine: {
                     show: false

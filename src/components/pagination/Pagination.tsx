@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import {useEffectState} from "src/hooks/useEffectState";
 import Toggle from '../toggle/Toggle';
 import {ArrowIcon, More, PageItem, PaginationStyle} from "./Pagination.style";
+import {useThemeManager} from "src/hooks/useThemeManager";
 
 interface IPagination{
     total: number
@@ -16,6 +17,7 @@ interface IPagination{
 }
 export default function Pagination(props:IPagination) {
     const {t} = useTranslation();
+    const {isDark} = useThemeManager();
     const state = useEffectState({
         current: props.current ?? 1,
         visible: props.visible ?? 5,
@@ -93,7 +95,9 @@ export default function Pagination(props:IPagination) {
                          className={props.className}>
             { props.total
                 ? <div className={"flex-row"} style={{justifyContent: "flex-end"}}>
-                    <ArrowIcon className={"arrowLeft"} onClick={pre}></ArrowIcon>
+                    <ArrowIcon className={"arrowLeft"}
+                               src={isDark?require("src/assets/images/dark/pre.png"):require("src/assets/images/light/pre.png")}
+                               onClick={pre} />
                     <PageItem className={`${state.current === 1 ? 'active' : ''}`} onClick={() => {
                         state.current = 1;
                         props.onChange(1);
@@ -136,7 +140,9 @@ export default function Pagination(props:IPagination) {
                                       props.onChange(lastPage);
                                   }}>{lastPage}</PageItem>
                     </Toggle>
-                    <ArrowIcon className={"arrowRight"} onClick={next}></ArrowIcon>
+                    <ArrowIcon className={"arrowRight"}
+                               src={isDark?require("src/assets/images/dark/pre.png"):require("src/assets/images/light/pre.png")}
+                               onClick={next} />
                   </div>
                 : null
             }

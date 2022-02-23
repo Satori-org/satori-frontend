@@ -5,12 +5,13 @@ export const MessageBoxStyle = styled.div`
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);*/
-    width: 3.54rem;
-    padding: 0.18rem;
+    width: 3.58rem;
+    padding: 0.16rem 0.16rem 0.16rem 0.2rem;
     background: ${({theme}) => theme.colors.boxBgColor};
-    border-radius: 0.08rem;
-    margin-top: 0.18rem;
-    border: 1px solid ${({theme}) => theme.colors.modalBorderColor};
+    box-shadow: 0 0.16rem 0.64rem ${({theme}) => theme.colors.backgroundColor};
+    border-radius: 0.16rem;
+    margin-top: 0.08rem;
+    /*border: 1px solid ${({theme}) => theme.colors.modalBorderColor};*/
     box-sizing: border-box;
     &.bottomRight{
         left: initial;

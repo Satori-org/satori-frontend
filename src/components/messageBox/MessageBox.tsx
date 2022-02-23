@@ -50,7 +50,7 @@ function MessageBox(props: IMessageBox) {
     }, []);
 
     return (
-        <CSSTransition in={state.active} timeout={200} classNames={"my-slider-right"} unmountOnExit onExited={() => {
+        <CSSTransition in={state.active} timeout={200} classNames={"my-slider-left"} unmountOnExit onExited={() => {
             props.destoryComponent();
         }}>
             <MessageBoxStyle>

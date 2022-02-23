@@ -1,6 +1,6 @@
 import React, {useEffect, useMemo} from 'react';
 import {useTranslation} from 'react-i18next';
-import {ClosePositionModalContentStyle, ClosePositionModalStyle, Group} from './ClosePositionModal.style';
+import {ClosePositionModalContentStyle, ClosePositionModalStyle, Group, InputLabel} from './ClosePositionModal.style';
 import Modal from "../modal/Modal";
 import {useEffectState} from "src/hooks/useEffectState";
 import {useStore} from "react-redux";
@@ -9,13 +9,15 @@ import useExchangeStore from "src/views/exchange/ExchangeProvider";
 import Percent from "../percent/Percent";
 import Decimal from "decimal.js";
 import {addOrder, IPositionList} from "src/ajax/contract/contract";
-import {awaitWrap, fixedNumber, isNumber, showMessage} from "src/common/utilTools";
+import {awaitWrap, fixedNumber, fixedNumberStr, isNumber, showMessage} from "src/common/utilTools";
 import {signExpire, signMsg} from "src/contract/wallet";
 import ModalFooter from "../modal/ModalFooter";
 import {ORDER_TYPE} from "src/common/enum";
 import Tab from "../tab/Tab";
 import Toggle from "../toggle/Toggle";
 import InputNumber from "../inputNumber/InputNumber";
+import {USDT_decimal_show} from "../../config";
+import useTheme from "../../hooks/useTheme";
 
 interface IProps {
     data: IPositionList
@@ -27,11 +29,14 @@ export function ClosePositionModal(props: IProps) {
     const store = useStore<IState>();
     const storeData = store.getState();
     const [ reducerState, dispath ] = useExchangeStore();
+    const {theme} = useTheme();
 
     const placeholderText = "0.0000";
     const state = useEffectState({
         price: "",
         quantity: "",
+        quantityUSDT: "",
+        showTogglePair: false,
         percent: 0,
         quantityPlaceholder: placeholderText,
         pricePlaceholder: placeholderText,
@@ -54,16 +59,19 @@ export function ClosePositionModal(props: IProps) {
     const isMart = useMemo(() => {
         return state.orderType === ORDER_TYPE.market;
     }, [state.orderType]);
+    const ExpectedPrice = useMemo(() => {
+        return isMart ? reducerState.marketPrice : state.price;
+    }, [isMart, reducerState.marketPrice, state.price]);
     const amount = useMemo(() => {
-        let price = isMart ? reducerState.marketPrice : state.price;
-        if (!price || !isNumber(state.quantity)) {
+        //let price = isMart ? reducerState.marketPrice : state.price;
+        if (!ExpectedPrice || !isNumber(state.quantity)) {
             return "0";
         }
         /* (标记价 + 标记价/杠杆)*数量/杠杆 */
         /*let a = Decimal.div(state.price, props.data.lever).toFixed();
         let amount = Decimal.add(a, state.price).mul(state.quantity).div(props.data.lever).toFixed();*/
-        return Decimal.mul(price, state.quantity).toFixed();
-    }, [reducerState.marketPrice, state.quantity, isMart, state.price]);
+        return Decimal.mul(ExpectedPrice, state.quantity).toFixed();
+    }, [ExpectedPrice, state.quantity]);
 
     const fee = useMemo(() => {
         let margin = amount || 0;
@@ -140,9 +148,10 @@ export function ClosePositionModal(props: IProps) {
                     <Toggle vIf={state.orderType !== ORDER_TYPE.market}>
                         <InputNumber
                             label={t(`Price`)}
+                            inputStyle={{textAlign: "right", color: theme.colors.labelColor, marginRight: "0.04rem"}}
                             style={{marginBottom: "0.16rem"}}
                             right={<div className={`flex-row`}>
-                                <button className={"btnText"} onClick={() => state.price = String(reducerState.marketPrice)}>Last</button>
+                                <button className={"btnText"}  style={{color: theme.colors.labelColor}} onClick={() => state.price = String(reducerState.marketPrice)}>Last</button>
                             </div>
                             }
                             placeholder={state.pricePlaceholder}
@@ -152,7 +161,7 @@ export function ClosePositionModal(props: IProps) {
                                 state.price = value;
                             }}  />
                     </Toggle>
-                    <InputNumber
+                    {/*<InputNumber
                         label={t(`Amount`)}
                         style={{marginBottom: "0.16rem"}}
                         right={<span>{reducerState.currentPair.tradeCoin && reducerState.currentPair.tradeCoin.symbol}</span>}
@@ -162,20 +171,62 @@ export function ClosePositionModal(props: IProps) {
                         onChange={(value) => {
                             state.percent = 0;
                             state.quantity = value;
-                        }}/>
-                    <Percent<number>
+                        }}/>*/}
+                    <div style={{marginTop: "0.11rem"}}>
+                        <InputLabel>
+                            <span>{t(`Amount`)}</span>
+                            <span className={"explain"}>{t(`Set Order Size`)}</span>
+                        </InputLabel>
+                        <div className={"flex-row"}>
+                            <InputNumber
+                                style={{flex: 1}}
+                                inputStyle={{textAlign: "left"}}
+                                right={<span style={{color: theme.colors.labelColor}}>{reducerState.currentPair.tradeCoin && reducerState.currentPair.tradeCoin.symbol}</span>}
+                                placeholder={state.quantityPlaceholder}
+                                value={state.quantity}
+                                maxDecimal={symbolDecimal}
+                                onChange={(value) => {
+                                    //state.percent = 0;
+                                    state.quantity = value;
+                                    if (value && ExpectedPrice) {
+                                        state.quantityUSDT = fixedNumberStr(Decimal.mul(value, ExpectedPrice).toFixed(), USDT_decimal_show);
+                                    } else {
+                                        state.quantityUSDT = "";
+                                    }
+                                }}/>
+                            <InputNumber
+                                style={{marginLeft: "0.04rem", flex: state.showTogglePair?1:0}}
+                                inputStyle={{textAlign: "left"}}
+                                right={
+                                    <span style={{color: theme.colors.labelColor, cursor: "pointer"}}
+                                          onClick={() => state.showTogglePair = !state.showTogglePair}>USDT</span>}
+                                placeholder={state.quantityPlaceholder}
+                                value={state.quantityUSDT}
+                                maxDecimal={USDT_decimal_show}
+                                onChange={(value) => {
+                                    //state.percent = 0;
+                                    state.quantityUSDT = value;
+                                    if (value && ExpectedPrice) {
+                                        state.quantity = fixedNumberStr(Decimal.div(value, ExpectedPrice).toFixed(), symbolDecimal);
+                                    } else {
+                                        state.quantity = "";
+                                    }
+                                }}/>
+                        </div>
+                    </div>
+                    {/*<Percent<number>
                         data={[{value: 25},{value: 50},{value: 75},{value: 100}]}
                         value={state.percent}
                         onChange={(value) => {
                             state.percent = value
-                        }} />
+                        }} />*/}
                     {/*<Group className={"flex-sb"} style={{marginTop: "32px"}}>
                         <span className={"label"}>{t(`Fee`)}</span>
                         <span>{fixedNumberStr("3.35624", USDT_decimal)} USDT</span>
                     </Group>*/}
                     <Group className={"flex-sb"} style={{marginTop: "0.28rem"}}>
                         <span className={"label"}>{t(`Total`)}</span>
-                        <span>{fixedNumber(amount, settleDecimal)} USDT</span>
+                        <span>{fixedNumber(amount, USDT_decimal_show)} USDT</span>
                     </Group>
                     <ModalFooter
                         onCancel={props.onClose}

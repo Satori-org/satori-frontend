@@ -9,3 +9,5 @@ export const getWalletProvider = () => {
 
 export const USDT_decimal = project.contracts.USDC.decimals;
 export const USDT_decimal_show = 3;
+
+export const MonArr = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"];

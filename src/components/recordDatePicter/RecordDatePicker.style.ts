@@ -18,8 +18,8 @@ export const DateTab = styled.div`
             padding: 0 0.06rem;
             box-sizing: border-box;
             border-radius: 0.06rem;
-            background: ${({theme}) => theme.colors.linkActiveBgColor};
-            color: ${({theme}) => theme.colors.baseColor};
+            background: ${({theme}) => theme.colors.confirmBgColor};
+            color: ${({theme}) => theme.colors.confirmColor};
         }
     }
 `;
@@ -44,8 +44,8 @@ export const Search = styled.button`
     min-width: 0.64rem;
     height: 0.26rem;
     border-radius: 0.06rem;
-    background: ${({theme}) => theme.colors.linkActiveBgColor};
     font-size: 0.12rem;
-    color: ${({theme}) => theme.colors.baseColor};
+    background: ${({theme}) => theme.colors.confirmBgColor};
+    color: ${({theme}) => theme.colors.confirmColor};
     margin-left: 0.12rem;
 `;
