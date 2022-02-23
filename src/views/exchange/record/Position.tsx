@@ -291,7 +291,7 @@ export default function Position(props: IProps) {
                         }
                         </tbody>
                     </Table>
-                    <NotConnect></NotConnect>
+                    <NotConnect className={"center"} customInput={<p>{t(`Connect your wallet to view your positions.`)}</p>}></NotConnect>
                 </Toggle>
                 <Toggle vIf={total === 0 && !!storeData.token}>
                     <EmptyData style={{marginTop: "78px"}} />

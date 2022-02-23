@@ -5,6 +5,15 @@ export const NotConnectStyle = styled.div`
     flex-direction: column;
     align-items: center;
     margin-top: 0.4rem;
+    font-size: 0.2rem;
+    color: ${({theme}) => theme.colors.labelColor};
+    &.center{
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        margin-top: 0.4rem;
+    }
     .walletIcon{
         width: 0.44rem;
         height: 0.44rem;

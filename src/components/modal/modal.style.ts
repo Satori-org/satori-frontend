@@ -35,6 +35,7 @@ export const ModalBox = styled.div`
     }
     .title{
         font-size: 0.24rem;
+        font-weight: 600;
         text-align: left;
         color: ${({theme}) => theme.colors.modalTitle};
     }

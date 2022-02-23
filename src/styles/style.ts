@@ -58,7 +58,9 @@ export type IColors = {
     pickerThColor: string,
     pickerNotAllow: string,
     pickerOnSelect: string,
-    pickerRangeBgColor: string
+    pickerRangeBgColor: string,
+    walletBtnBgColor: string,
+    walletBtnColor: string,
 }
 export type ITheme = {
     colors: IColors

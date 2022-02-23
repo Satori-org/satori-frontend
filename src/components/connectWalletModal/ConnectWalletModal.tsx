@@ -1,6 +1,15 @@
 import React, {CSSProperties, useEffect, useRef, useState} from 'react';
 import { useTranslation } from 'react-i18next';
-import {ConnectButton, ConnectWalletModalStyle, Process, StepBox, Subtitle, Title} from './ConnectWalletModal.style';
+import {
+    ConnectButton,
+    ConnectWalletModalStyle,
+    Process,
+    StepBox,
+    Subtitle,
+    Title,
+    WalletBox,
+    WalletList
+} from './ConnectWalletModal.style';
 import {getWalletProvider} from "../../config";
 import {useWallet} from "use-wallet";
 import {useStore} from "react-redux";
@@ -13,6 +22,7 @@ import Toggle from "../toggle/Toggle";
 import Spin from "../Spin/Spin";
 import {awaitWrap} from "../../common/utilTools";
 import useTheme from "../../hooks/useTheme";
+import Modal from '../modal/Modal';
 
 type IProps = {
     onClose(): void
@@ -30,7 +40,8 @@ export default function ConnectWalletModal(props: IProps) {
     const { theme } = useTheme();
     const state = useEffectState({
         stepNum: 1,
-        loading: false
+        loading: false,
+        chain: ""
     });
 
     useEffect(() => {
@@ -130,51 +141,66 @@ export default function ConnectWalletModal(props: IProps) {
     }
 
     return (
-        <ConnectWalletModalStyle onClick={props.onClose}>
-            <div className={"connectWaaletContent"} onClick={(event) => {event.stopPropagation()}}>
-                <Title>{t(`Connect wallet`)}</Title>
-                <Subtitle>{t(`You will receive two signature requests.Signing is free and will not send a transaction.`)}</Subtitle>
-                <StepBox className={`${state.stepNum === 1 ?'active':''}`}>
-                    <div className={"flex-row"}>
-                        <div className={"mark flex-row"}>
-                            <div className={"step flex-box"} id={"step1"} ref={step1Ref}>
-                                <Toggle vIf={state.stepNum === 1}>
-                                    <span>1</span>
-                                    <img src={require("src/assets/images/dark/ok.png")} style={{width: "0.12rem", height: "0.1rem"}} alt=""/>
-                                </Toggle>
+        <Modal title={t(`Connect Wallet`)} handleClick={props.onClose}>
+            <Toggle vIf={!!state.chain}>
+                <div>
+                    <Subtitle>{t(`You will receive two signature requests.Signing is free and will not send a transaction.`)}</Subtitle>
+                    <StepBox className={`${state.stepNum === 1 ?'active':''}`}>
+                        <div className={"flex-row"}>
+                            <div className={"mark flex-row"}>
+                                <div className={"step flex-box"} id={"step1"} ref={step1Ref}>
+                                    <Toggle vIf={state.stepNum === 1}>
+                                        <span>1</span>
+                                        <img src={require("src/assets/images/dark/ok.png")} style={{width: "0.12rem", height: "0.1rem"}} alt=""/>
+                                    </Toggle>
+                                </div>
                             </div>
+                            <span className={"step-title"}>{t(`Verify ownership`)}</span>
                         </div>
-                        <span className={"step-title"}>{t(`Verify ownership`)}</span>
-                    </div>
-                    <div className={"explain"}>{t(`Confirm you are the owner of this wallet.`)}</div>
-                </StepBox>
-                <Process style={processStyle} />
-                <StepBox className={`${state.stepNum === 2 ?'active':''}`} style={{marginTop: "28px"}}>
-                    <div className={"flex-row"}>
-                        <div className={"mark flex-row"}>
-                            <div className={"step flex-box"} id={"step2"} ref={step2Ref} style={state.stepNum === 2 ?{background: theme.colors.baseColor}:{}}>
-                                <Toggle vIf={state.stepNum === 1}>
-                                    <span>2</span>
-                                    <img src={require("src/assets/images/icon_connectwallet_step2_refresh.png")}
-                                         style={{width: "100%", cursor: "pointer"}}
-                                         alt=""
-                                         onClick={() => getGenerateNonce(storeData.address)}/>
-                                </Toggle>
+                        <div className={"explain"}>{t(`Confirm you are the owner of this wallet.`)}</div>
+                    </StepBox>
+                    <Process style={processStyle} />
+                    <StepBox className={`${state.stepNum === 2 ?'active':''}`} style={{marginTop: "28px"}}>
+                        <div className={"flex-row"}>
+                            <div className={"mark flex-row"}>
+                                <div className={"step flex-box"} id={"step2"} ref={step2Ref} style={state.stepNum === 2 ?{background: theme.colors.baseColor}:{}}>
+                                    <Toggle vIf={state.stepNum === 1}>
+                                        <span>2</span>
+                                        <img src={require("src/assets/images/icon_connectwallet_step2_refresh.png")}
+                                             style={{width: "100%", cursor: "pointer"}}
+                                             alt=""
+                                             onClick={() => getGenerateNonce(storeData.address)}/>
+                                    </Toggle>
+                                </div>
                             </div>
+                            <span className={"step-title"}>{t(`Verify ownership`)}</span>
                         </div>
-                        <span className={"step-title"}>{t(`Verify ownership`)}</span>
-                    </div>
-                    <div className={"explain"}>{t(`Confirm you are the owner of this wallet.`)}</div>
-                </StepBox>
-                <ConnectButton className={"flex-box"} onClick={() => {
-                    connectWallet();
-                }}>
-                    <Toggle vIf={state.loading}>
-                        <Spin />
-                        <span>{t(`Send requests`)}</span>
-                    </Toggle>
-                </ConnectButton>
-            </div>
-        </ConnectWalletModalStyle>
+                        <div className={"explain"}>{t(`Confirm you are the owner of this wallet.`)}</div>
+                    </StepBox>
+                    <ConnectButton className={"flex-box"} onClick={() => {
+                        connectWallet();
+                    }}>
+                        <Toggle vIf={state.loading}>
+                            <Spin />
+                            <span>{t(`Send requests`)}</span>
+                        </Toggle>
+                    </ConnectButton>
+                </div>
+                <WalletList>
+                    <WalletBox style={{marginRight: "0.15rem"}}>
+                        <img src={require("src/assets/images/MetaMask.png")} className={"icon"} alt=""/>
+                        <span>{t(`MetaMask`)}</span>
+                    </WalletBox>
+                    <WalletBox>
+                        <img src={require("src/assets/images/Polkadot.png")} className={"icon"} alt=""/>
+                        <span>{t(`Polkadot js`)}</span>
+                    </WalletBox>
+                    <WalletBox>
+                        <img src={require("src/assets/images/clover.png")} className={"icon"} alt=""/>
+                        <span>{t(`Clover Wallet`)}</span>
+                    </WalletBox>
+                </WalletList>
+            </Toggle>
+        </Modal>
     )
 }

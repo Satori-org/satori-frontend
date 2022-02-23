@@ -1,6 +1,6 @@
 import React, {useCallback} from 'react';
 import { useTranslation } from 'react-i18next';
-import {ButtonGroup, ContractDetailStyle, FieldLabel, Title} from './styles/ContractDetail.style';
+import {ButtonGroup, ConnectModal, ContractDetailStyle, FieldLabel, Title} from './styles/ContractDetail.style';
 import {useEffectState} from "../../hooks/useEffectState";
 import Toggle from 'src/components/toggle/Toggle';
 import DepositModal from 'src/components/DepositModal/DepositModal';
@@ -9,6 +9,7 @@ import {useStore} from "react-redux";
 import {IState} from "../../store/reducer";
 import useExchangeStore from "./ExchangeProvider";
 import {formatAmount, formatAmountRise} from "../../common/utilTools";
+import ConnectWalletModal from "../../components/connectWalletModal/ConnectWalletModal";
 
 export default function ContractDetail() {
     const {t} = useTranslation();
@@ -18,6 +19,7 @@ export default function ContractDetail() {
     const state = useEffectState({
         showDeposit: false,
         showWithdraw: false,
+        showModal: false
     });
 
     const getRiseClassName = useCallback((amount: string) => {
@@ -69,6 +71,17 @@ export default function ContractDetail() {
             </Toggle>
             <Toggle vIf={state.showWithdraw}>
                 <WithdrawModal onClose={() => state.showWithdraw = false} />
+            </Toggle>
+            <Toggle vIf={!storeData.token}>
+                <ConnectModal>
+                    <p>{t(`Connect your wallet to start trading.`)}</p>
+                    <button className={"button"} onClick={() => state.showModal = true}>{t(`Connect wallet`)}</button>
+                </ConnectModal>
+            </Toggle>
+            <Toggle vIf={state.showModal}>
+                <ConnectWalletModal
+                    onClose={() => state.showModal = false}
+                    onSuccess={() => state.showModal = false}></ConnectWalletModal>
             </Toggle>
         </ContractDetailStyle>
     )

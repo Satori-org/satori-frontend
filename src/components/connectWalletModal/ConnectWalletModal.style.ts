@@ -8,7 +8,7 @@ export const ConnectWalletModalStyle = styled.div`
     height: 100vh;
     z-index: 888;
     background: rgb(13,13,13,0.7);
-    .connectWaaletContent{
+    .connectWalletContent{
         position: absolute;
         left: 50%;
         top: 50%;
@@ -88,4 +88,34 @@ export const ConnectButton = styled.button`
     font-size: 0.12rem;
     font-weight: bold;
     color: ${({theme}) => theme.colors.confirmColor};
+`;
+
+
+export const WalletList = styled.div`
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 0.16rem;
+`;
+
+export const WalletBox = styled.div`
+    display: flex;
+    align-items: center;
+    min-width: 1.14rem;
+    height: 0.4rem;
+    padding: 0.08rem;
+    border-radius: 0.08rem;
+    background: ${({theme}) => theme.colors.walletBtnBgColor};
+    color: ${({theme}) => theme.colors.walletBtnColor};
+    font-size: 0.12rem;
+    font-weight: bold;
+    margin-bottom: 0.16rem;
+    box-sizing: border-box;
+    &:last-child{
+        margin-bottom: 0;
+    }
+    .icon{
+        width: 0.24rem;
+        height: 0.24rem;
+        margin-right: 0.08rem;
+    }
 `;

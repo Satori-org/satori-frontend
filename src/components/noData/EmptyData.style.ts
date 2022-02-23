@@ -3,12 +3,12 @@ import styled from "styled-components";
 export const EmptyDataStyle = styled.div`
     text-align: center;
     .emptyIcon{
-        width: 54px;
-        height: 45px;
-        margin-bottom: 24px;
+        width: 0.44rem;
+        height: 0.36rem;
+        margin-bottom: 0.2rem;
     }
     .emptyText{
-        font-size: 20px;
+        font-size: 0.2rem;
         color: ${({theme}) => theme.colors.emptyTextColor};
     }
 `;

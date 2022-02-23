@@ -56,6 +56,8 @@ export const dark: ITheme = {
         pickerThColor: "#8D9591",
         pickerNotAllow: "#707A75",
         pickerOnSelect: "#83998D",
-        pickerRangeBgColor: "#555F59"
+        pickerRangeBgColor: "#555F59",
+        walletBtnBgColor: "#57625C",
+        walletBtnColor: "#DDDFDE",
     }
 };

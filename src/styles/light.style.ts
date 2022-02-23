@@ -56,6 +56,8 @@ export const light: ITheme = {
         pickerThColor: "#A6ACA9",
         pickerNotAllow: "#C8CAC9",
         pickerOnSelect: "#83998D",
-        pickerRangeBgColor: "#A6ACA9"
+        pickerRangeBgColor: "#A6ACA9",
+        walletBtnBgColor: "#EEEFEF",
+        walletBtnColor: "#3E403F",
     }
 };
