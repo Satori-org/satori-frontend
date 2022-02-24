@@ -1,9 +1,10 @@
 import React, {ReactNode, useEffect} from 'react';
 import {ProgressBar, WaitingModalStyle} from './WaitingModal.style';
 import {useEffectState} from "../../hooks/useEffectState";
-import {getProvider} from "../../contract/wallet";
+//import {getProvider} from "../../contract/wallet";
 import {IOpenModal} from "../openModal";
 import {useTranslation} from "react-i18next";
+import {usePluginModel} from "../../hooks/usePluginModel";
 
 export interface IWaitParams {
     title: string
@@ -12,13 +13,9 @@ export interface IWaitParams {
     callback?(result: boolean): void
 }
 
-/*interface INotification extends IWaitParams{
-    className?: string,
-    style?: CSSProperties,
-    destoryComponent():void
-}*/
 export function WaitingModal(props: IWaitParams & IOpenModal) {
     const {t} = useTranslation();
+    const {getProvider} = usePluginModel();
     const state = useEffectState({
         count: 0
     });
@@ -32,9 +29,6 @@ export function WaitingModal(props: IWaitParams & IOpenModal) {
         //const instance = new web3(chainNode);
         //instance.eth.getTransactionReceipt(currentHash).then((res) => {
         getProvider().getTransactionReceipt(props.hash).then((res) => {
-            console.log("confirmations",res.confirmations);
-            console.log(res);
-            console.log(res.status);
             state.count = res.confirmations;
             if (res && res.status && res.confirmations >= 15) {
                 props.callback && props.callback(true);

@@ -6,3 +6,5 @@ export const SET_COMPLETED_HASH = "SET_COMPLETED_HASH";
 export const SET_TOKEN = "SET_TOKEN";
 export const TOGGLE_THEME = "TOGGLE_THEME";
 export const SET_LEVERAGE = "SET_LEVERAGE";
+export const SET_NETWORK = "SET_NETWORK";
+export const SET_WALLET_INFO = "SET_WALLET_INFO";

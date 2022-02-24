@@ -1,11 +1,7 @@
 import React, {CSSProperties, useEffect} from 'react';
 import {useTranslation} from 'react-i18next';
 import {ConectWalletStyle, DropMenu, DropMenuContainer} from './ConectWallet.style';
-import {NewReadContract, NewWriteContract} from "src/contract/wallet";
-import {ethers} from "ethers";
-import {getWalletProvider} from "src/config";
-import {project} from "src/contract/config";
-import {formatAddress, getNumberByDecimal, showMessage} from "src/common/utilTools";
+import {formatAddress, showMessage} from "src/common/utilTools";
 import {useStore} from "react-redux";
 import {IState} from "src/store/reducer";
 import {useWallet} from "use-wallet";
@@ -16,7 +12,6 @@ import Toggle from '../toggle/Toggle';
 import {useEffectState} from "../../hooks/useEffectState";
 import {MsgStatus} from "../../common/enum";
 import CopyToClipboard from 'react-copy-to-clipboard';
-import {NetworkStyle} from "../network/Network.style";
 import {useThemeManager} from "../../hooks/useThemeManager";
 
 type IProp = {
@@ -36,7 +31,7 @@ export default function ConectWallet(props: IProp) {
     });
 
     useEffect(() => {
-        getBalance();
+        //getBalance();
         const namespace = PubSub.subscribe("wallet.logout", () => {
             disconnect();
         });
@@ -52,7 +47,7 @@ export default function ConectWallet(props: IProp) {
         state.showDropMenu = false;
     }
 
-    async function getBalance() {
+    /*async function getBalance() {
         const USDC = NewReadContract(project.contracts.USDC.address, project.contracts.USDC.abi)
         let balance1 = await USDC.balanceOf(project.contracts.Satori.address);
         let balance2 = await USDC.balanceOf("0xc783df8a850f42e7F7e57013759C285caa701eB6");
@@ -118,11 +113,12 @@ export default function ConectWallet(props: IProp) {
         console.log(v)
         console.log(s)
         return [r,v,s]
-    }
+    }*/
 
     async function disconnect() {
         dispatch.setWalletAddress("");
         dispatch.setToken("");
+        dispatch.setWallet(null);
         reset();
     }
 

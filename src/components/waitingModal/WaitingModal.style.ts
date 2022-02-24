@@ -10,7 +10,8 @@ export const WaitingModalStyle = styled.div`
     padding: 0.18rem;
     background: ${({theme}) => theme.colors.boxBgColor};
     color: ${({theme}) => theme.colors.baseColor};
-    border: 1px solid ${({theme}) => theme.colors.modalBorderColor};
+    box-shadow: ${({theme}) => theme.colors.boxShadow};
+    /*border: 1px solid ${({theme}) => theme.colors.modalBorderColor};*/
     box-sizing: border-box;
     border-radius: 0.08rem;
     .title{

@@ -5,6 +5,7 @@ import {ComponentType} from "react";
 import * as actions from './actionTypes';
 import {ITrans} from "../contract/types";
 import { THEME } from 'src/common/enum';
+import {IChain, IWallet} from "../contract/config";
 
 
 const mapStateToProps = (state: IState) => ({
@@ -65,6 +66,20 @@ export const mapDispatchToProps = (dispatch: Dispatch) => {
             dispatch({
                 type: actions.SET_LEVERAGE,
                 data: leverage
+            })
+        },
+        setNetwork(network: IChain) {
+            localStorage.setItem("network", JSON.stringify(network));
+            dispatch({
+                type: actions.SET_NETWORK,
+                data: network
+            })
+        },
+        setWallet(wallet_info: IWallet|null) {
+            sessionStorage.setItem("wallet_info", JSON.stringify(wallet_info));
+            dispatch({
+                type: actions.SET_WALLET_INFO,
+                data: wallet_info
             })
         }
     }

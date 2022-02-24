@@ -1,14 +1,14 @@
 {
-  "timestamp": "2022-01-14 11:18:53",
-  "node": "http://52.87.195.210:9933",
-  "browser": "https://clover-testnet.subscan.io",
-  "chainid": 1023,
-  "chainName": "Clover Testnet",
-  "chainSymbol": "BNB",
+  "timestamp": "2022-02-23 11:05:58",
+  "node": "https://rpc.shibuya.astar.network:8545",
+  "browser": "#",
+  "chainid": 81,
+  "chainName": "Astar Shibuya",
+  "chainSymbol": "SBY",
   "chainSymbolDecimals": 18,
   "contracts": {
     "USDC": {
-      "address": "0xe6147095722EC87aC39572DE24bD951C5B60f228",
+      "address": "0xE646E7736d5729EF3E3833936EdAF757C4316bf7",
       "abi": [
         {
           "inputs": [
@@ -330,7 +330,7 @@
       "decimals": 6
     },
     "Oracle": {
-      "address": "0xB759DB2f7C0ea7d17c457cEf424cDCd5e07B36F8",
+      "address": "0xC13D6E89109fa1b78634Abca29E722F60A80198E",
       "abi": [
         {
           "inputs": [
@@ -494,7 +494,7 @@
       ]
     },
     "Satori": {
-      "address": "0x3389aD75d43eCe2c347E3FAE0A0380e0AA1f830a",
+      "address": "0xF1b0ba1085F3F668Ccb9D07eF96113b0a9c3A303",
       "abi": [
         {
           "anonymous": false,
@@ -921,7 +921,7 @@
       ]
     },
     "Admin": {
-      "address": "0xd7F85fd3496e76301fc45E14Ff6A8df071B5A5c0",
+      "address": "0xB6187E814467218eea72CD80948b9A387f4E9696",
       "abi": [
         {
           "anonymous": false,
@@ -1088,7 +1088,7 @@
       ]
     },
     "Proxy": {
-      "address": "0x362a8703B419230cC8BC3EdC67321f0BDBd1abdc",
+      "address": "0xeD6292d9d3cc6D5020324eA7C2CF5423979E163e",
       "abi": [
         {
           "inputs": [

@@ -1,14 +1,14 @@
 {
-  "timestamp": "2022-01-14 11:18:53",
-  "node": "http://52.87.195.210:9933",
-  "browser": "https://clover-testnet.subscan.io",
-  "chainid": 1023,
-  "chainName": "Clover Testnet",
-  "chainSymbol": "BNB",
+  "timestamp": "2022-02-22 11:37:38",
+  "node": "https://rpc.api.moonbase.moonbeam.network",
+  "browser": "https://moonbase.moonscan.io",
+  "chainid": 1287,
+  "chainName": "Moonbase Alpha",
+  "chainSymbol": "DEV",
   "chainSymbolDecimals": 18,
   "contracts": {
     "USDC": {
-      "address": "0xe6147095722EC87aC39572DE24bD951C5B60f228",
+      "address": "0xC7636f74501342B3605513E17b16Ed184815ce15",
       "abi": [
         {
           "inputs": [
@@ -330,7 +330,7 @@
       "decimals": 6
     },
     "Oracle": {
-      "address": "0xB759DB2f7C0ea7d17c457cEf424cDCd5e07B36F8",
+      "address": "0x1901Ff91c1F688CFa83FE1ade1c8E4B52A0b506E",
       "abi": [
         {
           "inputs": [
@@ -494,7 +494,7 @@
       ]
     },
     "Satori": {
-      "address": "0x3389aD75d43eCe2c347E3FAE0A0380e0AA1f830a",
+      "address": "0x8Bd95213e683e3732659bA43ab30Bf3CA75DCFde",
       "abi": [
         {
           "anonymous": false,
@@ -921,7 +921,7 @@
       ]
     },
     "Admin": {
-      "address": "0xd7F85fd3496e76301fc45E14Ff6A8df071B5A5c0",
+      "address": "0x92eb4297786b50fbE9E6db1Fd689A74448bfbB45",
       "abi": [
         {
           "anonymous": false,
@@ -1088,7 +1088,7 @@
       ]
     },
     "Proxy": {
-      "address": "0x362a8703B419230cC8BC3EdC67321f0BDBd1abdc",
+      "address": "0xC7dCEB49965ADf1586536F48FC5E02fb91a5A28E",
       "abi": [
         {
           "inputs": [

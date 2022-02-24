@@ -6,7 +6,7 @@ import Form from "../form/Form";
 import {withdraw} from "src/ajax/contract/contract";
 import {useEffectState} from "src/hooks/useEffectState";
 import {NUMBER_REG} from "src/common/regExp";
-import {checkHashStatus, NewWriteContract, signMsg, unpackEIP712} from 'src/contract/wallet';
+import {checkHashStatus, unpackEIP712} from 'src/contract/wallet';
 import {project} from "src/contract/config";
 import {
     awaitWrap,
@@ -30,6 +30,7 @@ import {USDT_decimal} from "../../config";
 import InputNumber from "../inputNumber/InputNumber";
 import openModal from "../openModal";
 import {IWaitParams, WaitingModal} from "../waitingModal/WaitingModal";
+import {usePluginModel} from "../../hooks/usePluginModel";
 
 type IProps = {
     onClose(): void
@@ -40,6 +41,7 @@ export default function WithdrawModal(props: IProps) {
     const storeData = store.getState();
     const [reducerState] = useExchangeStore();
     const { theme } = useTheme();
+    const { signMsg, NewWriteContract } = usePluginModel();
     const state = useEffectState({
         amount: "",
         loading: false

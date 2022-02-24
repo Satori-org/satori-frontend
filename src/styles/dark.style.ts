@@ -8,6 +8,7 @@ export const dark: ITheme = {
         linkActiveBgColor: "#181E1B",
         headerButtonColor: "#A6ACA9",
         boxBgColor: "#181E1B",
+        boxShadow: "0 0.16rem 0.64rem #101613",
         baseColor: "#fff",
         backgroundColor: "#101613",
         labelColor: "#707A75",
@@ -59,5 +60,6 @@ export const dark: ITheme = {
         pickerRangeBgColor: "#555F59",
         walletBtnBgColor: "#57625C",
         walletBtnColor: "#DDDFDE",
+        networkBgColor: "#4D5651"
     }
 };

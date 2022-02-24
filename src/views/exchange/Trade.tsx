@@ -31,6 +31,7 @@ import {NUMBER_REG} from "../../common/regExp";
 import {Toast} from "../../components/toast/Toast";
 import {mapExchangeDispatch} from "./exchangeReducer";
 import {USDT_decimal_show} from "../../config";
+import {usePluginModel} from "../../hooks/usePluginModel";
 
 type IProps = {
     longPrice: string
@@ -45,7 +46,7 @@ export default function Trade(props: IProps) {
     const childRef = useRef<{ validate(): boolean }>();
     const $form = useRef<HTMLFormElement>();
     const {theme} = useTheme();
-
+    const {signMsg} = usePluginModel();
     const placeholderText = "0.0000";
     const state = useEffectState({
         orderType: ORDER_TYPE.limit,   //false：Limit，true：Market
@@ -433,8 +434,9 @@ export default function Trade(props: IProps) {
                             {
                                 orderDirections.map((item, index) => {
                                     return <button className={`button font12 
-                                ${item.isLong ? '' : 'sell'} 
-                                ${state.isLong === item.isLong ? 'active' : ''}`}
+                                                   ${item.isLong ? '' : 'sell'} 
+                                                   ${state.isLong === item.isLong ? 'active' : ''}`}
+                                                   key={index}
                                                    onClick={() => state.isLong = item.isLong}>{item.text}</button>
                                 })
                             }

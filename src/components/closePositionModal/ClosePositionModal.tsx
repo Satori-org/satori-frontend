@@ -10,7 +10,7 @@ import Percent from "../percent/Percent";
 import Decimal from "decimal.js";
 import {addOrder, IPositionList} from "src/ajax/contract/contract";
 import {awaitWrap, fixedNumber, fixedNumberStr, isNumber, showMessage} from "src/common/utilTools";
-import {signExpire, signMsg} from "src/contract/wallet";
+import {signExpire} from "src/contract/wallet";
 import ModalFooter from "../modal/ModalFooter";
 import {ORDER_TYPE} from "src/common/enum";
 import Tab from "../tab/Tab";
@@ -18,6 +18,7 @@ import Toggle from "../toggle/Toggle";
 import InputNumber from "../inputNumber/InputNumber";
 import {USDT_decimal_show} from "../../config";
 import useTheme from "../../hooks/useTheme";
+import {usePluginModel} from "../../hooks/usePluginModel";
 
 interface IProps {
     data: IPositionList
@@ -28,9 +29,9 @@ export function ClosePositionModal(props: IProps) {
     const {t} = useTranslation();
     const store = useStore<IState>();
     const storeData = store.getState();
-    const [ reducerState, dispath ] = useExchangeStore();
+    const [ reducerState ] = useExchangeStore();
     const {theme} = useTheme();
-
+    const {signMsg} = usePluginModel();
     const placeholderText = "0.0000";
     const state = useEffectState({
         price: "",

@@ -94,7 +94,7 @@ export const ConnectButton = styled.button`
 export const WalletList = styled.div`
     display: flex;
     flex-wrap: wrap;
-    margin-top: 0.16rem;
+    margin-top: calc(0.16rem - 1px);
 `;
 
 export const WalletBox = styled.div`
@@ -110,6 +110,10 @@ export const WalletBox = styled.div`
     font-weight: bold;
     margin-bottom: 0.16rem;
     box-sizing: border-box;
+    cursor:pointer;
+    &:nth-child(odd){
+        margin-right: 0.15rem;
+    }
     &:last-child{
         margin-bottom: 0;
     }

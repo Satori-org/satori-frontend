@@ -10,19 +10,19 @@ import {
     WalletBox,
     WalletList
 } from './ConnectWalletModal.style';
-import {getWalletProvider} from "../../config";
 import {useWallet} from "use-wallet";
 import {useStore} from "react-redux";
 import {IState} from "../../store/reducer";
 import {mapDispatchToProps} from "../../store/connect";
 import {generateNonce, getUserToken} from "../../ajax/auth/auth";
-import {signString} from "../../contract/wallet";
 import {useEffectState} from "../../hooks/useEffectState";
 import Toggle from "../toggle/Toggle";
 import Spin from "../Spin/Spin";
-import {awaitWrap} from "../../common/utilTools";
+import {awaitWrap, showMessage} from "../../common/utilTools";
 import useTheme from "../../hooks/useTheme";
 import Modal from '../modal/Modal';
+import {usePluginModel} from "../../hooks/usePluginModel";
+import {IWallet} from "../../contract/config";
 
 type IProps = {
     onClose(): void
@@ -38,6 +38,7 @@ export default function ConnectWalletModal(props: IProps) {
     const step2Ref = useRef<HTMLDivElement | null>(null);
     const [processStyle, setProcessStyle] = useState<CSSProperties>({});
     const { theme } = useTheme();
+    const { signString, Provider } = usePluginModel();
     const state = useEffectState({
         stepNum: 1,
         loading: false,
@@ -66,7 +67,8 @@ export default function ConnectWalletModal(props: IProps) {
     }
 
     async function connectWallet() {
-        const accounts = await getWalletProvider().request({ method: 'eth_requestAccounts' });
+        console.log(Provider)
+        const accounts = await Provider.request({ method: 'eth_requestAccounts' });
         console.log('accounts:', accounts);
         dispatch.setWalletAddress(accounts[0]);
         /*let web3js = new Web3(getWalletProvider());//web3js is the web3 example you need
@@ -140,9 +142,18 @@ export default function ConnectWalletModal(props: IProps) {
         state.loading = false;
     }
 
+    function onSelect(wallet_info: IWallet) {
+        // @ts-ignore
+        if (!window[wallet_info.plugin]) {
+            showMessage(t(`No Plugin was found`));
+            return;
+        }
+        dispatch.setWallet(wallet_info)
+    }
+
     return (
         <Modal title={t(`Connect Wallet`)} handleClick={props.onClose}>
-            <Toggle vIf={!!state.chain}>
+            <Toggle vIf={!!storeData.wallet_info}>
                 <div>
                     <Subtitle>{t(`You will receive two signature requests.Signing is free and will not send a transaction.`)}</Subtitle>
                     <StepBox className={`${state.stepNum === 1 ?'active':''}`}>
@@ -187,7 +198,15 @@ export default function ConnectWalletModal(props: IProps) {
                     </ConnectButton>
                 </div>
                 <WalletList>
-                    <WalletBox style={{marginRight: "0.15rem"}}>
+                    {
+                        storeData.network.wallet.map((item, index) => {
+                            return <WalletBox key={item.name} onClick={() => onSelect(item)}>
+                                <img src={item.icon} className={"icon"} alt=""/>
+                                <span>{item.name}</span>
+                            </WalletBox>
+                        })
+                    }
+                    {/*<WalletBox style={{marginRight: "0.15rem"}}>
                         <img src={require("src/assets/images/MetaMask.png")} className={"icon"} alt=""/>
                         <span>{t(`MetaMask`)}</span>
                     </WalletBox>
@@ -198,7 +217,7 @@ export default function ConnectWalletModal(props: IProps) {
                     <WalletBox>
                         <img src={require("src/assets/images/clover.png")} className={"icon"} alt=""/>
                         <span>{t(`Clover Wallet`)}</span>
-                    </WalletBox>
+                    </WalletBox>*/}
                 </WalletList>
             </Toggle>
         </Modal>

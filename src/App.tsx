@@ -28,30 +28,39 @@ class App extends React.Component<IProps, any>{
     }
 
     componentDidMount(): void {
-        plusReady(() => {
+        /*plusReady(() => {
             this.addEventListener();
-        });
+        });*/
         this.checkLoginStatus();
     }
 
     componentDidUpdate(prevProps: Readonly<IProps>, prevState: Readonly<any>, snapshot?: any): void {
+        if (prevProps.redux.wallet_info?.plugin && prevProps.redux.wallet_info?.plugin !== this.props.redux.wallet_info?.plugin) {
+            // @ts-ignore
+            this.removeListener(window[prevProps.redux.wallet_info?.plugin]);
+        }
+        if (this.props.redux.wallet_info?.plugin && prevProps.redux.wallet_info?.plugin !== this.props.redux.wallet_info?.plugin) {
+            this.addEventListener();
+        }
         /*if (!prevProps.redux.address && this.props.redux.address) {
             this.checkLoginStatus();
         }*/
     }
 
     addEventListener() {
-        let ethersProvider = new ethers.providers.Web3Provider(getWalletProvider());
+        // @ts-ignore
+        let provider = window[this.props.redux.wallet_info?.plugin];
+        let ethersProvider = new ethers.providers.Web3Provider(provider);
         ethersProvider.getNetwork().then((res:any) => {
             this.checkNetwork(res.chainId);
         });
-        getWalletProvider().on('chainChanged',  (accounts:any) => {
+        provider.on('chainChanged',  (accounts:any) => {
             console.log(accounts);
             console.log(parseInt(accounts, 16));
             let chainID = parseInt(accounts, 16);
             this.checkNetwork(chainID);
         });
-        getWalletProvider().on('accountsChanged',  (accounts:string[]) => {
+        provider.on('accountsChanged',  (accounts:string[]) => {
             if (accounts && accounts[0]) {
                 const address = accounts[0];
                 this.logout();
@@ -63,9 +72,15 @@ class App extends React.Component<IProps, any>{
         });
     }
 
+    removeListener(provider: any) {
+        if (provider) {
+            provider.removeAllListeners();
+        }
+    }
+
     checkNetwork(ID:number) {
-        if (ID !== chainID) {
-            showMessage(this.props.t(`请连接正确的网络`));
+        if (ID !== this.props.redux.network.project.chainid) {
+            showMessage(this.props.t(`Please connect to the correct network`));
         }
     }
 
@@ -80,10 +95,11 @@ class App extends React.Component<IProps, any>{
         if (!address) {
             return ;
         }
-
+        // @ts-ignore
+        const provider = window[this.props.redux.wallet_info?.plugin];
         const [nonceInfo, error] = await awaitWrap(generateNonce(address));
         if (nonceInfo) {
-            const [signData, error2] = await awaitWrap(signString(nonceInfo.data.nonce, address));
+            const [signData, error2] = await awaitWrap(signString(nonceInfo.data.nonce, address, provider));
             if (signData) {
                 this.login(address, signData.signatrue);
             }

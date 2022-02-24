@@ -15,7 +15,7 @@ import {
     showError,
     showMessage
 } from "src/common/utilTools";
-import {approve, checkHashStatus, extendTran, getInput, needApprove, NewWriteContract} from "src/contract/wallet";
+import {extendTran, getInput} from "src/contract/wallet";
 import {mapDispatchToProps} from "src/store/connect";
 import {NUMBER_REG} from "src/common/regExp";
 import {IWaitParams, WaitingModal} from "../waitingModal/WaitingModal";
@@ -28,6 +28,7 @@ import {RELOAD_ACCOUNT_INFO} from "../../common/PubSubEvents";
 import {USDT_decimal} from "../../config";
 import InputNumber from "../inputNumber/InputNumber";
 import openModal from "../openModal";
+import {usePluginModel} from "../../hooks/usePluginModel";
 
 type IProps = {
     onClose(): void
@@ -39,6 +40,7 @@ export default function DepositModal(props: IProps) {
     const dispatch = mapDispatchToProps(store.dispatch);
     const [reducerState] = useExchangeStore();
     const { theme } = useTheme();
+    const { needApprove, approve, checkHashStatus, NewWriteContract } = usePluginModel();
     const state = useEffectState({
         approveStatus: false,
         loading: false,
@@ -161,7 +163,7 @@ export default function DepositModal(props: IProps) {
                            <RightBtn onClick={() => state.amount = String(fixedNumber(walletBalance, USDT_decimal))}>{t(`MAX`)}</RightBtn>
                        </div>
                        }
-                       inputStyle={{width: "110px"}}
+                       inputStyle={{flex: 1}}
                        placeholder={"0.000000"}
                        hideTips={true}
                        regex={[{regStr: NUMBER_REG, tips: ""}]}

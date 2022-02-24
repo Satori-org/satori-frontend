@@ -10,6 +10,7 @@ export type IColors = {
     linkActiveBgColor: string
     headerButtonColor: string
     boxBgColor: string
+    boxShadow: string
     baseColor: string
     backgroundColor: string
     labelColor: string
@@ -61,6 +62,7 @@ export type IColors = {
     pickerRangeBgColor: string,
     walletBtnBgColor: string,
     walletBtnColor: string,
+    networkBgColor: string
 }
 export type ITheme = {
     colors: IColors

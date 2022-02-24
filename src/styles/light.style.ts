@@ -8,6 +8,7 @@ export const light: ITheme = {
         linkActiveBgColor: "#DFE1E0",
         headerButtonColor: "#57625C",
         boxBgColor: "#FFFFFF",
+        boxShadow: "0 0.24rem 0.72rem rgba(16, 22, 19, 0.12)",
         baseColor: "#000",
         backgroundColor: "#F7F7F7",
         labelColor: "#617168",
@@ -59,5 +60,6 @@ export const light: ITheme = {
         pickerRangeBgColor: "#A6ACA9",
         walletBtnBgColor: "#EEEFEF",
         walletBtnColor: "#3E403F",
+        networkBgColor: "#EEEFEF"
     }
 };

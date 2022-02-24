@@ -13,17 +13,40 @@ export const MaxApproveBalance = "100000000000000000000000000";
 export const minAllowance = "10000000000000000000000000";
 export const zeroAddress = "0x0000000000000000000000000000000000000000";
 
-
-const wallets = {
-    metamask: {name: "Metamask", icon: ""},
-    clover: {name: "Clover Wallet", icon: ""},
-    polkadot: {name: "Polkadot{.js}", icon: ""},
+export const WALLETS = {
+    metamask: {name: "Metamask", icon: require("src/assets/images/MetaMask.png"), plugin: "ethereum"},
+    clover: {name: "Clover Wallet", icon: require("src/assets/images/clover.png"), plugin: "clover"},
+    polkadot: {name: "Polkadot{.js}", icon: require("src/assets/images/Polkadot.png"), plugin: "polkadot"},
 };
-
-export const chains = {
-    Clover: {name: "Clover", icon: "", wallet: [wallets.metamask, wallets.clover], project: project_Clover},
-    Moonbeam: {name: "Moonbeam", icon: "", wallet: [wallets.metamask, wallets.clover], project: project_Moonbeam},
-    Astar: {name: "Astar", icon: "", wallet: [wallets.metamask], project: project_Astar},
+export type IWallet = typeof WALLETS.metamask;
+/*export type IChain = {
+    name: string,
+    icon: string,
+    wallet: IWallet[],
+    project: any
+}*/
+/*type key = "Clover" | "Moonbeam" | "Astar";*/
+export const CHAINS = {
+    Clover: {
+        name: "Clover",
+        icon: require("src/assets/images/clover.png"),
+        wallet: [WALLETS.metamask, WALLETS.clover],
+        project: project_Clover
+    },
+    Moonbeam: {
+        name: "Moonbeam",
+        icon: require("src/assets/images/Moonbeam.png"),
+        wallet: [WALLETS.metamask, WALLETS.clover],
+        project: project_Moonbeam
+    },
+    Astar: {
+        name: "Astar",
+        icon: require("src/assets/images/Astar.png"),
+        wallet: [WALLETS.metamask, WALLETS.clover],
+        project: project_Astar
+    },
     // Parallel: {name: "Parallel", icon: "", wallet: [wallets.polkadot]},
     // Acala: {name: "Acala", icon: "", wallet: [wallets.metamask, wallets.clover]},
 };
+
+export type IChain = typeof CHAINS.Clover;
