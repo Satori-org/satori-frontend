@@ -26,3 +26,11 @@ export interface IAccountAsset {
 export function useAccountAsset() {
     return useFetchPost<IAccountAsset>("/contract-provider/contract-account/accounts")
 }
+
+export type IAccountLever = {
+    lever: number,
+    positionType: number
+}
+export function useAccountLever(params: any, require: any[] = []) {
+    return useFetchGet<IAccountLever>("/contract-provider/contract/getUserLever", params, require)
+}

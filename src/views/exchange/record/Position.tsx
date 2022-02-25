@@ -10,7 +10,7 @@ import Pagination from "src/components/pagination/Pagination";
 import {addOrder, getPositionList, IPair, IPositionList, IQuotation} from "src/ajax/contract/contract";
 import useExchangeStore from "../ExchangeProvider";
 import {awaitWrap, fixedNumber, showMessage} from "src/common/utilTools";
-import {signExpire, signMsg} from "src/contract/wallet";
+import {signExpire} from "src/contract/wallet";
 import {Toast} from "src/components/toast/Toast";
 import {NUMBER_REG} from "src/common/regExp";
 import Decimal from "decimal.js";
@@ -27,6 +27,8 @@ import {useUpdateEffect} from "ahooks";
 import NotConnect from "../../../components/NotConnect/NotConnect";
 import EmptyData from "../../../components/noData/EmptyData";
 import {useThemeManager} from "../../../hooks/useThemeManager";
+import {usePluginModel} from "../../../hooks/usePluginModel";
+import PlanOrderModal from "../../../components/planOrderModal/PlanOrderModal";
 
 type IRow = {
     item: IPositionList
@@ -38,12 +40,14 @@ function Row(props: IRow) {
     const store = useStore<IState>();
     const storeData = store.getState();
     const [reducerState] = useExchangeStore();
+    const { signMsg } = usePluginModel();
     const state = useEffectState({
         showpercent: false,
         percent: "100%",
         showMarin: false,
         showCloseModal: false,
-        loading: false
+        loading: false,
+        showPlanOrderModal: false
     });
 
     const rowPair = useMemo(() => {
@@ -109,42 +113,8 @@ function Row(props: IRow) {
     }, [props.item.quantity, state.percent]);
 
     async function closeOrder() {
-
         state.showCloseModal = true;
         return ;
-
-        if (!quantity) {
-            showMessage(t(`Please enter the number of closed positions`));
-            return ;
-        }
-        state.loading = true;
-        const isClose = true;
-        const [signData, error] = await awaitWrap(signMsg({
-            "quantity": quantity,
-            "address": storeData.address,
-            "expireTime": signExpire(),
-            "contractPairId": props.item.contractPairId,
-            "isClose": isClose,
-            "amount": "100"
-        }, storeData.address)) ;
-        if (!error) {
-            const [res, error2] = await awaitWrap(addOrder({
-                contractPairId: props.item.contractPairId,
-                contractPositionId: props.item.id,
-                isClose: isClose,
-                isLong: props.item.isLong,
-                isMarket: true,
-                quantity: Number(quantity),
-                signHash: signData.signatrue,
-                originMsg: signData.origin,
-                lever: 10,
-                amount: "100"
-            }));
-            if (!error2) {
-                props.reload();
-            }
-        }
-        state.loading = false;
     }
 
     return <>
@@ -172,7 +142,17 @@ function Row(props: IRow) {
                 </div>
             </td>*/}
             <td className={`${pnl.className} right`}>{pnl.profit}({pnl.percent})</td>
-            {/*<td className={"long"}>{props.item.amount}</td>*/}
+            <td className={`right`}>
+                <div className={"flex-row"} style={{justifyContent: "flex-end"}}>
+                    <span>65,524</span>
+                    <span>/</span>
+                    <span>65,500</span>
+                    <img src={props.isDark?require("src/assets/images/dark/edit.png"):require("src/assets/images/light/edit.png")}
+                         style={{width: "0.12rem", height: "0.12rem", cursor: "pointer"}} alt=""
+                         onClick={() => state.showPlanOrderModal = true} />
+                </div>
+            </td>
+            <td className={"right"}>-</td>
             <td className={"right"}>
                 <div className={"flex-row"} style={{position: "relative", justifyContent: "flex-end"}}>
                     <CloseBtn onClick={closeOrder}>{t(`Close`)}</CloseBtn>
@@ -222,6 +202,19 @@ function Row(props: IRow) {
                         state.showCloseModal = false;
                         props.reload();
                     }}></ClosePositionModal>, document.getElementById("root")!)
+                : null
+        }
+        {
+            state.showPlanOrderModal
+                ? ReactDOM.createPortal(<PlanOrderModal
+                    data={props.item}
+                    onClose={() => {
+                        state.showPlanOrderModal = false
+                    }}
+                    onConfirm={() => {
+                        state.showPlanOrderModal = false;
+                        console.log("onConfirm planOrder")
+                    }}></PlanOrderModal>, document.getElementById("root")!)
                 : null
         }
     </>
@@ -280,6 +273,8 @@ export default function Position(props: IProps) {
                             <th className={"right"}>{t(`MARGIN`)}</th>
                             <th className={"right"}>{t(`FUNDING COSTS`)}</th>
                             <th className={"right"}>{t(`UNREALIZED PNL(ROE%)`)}</th>
+                            <th className={"right"}>{t(`TP/SL`)}</th>
+                            <th className={"right"}>{t(`ADL RANKING`)}</th>
                             <th className={"right"} style={{width: "1rem"}}></th>
                         </tr>
                         </thead>

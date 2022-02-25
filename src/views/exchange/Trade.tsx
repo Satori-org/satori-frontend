@@ -4,19 +4,17 @@ import Tab from 'src/components/tab/Tab';
 import {Direction, FeeBox, InputLabel, Lever, LeverageBtn, Submit, TradeStyle} from './styles/Trade.style';
 import {useEffectState} from "src/hooks/useEffectState";
 import Form from "src/components/form/Form";
-import Input from "src/components/form/Input";
 import useExchangeStore from "./ExchangeProvider";
 import {addOrder, IAccount} from "src/ajax/contract/contract";
 import {ORDER_DIRECTION, ORDER_TYPE} from "src/common/enum";
-import {signExpire, signMsg} from "src/contract/wallet";
+import {signExpire} from "src/contract/wallet";
 import {useStore} from "react-redux";
 import {IState} from "src/store/reducer";
 import Decimal from "decimal.js";
 import {
     awaitWrap,
     fixedNumber,
-    fixedNumberStr, formatAmount,
-    isInputNumber,
+    fixedNumberStr,
     isIntNumber,
     isNumber,
     showMessage
@@ -26,12 +24,12 @@ import {RELOAD_RECORD, USER_SELECT_PRICE} from "src/common/PubSubEvents";
 import useTheme from "src/hooks/useTheme";
 import Toggle from "src/components/toggle/Toggle";
 import InputNumber from "src/components/inputNumber/InputNumber";
-import Divider from "../../components/divider/Divider";
-import {NUMBER_REG} from "../../common/regExp";
-import {Toast} from "../../components/toast/Toast";
+import Divider from "src/components/divider/Divider";
 import {mapExchangeDispatch} from "./exchangeReducer";
-import {USDT_decimal_show} from "../../config";
-import {usePluginModel} from "../../hooks/usePluginModel";
+import {USDT_decimal_show} from "src/config";
+import {usePluginModel} from "src/hooks/usePluginModel";
+import {fetchPost, useFetchGet, useFetchPost} from "../../ajax";
+import { useAccountLever } from 'src/ajax/user/user.type';
 
 type IProps = {
     longPrice: string
@@ -63,14 +61,11 @@ export default function Trade(props: IProps) {
         loading: false,
         accountInfo: {} as IAccount,
         percent: 0,
+        lever: "",
         levers: [5, 10 ,20],
         showTogglePair: false
     });
     const symbolDecimal = reducerState.currentPair.settleCoin && reducerState.currentPair.settleCoin.settleDecimal || 4;
-    const settleDecimal = useMemo(() => {
-        //return reducerState.currentPairDecimal;
-        return 3;
-    }, [reducerState.currentPairDecimal]);
     /* Currently selected trading pairs */
     //const pairInfo = useCurrentPairInfo();, textAlign: "right
     /*Get contract account information*/
@@ -112,6 +107,14 @@ export default function Trade(props: IProps) {
             showMessage(t(`Exceeds leverage maximum：`) + reducerState.currentPair.maxLever);
         }
     }, [t, reducerState.leverage, reducerState.currentPair]);*/
+
+    const { data: leverData, reload: reloadLever } = useAccountLever({contractPairId: reducerState.currentPair.id}, [reducerState.currentPair.id, storeData.token]);
+
+    useEffect(() => {
+        if (leverData.lever) {
+            state.lever = String(leverData.lever);
+        }
+    }, [leverData.lever]);
 
     const amount = useMemo(() => {
         if (!state.quantity || !state.price || !isNumber(state.quantity)) {
@@ -300,28 +303,20 @@ export default function Trade(props: IProps) {
         let quantity = Decimal.mul(reducerState.accountInfo.availableAmount, reducerState.leverage).mul(percent).div(R).toFixed(symbolDecimal);
         state.quantity = Number(quantity).toString();*/
     }
-    /* Calculate the value of the slider */
-    function calcSliderValue() {
-        if (!state.price || !storeData.token || reducerState.accountInfo.availableAmount === "0" || !state.quantity) {
-            state.sliderValue = 0;
-            return;
-        }
-        if (!isNumber(state.quantity)) {
-            return;
-        }
-        let totalAmount = Decimal.mul(state.quantity, state.price).div(reducerState.leverage).toFixed();
-        let val = Decimal.div(totalAmount, reducerState.accountInfo.availableAmount).mul(100).toFixed();
 
-        state.sliderValue = Number(val);
-    }
-
-    /*async function getPairBalance(pairId: number) {
-        const data = await getAccountDetail(pairId);
-        data.availableAmount = Number(data.availableAmount)
-    }*/
-    /*Percentage of slider display*/
-    function tipFormatter (value=0) {
-        return (<span>{value}%</span>)
+    async function setLever(lever: number) {
+        if (!lever || lever === leverData.lever) {
+            return ;
+        }
+        const [res, error] = await awaitWrap(fetchPost("/contract-provider/contract/setUserLever", {
+            "contractPairId": reducerState.currentPair.id,
+            "lever": lever
+        }));
+        if (error) {
+            console.error(error);
+        } else {
+            reloadLever();
+        }
     }
 
     async function submit() {
@@ -377,7 +372,7 @@ export default function Trade(props: IProps) {
                 quantity: Number(state.quantity),
                 signHash: signData.signatrue,
                 originMsg: signData.origin,
-                lever: Number(reducerState.leverage),
+                lever: Number(state.lever),
                 amount: total
             };
             if (isLimit) {
@@ -520,29 +515,34 @@ export default function Trade(props: IProps) {
                         <div style={{position: "relative"}} className={"flex-row"}>
                             <Lever className={"flex-sb"}>
                                 <div className={"flex-row"}>
-                                    <Toggle vIf={!!reducerState.leverage}>
-                                        <span>{reducerState.leverage}x</span>
+                                    <Toggle vIf={!!state.lever}>
+                                        <span>{state.lever}x</span>
                                     </Toggle>
-                                    <input type="text" className={"leverText"} value={reducerState.leverage} onChange={(event) => {
-                                        let value = event.target.value;
-                                        if ((value === "" || isIntNumber(value))) {
-                                            let number_val = Number(value);
-                                            if(value && number_val < reducerState.currentPair.minLever) {
-                                                showMessage(t(`Below leverage min：`) + reducerState.currentPair.minLever);
-                                            } else if(number_val > reducerState.currentPair.maxLever){
-                                                showMessage(t(`Exceeds leverage maximum：`) + reducerState.currentPair.maxLever);
-                                            } else {
-                                                //reducerState.leverage = value;
-                                                mapDispatch.setLeverage(value);
-                                            }
-                                        }
-                                    }} />
+                                    <input type="text" className={"leverText"}
+                                           value={state.lever}
+                                           onBlur={() => setLever(Number(state.lever))}
+                                           onChange={(event) => {
+                                                let value = event.target.value;
+                                                if ((value === "" || isIntNumber(value))) {
+                                                    let number_val = Number(value);
+                                                    if(value && number_val < reducerState.currentPair.minLever) {
+                                                        showMessage(t(`Below leverage min：`) + reducerState.currentPair.minLever);
+                                                    } else if(number_val > reducerState.currentPair.maxLever){
+                                                        showMessage(t(`Exceeds leverage maximum：`) + reducerState.currentPair.maxLever);
+                                                    } else {
+                                                        //reducerState.leverage = value;
+                                                       // mapDispatch.setLeverage(value);
+                                                        state.lever = value;
+                                                    }
+                                                }
+                                            }}/>
                                 </div>
                                 <div>
                                     {
                                         state.levers.map((item, index) => {
-                                            return <LeverageBtn className={`${Number(reducerState.leverage) === item ? 'active' : ''}`} key={index}
-                                                                onClick={() => mapDispatch.setLeverage(String(item))}>{item}x</LeverageBtn>
+                                            return <LeverageBtn className={`${Number(state.lever) === item ? 'active' : ''}`}
+                                                                key={index}
+                                                                onClick={() => setLever(item)}>{item}x</LeverageBtn>
                                         })
                                     }
                                 </div>
@@ -607,16 +607,16 @@ export default function Trade(props: IProps) {
                         <Toggle vIf={state.orderType === ORDER_TYPE.market}>
                             <FeeBox>
                                 <div className={"label"}>{t(`Expected Price`)}</div>
-                                <div>{fixedNumberStr(ExpectedPrice, settleDecimal) || "--"} USDT</div>
+                                <div>{fixedNumberStr(ExpectedPrice, USDT_decimal_show) || "--"} USDT</div>
                             </FeeBox>
                         </Toggle>
                         <FeeBox>
                             <div className={"label"}>{t(`Fee`)}</div>
-                            <div>{fixedNumberStr(orderFee, settleDecimal) || "--"} USDT</div>
+                            <div>{fixedNumberStr(orderFee, USDT_decimal_show) || "--"} USDT</div>
                         </FeeBox>
                         <FeeBox>
                             <div className={"label"}>{t(`Total`)}</div>
-                            <div>{fixedNumberStr(Decimal.add(orderFee || 0, orderTotalAmount || 0).toFixed(), settleDecimal) || "--"} USDT</div>
+                            <div>{fixedNumberStr(Decimal.add(orderFee || 0, orderTotalAmount || 0).toFixed(), USDT_decimal_show) || "--"} USDT</div>
                         </FeeBox>
                         <Submit className={`font12 borderRadius ${state.isLong ? '' : 'sell'}`}
                                 disabled={disabledAddOrder}

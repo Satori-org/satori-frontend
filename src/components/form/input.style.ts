@@ -17,6 +17,8 @@ export const InputBox = styled.div`
         display: inline-block;
         color: ${({theme}) => theme.colors.labelColor};
         text-align: left;
+        white-space: nowrap;
+        margin-right: 0.04rem;
     }
     .input{
         width: 100%;

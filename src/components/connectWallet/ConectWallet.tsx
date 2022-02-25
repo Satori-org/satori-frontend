@@ -13,6 +13,7 @@ import {useEffectState} from "../../hooks/useEffectState";
 import {MsgStatus} from "../../common/enum";
 import CopyToClipboard from 'react-copy-to-clipboard';
 import {useThemeManager} from "../../hooks/useThemeManager";
+import EmailModal from "../emailModal/EmailModal";
 
 type IProp = {
     style?: CSSProperties
@@ -27,7 +28,8 @@ export default function ConectWallet(props: IProp) {
     const { isDark } = useThemeManager();
     const state = useEffectState({
         showModal: false,
-        showDropMenu: false
+        showDropMenu: false,
+        showEmailModal: false
     });
 
     useEffect(() => {
@@ -171,6 +173,7 @@ export default function ConectWallet(props: IProp) {
                                     state.showDropMenu = false;
                                 }}
                             >{t(`Disconnect`)}</li>
+                            <li className="flex-box menuItem" onClick={() => state.showEmailModal = true}>{t(`Connect with Email`)}</li>
                         </DropMenu>
                     </DropMenuContainer>
                 </Toggle>
@@ -179,6 +182,9 @@ export default function ConectWallet(props: IProp) {
                 <ConnectWalletModal
                     onClose={() => state.showModal = false}
                     onSuccess={() => state.showModal = false}></ConnectWalletModal>
+            </Toggle>
+            <Toggle vIf={state.showEmailModal}>
+                <EmailModal onClose={() => state.showEmailModal = false} />
             </Toggle>
         </div>
 
