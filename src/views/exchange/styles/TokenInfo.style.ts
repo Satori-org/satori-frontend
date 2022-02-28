@@ -39,7 +39,7 @@ export const TokenData = styled.div`
         }
     }
     .dataGroup{
-        min-width: 1rem;
+        min-width: 1.05rem;
         display: flex;
         flex-direction: column;
         align-items: flex-start;

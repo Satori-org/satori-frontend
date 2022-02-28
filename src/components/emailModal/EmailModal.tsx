@@ -21,8 +21,8 @@ export default function EmailModal(props: IProps) {
     return (
         <Modal title={t(`Connect with Email`)}>
             <p style={{margin: "0.24rem 0 0.08rem"}}>{t(`Email address:`)}</p>
-            <Input label={t(`Email`)} style={{marginBottom: "0.16rem"}} />
-            <Input label={t(`Verification Code`)} right={<RightBtn>{t(`Receive`)}</RightBtn>} />
+            <Input placeholder={t(`Email`)} style={{marginBottom: "0.16rem"}} />
+            <Input placeholder={t(`Verification Code`)} right={<RightBtn>{t(`Receive`)}</RightBtn>} />
             <Submit>{t(`Confirm`)}</Submit>
         </Modal>
     )

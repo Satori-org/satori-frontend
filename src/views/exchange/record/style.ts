@@ -34,3 +34,13 @@ export const RecordListStyle = styled.div`
     position: relative;
     min-height: 1.8rem;
 `;
+
+export const PointerItem = styled.div`
+    display: inline-block;
+    width: 0.08rem;
+    height: 0.08rem;
+    border-radius: 50%;
+    background: #242A27;
+    margin-left: 0.02rem;
+    cursor:pointer;
+`;

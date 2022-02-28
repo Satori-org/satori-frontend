@@ -9,7 +9,7 @@ import ReactDOM from 'react-dom';
 import Pagination from "src/components/pagination/Pagination";
 import {addOrder, getPositionList, IPair, IPositionList, IQuotation} from "src/ajax/contract/contract";
 import useExchangeStore from "../ExchangeProvider";
-import {awaitWrap, fixedNumber, showMessage} from "src/common/utilTools";
+import {awaitWrap, fixedNumber, fixedNumberStr, showMessage} from "src/common/utilTools";
 import {signExpire} from "src/contract/wallet";
 import {Toast} from "src/components/toast/Toast";
 import {NUMBER_REG} from "src/common/regExp";
@@ -17,7 +17,7 @@ import Decimal from "decimal.js";
 import {useStore} from "react-redux";
 import {IState} from "src/store/reducer";
 import Loading from "src/components/loadStatus/Loading";
-import {CloseBtn, RecordListStyle, RowStyle} from "./style";
+import {CloseBtn, PointerItem, RecordListStyle, RowStyle} from "./style";
 import {useFetchPostPage} from "src/ajax";
 import {usePubSubEvents} from "src/hooks/usePubSubEvents";
 import {RELOAD_RECORD} from "src/common/PubSubEvents";
@@ -29,6 +29,7 @@ import EmptyData from "../../../components/noData/EmptyData";
 import {useThemeManager} from "../../../hooks/useThemeManager";
 import {usePluginModel} from "../../../hooks/usePluginModel";
 import PlanOrderModal from "../../../components/planOrderModal/PlanOrderModal";
+import {USDT_decimal_show} from "../../../config";
 
 type IRow = {
     item: IPositionList
@@ -121,13 +122,13 @@ function Row(props: IRow) {
         <RowStyle>
             <td>{props.item.symbol} </td>
             <td className={`${props.item.isLong ? 'long' : 'short'}`}>{getOrderType(props.item.isLong, t)}</td>
-            <td>{props.item.lever}x</td>
-            <td className={"right"}>{props.item.quantity} {props.item.symbol.split("-")[0]}</td>
-            <td className={"right"}>{props.item.openingPrice}</td>
-            <td className={"right"}>{Number(props.item.restrictPrice) < 0 ? "--" : props.item.restrictPrice}</td>
+            <td className={"center"}>{props.item.lever}x</td>
+            <td className={"center"}>{props.item.quantity} {props.item.symbol.split("-")[0]}</td>
+            <td className={"right"}>{fixedNumberStr(props.item.openingPrice, USDT_decimal_show)}</td>
+            <td className={"right"}>{Number(props.item.restrictPrice) < 0 ? "--" : fixedNumberStr(props.item.restrictPrice, USDT_decimal_show)}</td>
             <td className={"right"}>
                 <div className={"flex-row"} style={{justifyContent: "flex-end"}}>
-                    <span style={{marginRight: "4px"}}>{props.item.marginAmount}</span>
+                    <span style={{marginRight: "4px"}}>{fixedNumberStr(props.item.marginAmount, USDT_decimal_show)}</span>
                     <img src={props.isDark?require("src/assets/images/dark/edit.png"):require("src/assets/images/light/edit.png")}
                          style={{width: "0.12rem", height: "0.12rem", cursor: "pointer"}} alt=""
                          onClick={() => state.showMarin = true} />
@@ -152,9 +153,15 @@ function Row(props: IRow) {
                          onClick={() => state.showPlanOrderModal = true} />
                 </div>
             </td>
-            <td className={"right"}>-</td>
             <td className={"right"}>
-                <div className={"flex-row"} style={{position: "relative", justifyContent: "flex-end"}}>
+                <PointerItem />
+                <PointerItem />
+                <PointerItem />
+                <PointerItem />
+                <PointerItem />
+            </td>
+            <td style={{width: "0.74rem", paddingLeft: "0.2rem", boxSizing: "border-box"}}>
+                <div className={"flex-row"} style={{position: "relative"}}>
                     <CloseBtn onClick={closeOrder}>{t(`Close`)}</CloseBtn>
                     {/*<input type="text" className={"input"}
                            value={state.percent}
@@ -266,16 +273,16 @@ export default function Position(props: IProps) {
                         <tr>
                             <th style={{width: "8%"}}>{t(`PAIRS`)}</th>
                             <th>{t(`TYPE`)}</th>
-                            <th>{t(`LEVERAGE`)}</th>
-                            <th className={"right"}>{t(`AMOUNT`)}</th>
+                            <th className={"center"}>{t(`LEVERAGE`)}</th>
+                            <th className={"center"}>{t(`VALUE`)}</th>
                             <th className={"right"}>{t(`ENTRY PRICE`)}</th>
-                            <th className={"right"}>{t(`LIQUIDATION PRICE`)}</th>
-                            <th className={"right"}>{t(`MARGIN`)}</th>
+                            <th className={"right"}>{t(`LIQ . PRICE`)}</th>
+                            <th className={"right"} style={{paddingRight: "0.12rem"}}>{t(`MARGIN`)}</th>
                             <th className={"right"}>{t(`FUNDING COSTS`)}</th>
                             <th className={"right"}>{t(`UNREALIZED PNL(ROE%)`)}</th>
-                            <th className={"right"}>{t(`TP/SL`)}</th>
+                            <th className={"right"} style={{paddingRight: "0.12rem"}}>{t(`TP/SL`)}</th>
                             <th className={"right"}>{t(`ADL RANKING`)}</th>
-                            <th className={"right"} style={{width: "1rem"}}></th>
+                            <th style={{width: "0.74rem", paddingLeft: "0.2rem", boxSizing: "border-box"}}>{t(`ACTION`)}</th>
                         </tr>
                         </thead>
                         <tbody>

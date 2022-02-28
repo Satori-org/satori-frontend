@@ -8,6 +8,11 @@ import { store } from './store';
 import 'src/locales/i18n';
 import { UseWalletProvider } from 'use-wallet';
 import {chainID} from "./contract/config";
+import { Decimal } from 'decimal.js';
+
+Decimal.set({
+    precision: 30
+})
 
 ReactDOM.render(
     <UseWalletProvider chainId={chainID}>
