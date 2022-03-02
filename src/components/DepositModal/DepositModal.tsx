@@ -66,7 +66,9 @@ export default function DepositModal(props: IProps) {
                 owner: storeData.address,
                 spender: Proxy.address
             };
+            state.loading = true;
             state.approveStatus = await needApprove(a);
+            state.loading = false;
         }
     }
 

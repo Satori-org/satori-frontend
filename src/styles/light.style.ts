@@ -60,6 +60,12 @@ export const light: ITheme = {
         pickerRangeBgColor: "#A6ACA9",
         walletBtnBgColor: "#EEEFEF",
         walletBtnColor: "#3E403F",
-        networkBgColor: "#EEEFEF"
+        networkBgColor: "#EEEFEF",
+        lev1BgColor: "#53AC82",
+        lev2BgColor: "#80A996",
+        lev3BgColor: "#E8B3B0",
+        lev4BgColor: "#E68E8A",
+        lev5BgColor: "#EA4F48",
+        levDefaultBgColor: "#C8CAC9"
     }
 };

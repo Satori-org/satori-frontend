@@ -145,20 +145,20 @@ function Row(props: IRow) {
             <td className={`${pnl.className} right`}>{pnl.profit}({pnl.percent})</td>
             <td className={`right`}>
                 <div className={"flex-row"} style={{justifyContent: "flex-end"}}>
-                    <span>65,524</span>
+                    <span className={"long"}>65,524</span>
                     <span>/</span>
-                    <span>65,500</span>
+                    <span className={"short"}>65,500</span>
                     <img src={props.isDark?require("src/assets/images/dark/edit.png"):require("src/assets/images/light/edit.png")}
                          style={{width: "0.12rem", height: "0.12rem", cursor: "pointer"}} alt=""
                          onClick={() => state.showPlanOrderModal = true} />
                 </div>
             </td>
             <td className={"right"}>
-                <PointerItem />
-                <PointerItem />
-                <PointerItem />
-                <PointerItem />
-                <PointerItem />
+                <PointerItem className={"lev1"} />
+                <PointerItem className={"lev2"} />
+                <PointerItem className={"lev3"} />
+                <PointerItem className={"lev4"} />
+                <PointerItem className={"lev5"} />
             </td>
             <td style={{width: "0.74rem", paddingLeft: "0.2rem", boxSizing: "border-box"}}>
                 <div className={"flex-row"} style={{position: "relative"}}>

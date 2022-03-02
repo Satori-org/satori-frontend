@@ -35,14 +35,14 @@ export const DropMenuContainer = styled.div`
     transform: translate(-50%, 100%);
     width: 100%;
     z-index: 100;
-    padding-top: 14px;
+    padding-top: 0.08rem;
 `;
 
 export const DropMenu = styled.ul`
     list-style: none;
     text-align: center;
     color: ${({theme}) => theme.colors.baseColor};
-    background: ${({theme}) => theme.colors.inputBgColor};
+    background: ${({theme}) => theme.colors.boxBgColor};
     box-shadow: ${({theme}) => theme.colors.boxShadow};
     //border: 1px solid ${({theme}) => theme.colors.borderColor};
     box-sizing: border-box;
@@ -53,8 +53,8 @@ export const DropMenu = styled.ul`
         &.exit{
             color: ${({theme}) => theme.colors.short};
         }
-        &:hover{
+        /*&:hover{
             background: rgba(255, 255, 255, 0.04);
-        }
+        }*/
     }
 `;

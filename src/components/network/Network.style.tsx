@@ -27,7 +27,7 @@ export const NetworkList = styled.div`
     right: -0.08rem;
     bottom: 0;
     transform: translateY(100%);
-    padding-top: 8px;
+    padding-top: 0.08rem;
     z-index: 1000;
 `;
 export const NetworkPanel = styled.ul`

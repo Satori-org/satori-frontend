@@ -62,7 +62,13 @@ export type IColors = {
     pickerRangeBgColor: string,
     walletBtnBgColor: string,
     walletBtnColor: string,
-    networkBgColor: string
+    networkBgColor: string,
+    lev1BgColor: string,
+    lev2BgColor: string,
+    lev3BgColor: string,
+    lev4BgColor: string,
+    lev5BgColor: string,
+    levDefaultBgColor: string
 }
 export type ITheme = {
     colors: IColors

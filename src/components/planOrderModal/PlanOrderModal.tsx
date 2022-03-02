@@ -1,13 +1,20 @@
 import React, {CSSProperties, useEffect} from 'react';
 import { useTranslation } from 'react-i18next';
-import {DropDown, DropMenuContainer, ExplainText, FieldGroup, PlanFieldStyle, PlanOrderModalStyle} from './PlanOrderModal.style';
+import {
+    DropDown,
+    DropMenu,
+    DropMenuContainer,
+    ExplainText,
+    FieldGroup,
+    PlanFieldStyle,
+    PlanOrderModalStyle
+} from './PlanOrderModal.style';
 import Modal from "../modal/Modal";
 import InputNumber from '../inputNumber/InputNumber';
 import {useThemeManager} from "../../hooks/useThemeManager";
 import ModalFooter from "../modal/ModalFooter";
 import {useEffectState} from "../../hooks/useEffectState";
 import {IPositionList} from "../../ajax/contract/contract";
-import {DropMenu} from "../connectWallet/ConectWallet.style";
 import Toggle from "../toggle/Toggle";
 import {NetworkStyle} from "../network/Network.style";
 
@@ -33,7 +40,7 @@ function PlanField(props: IPlanField) {
                 onMouseOver={() => state.showDropDown = true}
                 onMouseLeave={() => state.showDropDown = false}>
                 <span>Current</span>
-                <img src={props.isDark ? require("src/assets/images/dark/icon_arrow_down.png") : require("src/assets/images/light/icon_arrow_down.png")} className={"arrow"} alt=""/>
+                <img src={props.isDark ? require("src/assets/images/dark/icon_arrow_down_2.png") : require("src/assets/images/light/icon_arrow_down_2.png")} className={"arrow"} alt=""/>
                 <Toggle vIf={state.showDropDown}>
                     <DropMenuContainer onClick={(event) => event.stopPropagation()}>
                         <DropMenu>
@@ -68,7 +75,7 @@ export default function PlanOrderModal(props: IProps) {
     }
 
     return (
-        <Modal title={t(`Take Profit/ Stop Limit`)} titleStyle={{marginBottom: "0.2rem"}}>
+        <Modal title={t(`Take Profit/ Stop Limit`)} titleStyle={{marginBottom: "0.2rem"}} style={{borderRadius: "0.16rem"}}>
             <PlanOrderModalStyle>
                 <FieldGroup>
                     <span className={"label"}>{t(`Contract`)}</span>

@@ -1,7 +1,7 @@
 import {useStore} from "react-redux";
 import {IState} from "../store/reducer";
 import Web3 from "web3";
-import {ethers} from "ethers";
+import {BigNumber, ethers} from "ethers";
 import {getWalletProvider} from "../config";
 import {getProvider, NewReadContract, NewWriteContract} from "../contract/wallet";
 import {useMemo} from "react";
@@ -74,7 +74,8 @@ export function usePluginModel() {
             let [allowance] = await Promise.all([
                 contract.allowance(params.owner, params.spender),
             ]);
-            if (allowance > minAllowance) {
+
+            if (BigNumber.from(minAllowance).lt(allowance)) {
                 resolve(true);
             } else {
                 resolve(false);

@@ -81,9 +81,9 @@ export const PanelStyle = styled.div`
         }
         tbody>tr{
             cursor:pointer;
-            &:hover{
+            /*&:hover{
                 background: rgba(255, 255, 255, 0.04);
-            }
+            }*/
         }
     }
 `;

@@ -40,7 +40,22 @@ export const PointerItem = styled.div`
     width: 0.08rem;
     height: 0.08rem;
     border-radius: 50%;
-    background: #242A27;
+    background: ${({theme}) => theme.colors.levDefaultBgColor};
     margin-left: 0.02rem;
     cursor:pointer;
+    &.lev1{
+        background: ${({theme}) => theme.colors.lev1BgColor};
+    }
+    &.lev2{
+        background: ${({theme}) => theme.colors.lev2BgColor};
+    }
+    &.lev3{
+        background: ${({theme}) => theme.colors.lev3BgColor};
+    }
+    &.lev4{
+        background: ${({theme}) => theme.colors.lev4BgColor};
+    }
+    &.lev5{
+        background: ${({theme}) => theme.colors.lev5BgColor};
+    }
 `;

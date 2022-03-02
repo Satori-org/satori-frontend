@@ -152,7 +152,7 @@ export default function ConnectWalletModal(props: IProps) {
     }
 
     return (
-        <Modal title={t(`Connect Wallet`)} handleClick={props.onClose}>
+        <Modal title={t(`Connect Wallet`)} handleClick={props.onClose} style={{borderRadius: "0.16rem"}}>
             <Toggle vIf={!!storeData.wallet_info}>
                 <div>
                     <Subtitle>{t(`You will receive two signature requests.Signing is free and will not send a transaction.`)}</Subtitle>

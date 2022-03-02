@@ -14,6 +14,7 @@ export const Submit = styled.button`
 		/*background: #DBDBDB;
 		color: #999999;*/
 		opacity: 0.5;
+		cursor: not-allowed;
 	}
 `;
 export const Loading = styled.div`

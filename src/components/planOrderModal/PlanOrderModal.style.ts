@@ -61,6 +61,7 @@ export const DropMenu = styled.ul`
     text-align: center;
     color: ${({theme}) => theme.colors.baseColor};
     background: ${({theme}) => theme.colors.boxBgColor};
+    box-shadow: ${({theme}) => theme.colors.boxShadow};
     //border: 1px solid ${({theme}) => theme.colors.borderColor};
     box-sizing: border-box;
     border-radius: 0.08rem;

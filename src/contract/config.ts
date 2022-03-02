@@ -14,7 +14,7 @@ export const minAllowance = "10000000000000000000000000";
 export const zeroAddress = "0x0000000000000000000000000000000000000000";
 
 export const WALLETS = {
-    metamask: {name: "Metamask", icon: require("src/assets/images/MetaMask.png"), plugin: "ethereum"},
+    metamask: {name: "MetaMask", icon: require("src/assets/images/MetaMask.png"), plugin: "ethereum"},
     clover: {name: "Clover Wallet", icon: require("src/assets/images/clover.png"), plugin: "clover"},
     polkadot: {name: "Polkadot{.js}", icon: require("src/assets/images/Polkadot.png"), plugin: "polkadot"},
 };
