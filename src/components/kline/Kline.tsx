@@ -354,7 +354,7 @@ class Kline extends React.Component<Ikline, any>{
     }
     //Create MA
     createStudy() {
-        this.widget.activeChart().createStudy('Moving Average', false, false, [5, 'close', 0], null, {
+        /*this.widget.activeChart().createStudy('Moving Average', false, false, [5, 'close', 0], null, {
             'Plot.linewidth': 1,
             'Plot.color': '#ff00ff'
         });
@@ -372,7 +372,7 @@ class Kline extends React.Component<Ikline, any>{
         this.widget.activeChart().createStudy('Moving Average', false, false, [60, 'close', 0], null, {
             'Plot.linewidth': 1,
             'Plot.color': '#9be9ff'
-        });
+        });*/
     }
     onMessage(data:any) {
         // console.log(data)

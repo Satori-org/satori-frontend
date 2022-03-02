@@ -49,7 +49,7 @@ function Row(props: IRow) {
         </td>
         <td>{props.item.contractPairSymbol}</td>
         <td style={{paddingRight: "12px", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis"}}>{props.item.logType}</td>
-        <td className={operaInfo.className}>{operaInfo.value}</td>
+        <td className={operaInfo.className} style={{paddingLeft: "0.65rem"}}>{operaInfo.value}</td>
         <td className={"right"}>{props.item.accountAmount}</td>
     </RowStyle>
 }
@@ -110,7 +110,7 @@ export default function TransactionHistory() {
                             <th style={{width: "20%"}}>{t(`TIME`)}</th>
                             <th style={{width: "20%"}}>{t(`PAIRS`)}</th>
                             <th style={{width: "20%"}}>{t(`TYPE`)}</th>
-                            <th style={{width: "20%"}}>{t(`TOTAL(USDT)`)}</th>
+                            <th style={{width: "20%", paddingLeft: "0.65rem"}}>{t(`TOTAL(USDT)`)}</th>
                             <th className={"right"} style={{width: "20%"}}>{t(`ACCOUNT BALANCE(USDT)`)}</th>
                         </tr>
                         </thead>

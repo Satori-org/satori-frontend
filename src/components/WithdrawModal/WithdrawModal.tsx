@@ -68,40 +68,36 @@ export default function WithdrawModal(props: IProps) {
 
         const signatureData = await signMsg(withdrawInfo, storeData.address);
 
-        const {data: resData} = await withdraw(state.amount, signatureData.origin, signatureData.signatrue);
-        const [r,v,s] = unpackEIP712(resData.signHash);
-        const contract = NewWriteContract(Proxy.address, Satori.abi);
-        const [transInfo, error] = await awaitWrap(contract.withdraw(resData.amount, resData.expireTime, resData.salt, v, r, s));
-        if (error) {
-            showError(error);
-        } else {
-            await checkHashStatus(transInfo);
-            const tipText = regExpTemplate(t(`Your 300.00 USDT withdraw will be successful after confirmation on the mainnet.`), {amount: state.amount});
-            openModal<IWaitParams>(WaitingModal, {
-                title: t(`Withdrawing...`),
-                content: tipText,
-                hash: transInfo.hash,
-                callback(result: boolean): void {
-                    OpenMessageBox({
-                        title: t(`Withdraw Successfully!`)
-                    });
-                    PubSub.publish(RELOAD_ACCOUNT_INFO);
-                }
-            });
-            /*OpenWaitingModal({
-                title: t(`Withdrawing...`),
-                content: tipText,
-                hash: transInfo.hash,
-                callback(result: boolean): void {
-                    OpenMessageBox({
-                        title: t(`Withdraw Successfully!`)
-                    });
-                    PubSub.publish(RELOAD_ACCOUNT_INFO);
-                }
-            });*/
-            state.loading = false;
-            props.onClose();
+        const [resData, err] = await awaitWrap(withdraw({
+            amount: state.amount,
+            originMsg: signatureData.origin,
+            signHash: signatureData.signatrue,
+            network: storeData.network.name
+        }));
+        if (resData) {
+            const [r,v,s] = unpackEIP712(resData.signHash);
+            const contract = NewWriteContract(Proxy.address, Satori.abi);
+            const [transInfo, error] = await awaitWrap(contract.withdraw(resData.amount, resData.expireTime, resData.salt, v, r, s));
+            if (error) {
+                showError(error);
+            } else {
+                await checkHashStatus(transInfo);
+                const tipText = regExpTemplate(t(`Your 300.00 USDT withdraw will be successful after confirmation on the mainnet.`), {amount: state.amount});
+                openModal<IWaitParams>(WaitingModal, {
+                    title: t(`Withdrawing...`),
+                    content: tipText,
+                    hash: transInfo.hash,
+                    callback(result: boolean): void {
+                        OpenMessageBox({
+                            title: t(`Withdraw Successfully!`)
+                        });
+                        PubSub.publish(RELOAD_ACCOUNT_INFO);
+                    }
+                });
+                props.onClose();
+            }
         }
+        state.loading = false;
     }
 
     return (
@@ -114,7 +110,7 @@ export default function WithdrawModal(props: IProps) {
                         <RightBtn onClick={() => state.amount = String(fixedNumber(reducerState.accountInfo.availableAmount, USDT_decimal))}>{t(`MAX`)}</RightBtn>
                     </div>
                     }
-                    inputStyle={{width: "110px"}}
+                    inputStyle={{flex: 1}}
                     placeholder={"0.000000"}
                     hideTips={true}
                     regex={[{regStr: NUMBER_REG, tips: ""}]}

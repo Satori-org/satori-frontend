@@ -19,8 +19,11 @@ export const FieldGroup = styled.div`
     .label{
         color: #57625C;
     }
-    .long{
+    .Long{
         color: ${({theme}) => theme.colors.long};
+    }
+    .Short{
+        color: ${({theme}) => theme.colors.short};
     }
 `;
 
@@ -85,5 +88,11 @@ export const ExplainText = styled.div`
     margin-top: 0.04rem;
     .value{
         color: ${({theme}) => theme.colors.baseColor};
+    }
+    .long{
+        color: ${({theme}) => theme.colors.long};
+    }
+    .short{
+        color: ${({theme}) => theme.colors.short};
     }
 `;

@@ -74,7 +74,7 @@ export default function Record() {
                             <img src={isDark ? require("src/assets/images/dark/icon_checked.png"):require("src/assets/images/light/icon_checked.png")} className={"checkIcon"} alt=""/>
                         </Toggle>
                     </div>
-                    <span>{t(`Hide different pares`)}</span>
+                    <span>{t(`Hide different pairs`)}</span>
                 </DisplayCtroll>
             </RecordHeader>
             {RecordComponent}

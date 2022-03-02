@@ -16,7 +16,7 @@ export default function Guide(props: IProps) {
     return (
         <GuideStyle className={`flex-box ${props.className}`} style={props.style}>
             <img src={isDark?require("src/assets/images/dark/video-circle.png"):require("src/assets/images/light/video-circle.png")} className={`icon ${props.iconClassName}`} style={props.iconStyle} alt=""/>
-            <span>{t(`Getting guide`)}</span>
+            <span>{t(`Getting started guide`)}</span>
         </GuideStyle>
     )
 }

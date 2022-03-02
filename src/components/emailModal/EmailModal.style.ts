@@ -14,14 +14,18 @@ export const RightBtn = styled.button`
     border-radius: 0.08rem;
     margin-left:  0.08rem;
     font-weight: normal;
+    &:disabled{
+        color: ${({theme}) => theme.colors.inputBtnDisableColor};
+        cursor: not-allowed;
+    }
 `;
 
 export const Submit = styled.button`
     width: 100%;
     height: 0.4rem;
     border-radius: 0.08rem;
-    background: ${({theme}) => theme.colors.cancelBgColor};
-    color: ${({theme}) => theme.colors.cancelColor};
+    background: ${({theme}) => theme.colors.confirmBgColor};
+    color: ${({theme}) => theme.colors.confirmColor};
     font-size: 0.12rem;
     font-weight: bold;
     margin-top: 0.24rem;

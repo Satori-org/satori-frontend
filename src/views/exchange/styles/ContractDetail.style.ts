@@ -10,6 +10,13 @@ export const ContractDetailStyle = styled.div`
     box-sizing: border-box;
 `;
 
+export const ContractDetailContent = styled.div`
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding-bottom: 0.16rem;
+`;
+
 export const ConnectModal = styled.div`
     position: absolute;
     left: 0;
@@ -57,7 +64,7 @@ export const FieldLabel = styled.div`
         color: ${({theme}) => theme.colors.borderColor};
         box-sizing: border-box;
         &.border{
-            border-bottom: 1px dashed ${({theme}) => theme.colors.linkDefaultColor};
+            /*border-bottom: 1px dashed ${({theme}) => theme.colors.linkDefaultColor};*/
         }
     }
 `;

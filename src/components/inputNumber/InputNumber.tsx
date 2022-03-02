@@ -22,7 +22,10 @@ export default function InputNumber(props: IProps) {
                hideTips={true}
                regex={[{regStr: NUMBER_REG, tips: ""}]}
                onFocus={() => state.placeholder = ""}
-               onBlur={() => state.placeholder = props.placeholder || ""}
+               onBlur={(event) => {
+                   state.placeholder = props.placeholder || "";
+                   props.onBlur && props.onBlur(event);
+               }}
                onChange={(value) => {
                    if (props.onChange && (value === "" || isInputNumber(value))) {
                        //state.price = value;

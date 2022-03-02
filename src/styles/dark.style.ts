@@ -66,6 +66,7 @@ export const dark: ITheme = {
         lev3BgColor: "#E8B3B0",
         lev4BgColor: "#E68E8A",
         lev5BgColor: "#EA4F48",
-        levDefaultBgColor: "#242A27"
+        levDefaultBgColor: "#242A27",
+        inputBtnDisableColor: "#555F59"
     }
 };

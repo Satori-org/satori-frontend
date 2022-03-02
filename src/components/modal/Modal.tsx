@@ -18,7 +18,7 @@ export default function Modal(props: IProps) {
 
     return (
         <ModalBox onClick={props.handleClick} style={props.fullScreen ? {overflow: "auto"} : {}}>
-            <div className={`content borderRadius`} style={props.style} onClick={(event) => event.stopPropagation()}>
+            <div className={`content`} style={props.style} onClick={(event) => event.stopPropagation()}>
                 {
                     props.disableHead
                         ? null

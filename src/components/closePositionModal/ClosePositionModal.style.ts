@@ -13,7 +13,7 @@ export const ClosePositionModalContentStyle = styled.div`
 `;
 
 export const Group = styled.div`
-    margin-bottom: 0.16rem;
+    margin-bottom: 0.12rem;
     color: ${({theme}) => theme.colors.filedColor};
     .label{
         color: ${({theme}) => theme.colors.labelColor};

@@ -37,11 +37,11 @@ export const light: ITheme = {
         activeBgColor: "#22352C",
         explain: "#57625C",
         borderColor: "#57625C",
-        cancelBgColor: "#57625C",
-        cancelColor: "#FFFFFF",
-        confirmBgColor: "#C8CAC9",
+        cancelBgColor: "#DFE1E0",
+        cancelColor: "#3E403F",
+        confirmBgColor: "#617168",
+        confirmColor: "#F6F6F6",
         tokenBorderColor: "#DFE1E0",
-        confirmColor: "#3E403F",
         borderColor2: "#DFE1E0",
         tabActiveColor: "#233918",
         tabActiveBgColor2: "#fff",
@@ -66,6 +66,7 @@ export const light: ITheme = {
         lev3BgColor: "#E8B3B0",
         lev4BgColor: "#E68E8A",
         lev5BgColor: "#EA4F48",
-        levDefaultBgColor: "#C8CAC9"
+        levDefaultBgColor: "#C8CAC9",
+        inputBtnDisableColor: "#A9AFAC",
     }
 };

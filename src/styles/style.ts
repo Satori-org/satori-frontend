@@ -68,7 +68,8 @@ export type IColors = {
     lev3BgColor: string,
     lev4BgColor: string,
     lev5BgColor: string,
-    levDefaultBgColor: string
+    levDefaultBgColor: string,
+    inputBtnDisableColor: string
 }
 export type ITheme = {
     colors: IColors

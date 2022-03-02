@@ -111,7 +111,7 @@ export default function Fills() {
                             <th style={ItemStyle}>{t(`TYPE`)}</th>
                             <th style={ItemStyle}>{t(`ORDER TYPE`)}</th>
                             <th style={ItemStyle}>{t(`PRICE`)}</th>
-                            <th style={ItemStyle}>{t(`CONT`)}</th>
+                            <th style={ItemStyle}>{t(`COUNT`)}</th>
                             {/*<th style={ItemStyle}>{t(`REALIZED PNL(USDT) `)}</th>
                             <th style={ItemStyle}>{t(`FUNDING COSTS(USDT) `)}</th>*/}
                             {/*<th>{t(`Fee`)}</th>*/}

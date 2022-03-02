@@ -19,6 +19,7 @@ export const ModalBox = styled.div`
         padding: 0.32rem;
         box-sizing: border-box;
         color: ${({theme}) => theme.colors.baseColor};
+        border-radius: 0.16rem;
        /* border: 1px solid ${({theme}) => theme.colors.modalBorderColor};*/
         .close{
             /*position: absolute;

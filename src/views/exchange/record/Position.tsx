@@ -279,7 +279,7 @@ export default function Position(props: IProps) {
                             <th className={"right"}>{t(`LIQ . PRICE`)}</th>
                             <th className={"right"} style={{paddingRight: "0.12rem"}}>{t(`MARGIN`)}</th>
                             <th className={"right"}>{t(`FUNDING COSTS`)}</th>
-                            <th className={"right"}>{t(`UNREALIZED PNL(ROE%)`)}</th>
+                            <th className={"right"}>{t(`UNREALIZED PNL(%)`)}</th>
                             <th className={"right"} style={{paddingRight: "0.12rem"}}>{t(`TP/SL`)}</th>
                             <th className={"right"}>{t(`ADL RANKING`)}</th>
                             <th style={{width: "0.74rem", paddingLeft: "0.2rem", boxSizing: "border-box"}}>{t(`ACTION`)}</th>

@@ -53,8 +53,14 @@ interface IWithdraw {
     "signHash": string,
     "salt": string
 }
-export function withdraw(amount: string, originMsg: string, signHash: string) {
-    return fetchPost<IWithdraw>("/contract-provider/withdraw/ask", {amount, originMsg, signHash})
+type IWithdrawReq = {
+    amount: string,
+    originMsg: string,
+    signHash: string,
+    network: string
+}
+export function withdraw(params: IWithdrawReq) {
+    return fetchPost<IWithdraw>("/contract-provider/withdraw/ask", params)
 }
 interface IAddOrderParams {
     amount?: string
@@ -96,7 +102,7 @@ export type IPositionList = {
     isLong: boolean
     marginAmount: number
     marginCallAmount: string
-    openingPrice: number
+    openingPrice: string
     quantity: number
     restrictPrice: number
     status: number
