@@ -112,6 +112,10 @@ export type IPositionList = {
     remainingCloseQuantity: string
     unrealizedPnl: string
     realizedPnl: string
+    lossType: number
+    profitType: number
+    profitPrice: string
+    lossPrice: string
 }
 export const getPositionList = "/contract-provider/contract/selectContractPositionList";
 /*Get the current delegate*/
@@ -269,3 +273,15 @@ export type ITariff = {
     tariffAmount: number
 }
 export const getContractTariffList = "/contract-provider/contract/selectContractTariffList";
+
+export type IPnl = {
+    id: number
+    lossPrice: string | null
+    lossType: number
+    profitPrice: string | null
+    profitType: number
+}
+export async function updatePnlConfig(params: IPnl) {
+    const { data } = await fetchPost<IPair>("/contract-provider/contract/updateStopConfig", params);
+    return data;
+}

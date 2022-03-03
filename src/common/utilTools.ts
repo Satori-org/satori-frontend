@@ -263,6 +263,9 @@ export function getNumberByDecimal(amount: BigNumber | number | string, decimals
 
 /*with, separating numbers*/
 export function formatNumber(value: number|string, splitor = ",") {
+    if (!value) {
+        return "-";
+    }
     let amount = Number(value);
     if (amount > 1000) {
         let numAry = String(amount).split('.');

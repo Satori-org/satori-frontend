@@ -2,11 +2,12 @@ import React, {useMemo} from 'react';
 import {useTranslation} from 'react-i18next';
 import {BookContent, BookStyle, LabelBox, ListContainer, Row, RowContainer, Spread} from "./styles/Book.style";
 import {IDepthData, IDepthItem} from "../../components/kline/depthChart/DepthChart";
-import {fixedNumber, fixedNumberStr} from "../../common/utilTools";
+import {fixedNumber, fixedNumberStr, formatNumber} from "../../common/utilTools";
 import Decimal from "decimal.js";
 import useExchangeStore from "./ExchangeProvider";
 import {USER_SELECT_PRICE} from "../../common/PubSubEvents";
 import Toggle from "../../components/toggle/Toggle";
+import {USDT_decimal_show} from "../../config";
 //import { OrderBookStyle } from './styles/Book.style';
 
 type IProps = {
@@ -93,13 +94,13 @@ export default function OrderBook(props: IProps) {
                     }
                 </RowContainer>
                 <Spread>
-                    <span className={rise.className}>{fixedNumber(reducerState.tiker.close, decimal)}</span>
+                    <span className={rise.className}>{formatNumber(fixedNumber(reducerState.tiker.close, USDT_decimal_show))}</span>
                     <Toggle vIf={!!rise.className}>
                         <img
                             src={rise.className === "long" ? require("src/assets/images/long_icon.png") : require("src/assets/images/short_icon.png")}
                             className={"arrow"} alt=""/>
                     </Toggle>
-                    <span className={"marketPrice"}>{fixedNumberStr(reducerState.marketPrice, 3)}</span>
+                    <span className={"marketPrice"}>{formatNumber(fixedNumberStr(reducerState.marketPrice, USDT_decimal_show))}</span>
                     {/*<span style={{color: colors.labelColor}}>0.1</span>
                     <span>0.01%</span>*/}
                 </Spread>

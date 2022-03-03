@@ -9,7 +9,7 @@ import ReactDOM from 'react-dom';
 import Pagination from "src/components/pagination/Pagination";
 import {addOrder, getPositionList, IPair, IPositionList, IQuotation} from "src/ajax/contract/contract";
 import useExchangeStore from "../ExchangeProvider";
-import {awaitWrap, fixedNumber, fixedNumberStr, showMessage} from "src/common/utilTools";
+import {awaitWrap, fixedNumber, fixedNumberStr, formatNumber, showMessage} from "src/common/utilTools";
 import {signExpire} from "src/contract/wallet";
 import {Toast} from "src/components/toast/Toast";
 import {NUMBER_REG} from "src/common/regExp";
@@ -145,9 +145,9 @@ function Row(props: IRow) {
             <td className={`${pnl.className} right`}>{pnl.profit}({pnl.percent})</td>
             <td className={`right`}>
                 <div className={"flex-row"} style={{justifyContent: "flex-end"}}>
-                    <span className={"long"}>65,524</span>
-                    <span>/</span>
-                    <span className={"short"}>65,500</span>
+                    <span className={`${props.item.profitPrice ? 'long' : ''}`}>{formatNumber(props.item.profitPrice)}</span>
+                    <span className={"split"}>/</span>
+                    <span className={`${props.item.lossPrice ? 'short' : ''}`}>{formatNumber(props.item.lossPrice)}</span>
                     <img src={props.isDark?require("src/assets/images/dark/edit.png"):require("src/assets/images/light/edit.png")}
                          style={{width: "0.12rem", height: "0.12rem", cursor: "pointer"}} alt=""
                          onClick={() => state.showPlanOrderModal = true} />
@@ -219,8 +219,9 @@ function Row(props: IRow) {
                         state.showPlanOrderModal = false
                     }}
                     onConfirm={() => {
+                        props.reload();
                         state.showPlanOrderModal = false;
-                        console.log("onConfirm planOrder")
+                        console.log("onConfirm planOrder");
                     }}></PlanOrderModal>, document.getElementById("root")!)
                 : null
         }

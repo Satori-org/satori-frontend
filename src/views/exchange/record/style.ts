@@ -18,6 +18,9 @@ export const RowStyle = styled.tr`
     .short{
         color: ${({theme}) => theme.colors.short};
     }
+    .split{
+        color: ${({theme}) => theme.colors.inputBtnColor};
+    }
 `;
 
 export const CloseBtn = styled.button`

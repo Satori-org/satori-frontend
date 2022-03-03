@@ -29,10 +29,12 @@ export const FieldGroup = styled.div`
 
 export const DropDown = styled.div`
     position: relative;
+    min-width: 0.8rem;
+    padding: 0 0.12rem;
+    box-sizing: border-box;
     background: ${({theme}) => theme.colors.inputBgColor};
     border-radius: 0.08rem;
     margin-left: 0.08rem;
-    padding: 0 0.12rem;
     color: ${({theme}) => theme.colors.labelColor};
     cursor:pointer;
     .arrow{

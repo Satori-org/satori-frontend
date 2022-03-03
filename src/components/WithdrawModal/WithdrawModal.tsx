@@ -68,13 +68,14 @@ export default function WithdrawModal(props: IProps) {
 
         const signatureData = await signMsg(withdrawInfo, storeData.address);
 
-        const [resData, err] = await awaitWrap(withdraw({
+        const [res, err] = await awaitWrap(withdraw({
             amount: state.amount,
             originMsg: signatureData.origin,
             signHash: signatureData.signatrue,
             network: storeData.network.name
         }));
-        if (resData) {
+        if (res) {
+            const resData = res.data;
             const [r,v,s] = unpackEIP712(resData.signHash);
             const contract = NewWriteContract(Proxy.address, Satori.abi);
             const [transInfo, error] = await awaitWrap(contract.withdraw(resData.amount, resData.expireTime, resData.salt, v, r, s));

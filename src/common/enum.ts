@@ -34,3 +34,8 @@ export const ORDER_DIRECTION = {
     buy: true,
     sell: false
 };
+
+export enum PNL_TYPE {
+    Current = 1,
+    Trigger
+}

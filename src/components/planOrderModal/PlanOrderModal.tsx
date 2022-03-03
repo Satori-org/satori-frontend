@@ -14,31 +14,52 @@ import InputNumber from '../inputNumber/InputNumber';
 import {useThemeManager} from "../../hooks/useThemeManager";
 import ModalFooter from "../modal/ModalFooter";
 import {useEffectState} from "../../hooks/useEffectState";
-import {IPositionList} from "../../ajax/contract/contract";
+import {IPositionList, updatePnlConfig} from "../../ajax/contract/contract";
 import Toggle from "../toggle/Toggle";
 import {NetworkStyle} from "../network/Network.style";
-import {fixedNumber, fixedNumberStr, showMessage} from "../../common/utilTools";
+import {awaitWrap, fixedNumber, fixedNumberStr, showMessage} from "../../common/utilTools";
 import {USDT_decimal_show} from "../../config";
 import useExchangeStore from "../../views/exchange/ExchangeProvider";
 import Decimal from "decimal.js";
+import {PNL_TYPE} from "../../common/enum";
 
 type IPlanField = {
     isDark: boolean
     style?: CSSProperties
     onChange(value: string): void
+    onSelect(value: number): void
     data: IPositionList
     isProfit: boolean
+    defaultValue?: string
+    defaultType: number
 }
 function PlanField(props: IPlanField) {
     const {t} = useTranslation();
+    const pnlTypes = [
+        {text: "Current", value: PNL_TYPE.Current},
+        {text: "Trigger", value: PNL_TYPE.Trigger}
+    ];
     const state = useEffectState({
         showDropDown: false,
-        amount: ""
+        amount: props.defaultValue || "",
+        pnlConfig: getPnlType(props.defaultType)
     });
 
     useEffect(() => {
         props.onChange(state.amount);
     }, [state.amount]);
+
+    function getPnlType(type: number) {
+        if (type === 0) {
+            return pnlTypes[0]
+        }
+        let dd =  pnlTypes.find((item) => {
+            return item.value === type;
+        });
+        //console.log(dd);
+
+        return dd;
+    }
 
     const pnl = useMemo(() => {
         let obj = {
@@ -72,30 +93,6 @@ function PlanField(props: IPlanField) {
         return obj;
     }, [props.data.openingPrice, props.data.isLong, state.amount]);
 
-    function validProfit(profit: string) {
-        if (!profit) {
-            return;
-        }
-        if (props.data.isLong && Number(profit) < Number(props.data.openingPrice)) {
-            showMessage(t(`The long take profit price must be greater than the opening price`))
-        }
-        if (!props.data.isLong && Number(profit) > Number(props.data.openingPrice)) {
-            showMessage(t(`The short take profit price must be lower than the opening price`))
-        }
-    }
-
-    function validLoss(loss: string) {
-        if (!loss) {
-            return;
-        }
-        if (props.data.isLong && Number(loss) > Number(props.data.openingPrice)) {
-            showMessage(t(`The long stop price must be lower than the opening price`))
-        }
-        if (!props.data.isLong && Number(loss) < Number(props.data.openingPrice)) {
-            showMessage(t(`The short stop price must be greater than the opening price`))
-        }
-    }
-
     return <div style={props.style || {marginTop: "0.16rem"}}>
         <PlanFieldStyle>
             <InputNumber label={t(`Take Profit`)}
@@ -104,32 +101,37 @@ function PlanField(props: IPlanField) {
                          inputStyle={{flex: 1, textAlign: "right", marginRight: "0.04rem"}}
                          style={{flex: 1}}
                          value={state.amount}
-                         onBlur={() => {
-                             if (props.isProfit) {
-                                 validProfit(state.amount);
-                             } else {
-                                 validLoss(state.amount);
-                             }
-                         }}
                          onChange={(value) => state.amount = value} />
             <DropDown
                 className={"flex-row"}
                 onMouseOver={() => state.showDropDown = true}
                 onMouseLeave={() => state.showDropDown = false}>
-                <span>Current</span>
+                <span>{state.pnlConfig?.text}</span>
                 <img src={props.isDark ? require("src/assets/images/dark/icon_arrow_down_2.png") : require("src/assets/images/light/icon_arrow_down_2.png")} className={"arrow"} alt=""/>
                 <Toggle vIf={state.showDropDown}>
                     <DropMenuContainer onClick={(event) => event.stopPropagation()}>
                         <DropMenu>
-                            <li className={"menuItem flex-box"}>{t(`Current`)}</li>
-                            <li className={"menuItem flex-box"}>Trigger</li>
+                            {
+                                pnlTypes.map((item) => {
+                                    return (
+                                        <li className={"menuItem flex-box"} key={item.value}
+                                            onClick={() => {
+                                                props.onSelect(item.value);
+                                                state.pnlConfig = item;
+                                                state.showDropDown = false;
+                                        }}>{item.text}</li>
+                                    )
+                                })
+                            }
+                            {/*<li className={"menuItem flex-box"}>{t(`Current`)}</li>
+                            <li className={"menuItem flex-box"}>Trigger</li>*/}
                         </DropMenu>
                     </DropMenuContainer>
                 </Toggle>
             </DropDown>
         </PlanFieldStyle>
         <ExplainText>
-            When <span className={"value"}>current price</span> reach <span className={"value"}>{state.amount || "0.00"} USDT</span>, postion will be closed at trigger proce, est. profit/loss will be <span className={`${pnl.className}`}>{pnl.profit} USDT</span>
+            When <span className={"value"}>{state.pnlConfig?.text.toLowerCase()} price</span> reach <span className={"value"}>{state.amount || "0.00"} USDT</span>, postion will be closed at trigger proce, est. profit/loss will be <span className={`${pnl.className}`}>{pnl.profit} USDT</span>
         </ExplainText>
     </div>
 }
@@ -147,7 +149,9 @@ export default function PlanOrderModal(props: IProps) {
     const state = useEffectState({
         loading: false,
         profit: "",
-        loss: ""
+        loss: "",
+        lossType: props.data.lossType || 1,
+        profitType: props.data.profitType || 1
     });
 
 /*    useEffect(() => {
@@ -168,8 +172,54 @@ export default function PlanOrderModal(props: IProps) {
         }
     }, [state.loss, props.data.isLong]);*/
 
-    async function submit() {
+    function validProfit(profit: string) {
+        if (!profit) {
+            return true;
+        }
+        if (props.data.isLong && Number(profit) < Number(props.data.openingPrice)) {
+            showMessage(t(`The long take profit price must be greater than the opening price`));
+            return false;
+        }
+        if (!props.data.isLong && Number(profit) > Number(props.data.openingPrice)) {
+            showMessage(t(`The short take profit price must be lower than the opening price`));
+            return false;
+        }
+        return true;
+    }
 
+    function validLoss(loss: string) {
+        if (!loss) {
+            return true;
+        }
+        if (props.data.isLong && Number(loss) > Number(props.data.openingPrice)) {
+            showMessage(t(`The long stop price must be lower than the opening price`));
+            return false;
+        }
+        if (!props.data.isLong && Number(loss) < Number(props.data.openingPrice)) {
+            showMessage(t(`The short stop price must be greater than the opening price`));
+            return false;
+        }
+        return true;
+    }
+
+    async function submit() {
+        if (!validProfit(state.profit)) {
+            return ;
+        }
+        if (!validLoss(state.loss)) {
+            return ;
+        }
+        const [resData, error] = await awaitWrap(updatePnlConfig({
+            id: props.data.id,
+            profitPrice: state.profit || null,
+            lossPrice: state.loss || null,
+            profitType: state.profit ? state.profitType : 0,
+            lossType: state.loss ? state.lossType : 0
+        }));
+        if (resData && !resData.error) {
+            props.onConfirm();
+        }
+        console.log(resData);
     }
 
     return (
@@ -191,8 +241,23 @@ export default function PlanOrderModal(props: IProps) {
                     <span className={"label"}>{t(`Trigger Price`)}</span>
                     <span>{fixedNumberStr(reducerState.marketPrice, USDT_decimal_show)} USDT</span>
                 </FieldGroup>
-                <PlanField isDark={isDark} isProfit={true} data={props.data} style={{marginTop: "0.12rem"}} onChange={(value) => state.profit = value} />
-                <PlanField isDark={isDark} isProfit={false} data={props.data} onChange={(value) => state.loss = value} />
+                <PlanField
+                    isDark={isDark}
+                    isProfit={true}
+                    data={props.data}
+                    style={{marginTop: "0.12rem"}}
+                    defaultValue={props.data.profitPrice}
+                    defaultType={props.data.profitType}
+                    onSelect={(value) => state.profitType = value}
+                    onChange={(value) => state.profit = value} />
+                <PlanField
+                    isDark={isDark}
+                    isProfit={false}
+                    data={props.data}
+                    defaultValue={props.data.lossPrice}
+                    defaultType={props.data.lossType}
+                    onSelect={(value) => state.lossType = value}
+                    onChange={(value) => state.loss = value} />
                 <ExplainText style={{marginTop: "0.28rem"}}>*TP/SL will apply to the entire postion. When the position closed, the order will be cancelled. When price reach trigger price, postion will be closed. If postion amount exceed max, order will be declined</ExplainText>
 
                 <ModalFooter
