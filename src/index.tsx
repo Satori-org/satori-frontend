@@ -1,4 +1,4 @@
-import React, {Suspense} from 'react';
+import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
@@ -7,19 +7,18 @@ import {Provider} from "react-redux";
 import { store } from './store';
 import 'src/locales/i18n';
 import { UseWalletProvider } from 'use-wallet';
-import {chainID} from "./contract/config";
 import { Decimal } from 'decimal.js';
 
 Decimal.set({
     precision: 30
-})
+});
 
 ReactDOM.render(
-    <UseWalletProvider chainId={chainID}>
-        <Provider store={store}>
+    <Provider store={store}>
+        <UseWalletProvider chainId={store.getState().network.project.chainid}>
             <App  />
-        </Provider>
-    </UseWalletProvider>,
+        </UseWalletProvider>
+    </Provider>,
     document.getElementById('root')
 );
 

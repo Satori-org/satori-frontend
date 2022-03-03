@@ -6,8 +6,7 @@ import Form from "../form/Form";
 import {withdraw} from "src/ajax/contract/contract";
 import {useEffectState} from "src/hooks/useEffectState";
 import {NUMBER_REG} from "src/common/regExp";
-import {checkHashStatus, unpackEIP712} from 'src/contract/wallet';
-import {project} from "src/contract/config";
+import {unpackEIP712} from 'src/contract/wallet';
 import {
     awaitWrap,
     fixedNumber,
@@ -41,14 +40,14 @@ export default function WithdrawModal(props: IProps) {
     const storeData = store.getState();
     const [reducerState] = useExchangeStore();
     const { theme } = useTheme();
-    const { signMsg, NewWriteContract } = usePluginModel();
+    const { signMsg, NewWriteContract, project, checkHashStatus } = usePluginModel();
     const state = useEffectState({
         amount: "",
         loading: false
     });
 
-    const Satori = project.contracts.Satori;
-    const Proxy = project.contracts.Proxy;
+    // const Satori = project.contracts.Satori;
+    // const Proxy = project.contracts.Proxy;
 
     const { walletBalance } = useAccountInfo(reducerState.currentPair.settleCoinId);
 
@@ -77,7 +76,7 @@ export default function WithdrawModal(props: IProps) {
         if (res) {
             const resData = res.data;
             const [r,v,s] = unpackEIP712(resData.signHash);
-            const contract = NewWriteContract(Proxy.address, Satori.abi);
+            const contract = NewWriteContract(project.contracts.Proxy.address, project.contracts.Satori.abi);
             const [transInfo, error] = await awaitWrap(contract.withdraw(resData.amount, resData.expireTime, resData.salt, v, r, s));
             if (error) {
                 showError(error);

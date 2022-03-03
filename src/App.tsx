@@ -4,15 +4,11 @@ import './assets/css/animate.css';
 import RouterView from "./router/RouterView";
 import {AppStyle} from "./styles/App.style";
 import connect, {IConnectProps} from "./store/connect";
-import plusReady from "./contract/plusReady";
 import {ethers} from "ethers";
-import {chainID} from "./contract/config";
-import {Toast} from "./components/toast/Toast";
 import {withTranslation, WithTranslation} from "react-i18next";
-import {getWalletProvider} from "./config";
 import Header from "./components/header/Header";
 import {generateNonce, getUserToken} from "./ajax/auth/auth";
-import {getWallet, signString} from "./contract/wallet";
+import {signString} from "./contract/wallet";
 import {ThemeProviderWrapper} from "./ThemeProviderWrapper";
 import {awaitWrap, showMessage} from "./common/utilTools";
 

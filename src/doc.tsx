@@ -6,15 +6,14 @@ import {Provider} from "react-redux";
 import { store } from './store';
 import 'src/locales/i18n';
 import { UseWalletProvider } from 'use-wallet';
-import {chainID} from "./contract/config";
 import AppDoc from './AppDoc';
 
 ReactDOM.render(
-    <UseWalletProvider chainId={chainID}>
-        <Provider store={store}>
+    <Provider store={store}>
+        <UseWalletProvider chainId={store.getState().network.project.chainid}>
             <AppDoc  />
-        </Provider>
-    </UseWalletProvider>,
+        </UseWalletProvider>
+    </Provider>,
     document.getElementById('root')
 );
 

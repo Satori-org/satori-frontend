@@ -6,7 +6,6 @@ import Form from "../form/Form";
 import {useStore} from "react-redux";
 import {IState} from "src/store/reducer";
 import {useEffectState} from "src/hooks/useEffectState";
-import {project} from "src/contract/config";
 import {
     awaitWrap, fixedNumber,
     isInputNumber,
@@ -40,16 +39,16 @@ export default function DepositModal(props: IProps) {
     const dispatch = mapDispatchToProps(store.dispatch);
     const [reducerState] = useExchangeStore();
     const { theme } = useTheme();
-    const { needApprove, approve, checkHashStatus, NewWriteContract } = usePluginModel();
+    const { needApprove, approve, checkHashStatus, NewWriteContract, project } = usePluginModel();
     const state = useEffectState({
         approveStatus: false,
         loading: false,
         amount: ""
     });
 
-    const USDC = project.contracts.USDC;
+    /*const USDC = project.contracts.USDC;
     const Satori = project.contracts.Satori;
-    const Proxy = project.contracts.Proxy;
+    const Proxy = project.contracts.Proxy;*/
 
     const {walletBalance } = useAccountInfo(reducerState.currentPair.settleCoinId);
 
@@ -62,9 +61,9 @@ export default function DepositModal(props: IProps) {
     async function checkApproveStatus() {
         if (storeData.address) {
             const a = {
-                token: USDC.address,
+                token: project.contracts.USDC.address,
                 owner: storeData.address,
-                spender: Proxy.address
+                spender: project.contracts.Proxy.address
             };
             state.loading = true;
             state.approveStatus = await needApprove(a);
@@ -74,9 +73,9 @@ export default function DepositModal(props: IProps) {
 
     async function approveToken() {
         const a = {
-            token: USDC.address,
+            token: project.contracts.USDC.address,
             owner: storeData.address,
-            spender: Proxy.address
+            spender: project.contracts.Proxy.address
         };
         state.loading = true;
         const [transInfo, error] = await awaitWrap(approve(a));
@@ -110,9 +109,9 @@ export default function DepositModal(props: IProps) {
             showMessage(`Please enter the quantity`);
             return ;
         }
-        const contract = NewWriteContract(Proxy.address, Satori.abi);
+        const contract = NewWriteContract(project.contracts.Proxy.address, project.contracts.Satori.abi);
         state.loading = true;
-        let [transInfo, error] = await awaitWrap(contract.deposit(getInput(state.amount,  USDC.decimals)));
+        let [transInfo, error] = await awaitWrap(contract.deposit(getInput(state.amount,  project.contracts.USDC.decimals)));
         if (error) {
             showError(error);
         } else {

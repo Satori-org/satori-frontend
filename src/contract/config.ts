@@ -4,8 +4,8 @@ export const project_Moonbeam = require('./projects/project_moonbeam.json');
 export const project_Astar = require('./projects/project_astar.json');
 export const project = require('./project.json');
 
-export const chainID = project.chainid;
-export const chainNode = project.node;
+//export const chainID = project.chainid;
+//export const chainNode = project.node;
 
 export const precision = 6;
 

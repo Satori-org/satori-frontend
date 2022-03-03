@@ -2,12 +2,11 @@ import {useStore} from "react-redux";
 import {IState} from "../store/reducer";
 import Web3 from "web3";
 import {BigNumber, ethers} from "ethers";
-import {getWalletProvider} from "../config";
-import {getProvider, NewReadContract, NewWriteContract} from "../contract/wallet";
 import {useMemo} from "react";
-import {chainNode, erc20, MaxApproveBalance, minAllowance} from "../contract/config";
+import {erc20, MaxApproveBalance, minAllowance} from "../contract/config";
 import {ITrans} from "../contract/types";
 import PubSub from "pubsub-js";
+import {Decimal} from "decimal.js";
 
 interface ISignatrua {
     origin: string
@@ -122,6 +121,15 @@ export function usePluginModel() {
         });
     }
 
+    async function getTokenBalance(account: string, address: string): Promise<number> {
+        let contract = NewReadContract(address, erc20);
+        let [balance, decimals] = await Promise.all([
+            contract.balanceOf(account),
+            contract.decimals(),
+        ]);
+        return Decimal.div( balance.toString(), Math.pow(10, decimals)).toNumber();
+    }
+
 
     return {
         signMsg,
@@ -132,6 +140,8 @@ export function usePluginModel() {
         getProvider,
         checkHashStatus,
         needApprove,
-        approve
+        approve,
+        project: storeData.network.project,
+        getTokenBalance
     };
 }
