@@ -2,11 +2,13 @@
 html body {
     margin: 0;
     min-width: 1380px;
+    height: 100vh;
     line-height: initial;
     font-family: NHaas, Helvetica, Montserrat-Regular, PingFang SC, Microsoft YaHei, SourceHanSerifCN-Medium, robotoregular, Hiragino Sans GB, Heiti SC, WenQuanYi Micro Hei, Helvetica, Arial, monospace, serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    overflow-x: auto;
+    /*overflow-x: auto;*/
+    overflow: hidden;
 }
 body{
     font-size: 0.12rem;

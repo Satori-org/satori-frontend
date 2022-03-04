@@ -11,6 +11,7 @@ import {generateNonce, getUserToken} from "./ajax/auth/auth";
 import {signString} from "./contract/wallet";
 import {ThemeProviderWrapper} from "./ThemeProviderWrapper";
 import {awaitWrap, showMessage} from "./common/utilTools";
+import {UseWalletProvider} from "use-wallet";
 
 interface IProps extends IConnectProps, WithTranslation{
 
@@ -116,12 +117,14 @@ class App extends React.Component<IProps, any>{
 
     render(): React.ReactElement<any, string | React.JSXElementConstructor<any>> | string | number | {} | React.ReactNodeArray | React.ReactPortal | boolean | null | undefined {
         return (
-            <ThemeProviderWrapper>
-                <AppStyle className="App font12">
-                    <Header />
-                    <RouterView></RouterView>
-                </AppStyle>
-            </ThemeProviderWrapper>
+            <UseWalletProvider chainId={this.props.redux.network.project.chainid}>
+                <ThemeProviderWrapper>
+                    <AppStyle className="App font12">
+                        <Header />
+                        <RouterView></RouterView>
+                    </AppStyle>
+                </ThemeProviderWrapper>
+            </UseWalletProvider>
         );
     }
 }

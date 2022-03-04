@@ -6,18 +6,20 @@ type IProps = {
 export const PercentStyle = styled.div<IProps>`
     display: grid;
     grid-template-columns: repeat(${(props: IProps) => props.length}, 1fr);
-    grid-column-gap: 8px;
-    margin-top: 20px;
+    grid-column-gap: 0.18rem;
+    margin-top: 0.12rem;
     .percentItem{
-        height: 32px;
+        height: 0.24rem;
         text-align: center;
-        border: 1px solid #525150;
-        border-radius: 6px;
+        background: ${({theme}) => theme.colors.inputBtnBgColor};
+        color: ${({theme}) => theme.colors.inputBtnColor};
+        /*border: 1px solid #525150;*/
+        border-radius: 0.08rem;
         box-sizing: border-box;
         cursor:pointer;
-        &.active{
+        /*&.active{
             background: ${({theme}) => theme.colors.boxBgColor};
             border: none;
-        }
+        }*/
     }
 `;

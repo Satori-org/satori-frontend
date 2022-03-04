@@ -86,12 +86,12 @@ export const Lever = styled.div`
         margin-left: 1px;
         flex: 1;
         height: 0.12rem;
-        color: transparent;
-        background: transparent;
-        &:focus{
+        color: ${({theme}) => theme.colors.baseColor};
+        background: ${({theme}) => theme.colors.inputBgColor};
+        /*&:focus{
             border-left: 1px solid ${({theme}) => theme.colors.baseColor};
             animation: ${loading_rotate} 1s infinite steps(1, start);
-        }
+        }*/
         
     }
 `;

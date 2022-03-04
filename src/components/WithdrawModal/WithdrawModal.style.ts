@@ -30,7 +30,7 @@ export const RightBtn = styled.button`
     box-sizing: border-box;
     /*color: ${({theme}) => theme.colors.headerButtonColor};
     background: ${({theme}) => theme.colors.confirmColor};*/
-    color: ${({theme}) => theme.colors.confirmColor};
+    color: ${({theme}) => theme.colors.inputBtnColor};
     background: ${({theme}) => theme.colors.inputBtnBgColor};
     border-radius: 0.08rem;
     margin-left:  0.08rem;

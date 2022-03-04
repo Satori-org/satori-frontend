@@ -5,8 +5,9 @@
 
 #root{
     /*position: absolute;
-    inset: 0;
-    margin-right: -17px;*/
-    overflow-y: auto;
+    inset: 0;*/
     min-width: 1380px;
+    height: 100%;
+    margin-right: -17px;
+    overflow-y: auto;
 }

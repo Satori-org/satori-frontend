@@ -32,7 +32,7 @@ export function ClosePositionModal(props: IProps) {
     const [ reducerState ] = useExchangeStore();
     const {theme} = useTheme();
     const {signMsg} = usePluginModel();
-    const placeholderText = "0.0000";
+    const placeholderText = "0";
     const state = useEffectState({
         price: "",
         quantity: "",
@@ -152,10 +152,11 @@ export function ClosePositionModal(props: IProps) {
                             inputStyle={{textAlign: "right", color: theme.colors.labelColor, marginRight: "0.04rem"}}
                             style={{marginBottom: "0.16rem"}}
                             right={<div className={`flex-row`}>
-                                <button className={"btnText"}  style={{color: theme.colors.labelColor}} onClick={() => state.price = String(reducerState.marketPrice)}>Last</button>
+                                {/*<button className={"btnText"}  style={{color: theme.colors.labelColor}} onClick={() => state.price = String(reducerState.marketPrice)}>Last</button>*/}
+                                <button className={"btnText"}  style={{color: theme.colors.labelColor}}>USDT</button>
                             </div>
                             }
-                            placeholder={state.pricePlaceholder}
+                            /*placeholder={state.pricePlaceholder}*/
                             maxDecimal={symbolDecimal}
                             value={state.price}
                             onChange={(value) => {
@@ -195,7 +196,7 @@ export function ClosePositionModal(props: IProps) {
                                         state.quantityUSDT = "";
                                     }
                                 }}/>
-                            <InputNumber
+                            {/*<InputNumber
                                 style={{marginLeft: "0.04rem", flex: state.showTogglePair?1:0}}
                                 inputStyle={{textAlign: "left"}}
                                 right={
@@ -212,21 +213,21 @@ export function ClosePositionModal(props: IProps) {
                                     } else {
                                         state.quantity = "";
                                     }
-                                }}/>
+                                }}/>*/}
                         </div>
                     </div>
-                    {/*<Percent<number>
-                        data={[{value: 25},{value: 50},{value: 75},{value: 100}]}
+                    <Percent<number>
+                        data={[{value: 10}, {value: 25},{value: 50},{value: 75},{value: 100, text: "Max"}]}
                         value={state.percent}
                         onChange={(value) => {
                             state.percent = value
-                        }} />*/}
+                        }} />
                     {/*<Group className={"flex-sb"} style={{marginTop: "32px"}}>
                         <span className={"label"}>{t(`Fee`)}</span>
-                        <span>{fixedNumberStr("3.35624", USDT_decimal)} USDT</span>
+                        <span>{fixedNumberStr("3.35624", US)} USDT</span>
                     </Group>*/}
-                    <Group className={"flex-sb"} style={{marginTop: "0.28rem"}}>
-                        <span className={"label"}>{t(`Total`)}</span>
+                    <Group className={"flex-sb"} style={{marginTop: "0.24rem"}}>
+                        <span className={"label"}>{t(`Total Price`)}</span>
                         <span>{fixedNumber(amount, USDT_decimal_show)} USDT</span>
                     </Group>
                     <ModalFooter

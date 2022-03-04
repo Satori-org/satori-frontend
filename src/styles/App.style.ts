@@ -7,6 +7,7 @@ export const AppStyle = styled.div`
     background: ${({theme}) => theme.colors.backgroundColor};
     text-align: left;
     box-sizing: border-box;
+    overflow: auto;
     a{
         color: ${({theme}) => theme.colors.baseColor};
         text-decoration: none;

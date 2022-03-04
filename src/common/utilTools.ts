@@ -266,9 +266,9 @@ export function formatNumber(value: number|string, splitor = ",") {
     if (!value) {
         return "-";
     }
-    let amount = Number(value);
-    if (amount > 1000) {
-        let numAry = String(amount).split('.');
+    //let amount = Number(value);
+    if (Number(value) > 1000) {
+        let numAry = String(value).split('.');
         let numStr = numAry[0].split("").reverse().join("");
         let length = numStr.length;
         let newStr = numStr.replace(/\d{3}/gi, function(a, b){
@@ -280,7 +280,7 @@ export function formatNumber(value: number|string, splitor = ",") {
         });
         return newStr.split("").reverse().join("") + (numAry[1]?`.${numAry[1]}`:'');
     }
-    return amount;
+    return value;
 }
 
 export function styleToString(style: CSSProperties) {

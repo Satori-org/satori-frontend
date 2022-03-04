@@ -515,14 +515,17 @@ export default function Trade(props: IProps) {
                         <div style={{position: "relative"}} className={"flex-row"}>
                             <Lever className={"flex-sb"}>
                                 <div className={"flex-row"}>
-                                    <Toggle vIf={!!state.lever}>
+                                    {/*<Toggle vIf={!!state.lever}>
                                         <span>{state.lever}x</span>
-                                    </Toggle>
+                                    </Toggle>*/}
                                     <input type="text" className={"leverText"}
-                                           value={state.lever}
+                                           value={state.lever ? `${state.lever}x` : ''}
                                            onBlur={() => setLever(Number(state.lever))}
                                            onChange={(event) => {
-                                                let value = event.target.value;
+                                                /*let str = event.target.value.includes("x") ? */
+                                                let value = event.target.value.includes("x")
+                                                        ? event.target.value.replace(/x/g, "")
+                                                        : (state.lever ? event.target.value.slice(0,-1) : event.target.value);
                                                 if ((value === "" || isIntNumber(value))) {
                                                     let number_val = Number(value);
                                                     if(value && number_val < reducerState.currentPair.minLever) {
@@ -532,8 +535,9 @@ export default function Trade(props: IProps) {
                                                     } else {
                                                         //reducerState.leverage = value;
                                                        // mapDispatch.setLeverage(value);
-                                                        state.lever = value;
+
                                                     }
+                                                    state.lever = value;
                                                 }
                                             }}/>
                                 </div>

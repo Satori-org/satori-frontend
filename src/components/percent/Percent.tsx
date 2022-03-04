@@ -2,6 +2,7 @@ import React, {useEffect} from 'react';
 import { useTranslation } from 'react-i18next';
 import { PercentStyle } from './Percent.style';
 import {useEffectState} from "../../hooks/useEffectState";
+import Toggle from "../toggle/Toggle";
 
 type IOption<T> = {text?: string, value: T}
 type IProps<T = number> = {
@@ -53,7 +54,12 @@ export default function Percent<T>(props: IProps<T>) {
                                 onClick={() => {
                                     state.active = index;
                                     state.selected = item;
-                                }}>{item.value}%</div>
+                                }}>
+                        <Toggle vIf={!!item.text}>
+                            <span>{item.text}</span>
+                            <span>{item.value}%</span>
+                        </Toggle>
+                    </div>
                 })
             }
         </PercentStyle>

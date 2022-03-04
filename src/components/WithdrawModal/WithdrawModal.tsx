@@ -132,12 +132,12 @@ export default function WithdrawModal(props: IProps) {
                     <span>{walletBalance} USDT</span>
                 </Group>*/}
                 <Group className={"flex-sb"}>
-                    <span className={"label"}>{t(`Account Balance`)}</span>
-                    <span>{reducerState.accountInfo.availableAmount || "--"} USDT</span>
+                    <span className={"label"}>{t(`Wallet Balance`)}</span>
+                    <span>{ walletBalance } USDT</span>
                 </Group>
                 <Group className={"flex-sb"}>
-                    <span className={"label"}>{t(`Wallet Balance`)}</span>
-                    <span>{walletBalance || "--"} USDT</span>
+                    <span className={"label"}>{t(`Account Balance`)}</span>
+                    <span>{reducerState.accountInfo.availableAmount || "--"} USDT</span>
                 </Group>
                 {/*<AssetBox className={"flex-sb"}>
                     <span className={"label"}>{t(`Assets`)}</span>
