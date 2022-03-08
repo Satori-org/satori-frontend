@@ -4,8 +4,7 @@ import {fonts} from "src/styles/style";
 export const TokenInfoStyle = styled.div`
     position: relative;
     background: ${({theme}) => theme.colors.backgroundColor};
-    margin-top: 0.2rem;
-    margin-bottom: 0.16rem;
+    height: 0.56rem;
 `;
 
 export const Hr = styled.hr`
@@ -39,18 +38,31 @@ export const TokenData = styled.div`
         }
     }
     .dataGroup{
+        position: relative;
         min-width: 1.05rem;
         display: flex;
         flex-direction: column;
         align-items: flex-start;
         padding: 0 0.16rem;
         box-sizing: border-box;
-        border-left: 1px solid ${({theme}) => theme.colors.tokenBorderColor};
+        //border-left: 1px solid ${({theme}) => theme.colors.tokenBorderColor};
+        line-height: 0.18rem;
+        &:before{
+            content: "";
+            display: inline-block;
+            height: 0.32rem;
+            width: 1px;
+            position: absolute;
+            left: 0;
+            top: 0;
+            background: ${({theme}) => theme.colors.tokenBorderColor};
+        }
         &:not(:last-child){
             /*margin-right: 24px;*/
         }
         .label{
             font-size: 0.1rem;
+            line-height: 0.12rem;
             /*font-weight: bold;*/
             color: ${({theme}) => theme.colors.labelColor};
             /*padding-bottom: 2px;*/

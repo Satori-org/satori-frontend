@@ -200,7 +200,7 @@ export default function ConnectWalletModal(props: IProps) {
                 <WalletList>
                     {
                         storeData.network.wallet.map((item, index) => {
-                            return <WalletBox key={item.name} onClick={() => onSelect(item)}>
+                            return <WalletBox key={item.name} style={item.style} onClick={() => onSelect(item)}>
                                 <img src={item.icon} className={"icon"} alt=""/>
                                 <span>{item.name}</span>
                             </WalletBox>

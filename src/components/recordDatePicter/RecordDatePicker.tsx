@@ -22,10 +22,10 @@ export default function RecordDatePicker(props: IProps) {
 
     const dates = useMemo(() => {
         return [
-            {text: t(`1Day`), value: 2},
-            {text: t(`1Week`), value: 3},
-            {text: t(`1Month`), value: 4},
-            {text: t(`3Months`), value: 5},
+            {text: t(`1 Day`), value: 2},
+            {text: t(`1 Week`), value: 3},
+            {text: t(`1 Month`), value: 4},
+            {text: t(`3 Months`), value: 5},
         ]
     }, [t]);
 
@@ -43,7 +43,7 @@ export default function RecordDatePicker(props: IProps) {
                     })
                 }
             </DateTab>
-            <div className={"flex-row"} style={{marginLeft: "32px", fontSize: "16px"}}>
+            <div className={"flex-row"} style={{marginLeft: "32px", fontSize: "0.12rem"}}>
                 <span className={"label"} style={{marginRight: "12px"}}>{t(`Time`)}</span>
                 {/*<DatePicker
                     customInput={<DateContainer className={"flex-row"}>

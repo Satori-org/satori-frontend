@@ -79,7 +79,7 @@ function Row(props: IRow) {
         let decimal = rowPair.settleCoin && rowPair.settleCoin.settleDecimal || 2;
         let profit = Decimal.sub(pairQuotation.lastPrice ,props.item.openingPrice).mul(props.item.quantity).toFixed();
         let amount = Decimal.mul(props.item.openingPrice, props.item.quantity).toFixed();
-        let percent = fixedNumber( Decimal.div(profit, props.item.marginAmount).mul(100).toFixed(), 2 );
+        let percent = fixedNumber( Decimal.div(profit, props.item.amount).mul(props.item.lever).mul(100).toFixed(), 2 );
 
         //obj.profit = props.item.isLong ? fixedNumber(profit, decimal) : 0 - fixedNumber(profit, decimal);
         let dicProfit = props.item.isLong ? profit : Decimal.sub(0, profit);

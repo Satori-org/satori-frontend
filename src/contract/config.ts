@@ -14,9 +14,9 @@ export const minAllowance = "10000000000000000000000000";
 export const zeroAddress = "0x0000000000000000000000000000000000000000";
 
 export const WALLETS = {
-    metamask: {name: "MetaMask", icon: require("src/assets/images/MetaMask.png"), plugin: "ethereum"},
-    clover: {name: "Clover Wallet", icon: require("src/assets/images/clover.png"), plugin: "clover"},
-    polkadot: {name: "Polkadot{.js}", icon: require("src/assets/images/Polkadot.png"), plugin: "polkadot"},
+    metamask: {name: "MetaMask", icon: require("src/assets/images/MetaMask.png"), plugin: "ethereum", style: {width: "1.2rem", paddingLeft: "0.09rem"}},
+    clover: {name: "Clover Wallet", icon: require("src/assets/images/clover.png"), plugin: "clover", style: {width: "1.34rem", paddingLeft: "0.1rem"}},
+    polkadot: {name: "Polkadot{.js}", icon: require("src/assets/images/Polkadot.png"), plugin: "polkadot", style: {width: "1.14rem", paddingLeft: "0.09rem"}},
 };
 export type IWallet = typeof WALLETS.metamask;
 /*export type IChain = {

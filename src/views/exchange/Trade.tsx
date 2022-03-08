@@ -25,7 +25,7 @@ import useTheme from "src/hooks/useTheme";
 import Toggle from "src/components/toggle/Toggle";
 import InputNumber from "src/components/inputNumber/InputNumber";
 import Divider from "src/components/divider/Divider";
-import {mapExchangeDispatch} from "./exchangeReducer";
+import {exchangeActions, mapExchangeDispatch} from "./exchangeReducer";
 import {USDT_decimal_show} from "src/config";
 import {usePluginModel} from "src/hooks/usePluginModel";
 import {fetchPost, useFetchGet, useFetchPost} from "../../ajax";
@@ -54,6 +54,7 @@ export default function Trade(props: IProps) {
         disabledCtroll: false,
         quantity: "",
         quantityUSDT: "",
+        reversePair: false,   // false: Symbol to USDT,  true: USDT to Symbol
         quantityPlaceholder: placeholderText,
         price: "",
         pricePlaceholder: placeholderText,
@@ -188,22 +189,31 @@ export default function Trade(props: IProps) {
         }
     }, [state.orderType, ExpectedPrice, state.price]);
 
+    useEffect(() => {
+        if (state.reversePair && state.quantityUSDT && reversePrice) {
+            state.quantity = fixedNumber(Decimal.div(state.quantityUSDT, reversePrice).toFixed(), symbolDecimal).toString();
+        }
+        if (!state.reversePair && state.quantity && reversePrice) {
+            state.quantityUSDT = fixedNumber(Decimal.mul(state.quantity, reversePrice).toFixed(), symbolDecimal).toString();
+        }
+    }, [reversePrice, state.reversePair]);
+
     const orderTotalAmount = useMemo(() => {
-        if (!state.quantity || !reducerState.leverage) {
+        if (!state.quantity || !state.lever) {
             return "0";
         }
         if (isLimit) {
             if (state.isLong) {
-                return Decimal.mul(state.price || 0, state.quantity || 0).div(reducerState.leverage).toFixed();
+                return Decimal.mul(state.price || 0, state.quantity || 0).div(state.lever).toFixed();
             } else {
                 let arr = [state.price, props.longPrice];
                 let r = arr.filter((item) => !!item);
                 // @ts-ignore
                 let maxPrice = Math.max(...r);
-                return Decimal.mul(maxPrice || 0, state.quantity || 0).div(reducerState.leverage).toFixed();
+                return Decimal.mul(maxPrice || 0, state.quantity || 0).div(state.lever).toFixed();
             }
         } else if(ExpectedPrice) {
-            return Decimal.mul(ExpectedPrice, state.quantity).div(reducerState.leverage).toFixed();
+            return Decimal.mul(ExpectedPrice, state.quantity).div(state.lever).toFixed();
         } else {
             return "0";
         }
@@ -229,7 +239,7 @@ export default function Trade(props: IProps) {
                 return "0";
             }
         }*/
-    }, [state.isLong, isLimit, state.price, state.quantity, reducerState.leverage, props.longPrice, ExpectedPrice]);
+    }, [state.isLong, isLimit, state.price, state.quantity, state.lever, props.longPrice, ExpectedPrice]);
     const orderFee = useMemo(() => {
         let margin = orderTotalAmount || 0;
         let rate = reducerState.currentPair.tradeFeeRate || 0;
@@ -477,6 +487,7 @@ export default function Trade(props: IProps) {
                                     onChange={(value) => {
                                         //state.percent = 0;
                                         state.quantity = value;
+                                        state.reversePair = false;
                                         if (value && reversePrice) {
                                             state.quantityUSDT = fixedNumberStr(Decimal.mul(value, reversePrice).toFixed(), USDT_decimal_show);
                                         } else {
@@ -495,6 +506,7 @@ export default function Trade(props: IProps) {
                                     onChange={(value) => {
                                         //state.percent = 0;
                                         state.quantityUSDT = value;
+                                        state.reversePair = true;
                                         if (value && reversePrice) {
                                             state.quantity = fixedNumberStr(Decimal.div(value, reversePrice).toFixed(), symbolDecimal);
                                         } else {

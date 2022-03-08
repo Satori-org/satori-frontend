@@ -11,7 +11,7 @@ export const BookStyle = styled.div`
     display: flex;
     flex-direction: column;
     background: ${({theme}) => theme.colors.boxBgColor};
-    margin: 0 1px;
+    /*margin: 0 1px;*/
     flex-shrink: 0;
     height: 100%;
     overflow-y: hidden;
@@ -118,8 +118,11 @@ export const RowContainer = styled.div`
 
 export const Row = styled.div`
     display: flex;
-    line-height: 0.24rem;
+    line-height: 0.18rem;
     font-size: 0.12rem;
+    &:not(:last-child){
+        margin-bottom: 0.06rem;
+    }
     .long{
         color: ${({theme}) => theme.colors.long};
     }
@@ -146,7 +149,7 @@ export const Spread = styled.div`
     box-sizing: border-box;
     border-top: 1px solid ${({theme}) => theme.colors.borderColor2};
     border-bottom: 1px solid ${({theme}) => theme.colors.borderColor2};
-    margin: 0.04rem 0;
+    margin: 0.08rem 0;
     span{
         &:first-child{
             text-align: left;

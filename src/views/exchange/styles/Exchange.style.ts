@@ -17,7 +17,7 @@ export const ExchangeStyle = styled.div`
         /*height: calc(100% - 35.3vh - 80px);*/
         /*flex: 1;
         height: 0;*/
-        height: 5rem;
+        height: 5.07rem;
         margin-bottom: 1px;
         border-top-right-radius: ${borderRadius};
         border-top-left-radius: ${borderRadius};

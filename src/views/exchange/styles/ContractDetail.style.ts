@@ -14,7 +14,9 @@ export const ContractDetailContent = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    height: 100%;
     padding-bottom: 0.16rem;
+    box-sizing: border-box;
 `;
 
 export const ConnectModal = styled.div`

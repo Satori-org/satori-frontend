@@ -8,6 +8,6 @@
     inset: 0;*/
     min-width: 1380px;
     height: 100%;
-    margin-right: -17px;
+    /*margin-right: -17px;*/
     overflow-y: auto;
 }

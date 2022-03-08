@@ -3,11 +3,11 @@ import {colors} from "../../styles/style";
 
 export const ConectWalletStyle = styled.div`
     position: relative;
-    min-width: 1.17rem;
+    width: 1.32rem;
     line-height: 0.32rem;
     background: ${({theme}) => theme.colors.boxBgColor};
     /*color: ${({theme}) => theme.colors.linkDefaultColor};*/
-    padding: 0 16px;
+    padding-left: 0.12rem;
     box-sizing: border-box;
     text-align: center;
     cursor:pointer;

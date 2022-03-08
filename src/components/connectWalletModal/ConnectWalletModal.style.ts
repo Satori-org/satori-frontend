@@ -102,7 +102,7 @@ export const WalletBox = styled.div`
     align-items: center;
     min-width: 1.14rem;
     height: 0.4rem;
-    padding: 0.08rem;
+    /*padding: 0.08rem;*/
     border-radius: 0.08rem;
     background: ${({theme}) => theme.colors.walletBtnBgColor};
     color: ${({theme}) => theme.colors.walletBtnColor};

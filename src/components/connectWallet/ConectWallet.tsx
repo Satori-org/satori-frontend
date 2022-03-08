@@ -127,23 +127,23 @@ export default function ConectWallet(props: IProp) {
     return (
         <div>
             <ConectWalletStyle
-                className={`borderRadius ${storeData.address ? '' : 'disconnect'}`}
+                className={`borderRadius ${storeData.token ? '' : 'disconnect'}`}
                 style={props.style}
                 onMouseOver={() => {
-                    if (storeData.address) {
+                    if (storeData.token) {
                         state.showDropMenu = true;
                     }
                 }}
                 onMouseLeave={() => state.showDropMenu = false}
                 onClick={(event) => {
-                    if (!storeData.address) {
+                    if (!storeData.token) {
                         state.showModal = true;
                     } else {
                         state.showDropMenu = true;
                         event.stopPropagation();
                     }
                 }}>
-                <Toggle vIf={!!storeData.address}>
+                <Toggle vIf={!!storeData.token}>
                     <div className={"flex-row"}>
                         <span>{formatAddress(storeData.address)}</span>
                         <img src={isDark ? require("src/assets/images/dark/icon_arrow_down.png") : require("src/assets/images/light/icon_arrow_down.png")} className={"arrow"} alt=""/>
@@ -166,6 +166,7 @@ export default function ConectWallet(props: IProp) {
                                     <span>{t(`Copy address`)}</span>
                                 </CopyToClipboard>
                             </li>
+                            <li className="flex-box menuItem" onClick={() => state.showEmailModal = true}>{t(`Connect with Email`)}</li>
                             <li className="flex-box menuItem exit"
                                 onClick={() => {
                                     disconnect();
@@ -173,7 +174,6 @@ export default function ConectWallet(props: IProp) {
                                     state.showDropMenu = false;
                                 }}
                             >{t(`Disconnect`)}</li>
-                            <li className="flex-box menuItem" onClick={() => state.showEmailModal = true}>{t(`Connect with Email`)}</li>
                         </DropMenu>
                     </DropMenuContainer>
                 </Toggle>

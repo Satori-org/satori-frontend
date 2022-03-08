@@ -28,7 +28,7 @@ export default function Book(props: IProps) {
         <BookStyle>
             <Tab
                 options={[
-                    {text: t(`OrderBook`), value: 0},
+                    {text: t(`Order Book`), value: 0},
                     {text: t(`Latest Transactions`), value: 1}
                 ]}
                 onChange={(value) => {

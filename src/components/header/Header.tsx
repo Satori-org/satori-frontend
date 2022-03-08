@@ -26,7 +26,7 @@ export default function Header(props: IProps) {
     });
 
     function showWait() {
-        showMessage(t(`Stay tuned`), MsgStatus.warn)
+        showMessage(t(`Coming soon`), MsgStatus.warn)
     }
 
     return (
