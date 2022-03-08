@@ -24,6 +24,7 @@ export const ListContainer = styled.div`
     flex-direction: column;
     /*height: calc(100% - 50px);*/
     height: calc(100% - 0.4rem);
+    flex: 1;
     overflow-y: hidden;
     padding-top: 0.1rem;
     &::-webkit-scrollbar-thumb{
@@ -84,7 +85,9 @@ export const LabelBox = styled.div`
             text-align: left;
         }
         &:last-child{
-            min-width: 1.07rem;
+            min-width: 0.88rem;
+            padding-left: 0.08rem;
+            box-sizing: border-box;
         }
     }
 `;
@@ -136,7 +139,9 @@ export const Row = styled.div`
             text-align: left;
         }
         &:last-child{
-            min-width: 1.07rem;
+            min-width: 0.88rem;
+            padding-left: 0.08rem;
+            box-sizing: border-box;
         }
     }
 `;
@@ -145,10 +150,11 @@ export const Spread = styled.div`
     /*border-bottom: 1px solid #1C1F2C;
     border-top: 1px solid #1C1F2C;*/
     font-size: 0.14rem;
-    padding: 0.08rem 0;
+    height: 0.34rem;
     box-sizing: border-box;
     border-top: 1px solid ${({theme}) => theme.colors.borderColor2};
     border-bottom: 1px solid ${({theme}) => theme.colors.borderColor2};
+    box-sizing: border-box;
     margin: 0.08rem 0;
     span{
         &:first-child{

@@ -62,7 +62,7 @@ export default function Trade(props: IProps) {
         loading: false,
         accountInfo: {} as IAccount,
         percent: 0,
-        lever: "",
+        lever:  localStorage.getItem("leverage") || "",
         levers: [5, 10 ,20],
         showTogglePair: false
     });
@@ -99,21 +99,22 @@ export default function Trade(props: IProps) {
         }
     }, [isLimit]);
     /*useEffect(() => {
-        let lever = Number(reducerState.leverage);
-        if (!reducerState.leverage || !isNumber(reducerState.leverage)) {
+        let lever = Number(state.lever);
+        if (!state.lever || !isNumber(state.lever)) {
             showMessage(t(`Please enter leverage`));
         } else if(lever < reducerState.currentPair.minLever) {
             showMessage(t(`Below leverage min：`) + reducerState.currentPair.minLever);
         } else if(lever > reducerState.currentPair.maxLever){
             showMessage(t(`Exceeds leverage maximum：`) + reducerState.currentPair.maxLever);
         }
-    }, [t, reducerState.leverage, reducerState.currentPair]);*/
+    }, [t, state.lever, reducerState.currentPair]);*/
 
     const { data: leverData, reload: reloadLever } = useAccountLever({contractPairId: reducerState.currentPair.id}, [reducerState.currentPair.id, storeData.token]);
 
     useEffect(() => {
         if (leverData.lever) {
             state.lever = String(leverData.lever);
+            localStorage.setItem("leverage", String(leverData.lever));
         }
     }, [leverData.lever]);
 
@@ -124,30 +125,30 @@ export default function Trade(props: IProps) {
         return fixedNumber(Decimal.mul(state.quantity, state.price).toFixed(), 3)
     }, [state.quantity, state.price]);
     const longMargin = useMemo(() => {
-        if (!state.quantity || !reducerState.leverage) {
+        if (!state.quantity || !state.lever) {
             return "0";
         }
         if (isLimit) {
-            let amount = Decimal.mul(state.price || 0, state.quantity || 0).div(reducerState.leverage).toFixed();
+            let amount = Decimal.mul(state.price || 0, state.quantity || 0).div(state.lever).toFixed();
             return amount;
         } else {
             let _price = props.shortPrice || reducerState.marketPrice;
             let calcPrice = Decimal.mul(_price, 1 + 0.0005);
-            let amount = Decimal.mul(calcPrice, state.quantity).div(reducerState.leverage).toFixed();
+            let amount = Decimal.mul(calcPrice, state.quantity).div(state.lever).toFixed();
             return amount;
             /* (marker price + marker price/leverage)*quantity/leverage */
-            // let a = Decimal.div(reducerState.marketPrice, reducerState.leverage).toFixed();
-            // let amount = Decimal.add(a, reducerState.marketPrice).mul(state.quantity).div(reducerState.leverage).toFixed();
+            // let a = Decimal.div(reducerState.marketPrice, state.lever).toFixed();
+            // let amount = Decimal.add(a, reducerState.marketPrice).mul(state.quantity).div(state.lever).toFixed();
             return amount
         }
-    }, [isLimit, state.price, state.quantity, reducerState.leverage, reducerState.marketPrice, props.shortPrice]);
+    }, [isLimit, state.price, state.quantity, state.lever, reducerState.marketPrice, props.shortPrice]);
     const longFee = useMemo(() => {
         let margin = longMargin || 0;
         let rate = reducerState.currentPair.tradeFeeRate || 0;
         return Decimal.mul(margin, rate).div(100).toFixed();
     }, [longMargin, reducerState.currentPair.tradeFeeRate]);
     const shortMargin = useMemo(() => {
-        if (!state.quantity || !reducerState.leverage) {
+        if (!state.quantity || !state.lever) {
             return "0";
         }
         if (isLimit) {
@@ -156,16 +157,16 @@ export default function Trade(props: IProps) {
             // @ts-ignore
             let maxPrice = Math.max(...r);
             console.log("maxPrice", maxPrice)
-            let amount = Decimal.mul(maxPrice || 0, state.quantity || 0).div(reducerState.leverage).toFixed();
+            let amount = Decimal.mul(maxPrice || 0, state.quantity || 0).div(state.lever).toFixed();
             return amount;
         } else if (reducerState.marketPrice){
             let _price = props.longPrice ? Math.max(Number(props.longPrice), reducerState.marketPrice) : reducerState.marketPrice;
-            let amount = Decimal.mul(_price, state.quantity).div(reducerState.leverage).toFixed();
+            let amount = Decimal.mul(_price, state.quantity).div(state.lever).toFixed();
             return amount
         } else {
             return "0";
         }
-    }, [isLimit, state.price, state.quantity, reducerState.leverage, reducerState.marketPrice, props.longPrice]);
+    }, [isLimit, state.price, state.quantity, state.lever, reducerState.marketPrice, props.longPrice]);
     const shortFee = useMemo(() => {
         let margin = shortMargin || 0;
         let rate = reducerState.currentPair.tradeFeeRate || 0;
@@ -219,11 +220,11 @@ export default function Trade(props: IProps) {
         }
         /*if (state.isLong) {
             if (isLimit) {
-                return Decimal.mul(state.price || 0, state.quantity || 0).div(reducerState.leverage).toFixed();
+                return Decimal.mul(state.price || 0, state.quantity || 0).div(state.lever).toFixed();
             } else {
                 /!*let _price = props.shortPrice || reducerState.marketPrice;
                 let calcPrice = Decimal.mul(_price, 1 + 0.0005);*!/
-                return Decimal.mul(ExpectedPrice, state.quantity).div(reducerState.leverage).toFixed();
+                return Decimal.mul(ExpectedPrice, state.quantity).div(state.lever).toFixed();
             }
         } else {
             if (isLimit) {
@@ -231,10 +232,10 @@ export default function Trade(props: IProps) {
                 let r = arr.filter((item) => !!item);
                 // @ts-ignore
                 let maxPrice = Math.max(...r);
-                return Decimal.mul(maxPrice || 0, state.quantity || 0).div(reducerState.leverage).toFixed();
+                return Decimal.mul(maxPrice || 0, state.quantity || 0).div(state.lever).toFixed();
             } else if (reducerState.marketPrice){
                 //let _price = props.longPrice ? Math.max(Number(props.longPrice), reducerState.marketPrice) : reducerState.marketPrice;
-                return Decimal.mul(ExpectedPrice, state.quantity).div(reducerState.leverage).toFixed()
+                return Decimal.mul(ExpectedPrice, state.quantity).div(state.lever).toFixed()
             } else {
                 return "0";
             }
@@ -263,7 +264,7 @@ export default function Trade(props: IProps) {
     useEffect(() => {
         //calcSliderValue();
         calcQuantity();
-    }, [props.longPrice, props.shortPrice, isLimit, reducerState.currentPair.tradeFeeRate, state.price, reducerState.marketPrice, reducerState.accountInfo.availableAmount, reducerState.leverage, state.percent, state.orderType]);
+    }, [props.longPrice, props.shortPrice, isLimit, reducerState.currentPair.tradeFeeRate, state.price, reducerState.marketPrice, reducerState.accountInfo.availableAmount, state.lever, state.percent, state.orderType]);
     /*Calculate the number of*/
     function calcQuantity() {
         let price = isLimit ? state.price : reducerState.marketPrice;
@@ -280,15 +281,15 @@ export default function Trade(props: IProps) {
         /* Calculate the number of long and short positions respectively and take the minimum price */
         /* Market and short */
         if (isLimit) {
-            let quantity = Decimal.mul(margin, reducerState.leverage).div(price).toFixed();
+            let quantity = Decimal.mul(margin, state.lever).div(price).toFixed();
             state.quantity = fixedNumberStr(quantity, symbolDecimal)
         } else {
             let long_price = props.shortPrice || reducerState.marketPrice;
             let calcPrice = Decimal.mul(long_price, 1 + 0.0005);
 
-            let quantity_long = Decimal.mul(margin, reducerState.leverage).div(calcPrice).toFixed();
+            let quantity_long = Decimal.mul(margin, state.lever).div(calcPrice).toFixed();
             let _price = props.longPrice ? Math.max(Number(props.longPrice), reducerState.marketPrice) : reducerState.marketPrice;
-            let quantity_short = Decimal.mul(margin, reducerState.leverage).div(_price).toFixed();
+            let quantity_short = Decimal.mul(margin, state.lever).div(_price).toFixed();
 
             let quantity = Number(quantity_long) > Number(quantity_short) ? quantity_short : quantity_long;
             state.quantity = fixedNumberStr(quantity, symbolDecimal);
@@ -297,20 +298,20 @@ export default function Trade(props: IProps) {
 
 
         // if (isLimit) {
-        //     //let amount = Decimal.mul(state.price || 0, state.quantity || 0).div(reducerState.leverage).toFixed();
+        //     //let amount = Decimal.mul(state.price || 0, state.quantity || 0).div(state.lever).toFixed();
         //
-        //     sum = Decimal.mul(margin, reducerState.leverage).div(state.price).toFixed();
+        //     sum = Decimal.mul(margin, state.lever).div(state.price).toFixed();
         // } else {
-        //     let a = Decimal.div(reducerState.marketPrice, reducerState.leverage).toFixed();
+        //     let a = Decimal.div(reducerState.marketPrice, state.lever).toFixed();
         //     let s = Decimal.add(a, reducerState.marketPrice);
-        //     sum =  Decimal.mul(margin, reducerState.leverage).div(s).toFixed();
+        //     sum =  Decimal.mul(margin, state.lever).div(s).toFixed();
         // }
         // state.quantity = sum;
-        /*let a = Decimal.div(reducerState.marketPrice, reducerState.leverage).toFixed();
-        let amount = Decimal.add(a, reducerState.marketPrice).mul(state.quantity).div(reducerState.leverage).toFixed();
+        /*let a = Decimal.div(reducerState.marketPrice, state.lever).toFixed();
+        let amount = Decimal.add(a, reducerState.marketPrice).mul(state.quantity).div(state.lever).toFixed();
 
         let R = Decimal.add(1, fe).mul(price);
-        let quantity = Decimal.mul(reducerState.accountInfo.availableAmount, reducerState.leverage).mul(percent).div(R).toFixed(symbolDecimal);
+        let quantity = Decimal.mul(reducerState.accountInfo.availableAmount, state.lever).mul(percent).div(R).toFixed(symbolDecimal);
         state.quantity = Number(quantity).toString();*/
     }
 
@@ -334,7 +335,7 @@ export default function Trade(props: IProps) {
             showMessage(t(`Please enter the price`));
             return ;
         }
-        if (!isNumber(reducerState.leverage)) {
+        if (!isNumber(state.lever)) {
             showMessage(t(`Please enter leverage`));
             return ;
         }
@@ -354,7 +355,7 @@ export default function Trade(props: IProps) {
             showMessage(t(`Less than minimum：`) +  reducerState.currentPair.minCount);
             return ;
         }
-        if ( Decimal.div(amount, reducerState.leverage).toNumber() > Number(reducerState.accountInfo.availableAmount)) {
+        if ( Decimal.div(amount, state.lever).toNumber() > Number(reducerState.accountInfo.availableAmount)) {
             showMessage(t(`Insufficient available balance`));
             return ;
         }
@@ -363,7 +364,7 @@ export default function Trade(props: IProps) {
         }
         state.loading = true;
         const isClose = false;
-        const total = state.isLong ? Decimal.mul(longMargin, reducerState.leverage).toFixed() : Decimal.mul(shortMargin, reducerState.leverage).toFixed();
+        const total = state.isLong ? Decimal.mul(longMargin, state.lever).toFixed() : Decimal.mul(shortMargin, state.lever).toFixed();
         const [signData, error] = await awaitWrap(signMsg({
             "quantity": state.quantity,
             "address": storeData.address,
@@ -423,14 +424,14 @@ export default function Trade(props: IProps) {
                     <LabelButton>{t(`Isolated`)}</LabelButton>
                     <LabelButton onClick={() => {
                         openModal<ILeverageModal>(LeverageModal, {
-                            defaultValue: String(reducerState.leverage),
+                            defaultValue: String(state.lever),
                             callback(leverage): void {
                                 if (isNumber(leverage)) {
-                                    reducerState.leverage = Number(leverage);
+                                    state.lever = Number(leverage);
                                 }
                             }
                         })
-                    }}>{t(`Leverage`)} {reducerState.leverage}x</LabelButton>
+                    }}>{t(`Leverage`)} {state.lever}x</LabelButton>
                 </div>*/}
                 <Form childRef={childRef} ref={$form}
                       style={{display: "flex", flexDirection: "column", justifyContent: "space-between", height: "100%"}}>
@@ -545,7 +546,7 @@ export default function Trade(props: IProps) {
                                                     } else if(number_val > reducerState.currentPair.maxLever){
                                                         showMessage(t(`Exceeds leverage maximum：`) + reducerState.currentPair.maxLever);
                                                     } else {
-                                                        //reducerState.leverage = value;
+                                                        //state.lever = value;
                                                        // mapDispatch.setLeverage(value);
 
                                                     }
@@ -564,19 +565,19 @@ export default function Trade(props: IProps) {
                                 </div>
                             </Lever>
                             {/*<Input
-                                value={reducerState.leverage}
+                                value={state.lever}
                                 inputStyle={{width: "1rem"}}
                                 placeholder={"0x"}
                                 onChange={(value) => {
-                                    reducerState.leverage = value;
+                                    state.lever = value;
                                 }}
-                                left={<span>{reducerState.leverage}x</span>}
+                                left={<span>{state.lever}x</span>}
                                 right={
                                     <>
                                         {
                                             state.levers.map((item, index) => {
-                                                return <LeverageBtn className={`${Number(reducerState.leverage) === item ? 'active' : ''}`} key={index}
-                                                                    onClick={() => reducerState.leverage = String(item)}>{item}x</LeverageBtn>
+                                                return <LeverageBtn className={`${Number(state.lever) === item ? 'active' : ''}`} key={index}
+                                                                    onClick={() => state.lever = String(item)}>{item}x</LeverageBtn>
                                             })
                                         }
                                     </>

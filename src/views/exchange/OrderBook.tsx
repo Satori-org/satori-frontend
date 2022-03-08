@@ -93,7 +93,7 @@ export default function OrderBook(props: IProps) {
                         })
                     }
                 </RowContainer>
-                <Spread>
+                <Spread className={"flex-row"}>
                     <span className={rise.className}>{formatNumber(fixedNumber(reducerState.tiker.close, USDT_decimal_show))}</span>
                     <Toggle vIf={!!rise.className}>
                         <img

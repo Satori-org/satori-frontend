@@ -24,7 +24,7 @@ export const RowStyle = styled.tr`
 `;
 
 export const CloseBtn = styled.button`
-    min-width: 0.51rem;
+    min-width: 0.49rem;
     height: 0.24rem;
     background: ${({theme}) => theme.colors.inputBtnBgColor};
     font-size: 0.12rem;

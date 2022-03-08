@@ -10,7 +10,7 @@ export const TradingviewToolStyle = styled.div`
     color: ${({theme}) => theme.colors.baseColor};
     margin: 0 0.16rem;
     border-bottom: 1px solid ${({theme}) => theme.colors.borderColor2};
-    
+    box-sizing: border-box;
     .toolItem{
         display: inline-block;
         border-right: 1px solid transparent;

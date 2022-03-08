@@ -10,13 +10,16 @@ export const RecordStyle = styled.div`
 `;
 
 export const RecordHeader = styled.div`
+    height: 0.4rem;
     border-bottom: 1px solid ${({theme}) => theme.colors.borderColor2};
     margin-bottom: 0.08rem;
+    box-sizing: border-box;
 `;
 
 export const RecordTab = styled.div`
-    height: 0.4rem;
+    /*height: 0.4rem;*/
     /*padding: 0 20px;*/
+    height: 100%;
     .tabItem{
         position: relative;
         height: 100%;

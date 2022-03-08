@@ -47,11 +47,13 @@ export const ConnectModal = styled.div`
 `;
 
 export const Title = styled.div`
+    flex-shrink: 0;
+    height: 0.4rem;
     margin-bottom: 0.16rem;
     font-weight: bold;
-    line-height: 0.4rem;
     color: ${({theme}) => theme.colors.baseColor};
     border-bottom: 1px solid ${({theme}) => theme.colors.borderColor2};
+    box-sizing: border-box;
 `;
 
 export const FieldLabel = styled.div`

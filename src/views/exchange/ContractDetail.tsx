@@ -38,7 +38,7 @@ export default function ContractDetail() {
 
     return (
         <ContractDetailStyle>
-            <Title>{t(`Account`)}</Title>
+            <Title className={"flex-row"}>{t(`Account`)}</Title>
             <ContractDetailContent>
                 <div>
                     <FieldLabel className={"flex-sb"}>
