@@ -213,7 +213,7 @@ class Kline extends React.Component<Ikline, any>{
                 fullscreen: false,
                 interval: this.resolution,
                 theme: isDark?'Dark':'Light',
-                timezone: "Asia/Shanghai",
+                timezone: "Etc/UTC",
                 saved_data: this.state.settings?JSON.parse(this.state.settings || ""):null,
                 // datafeed: new Datafeeds.UDFCompatibleDatafeed(websocketAdd, exSymbol),
                 library_path: "/static/tradeview/charting_library/charting_library/",
@@ -228,16 +228,16 @@ class Kline extends React.Component<Ikline, any>{
                 },
                 loading_screen: { backgroundColor: colors.boxBgColor },
                 customFormatters: {
-                    timeFormatter: {
+                    /*timeFormatter: {
                         format: function(date:number) {
-                            return formatDate(date - 8*60*60*1000, "hh:mm");
+                            return formatDate(date, "hh:mm");
                         }
                     },
                     dateFormatter: {
                         format: (date:number) => {
-                            return formatDate(date - 8*60*60*1000, "yyyy-MM-dd");
+                            return formatDate(date, "yyyy-MM-dd");
                         }
-                    }
+                    }*/
                 },
                 studies_overrides: {
                     "volume.volume.color.0": "rgba(219,87,75,0.5)",
@@ -514,7 +514,7 @@ class Kline extends React.Component<Ikline, any>{
                 ></TradingviewTool>
                 <TradeViewStyle id={"trade-view"} className={`${this.state.loading?'':'loaded'}`}></TradeViewStyle>
                 {this.state.loading?<Loading style={{backgroundColor: "transparent"}}></Loading>:null}
-                {/*{
+                {
                     this.props.depthData
                         ? <MyChartStyle id="myChart" className={`${this.state.chartType === 1?'active':''}`}>
                             <DepthChart
@@ -525,7 +525,7 @@ class Kline extends React.Component<Ikline, any>{
                                 asks={this.props.depthData.asks.map((item) => [item.price, item.quantity])}/>
                           </MyChartStyle>
                         : null
-                }*/}
+                }
                 { this.state.chartType === 2 ? <SymbolDetail /> :null }
 
                 {/*<DepthChart

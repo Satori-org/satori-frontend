@@ -14,7 +14,7 @@ import Decimal from "decimal.js";
 import {
     awaitWrap,
     fixedNumber,
-    fixedNumberStr,
+    fixedNumberStr, formatUSDT,
     isIntNumber,
     isNumber,
     showMessage
@@ -624,16 +624,16 @@ export default function Trade(props: IProps) {
                         <Toggle vIf={state.orderType === ORDER_TYPE.market}>
                             <FeeBox>
                                 <div className={"label"}>{t(`Expected Price`)}</div>
-                                <div>{fixedNumberStr(ExpectedPrice, USDT_decimal_show) || "--"} USDT</div>
+                                <div>{formatUSDT(ExpectedPrice)} USDT</div>
                             </FeeBox>
                         </Toggle>
                         <FeeBox>
                             <div className={"label"}>{t(`Fee`)}</div>
-                            <div>{fixedNumberStr(orderFee, USDT_decimal_show) || "--"} USDT</div>
+                            <div>{formatUSDT(orderFee)} USDT</div>
                         </FeeBox>
                         <FeeBox>
                             <div className={"label"}>{t(`Total`)}</div>
-                            <div>{fixedNumberStr(Decimal.add(orderFee || 0, orderTotalAmount || 0).toFixed(), USDT_decimal_show) || "--"} USDT</div>
+                            <div>{formatUSDT(Decimal.add(orderFee || 0, orderTotalAmount || 0).toFixed())} USDT</div>
                         </FeeBox>
                         <Submit className={`font12 borderRadius ${state.isLong ? '' : 'sell'}`}
                                 disabled={disabledAddOrder}

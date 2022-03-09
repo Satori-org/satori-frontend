@@ -7,7 +7,7 @@ import useTheme from "src/hooks/useTheme";
 import {useEffectState} from "src/hooks/useEffectState";
 import {useAccountInfo} from "src/hooks/useAccountInfo";
 import {IAccountPortfolio, useAccountAsset, useAccountPortfolio} from "src/ajax/user/user.type";
-import {formatAmount, formatNumber} from "../../../common/utilTools";
+import {formatAmount, formatNumber, formatUSDT} from "../../../common/utilTools";
 import Toggle from 'src/components/toggle/Toggle';
 import LineChart2 from 'src/components/lineChart/LineChart2';
 import {useStore} from "react-redux";
@@ -77,7 +77,7 @@ export default function Account() {
                     <div className={"info"}>
                         <p className={"label"}>{t(`PORTFOLIO VALUE`)}</p>
                         <Toggle vIf={!!state.data.totalAssets}>
-                            <p className={`val ${getTotalAssetInfo(state.data.totalAssets).className}`}>$ {formatNumber(state.data.totalAssets)}</p>
+                            <p className={`val ${getTotalAssetInfo(state.data.totalAssets).className}`}>$ {formatUSDT(state.data.totalAssets)}</p>
                             <p className={"val"}>-</p>
                         </Toggle>
                     </div>
@@ -86,7 +86,7 @@ export default function Account() {
                         <Toggle vIf={!!state.data.todayProfitLoss}>
                             <p className={`flex-row ${getRiseInfo(state.data.todayProfitLoss).className}`}>
                                 <RiseIcon className={`${getRiseInfo(state.data.todayProfitLoss).className}`} />
-                                <span className={`val`}>{getRiseInfo(state.data.todayProfitLoss).dotal} $ {state.data.todayProfitLoss}</span>
+                                <span className={`val`}>{getRiseInfo(state.data.todayProfitLoss).dotal} $ {formatUSDT(state.data.todayProfitLoss)}</span>
                                 <span>({state.data.todayIncreaseRate}%)</span>
                             </p>
                             <p className={"val"}>-</p>
@@ -104,7 +104,7 @@ export default function Account() {
                         <Toggle vIf={!!state.data.totalProfitLoss}>
                             <p className={`flex-row ${getRiseInfo(state.data.totalProfitLoss).className}`}>
                                 <RiseIcon className={`${getRiseInfo(state.data.totalProfitLoss).className}`} />
-                                <span className={"val"}>{getRiseInfo(state.data.totalProfitLoss).dotal} $ {state.data.totalProfitLoss}</span>
+                                <span className={"val"}>{getRiseInfo(state.data.totalProfitLoss).dotal} $ {formatUSDT(state.data.totalProfitLoss)}</span>
                                 <span>({state.data.totalIncreaseRate}%)</span>
                             </p>
                             <p className={"val"}>-</p>

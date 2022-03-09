@@ -12,7 +12,7 @@ import Toggle from "../../../components/toggle/Toggle";
 import NotConnect from "../../../components/NotConnect/NotConnect";
 import EmptyData from "../../../components/noData/EmptyData";
 import {getOrderType} from "../../exchange/config";
-import {formatDate} from "../../../common/utilTools";
+import {formatDate, formatUSDT} from "../../../common/utilTools";
 import {tdStyle} from "./History";
 
 const data = [
@@ -37,7 +37,7 @@ function Row(props: IRow) {
             <td style={tdStyle}>{props.item.quantity} {props.item.symbol.split("-")[0]}</td>
             <td style={tdStyle}>{props.item.isTaker ? t(`Taker`) : t(`Maker`)}</td>
             <td style={tdStyle}>
-                <span className={"dashedBorder"}>{props.item.amount} / {props.item.tradeFee}</span>
+                <span className={"dashedBorder"}>{formatUSDT(props.item.profitLoss)} / {props.item.tradeFee}</span>
             </td>
         </tr>
     </>
@@ -97,7 +97,7 @@ export default function TradesOrders(props: IProps) {
                         <th>{t(`PRICE`)}</th>
                         <th>{t(`CONT`)}</th>
                         <th>{t(`TRANSACTION TYPE`)}</th>
-                        <th>{t(`TOTAL / FEE(USDT)`)}</th>
+                        <th>{t(`Realized PnL / FEE(USDT)`)}</th>
                     </tr>
                     </thead>
                     <tbody>

@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import {BookContent, LabelBox, ListContainer, Row, RowContainer} from "./styles/Book.style";
 import {ITrade} from "src/ajax/contract/contract";
 import useExchangeStore from "./ExchangeProvider";
+import {formatUSDT} from "../../common/utilTools";
 
 type IProps = {
     data: ITrade[]
@@ -23,7 +24,7 @@ export default function Transaction(props: IProps) {
                     {
                         props.data.map((item, index) => {
                             return <Row key={index}>
-                                <span className={`${item.isLong ? 'long' : 'short'}`}>{item.price}</span>
+                                <span className={`${item.isLong ? 'long' : 'short'}`}>{formatUSDT(item.price)}</span>
                                 <span>{item.quantity}</span>
                                 <span>{item.time}</span>
                             </Row>

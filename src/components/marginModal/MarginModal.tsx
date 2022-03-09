@@ -9,11 +9,12 @@ import useTheme from "src/hooks/useTheme";
 import InputNumber from "../inputNumber/InputNumber";
 import {changePositionMargin, IPositionList} from "src/ajax/contract/contract";
 import Decimal from "decimal.js";
-import {awaitWrap, fixedNumberStr, isNumber, showMessage} from "src/common/utilTools";
+import {awaitWrap, fixedNumberStr, formatUSDT, isNumber, showMessage} from "src/common/utilTools";
 import {useStore} from "react-redux";
 import {IState} from "src/store/reducer";
 import useExchangeStore from "src/views/exchange/ExchangeProvider";
 import {MsgStatus} from "src/common/enum";
+import {USDT_decimal_show} from "../../config";
 
 type IProps = {
     data: IPositionList
@@ -182,11 +183,11 @@ export default function MarginModal(props: IProps) {
                 </Group>
                 <Group className={"flex-sb"}>
                     <span className={"label"}>{t(`Current position margin`)}</span>
-                    <span>{props.data.marginAmount} USDT</span>
+                    <span>{formatUSDT(props.data.marginAmount)} USDT</span>
                 </Group>
                 <Group className={"flex-sb"}>
                     <span className={"label"}>{ state.type === 1 ? t(`Est.Liq.Price after Reduce`) : t(`Est.Liq.Price after increase`)}</span>
-                    <span>{fixedNumberStr(props.data.isLong ? Est_long : Est, USDT_decimal)} USDT</span>
+                    <span>{formatUSDT(props.data.isLong ? Est_long : Est)} USDT</span>
                 </Group>
                 {/*<div className={"flex-sb"} style={{margin: "6px 0"}}>
                     <span className={"label"}>{t(`Current position margin BTC/USDT Perpetual`)}</span>

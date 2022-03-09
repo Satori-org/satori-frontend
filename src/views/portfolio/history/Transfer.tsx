@@ -14,7 +14,7 @@ import {IState} from "../../../store/reducer";
 import NotConnect from "../../../components/NotConnect/NotConnect";
 import EmptyData from "../../../components/noData/EmptyData";
 import {getOrderType, getTransferStatus, getTransferType} from "../../exchange/config";
-import {formatAddress} from "../../../common/utilTools";
+import {formatAddress, formatUSDT} from "../../../common/utilTools";
 
 const data = [
     {time: "2021-11-22 13:00:45",type: 'Deposit',Amount: "$1.078236",Status: "confirmed", address: "0x5022b938170167511A065D339d00002FdcBCfC27"},
@@ -31,7 +31,7 @@ function Row(props: IRow) {
         <tr>
             <td>{props.item.createTime}</td>
             <td>{getTransferType(props.item.type, t)}</td>
-            <td>${props.item.amount}</td>
+            <td>${formatUSDT(props.item.amount)}</td>
             <td>{getTransferStatus(props.item.status, t)}</td>
             <td>
                 <Toggle vIf={!!props.item.transHash}>
@@ -39,7 +39,7 @@ function Row(props: IRow) {
                         <span>{formatAddress(props.item.transHash, 17, 9)}</span>
                         <img src={require("src/assets/images/link.png")} style={{width: "16px",height: "16px",marginLeft:"6px"}} alt="" />
                     </a>
-                    <span>--</span>
+                    <span>-</span>
                 </Toggle>
             </td>
         </tr>

@@ -16,6 +16,7 @@ import NotConnect from "../../components/NotConnect/NotConnect";
 import EmptyData from "../../components/noData/EmptyData";
 import {RowStyle} from "../exchange/record/style";
 import {$router} from "../../react-router-perfect/Index";
+import {formatUSDT} from "../../common/utilTools";
 
 const data = [
     { name: "BTC/USDT", icon: require("src/assets/images/icon_pairs_buy@2x.png"), isLong: true,Leverage: 10, average: "1.078236", LiquidationPrice: "1.07", amount: "6.998", Margin: "1,297.60", Unrealized: "1.894541 (-129.35%)" },
@@ -42,10 +43,10 @@ function Row(props: IRow) {
         };
         if (Number(props.item.unrealizedPnl) > 0) {
             obj.className = 'long';
-            obj.value = `+${props.item.unrealizedPnl}`
+            obj.value = `+${formatUSDT(props.item.unrealizedPnl)}`
         } else {
             obj.className = 'short';
-            obj.value = `${props.item.unrealizedPnl}`
+            obj.value = `${formatUSDT(props.item.unrealizedPnl)}`
         }
         return obj;
     }, [props.item.unrealizedPnl]);
@@ -62,8 +63,8 @@ function Row(props: IRow) {
             <td style={tdStyle} className={`${props.item.isLong ? 'long' : 'short'}`}>{getOrderType(props.item.isLong, t)}</td>
             <td style={tdStyle}>{props.item.lever}x</td>
             <td style={tdStyle} className={"right"}>{props.item.quantity} {props.item.symbol.split("-")[0]}</td>
-            <td style={tdStyle} className={"right"}>{props.item.openingPrice}</td>
-            <td style={tdStyle} className={"right"}>{Number(props.item.restrictPrice) < 0 ? "--" : props.item.restrictPrice}</td>
+            <td style={tdStyle} className={"right"}>{formatUSDT(props.item.openingPrice)}</td>
+            <td style={tdStyle} className={"right"}>{Number(props.item.restrictPrice) < 0 ? "-" : formatUSDT(props.item.restrictPrice)}</td>
             <td style={tdStyle} className={"right"}>{props.item.marginAmount}</td>
             <td style={tdStyle} className={`right ${operaInfo.className}`}>{operaInfo.value}</td>
             <td style={tdStyle} className={"right"}>

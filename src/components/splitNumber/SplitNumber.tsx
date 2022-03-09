@@ -8,7 +8,7 @@ type IProps = {
 export default function SplitNumber(props: IProps) {
 
     const arr = useMemo(() => {
-        return String(props.value).match(/(\d+)(\.)(\d+)/) || [];
+        return String(props.value).match(/([\d,]+)(\.)(\d+)/) || [];
     }, [props.value]);
 
     return (

@@ -17,7 +17,7 @@ import {useEffectState} from "../../hooks/useEffectState";
 import {IPositionList, updatePnlConfig} from "../../ajax/contract/contract";
 import Toggle from "../toggle/Toggle";
 import {NetworkStyle} from "../network/Network.style";
-import {awaitWrap, fixedNumber, fixedNumberStr, showMessage} from "../../common/utilTools";
+import {awaitWrap, fixedNumber, fixedNumberStr, formatUSDT, showMessage} from "../../common/utilTools";
 import {USDT_decimal_show} from "../../config";
 import useExchangeStore from "../../views/exchange/ExchangeProvider";
 import Decimal from "decimal.js";
@@ -231,15 +231,15 @@ export default function PlanOrderModal(props: IProps) {
                 </FieldGroup>
                 <FieldGroup>
                     <span className={"label"}>{t(`Opening Price`)}</span>
-                    <span>{fixedNumberStr(props.data.openingPrice, USDT_decimal_show)} USDT</span>
+                    <span>{formatUSDT(props.data.openingPrice)} USDT</span>
                 </FieldGroup>
                 <FieldGroup>
                     <span className={"label"}>{t(`Current Price`)}</span>
-                    <span>{fixedNumberStr(reducerState.tiker.close, USDT_decimal_show)} USDT</span>
+                    <span>{formatUSDT(reducerState.tiker.close)} USDT</span>
                 </FieldGroup>
                 <FieldGroup>
                     <span className={"label"}>{t(`Trigger Price`)}</span>
-                    <span>{fixedNumberStr(reducerState.marketPrice, USDT_decimal_show)} USDT</span>
+                    <span>{formatUSDT(reducerState.marketPrice)} USDT</span>
                 </FieldGroup>
                 <PlanField
                     isDark={isDark}

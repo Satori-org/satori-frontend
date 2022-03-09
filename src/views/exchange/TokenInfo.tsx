@@ -94,7 +94,7 @@ export default function TokenInfo() {
                     <p className={`flex-row ${rise.className}`}>
                        {/* {rise.dotal}*/}
                         <RiseIcon className={`${rise.className}`} />
-                        <span>{reducerState.market24Data.changePrice || "0"}({reducerState.market24Data.changeRate || "0"}%)</span>
+                        <span>{reducerState.market24Data.changePrice || "-"}({reducerState.market24Data.changeRate || "-"}%)</span>
                     </p>
                 </div>
                 <div className={"dataGroup"}>

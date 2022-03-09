@@ -4,6 +4,7 @@ import {CSSProperties} from "react";
 import {INPUT_NUMBER_REG, INT_REG, NUMBER_REG} from "./regExp";
 import OpenMessageBox from "../components/messageBox/MessageBox";
 import {MsgStatus} from "./enum";
+import {USDT_decimal_show} from "../config";
 
 //Parameter conversion processing
 export function stringify(obj:any) {
@@ -30,7 +31,7 @@ export const fixedNumberStr = (value:number|string, precision:number = 0) => {
         return "";
     }
     if (!value) {
-        return "0";
+        return "-";
     }
 
     let scale = Decimal.mul(value, Math.pow(10, precision)).toFixed();
@@ -45,16 +46,27 @@ export const fixedNumberStr = (value:number|string, precision:number = 0) => {
 
 export function formatAmount(amount: number | string, percent?: boolean): string {
     if (!amount || amount === "0") {
-        return "--";
+        return "-";
     }
     return percent ? `${String(amount)}%` : String(amount);
 }
 
 export function formatAmountRise(amount: number | string): string {
     if (!amount || amount === "0") {
-        return "--";
+        return "-";
     }
     return Number(amount) > 0 ? `+${amount}` : String(amount);
+}
+
+export function formatUSDTRise(amount: number | string): string {
+    if (!amount || amount === "0") {
+        return "-";
+    }
+    return Number(amount) > 0 ? `+${formatUSDT(amount)}` : String(formatUSDT(amount));
+}
+
+export function formatUSDT(amount: string | number) {
+    return formatNumber(fixedNumberStr(amount, USDT_decimal_show));
 }
 
 export function showMessage(msg: string, type?: MsgStatus) {

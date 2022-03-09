@@ -7,7 +7,14 @@ import {getContractPairList, IPair, IQuotation} from "src/ajax/contract/contract
 import {exchangeActions, mapExchangeDispatch} from "./exchangeReducer";
 import useExchangeStore from "./ExchangeProvider";
 import {$router} from "../../react-router-perfect/Index";
-import {fixedNumber, fixedNumberStr, formatAmount, formatAmountRise, formatNumber} from "../../common/utilTools";
+import {
+    fixedNumber,
+    fixedNumberStr,
+    formatAmount,
+    formatAmountRise,
+    formatNumber,
+    formatUSDT
+} from "../../common/utilTools";
 import {Price} from "./styles/TokenInfo.style";
 import {useThemeManager} from "../../hooks/useThemeManager";
 import {USDT_decimal_show} from "../../config";
@@ -45,13 +52,13 @@ function PairRow(props: IPairRow) {
     return <tr key={props.data.id} onClick={() => props.onChange()}>
         <td style={tdStyle}>{props.data.symbol}</td>
         <td style={Object.assign({textAlign: "left"}, tdStyle)}>
-            <span>{fixedNumberStr(pairQuotation.marketPrice, USDT_decimal_show) || "-"}</span>
+            <span>{formatUSDT(pairQuotation.marketPrice) || "-"}</span>
             <Toggle vIf={!!pairQuotation.marketChangeRate}>
                 <span className={rowClassName}>({formatAmount(pairQuotation.marketChangeRate || "", true)})</span>
             </Toggle>
         </td>
         <td style={tdStyle}>
-            <span>{fixedNumber(pairQuotation.last24hVol, reducerState.currentPairDecimal)}</span>
+            <span>{formatUSDT(pairQuotation.last24hVol)}</span>
         </td>
     </tr>
 }

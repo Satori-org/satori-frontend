@@ -15,7 +15,7 @@ import WithdrawModal from 'src/components/WithdrawModal/WithdrawModal';
 import {useStore} from "react-redux";
 import {IState} from "../../store/reducer";
 import useExchangeStore from "./ExchangeProvider";
-import {formatAmount, formatAmountRise} from "../../common/utilTools";
+import {fixedNumberStr, formatAmount, formatAmountRise, formatUSDT, formatUSDTRise} from "../../common/utilTools";
 import ConnectWalletModal from "../../components/connectWalletModal/ConnectWalletModal";
 
 export default function ContractDetail() {
@@ -43,29 +43,29 @@ export default function ContractDetail() {
                 <div>
                     <FieldLabel className={"flex-sb"}>
                         <span className={"label"}>{t(`Available`)}</span>
-                        <span>{formatAmount(reducerState.accountInfo.availableAmount)} USDT</span>
+                        <span>{formatUSDT(reducerState.accountInfo.availableAmount)} USDT</span>
                     </FieldLabel>
                     <FieldLabel className={"flex-sb"}>
                         <span className={"label border"}>{t(`Frozen Margin`)}</span>
-                        <span>{formatAmount(reducerState.accountInfo.frozenMargin)} USDT</span>
+                        <span>{formatUSDT(reducerState.accountInfo.frozenMargin)} USDT</span>
                     </FieldLabel>
                     <FieldLabel className={"flex-sb"}>
                         <span className={"label border"}>{t(`Unrealized PNL`)}</span>
                         <div>
-                            <span className={`${getRiseClassName(reducerState.accountInfo.unrealizedPnl)}`}>{formatAmountRise(reducerState.accountInfo.unrealizedPnl)}</span>
+                            <span className={`${getRiseClassName(reducerState.accountInfo.unrealizedPnl)}`}>{formatUSDTRise(reducerState.accountInfo.unrealizedPnl)}</span>
                             <span> USDT</span>
                         </div>
                     </FieldLabel>
                     <FieldLabel className={"flex-sb"}>
                         <span className={"label border"}>{t(`Realized PnL `)}</span>
                         <div>
-                            <span className={`${getRiseClassName(reducerState.accountInfo.realizedPnl)}`}>{formatAmountRise(reducerState.accountInfo.realizedPnl)}</span>
+                            <span className={`${getRiseClassName(reducerState.accountInfo.realizedPnl)}`}>{formatUSDTRise(reducerState.accountInfo.realizedPnl)}</span>
                             <span> USDT</span>
                         </div>
                     </FieldLabel>
                     <FieldLabel className={"flex-sb"}>
                         <span className={"label"}>{t(`Total Assets`)}</span>
-                        <span>{formatAmount(reducerState.accountInfo.totalAssets)} USDT</span>
+                        <span>{formatUSDT(reducerState.accountInfo.totalAssets)} USDT</span>
                     </FieldLabel>
                 </div>
                 <ButtonGroup className={"grid-2"}>

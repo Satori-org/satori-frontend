@@ -12,7 +12,7 @@ import Loading from "src/components/loadStatus/Loading";
 import {RELOAD_RECORD} from "src/common/PubSubEvents";
 import {useFetchPostPage} from "src/ajax";
 import {usePubSubEvents} from "src/hooks/usePubSubEvents";
-import {showMessage} from "src/common/utilTools";
+import {formatUSDT, showMessage} from "src/common/utilTools";
 import {MsgStatus} from "src/common/enum";
 import NotConnect from "src/components/NotConnect/NotConnect";
 import Toggle from "src/components/toggle/Toggle";
@@ -45,9 +45,9 @@ function Row(props: IRow) {
         <td className={`${props.item.isLong ? 'long' : 'short'}`}>{getOrderType(props.item.isLong, t)}</td>
         {/*<td>{props.item.isMarket ? t(`Market`) : t(`Limit`)}</td>*/}
         <td>{props.item.lever}x</td>
-        <td>{props.item.price || "--"}</td>
+        <td>{formatUSDT(props.item.price)}</td>
         <td className={"center"}>{props.item.dealQuantity}/{props.item.quantity}</td>
-        <td className={"right"}>{props.item.amount}</td>
+        <td className={"right"}>{formatUSDT(props.item.amount)}</td>
        {/* <td className={"right"}>{props.item.amount}</td>*/}
         {/*<td>{props.item.contractPairId}</td>*/}
         <td className={"right"}>

@@ -2,7 +2,7 @@ import {useTranslation} from "react-i18next";
 import {useEffectState} from "../../hooks/useEffectState";
 import {useCallback, useMemo, useState} from "react";
 import useExchangeStore from "./ExchangeProvider";
-import {fixedNumber, formatAmount} from "../../common/utilTools";
+import {fixedNumber, formatAmount, formatUSDT} from "../../common/utilTools";
 
 export type ICustomerToken = {
     text: string
@@ -24,10 +24,10 @@ export function useCustomerTokenInfo(symbol: string) {
     });*/
     const tokenInfo = useMemo(() => {
         return [
-            {text: t(`24H HIGH`), value: `${reducerState.market24Data.hight || "0"}`, show: switchs[0]},
-            {text: t(`24H LOW`), value: `${reducerState.market24Data.low || "0"}`, show: switchs[1]},
-            {text: `${t(`24H VOLUME`)}(${symbol})`, value: `${reducerState.market24Data.quantity || "0"}`, show: switchs[2]},
-            {text: t(`24H VOLUME(USDT)`), value: `${fixedNumber(reducerState.market24Data.amount, reducerState.currentPairDecimal) || "0"}`, show: switchs[3]},
+            {text: t(`24H HIGH`), value: `${formatUSDT(reducerState.market24Data.hight)}`, show: switchs[0]},
+            {text: t(`24H LOW`), value: `${formatUSDT(reducerState.market24Data.low)}`, show: switchs[1]},
+            {text: `${t(`24H VOLUME`)}(${symbol})`, value: `${reducerState.market24Data.quantity || "-"}`, show: switchs[2]},
+            {text: t(`24H VOLUME(USDT)`), value: `${formatUSDT(reducerState.market24Data.amount)}`, show: switchs[3]},
         ]
     }, [symbol, t, switchs, reducerState.market24Data]);
     const toggleTokenInfo = useCallback((index: number, show: boolean) => {

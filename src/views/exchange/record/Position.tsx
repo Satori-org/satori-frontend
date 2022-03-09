@@ -9,7 +9,7 @@ import ReactDOM from 'react-dom';
 import Pagination from "src/components/pagination/Pagination";
 import {addOrder, getPositionList, IPair, IPositionList, IQuotation} from "src/ajax/contract/contract";
 import useExchangeStore from "../ExchangeProvider";
-import {awaitWrap, fixedNumber, fixedNumberStr, formatNumber, showMessage} from "src/common/utilTools";
+import {awaitWrap, fixedNumber, fixedNumberStr, formatNumber, formatUSDT, showMessage} from "src/common/utilTools";
 import {signExpire} from "src/contract/wallet";
 import {Toast} from "src/components/toast/Toast";
 import {NUMBER_REG} from "src/common/regExp";
@@ -124,11 +124,11 @@ function Row(props: IRow) {
             <td className={`${props.item.isLong ? 'long' : 'short'}`}>{getOrderType(props.item.isLong, t)}</td>
             <td className={"center"}>{props.item.lever}x</td>
             <td className={"center"}>{props.item.quantity} {props.item.symbol.split("-")[0]}</td>
-            <td className={"right"}>{fixedNumberStr(props.item.openingPrice, USDT_decimal_show)}</td>
-            <td className={"right"}>{Number(props.item.restrictPrice) < 0 ? "--" : fixedNumberStr(props.item.restrictPrice, USDT_decimal_show)}</td>
+            <td className={"right"}>{formatUSDT(props.item.openingPrice)}</td>
+            <td className={"right"}>{Number(props.item.restrictPrice) < 0 ? "--" : formatUSDT(props.item.restrictPrice)}</td>
             <td className={"right"}>
                 <div className={"flex-row"} style={{justifyContent: "flex-end"}}>
-                    <span style={{marginRight: "4px"}}>{fixedNumberStr(props.item.marginAmount, USDT_decimal_show)}</span>
+                    <span style={{marginRight: "4px"}}>{formatUSDT(props.item.marginAmount)}</span>
                     <img src={props.isDark?require("src/assets/images/dark/edit.png"):require("src/assets/images/light/edit.png")}
                          style={{width: "0.12rem", height: "0.12rem", cursor: "pointer"}} alt=""
                          onClick={() => state.showMarin = true} />

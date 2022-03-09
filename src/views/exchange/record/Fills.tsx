@@ -19,7 +19,8 @@ import NotConnect from "../../../components/NotConnect/NotConnect";
 import Toggle from "../../../components/toggle/Toggle";
 import RecordDatePicker from "../../../components/recordDatePicter/RecordDatePicker";
 import EmptyData from "../../../components/noData/EmptyData";
-import {formatDate} from "../../../common/utilTools";
+import {fixedNumberStr, formatDate, formatUSDT} from "../../../common/utilTools";
+import {USDT_decimal_show} from "../../../config";
 
 type IRow = {
     item: IFills
@@ -36,15 +37,15 @@ function Row(props: IRow) {
         <td>{props.item.symbol}</td>
         <td className={`${props.item.isLong ? 'long' : 'short'}`}>{getOrderType(props.item.isLong, t)}</td>
         <td>{props.item.isMarket ? t(`Market`) : t(`Limit`)}</td>
-        <td>{props.item.averagePrice}</td>
+        <td>{formatUSDT(props.item.averagePrice)}</td>
         <td>{props.item.quantity} {props.item.symbol.split("-")[0]}</td>
         {/*<td>{props.item.profitLoss}</td>
         <td>{props.item.positionFee}</td>*/}
         <td>{props.item.isTaker ? t(`Taker`) : t(`Maker`)}</td>
         <td className={"right"}>
-            <span>{props.item.amount}</span>
+            <span>{formatUSDT(props.item.profitLoss)}</span>
             <span>/</span>
-            <span>{props.item.positionFee}</span>
+            <span>{formatUSDT(props.item.tradeFee)}</span>
         </td>
     </RowStyle>
 }
@@ -117,7 +118,7 @@ export default function Fills() {
                             {/*<th>{t(`Fee`)}</th>*/}
 
                             <th style={ItemStyle}>{t(`TRANSACTION TYPE`)}</th>
-                            <th className={"right"} style={ItemStyle}>{t(`TOTAL/FEE(USDT)`)}</th>
+                            <th className={"right"} style={ItemStyle}>{t(`Realized PnL/FEE(USDT)`)}</th>
                         </tr>
                         </thead>
                         <tbody>

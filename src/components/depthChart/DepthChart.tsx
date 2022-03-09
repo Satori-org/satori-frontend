@@ -4,6 +4,7 @@ import {useEffectState} from "src/hooks/useEffectState";
 import {colors} from "../../styles/style";
 import {useTranslation} from "react-i18next";
 import Decimal from "decimal.js";
+import {formatUSDT} from "../../common/utilTools";
 
 
 export interface IDepthItem {
@@ -567,7 +568,7 @@ export default function DepthChart(props: IProps) {
                     ? <ToolTip ref={tipRef} style={tipPositionInfo}>
                         <div className="item flex-sb">
                             <span className={"label"}>{t(`Price`)}</span>
-                            <span>${selected[0]}</span>
+                            <span>${formatUSDT(selected[0])}</span>
                         </div>
                         <div className="item flex-sb">
                             <span className={"label"}>{t(`Total Size`)}</span>
@@ -575,7 +576,7 @@ export default function DepthChart(props: IProps) {
                         </div>
                         <div className="item flex-sb">
                             <span className={"label"}>{t(`Total Cost`)}</span>
-                            <span>${totalCost}</span>
+                            <span>${formatUSDT(totalCost)}</span>
                         </div>
                         {/*<div className="item flex-sb">
                             <span className={"label"}>{t(`Price Impact`)}</span>

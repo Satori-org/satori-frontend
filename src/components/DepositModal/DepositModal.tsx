@@ -7,7 +7,7 @@ import {useStore} from "react-redux";
 import {IState} from "src/store/reducer";
 import {useEffectState} from "src/hooks/useEffectState";
 import {
-    awaitWrap, fixedNumber,
+    awaitWrap, fixedNumber, formatUSDT,
     isInputNumber,
     isNumber,
     regExpTemplate,
@@ -24,7 +24,7 @@ import {useAccountInfo} from "../../hooks/useAccountInfo";
 import useExchangeStore from "../../views/exchange/ExchangeProvider";
 import useTheme from "../../hooks/useTheme";
 import {RELOAD_ACCOUNT_INFO} from "../../common/PubSubEvents";
-import {USDT_decimal} from "../../config";
+import {USDT_decimal, USDT_decimal_show} from "../../config";
 import InputNumber from "../inputNumber/InputNumber";
 import openModal from "../openModal";
 import {usePluginModel} from "../../hooks/usePluginModel";
@@ -161,7 +161,7 @@ export default function DepositModal(props: IProps) {
                 <InputNumber
                        right={<div className={`flex-row`}>
                            <span style={{color: theme.colors.headerButtonColor}}>USDT</span>
-                           <RightBtn onClick={() => state.amount = String(fixedNumber(walletBalance, USDT_decimal))}>{t(`MAX`)}</RightBtn>
+                           <RightBtn onClick={() => state.amount = String(fixedNumber(walletBalance, USDT_decimal_show))}>{t(`MAX`)}</RightBtn>
                        </div>
                        }
                        inputStyle={{flex: 1}}
@@ -183,11 +183,11 @@ export default function DepositModal(props: IProps) {
                        </Explain>
                 <Group className={"flex-sb"}>
                     <span className={"label"}>{t(`Wallet Balance`)}</span>
-                    <span>{walletBalance} USDT</span>
+                    <span>{formatUSDT(walletBalance)} USDT</span>
                 </Group>
                 <Group className={"flex-sb"}>
                     <span className={"label"}>{t(`Account Balance`)}</span>
-                    <span>{reducerState.accountInfo.availableAmount} USDT</span>
+                    <span>{formatUSDT(reducerState.accountInfo.availableAmount)} USDT</span>
                 </Group>
                 {/*<BalanceBox className={"flex-sb"}>
                     <span className={"label"}>{t(`Available USDT`)}</span>

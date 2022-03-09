@@ -12,7 +12,7 @@ import Loading from "../../../components/loadStatus/Loading";
 import Toggle from "../../../components/toggle/Toggle";
 import NotConnect from "../../../components/NotConnect/NotConnect";
 import EmptyData from "../../../components/noData/EmptyData";
-import {formatDate} from "../../../common/utilTools";
+import {formatDate, formatUSDT} from "../../../common/utilTools";
 
 const data = [
     {time: "2021-11-22 13:00:45", pairs: "BTC/USDT",type: 0,payments: "+1.078236",rate: "0.0457%",order: "0.045",oraclePrice: "8.1334"},
@@ -52,7 +52,7 @@ function Row(props: IRow) {
                     <Tag className={props.item.isLong ? 'long' : 'short'} style={{marginLeft: "8px"}}>{`${props.item.isLong ? 'Long' : 'Short'}`}</Tag>
                 </div>
             </td>
-            <td>{props.item.openingPrice}</td>
+            <td>{formatUSDT(props.item.openingPrice)}</td>
         </tr>
     </>
 }

@@ -14,7 +14,7 @@ import Loading from "../../../components/loadStatus/Loading";
 import Toggle from "../../../components/toggle/Toggle";
 import NotConnect from "../../../components/NotConnect/NotConnect";
 import EmptyData from "../../../components/noData/EmptyData";
-import {awaitWrap, showMessage} from "../../../common/utilTools";
+import {awaitWrap, formatUSDT, showMessage} from "../../../common/utilTools";
 import {MsgStatus} from "../../../common/enum";
 import {ThButton} from "../history/History.style";
 import {tdStyle} from "../history/History";
@@ -50,7 +50,7 @@ function Row(props: IRow) {
         <td style={tdStyle}>{props.item.symbol}</td>
         <td style={tdStyle} className={`${props.item.isLong ? 'long' : 'short'}`}>{getOrderType(props.item.isLong, t)}</td>
         <td style={tdStyle}>{props.item.lever}x</td>
-        <td style={tdStyle}>{props.item.price}</td>
+        <td style={tdStyle}>{formatUSDT(props.item.price)}</td>
         <td style={tdStyle}>{props.item.dealQuantity}/{props.item.quantity}</td>
         {/*<td>{props.item.amount}</td>*/}
         <td style={tdStyle}>

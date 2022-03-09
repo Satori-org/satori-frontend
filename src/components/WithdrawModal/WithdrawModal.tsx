@@ -9,7 +9,7 @@ import {NUMBER_REG} from "src/common/regExp";
 import {unpackEIP712} from 'src/contract/wallet';
 import {
     awaitWrap,
-    fixedNumber,
+    fixedNumber, formatUSDT,
     isInputNumber,
     isNumber,
     regExpTemplate,
@@ -25,7 +25,7 @@ import {useAccountInfo} from "../../hooks/useAccountInfo";
 import useExchangeStore from "../../views/exchange/ExchangeProvider";
 import ModalFooter from "../modal/ModalFooter";
 import {RELOAD_ACCOUNT_INFO} from "../../common/PubSubEvents";
-import {USDT_decimal} from "../../config";
+import {USDT_decimal, USDT_decimal_show} from "../../config";
 import InputNumber from "../inputNumber/InputNumber";
 import openModal from "../openModal";
 import {IWaitParams, WaitingModal} from "../waitingModal/WaitingModal";
@@ -107,7 +107,7 @@ export default function WithdrawModal(props: IProps) {
                 <InputNumber
                     right={<div className={`flex-row`}>
                         <span style={{color: theme.colors.labelColor, pointerEvents: "none"}}>USDT</span>
-                        <RightBtn onClick={() => state.amount = String(fixedNumber(reducerState.accountInfo.availableAmount, USDT_decimal))}>{t(`MAX`)}</RightBtn>
+                        <RightBtn onClick={() => state.amount = String(fixedNumber(reducerState.accountInfo.availableAmount, USDT_decimal_show))}>{t(`MAX`)}</RightBtn>
                     </div>
                     }
                     inputStyle={{flex: 1}}
@@ -133,11 +133,11 @@ export default function WithdrawModal(props: IProps) {
                 </Group>*/}
                 <Group className={"flex-sb"}>
                     <span className={"label"}>{t(`Wallet Balance`)}</span>
-                    <span>{ walletBalance } USDT</span>
+                    <span>{ formatUSDT(walletBalance) } USDT</span>
                 </Group>
                 <Group className={"flex-sb"}>
                     <span className={"label"}>{t(`Account Balance`)}</span>
-                    <span>{reducerState.accountInfo.availableAmount || "--"} USDT</span>
+                    <span>{formatUSDT(reducerState.accountInfo.availableAmount)} USDT</span>
                 </Group>
                 {/*<AssetBox className={"flex-sb"}>
                     <span className={"label"}>{t(`Assets`)}</span>

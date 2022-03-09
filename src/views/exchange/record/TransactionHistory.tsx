@@ -18,7 +18,8 @@ import NotConnect from "../../../components/NotConnect/NotConnect";
 import Toggle from "../../../components/toggle/Toggle";
 import RecordDatePicker from "../../../components/recordDatePicter/RecordDatePicker";
 import EmptyData from "../../../components/noData/EmptyData";
-import {formatDate} from "../../../common/utilTools";
+import {fixedNumberStr, formatDate, formatUSDT} from "../../../common/utilTools";
+import {USDT_decimal_show} from "../../../config";
 
 type IRow = {
     item: ITransRecord
@@ -33,10 +34,10 @@ function Row(props: IRow) {
         };
         if (props.item.positive) {
             obj.className = 'long';
-            obj.value = `+${props.item.operateAmount}`
+            obj.value = `+${formatUSDT(props.item.operateAmount)}`
         } else {
             obj.className = 'short';
-            obj.value = `-${props.item.operateAmount}`
+            obj.value = `-${formatUSDT(props.item.operateAmount)}`
         }
         return obj;
     }, [props.item.positive, props.item.operateAmount]);
@@ -50,7 +51,7 @@ function Row(props: IRow) {
         <td>{props.item.contractPairSymbol}</td>
         <td style={{paddingRight: "12px", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis"}}>{props.item.logType}</td>
         <td className={operaInfo.className} style={{paddingLeft: "0.65rem"}}>{operaInfo.value}</td>
-        <td className={"right"}>{props.item.accountAmount}</td>
+        <td className={"right"}>{formatUSDT(props.item.accountAmount)}</td>
     </RowStyle>
 }
 

@@ -2,7 +2,7 @@ import React, {useMemo} from 'react';
 import {useTranslation} from 'react-i18next';
 import {BookContent, BookStyle, LabelBox, ListContainer, Row, RowContainer, Spread} from "./styles/Book.style";
 import {IDepthData, IDepthItem} from "../../components/kline/depthChart/DepthChart";
-import {fixedNumber, fixedNumberStr, formatNumber} from "../../common/utilTools";
+import {fixedNumber, fixedNumberStr, formatNumber, formatUSDT} from "../../common/utilTools";
 import Decimal from "decimal.js";
 import useExchangeStore from "./ExchangeProvider";
 import {USER_SELECT_PRICE} from "../../common/PubSubEvents";
@@ -86,7 +86,7 @@ export default function OrderBook(props: IProps) {
                         asksMap.concat().reverse().map((item, index) => {
                             return <Row style={{cursor: "pointer"}} key={index}
                                         onClick={() => publishSelectedPrice(item.price)}>
-                                <span className={"short"}>{item.price}</span>
+                                <span className={"short"}>{formatUSDT(item.price)}</span>
                                 <span>{item.quantity}</span>
                                 <span>{fixedNumber(item.sum, decimal)}</span>
                             </Row>
@@ -109,7 +109,7 @@ export default function OrderBook(props: IProps) {
                         bidsMap.map((item, index) => {
                             return <Row style={{cursor: "pointer"}} key={index}
                                         onClick={() => publishSelectedPrice(item.price)}>
-                                <span className={"long"}>{item.price}</span>
+                                <span className={"long"}>{formatUSDT(item.price)}</span>
                                 <span>{item.quantity}</span>
                                 <span>{fixedNumber(item.sum, decimal)}</span>
                             </Row>
