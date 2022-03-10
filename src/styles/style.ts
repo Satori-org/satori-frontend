@@ -45,6 +45,8 @@ export type IColors = {
     tokenBorderColor: string,
     confirmColor: string,
     borderColor2: string
+    chartLineColor: string
+    gridPropertiesColor: string
     tabActiveColor: string
     tabActiveBgColor2: string
     stepColor: string

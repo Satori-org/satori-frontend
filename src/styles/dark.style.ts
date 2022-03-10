@@ -43,6 +43,8 @@ export const dark: ITheme = {
         tokenBorderColor: "#424D47",
         confirmColor: "#DDDFDE",
         borderColor2: "#484E4B",
+        chartLineColor: "#393D3A",
+        gridPropertiesColor: "#262A27",
         tabActiveColor: "#233918",
         tabActiveBgColor2: "#2F3532",
         stepColor: "#AFAFC4",

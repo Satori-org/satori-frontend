@@ -266,7 +266,7 @@ class Kline extends React.Component<Ikline, any>{
                     "header_chart_type",
                     "header_resolutions",
                     "header_settings",
-                    /*"volume_force_overlay",*/
+                    "volume_force_overlay",
                     "compare_symbol",
                     "save_chart_properties_to_local_storage",
                     "edit_buttons_in_legend",
@@ -293,12 +293,12 @@ class Kline extends React.Component<Ikline, any>{
                     'mainSeriesProperties.candleStyle.wickDownColor': colors.short,
                     'mainSeriesProperties.candleStyle.wickUpColor': colors.long,
                     'paneProperties.background': colors.boxBgColor,
-                    'paneProperties.horzGridProperties.color': colors.borderColor2,
+                    'paneProperties.horzGridProperties.color': colors.gridPropertiesColor,
                     'paneProperties.topMargin': 5,
                     'paneProperties.bottomMargin': 1,
-                    'paneProperties.vertGridProperties.color': colors.borderColor2,
+                    'paneProperties.vertGridProperties.color': colors.gridPropertiesColor,
                     'paneProperties.vertGridProperties.style': 0,
-                    'scalesProperties.lineColor': colors.borderColor2,
+                    'scalesProperties.lineColor': colors.chartLineColor,
                     'scalesProperties.textColor': "#999",
                     'volumePaneSize': "medium"
                 }

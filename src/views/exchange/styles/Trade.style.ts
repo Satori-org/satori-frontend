@@ -82,7 +82,7 @@ export const Lever = styled.div`
     box-sizing: border-box;
     white-space: nowrap;
     .leverText{
-        max-width: 0.68rem;
+        /*max-width: 0.68rem;*/
         margin-left: 1px;
         flex: 1;
         height: 0.12rem;
