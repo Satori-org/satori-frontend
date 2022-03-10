@@ -1,10 +1,6 @@
-import {AnyAction, Dispatch} from "redux";
-import {IAccount, IKline, IMarket24, IMarketData, IPair, IQuotation} from "src/ajax/contract/contract";
-import {RESOLUTION_KEY} from "./exchangeConfig";
+import {AnyAction} from "redux";
+import {IMarket24, IPair, IQuotation} from "src/ajax/contract/contract";
 import {IAccountInfo, Idata} from "../../components/kline/Kline";
-import {USDT_decimal} from "../../config";
-import {DispatchWithoutAction, Reducer, ReducerAction} from "react";
-import {$router} from "../../react-router-perfect/Index";
 
 export const exchangeActions = {
     SET_PAIR: "SET_PAIR",
@@ -53,7 +49,7 @@ export type IExchangeState = {
     currentTokenIndex: number
     resolution: string,
     resolutionData: {value: string, resolution: string},
-    marketPrice: number
+    marketPrice: number | undefined
     tiker: Idata,
     accountInfo: IAccountInfo,
     market24Data: IMarket24,
@@ -65,11 +61,11 @@ export type IExchangeState = {
 export const initExchangeState: IExchangeState = {
     pairs: [],
     currentPair: {} as IPair,
-    currentPairDecimal: USDT_decimal,
+    currentPairDecimal: 6,
     currentTokenIndex: 0,
     resolution: "15MIN",
     resolutionData: {value: '15MIN',resolution: '15'},
-    marketPrice: 0,
+    marketPrice: undefined,
     tiker: {} as Idata,
     accountInfo: {} as IAccountInfo,
     market24Data: {} as IMarket24,

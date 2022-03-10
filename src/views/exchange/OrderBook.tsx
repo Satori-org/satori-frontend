@@ -37,14 +37,14 @@ export default function OrderBook(props: IProps) {
     const rise = useMemo(() => {
         let obj = {
             className: "",
-            dotal: "",
+            dotal: ""
         };
-        if (reducerState.market24Data.changeRate > 0) {
+        if (reducerState.tiker.close > reducerState.tiker.open) {
             obj = {
                 className: "long",
                 dotal: "+"
             }
-        } else if (reducerState.market24Data.changeRate < 0) {
+        } else if(reducerState.tiker.close < reducerState.tiker.open) {
             obj = {
                 className: "short",
                 dotal: ""
@@ -94,13 +94,13 @@ export default function OrderBook(props: IProps) {
                     }
                 </RowContainer>
                 <Spread className={"flex-row"}>
-                    <span className={rise.className}>{formatNumber(fixedNumber(reducerState.tiker.close, USDT_decimal_show))}</span>
+                    <span className={rise.className}>{formatUSDT(reducerState.tiker.close)}</span>
                     <Toggle vIf={!!rise.className}>
                         <img
                             src={rise.className === "long" ? require("src/assets/images/long_icon.png") : require("src/assets/images/short_icon.png")}
                             className={"arrow"} alt=""/>
                     </Toggle>
-                    <span className={"marketPrice"}>{formatNumber(fixedNumberStr(reducerState.marketPrice, USDT_decimal_show))}</span>
+                    <span className={"marketPrice"}>{formatUSDT(reducerState.marketPrice)}</span>
                     {/*<span style={{color: colors.labelColor}}>0.1</span>
                     <span>0.01%</span>*/}
                 </Spread>

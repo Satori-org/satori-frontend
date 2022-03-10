@@ -83,7 +83,7 @@ export const TokenData = styled.div`
 `;
 
 export const Price = styled.div`
-    color: ${({theme}) => theme.colors.long2};
+    /*color: ${({theme}) => theme.colors.long2};*/
     margin: 0 0.199rem 0 0.16rem;
     &.long{
         color: ${({theme}) => theme.colors.long2};

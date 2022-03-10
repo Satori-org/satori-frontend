@@ -22,7 +22,7 @@ export function useKlineControll(contractPairId: number, period: string, token: 
         depthData: {asks: [], bids: []} as IDepthData,
         ticker: {} as Idata,
         tradeData: [] as ITrade[],
-        marketPrice: 0,
+        marketPrice: undefined,
         token: token,
         accountInfo: {} as IAccountInfo,
         market24Data: {} as IMarket24,

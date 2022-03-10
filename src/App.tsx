@@ -12,6 +12,7 @@ import {signString} from "./contract/wallet";
 import {ThemeProviderWrapper} from "./ThemeProviderWrapper";
 import {awaitWrap, showMessage} from "./common/utilTools";
 import {UseWalletProvider} from "use-wallet";
+import {cacheKey} from "./config";
 
 interface IProps extends IConnectProps, WithTranslation{
 
@@ -29,6 +30,7 @@ class App extends React.Component<IProps, any>{
             this.addEventListener();
         });*/
         this.checkLoginStatus();
+        this.checkCache();
     }
 
     componentDidUpdate(prevProps: Readonly<IProps>, prevState: Readonly<any>, snapshot?: any): void {
@@ -44,9 +46,18 @@ class App extends React.Component<IProps, any>{
         }*/
     }
 
+    checkCache() {
+        let key = "cacheKey";
+        let cacheStr = localStorage.getItem(key);
+        if (cacheStr !== cacheKey) {
+            localStorage.clear();
+            localStorage.setItem(key, cacheKey);
+        }
+    }
+
     addEventListener() {
         // @ts-ignore
-        let provider = window[this.props.redux.wallet_info?.plugin];
+        let provider = window[this.props.redux.wallet_info?.plugin] as any;
         let ethersProvider = new ethers.providers.Web3Provider(provider);
         ethersProvider.getNetwork().then((res:any) => {
             this.checkNetwork(res.chainId);

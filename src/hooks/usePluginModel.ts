@@ -142,6 +142,7 @@ export function usePluginModel() {
         needApprove,
         approve,
         project: storeData.network.project,
+        USDT_decimal: storeData.network.project.contracts.USDC.decimals,
         getTokenBalance
     };
 }

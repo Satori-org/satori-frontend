@@ -24,7 +24,7 @@ import {useAccountInfo} from "../../hooks/useAccountInfo";
 import useExchangeStore from "../../views/exchange/ExchangeProvider";
 import useTheme from "../../hooks/useTheme";
 import {RELOAD_ACCOUNT_INFO} from "../../common/PubSubEvents";
-import {USDT_decimal, USDT_decimal_show} from "../../config";
+import {USDT_decimal_show} from "../../config";
 import InputNumber from "../inputNumber/InputNumber";
 import openModal from "../openModal";
 import {usePluginModel} from "../../hooks/usePluginModel";
@@ -39,7 +39,7 @@ export default function DepositModal(props: IProps) {
     const dispatch = mapDispatchToProps(store.dispatch);
     const [reducerState] = useExchangeStore();
     const { theme } = useTheme();
-    const { needApprove, approve, checkHashStatus, NewWriteContract, project } = usePluginModel();
+    const { needApprove, approve, checkHashStatus, NewWriteContract, project, USDT_decimal } = usePluginModel();
     const state = useEffectState({
         approveStatus: false,
         loading: false,

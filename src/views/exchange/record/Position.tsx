@@ -30,6 +30,7 @@ import {useThemeManager} from "../../../hooks/useThemeManager";
 import {usePluginModel} from "../../../hooks/usePluginModel";
 import PlanOrderModal from "../../../components/planOrderModal/PlanOrderModal";
 import {USDT_decimal_show} from "../../../config";
+import {usePairPnl} from "../../../hooks/usePairPnl";
 
 type IRow = {
     item: IPositionList
@@ -66,8 +67,7 @@ function Row(props: IRow) {
 
         return obj || {} as IQuotation;
     }, [reducerState.quotation]);
-
-    const pnl = useMemo(() => {
+/*    const pnl = useMemo(() => {
         let obj = {
             profit: 0,
             percent: "0%",
@@ -93,10 +93,11 @@ function Row(props: IRow) {
         } else {
             obj.percent = `${Math.abs(percent)}%`;
         }
-       // obj.percent = `${obj.profit > 0 ? '+' : '-'}${Math.abs(percent)}%`;
 
         return obj;
-    }, [props.item.openingPrice, reducerState.tiker.close, props.item.isLong, rowPair, pairQuotation]);
+    }, [props.item.openingPrice, reducerState.tiker.close, props.item.isLong, rowPair, pairQuotation]);*/
+
+    const pnl = usePairPnl({pairs: rowPair, quotation: pairQuotation, item: props.item});
 
     const percents = [0.1, 0.2 ,0.50,0.75, 1];
 

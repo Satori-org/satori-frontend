@@ -25,7 +25,7 @@ import {useAccountInfo} from "../../hooks/useAccountInfo";
 import useExchangeStore from "../../views/exchange/ExchangeProvider";
 import ModalFooter from "../modal/ModalFooter";
 import {RELOAD_ACCOUNT_INFO} from "../../common/PubSubEvents";
-import {USDT_decimal, USDT_decimal_show} from "../../config";
+import {USDT_decimal_show} from "../../config";
 import InputNumber from "../inputNumber/InputNumber";
 import openModal from "../openModal";
 import {IWaitParams, WaitingModal} from "../waitingModal/WaitingModal";
@@ -40,7 +40,7 @@ export default function WithdrawModal(props: IProps) {
     const storeData = store.getState();
     const [reducerState] = useExchangeStore();
     const { theme } = useTheme();
-    const { signMsg, NewWriteContract, project, checkHashStatus } = usePluginModel();
+    const { signMsg, NewWriteContract, project, checkHashStatus, USDT_decimal } = usePluginModel();
     const state = useEffectState({
         amount: "",
         loading: false

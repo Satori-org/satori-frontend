@@ -26,11 +26,11 @@ export const fixedNumber = (value:number|string, precision:number = 0) => {
     return Decimal.div(parseInt(scale), Math.pow(10, precision)).toNumber() ;
 };
 
-export const fixedNumberStr = (value:number|string, precision:number = 0) => {
-    if (typeof value !== "number" && !isNumber(String(value))) {
-        return "";
+export const fixedNumberStr = (value:number|string|undefined, precision:number = 0) => {
+    if (typeof value === "undefined") {
+        return "-";
     }
-    if (!value) {
+    if (typeof value !== "number" && !isNumber(String(value))) {
         return "-";
     }
 
@@ -59,13 +59,16 @@ export function formatAmountRise(amount: number | string): string {
 }
 
 export function formatUSDTRise(amount: number | string): string {
-    if (!amount || amount === "0") {
+    /*if (!amount || amount === "0") {
         return "-";
-    }
+    }*/
     return Number(amount) > 0 ? `+${formatUSDT(amount)}` : String(formatUSDT(amount));
 }
 
-export function formatUSDT(amount: string | number) {
+export function formatUSDT(amount: string | number | undefined) {
+    if (typeof amount === "undefined") {
+        return "-";
+    }
     return formatNumber(fixedNumberStr(amount, USDT_decimal_show));
 }
 
@@ -275,7 +278,7 @@ export function getNumberByDecimal(amount: BigNumber | number | string, decimals
 
 /*with, separating numbers*/
 export function formatNumber(value: number|string, splitor = ",") {
-    if (!value) {
+    if (typeof value !== "number" && typeof value !== "string") {
         return "-";
     }
     //let amount = Number(value);

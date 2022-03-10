@@ -2,6 +2,7 @@ export const erc20 = require('./erc20.json');
 export const project_Clover = require('./projects/project_clover.json');
 export const project_Moonbeam = require('./projects/project_moonbeam.json');
 export const project_Astar = require('./projects/project_astar.json');
+export const project_Acala = require('./projects/project_acala.json');
 export const project = require('./project.json');
 
 //export const chainID = project.chainid;
@@ -46,7 +47,12 @@ export const CHAINS = {
         project: project_Astar
     },
     // Parallel: {name: "Parallel", icon: "", wallet: [wallets.polkadot]},
-    // Acala: {name: "Acala", icon: "", wallet: [wallets.metamask, wallets.clover]},
+    /*Acala: {
+        name: "Acala",
+        icon: require("src/assets/images/Alcala.png"),
+        wallet: [WALLETS.metamask, WALLETS.clover],
+        project: project_Acala
+    }*/
 };
 
 export type IChain = typeof CHAINS.Clover;

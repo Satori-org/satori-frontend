@@ -1,4 +1,4 @@
-import React, {CSSProperties, useMemo} from 'react';
+import React, {CSSProperties, useEffect, useMemo} from 'react';
 import { useTranslation } from 'react-i18next';
 import {PositionStyle} from './styles/Position.style';
 import Table from "src/components/table/Table";
@@ -7,7 +7,15 @@ import Pagination from "../../components/pagination/Pagination";
 import {getOrderType} from "../exchange/config";
 import {useEffectState} from "../../hooks/useEffectState";
 import {useFetchPostPage} from "../../ajax";
-import {getPositionList, IPositionList} from "../../ajax/contract/contract";
+import {
+    getContractPairList,
+    getPositionList,
+    IKline,
+    IPair,
+    IPositionList,
+    IQuotation,
+    ISocketRes
+} from "../../ajax/contract/contract";
 import {useStore} from "react-redux";
 import {IState} from "../../store/reducer";
 import Loading from "../../components/loadStatus/Loading";
@@ -17,6 +25,9 @@ import EmptyData from "../../components/noData/EmptyData";
 import {RowStyle} from "../exchange/record/style";
 import {$router} from "../../react-router-perfect/Index";
 import {formatUSDT} from "../../common/utilTools";
+import {useWebsocket} from "../../hooks/useWebsocket";
+import {socketURL} from "../../config";
+import {usePairPnl} from "../../hooks/usePairPnl";
 
 const data = [
     { name: "BTC/USDT", icon: require("src/assets/images/icon_pairs_buy@2x.png"), isLong: true,Leverage: 10, average: "1.078236", LiquidationPrice: "1.07", amount: "6.998", Margin: "1,297.60", Unrealized: "1.894541 (-129.35%)" },
@@ -25,16 +36,27 @@ const data = [
 
 type IRow = {
     item: IPositionList
+    quotation: IQuotation[]
+    pairs: IPair[]
 }
 function Row(props: IRow) {
     const {t} = useTranslation();
 
-    const rowClassName = useMemo(() => {
-        if (!props.item.unrealizedPnl || Number(props.item.unrealizedPnl) === 0) {
-            return "";
-        }
-        return Number(props.item.unrealizedPnl) > 0 ? "long" : "short";
-    }, [props.item.unrealizedPnl]);
+    const rowPair = useMemo(() => {
+        let obj = props.pairs.find((item) => {
+            return item.id === props.item.contractPairId;
+        });
+
+        return obj || {} as IPair;
+    }, [props.pairs]);
+
+    const pairQuotation = useMemo(() => {
+        let obj = props.quotation.find((item) => {
+            return item.contractPairId === props.item.contractPairId;
+        });
+
+        return obj || {} as IQuotation;
+    }, [props.quotation]);
 
     const operaInfo = useMemo(() => {
         let obj = {
@@ -44,12 +66,14 @@ function Row(props: IRow) {
         if (Number(props.item.unrealizedPnl) > 0) {
             obj.className = 'long';
             obj.value = `+${formatUSDT(props.item.unrealizedPnl)}`
-        } else {
+        } else if(Number(props.item.unrealizedPnl) < 0) {
             obj.className = 'short';
             obj.value = `${formatUSDT(props.item.unrealizedPnl)}`
         }
         return obj;
     }, [props.item.unrealizedPnl]);
+
+    const pnl = usePairPnl({pairs: rowPair, quotation: pairQuotation, item: props.item});
 
     const tdStyle: CSSProperties = {
         fontSize: "0.14rem",
@@ -66,7 +90,7 @@ function Row(props: IRow) {
             <td style={tdStyle} className={"right"}>{formatUSDT(props.item.openingPrice)}</td>
             <td style={tdStyle} className={"right"}>{Number(props.item.restrictPrice) < 0 ? "-" : formatUSDT(props.item.restrictPrice)}</td>
             <td style={tdStyle} className={"right"}>{props.item.marginAmount}</td>
-            <td style={tdStyle} className={`right ${operaInfo.className}`}>{operaInfo.value}</td>
+            <td style={tdStyle} className={`right ${pnl.className}`}>{pnl.profit}</td>
             <td style={tdStyle} className={"right"}>
                 <OperationBtn onClick={() => {
                     $router.push({
@@ -85,14 +109,29 @@ export default function Position() {
     const storeData = store.getState();
     const state = useEffectState({
         pageNo: 1,
-        pageSize: 10
+        pageSize: 10,
+        quotation: [] as IQuotation[],
+        pairs: [] as IPair[]
     });
 
-    /* Currently selected trading pairs */
-    /*const pairInfo = useMemo(() => {
-        return reducerState.pairs[reducerState.currentTokenIndex] || {};
-    }, [reducerState.pairs, reducerState.currentTokenIndex]);*/
+    useEffect(() => {
+        getPairList();
+    }, []);
 
+    async function getPairList() {
+        const { data } = await getContractPairList();
+        state.pairs = data;
+    }
+    const socketData = useWebsocket<ISocketRes>({url: socketURL, event: "kline", params: {contractPairId: 2, period: "15MIN"}, token: ""}, []);
+
+    useEffect(() => {
+        if (socketData && socketData.success) {
+            let resData = socketData.data;
+            if (socketData.event === "contract_pair_quote") {
+                state.quotation = resData;
+            }
+        }
+    }, [socketData]);
     const {data, loading, total, reload} = useFetchPostPage<IPositionList>(getPositionList, {
         pageNo: state.pageNo,
         pageSize: state.pageSize
@@ -112,14 +151,14 @@ export default function Position() {
                         <th className={"right"}>{t(`ENTER PRICE`)}</th>
                         <th className={"right"}>{t(`LIQUIDATION PRICE`)}</th>
                         <th className={"right"}>{t(`MARGIN`)}</th>
-                        <th className={"right"}>{t(`LIQUIDATION PRICE`)}</th>
+                        <th className={"right"}>{t(`UNREALIZED PNL`)}</th>
                         <th className={"right"} style={{width: "1.2rem"}}></th>
                     </tr>
                     </thead>
                     <tbody>
                     {
                         data.map((item, index) => {
-                            return <Row key={index} item={item}></Row>
+                            return <Row key={index} item={item} quotation={state.quotation} pairs={state.pairs}></Row>
                         })
                     }
                     </tbody>

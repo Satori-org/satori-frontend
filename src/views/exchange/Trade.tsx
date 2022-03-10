@@ -132,7 +132,7 @@ export default function Trade(props: IProps) {
             let amount = Decimal.mul(state.price || 0, state.quantity || 0).div(state.lever).toFixed();
             return amount;
         } else {
-            let _price = props.shortPrice || reducerState.marketPrice;
+            let _price = props.shortPrice || reducerState.marketPrice || 0;
             let calcPrice = Decimal.mul(_price, 1 + 0.0005);
             let amount = Decimal.mul(calcPrice, state.quantity).div(state.lever).toFixed();
             return amount;
@@ -175,10 +175,11 @@ export default function Trade(props: IProps) {
 
     const ExpectedPrice = useMemo(() => {
         if (state.isLong) {
-            let _price = props.shortPrice || reducerState.marketPrice;
+            let _price = props.shortPrice || reducerState.marketPrice || 0;
             return Decimal.mul(_price, 1 + 0.0005).toFixed();
         } else {
-            return props.longPrice ? Math.max(Number(props.longPrice), reducerState.marketPrice) : reducerState.marketPrice;
+            let c = reducerState.marketPrice || 0;
+            return props.longPrice ? Math.max(Number(props.longPrice), c) : c;
         }
     }, [state.isLong, props.longPrice, props.shortPrice, reducerState.marketPrice]);
 
@@ -284,11 +285,12 @@ export default function Trade(props: IProps) {
             let quantity = Decimal.mul(margin, state.lever).div(price).toFixed();
             state.quantity = fixedNumberStr(quantity, symbolDecimal)
         } else {
-            let long_price = props.shortPrice || reducerState.marketPrice;
+            let long_price = props.shortPrice || reducerState.marketPrice || 0;
             let calcPrice = Decimal.mul(long_price, 1 + 0.0005);
 
             let quantity_long = Decimal.mul(margin, state.lever).div(calcPrice).toFixed();
-            let _price = props.longPrice ? Math.max(Number(props.longPrice), reducerState.marketPrice) : reducerState.marketPrice;
+            let c = reducerState.marketPrice || 0;
+            let _price = props.longPrice ? Math.max(Number(props.longPrice), c) : c;
             let quantity_short = Decimal.mul(margin, state.lever).div(_price).toFixed();
 
             let quantity = Number(quantity_long) > Number(quantity_short) ? quantity_short : quantity_long;
@@ -465,7 +467,7 @@ export default function Trade(props: IProps) {
                                     </div>
                                     }
                                     placeholder={state.pricePlaceholder}
-                                    maxDecimal={symbolDecimal}
+                                    maxDecimal={USDT_decimal_show}
                                     value={state.price}
                                     onChange={(value) => {
                                         state.price = value;

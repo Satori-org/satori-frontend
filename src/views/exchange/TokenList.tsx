@@ -90,6 +90,25 @@ export default function TokenList() {
         return reducerState.tiker.close >= reducerState.tiker.open;
     }, [reducerState.tiker]);
 
+    const rise = useMemo(() => {
+        let obj = {
+            className: "",
+            dotal: ""
+        };
+        if (reducerState.tiker.close > reducerState.tiker.open) {
+            obj = {
+                className: "long",
+                dotal: "+"
+            }
+        } else if(reducerState.tiker.close < reducerState.tiker.open) {
+            obj = {
+                className: "short",
+                dotal: ""
+            }
+        }
+        return obj;
+    }, [reducerState.market24Data]);
+
     function docOnClick() {
         state.showPanel = false;
     }
@@ -132,7 +151,7 @@ export default function TokenList() {
                         onMouseLeave={() => state.showPanel = false}>
             <div className={"flex-row font20"} style={{cursor: "pointer", userSelect: "none", whiteSpace: "nowrap"}}>
                 <span>{reducerState.currentPair.symbol}</span>
-                <Price className={`${isRise ? 'long' : 'short'}`}>{formatNumber(reducerState.tiker.close || "0")}</Price>
+                <Price className={rise.className}>{formatUSDT(reducerState.tiker.close)}</Price>
                 <img src={isDark ? require("src/assets/images/dark/icon_arrow_down.png") : require("src/assets/images/light/icon_arrow_down.png")}
                      className={`icon ${state.showPanel ? 'active' : ''}`}
                      alt="" />
